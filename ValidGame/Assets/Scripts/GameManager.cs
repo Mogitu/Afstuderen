@@ -21,9 +21,23 @@ public class GameManager : NetworkManager{
 	
 	}
 
+    public void OnClientConnect()
+    {
+        Debug.Log("Entered match");
+       
+       
+    }
+
+    public void OnConnectedToServer()
+    {
+        Debug.Log("Player connected");
+        mainMenu.SetActive(true);
+    }
+
     public void HostGame()
     {
-        StartServer();
+        StartHost();
+        NetworkServer.Listen(7777);
         mainMenu.SetActive(false);
         gameMenu.SetActive(true);
         RunAnimation();
@@ -32,6 +46,7 @@ public class GameManager : NetworkManager{
     public void JoinGame()
     {
         StartClient();
+        Network.Connect("127.0.0.1",7777);
         mainMenu.SetActive(false);
         gameMenu.SetActive(true);
         RunAnimation();
