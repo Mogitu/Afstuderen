@@ -57,4 +57,6 @@ public class GameManager : NetworkManager{
     {
         camAnimator.SetBool("GameStarted", true);
     }
+
+    
 }
