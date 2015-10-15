@@ -19,19 +19,22 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Add mouse axis movement to the rotation
-        horizontalRotation += Input.GetAxis("Mouse X") * lookSpeed;
-        verticalRotation -= Input.GetAxis("Mouse Y") * lookSpeed;
+        if(Input.GetMouseButton(1))
+        {
+            //Add mouse axis movement to the rotation
+            horizontalRotation += Input.GetAxis("Mouse X") * lookSpeed;
+            verticalRotation -= Input.GetAxis("Mouse Y") * lookSpeed;
 
-        //keep rotation within allowed limits
-        horizontalRotation = Mathf.Clamp(horizontalRotation, -horizontalRange, horizontalRange);
-        verticalRotation = Mathf.Clamp(verticalRotation, -verticalRange, verticalRange);
+            //keep rotation within allowed limits
+            horizontalRotation = Mathf.Clamp(horizontalRotation, -horizontalRange, horizontalRange);
+            verticalRotation = Mathf.Clamp(verticalRotation, -verticalRange, verticalRange);
 
-        //set the final rotation values.
-        Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+            //set the final rotation values.
+            Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
 
-        //moves the camera sideways when moving the mouse
-        Camera.main.transform.Translate(Vector3.right * Input.GetAxis("Mouse X") * moveSpeed*  Time.deltaTime);
+            //moves the camera sideways when moving the mouse
+            Camera.main.transform.Translate(Vector3.right * Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime);
+        }       
     }
 
     void DisableAnimator()
