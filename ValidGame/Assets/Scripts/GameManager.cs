@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : NetworkManager
 {
@@ -19,6 +20,7 @@ public class GameManager : NetworkManager
     public GameObject contextInfo;
 
     public Card currentCard;
+    public List<Card> gameCards = new List<Card>();
     public SubtopicMatcher currentSubTopic;
 
     public static GameManager Instance { get; private set; }
@@ -33,7 +35,6 @@ public class GameManager : NetworkManager
         {
             Destroy(gameObject);
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
@@ -42,6 +43,13 @@ public class GameManager : NetworkManager
     {
         mainCam = Camera.main.gameObject;
         camAnimator = mainCam.GetComponent<Animator>();
+        for (int i = 0; i < gameCards.Count;i++)
+        {
+            Card tmp = Instantiate(gameCards[i]);
+            tmp.gameObject.SetActive(false);
+        }
+
+        //currentCard = GetCard();
     }
 
     bool MatchCard()
@@ -65,7 +73,7 @@ public class GameManager : NetworkManager
         }
         //make current follow the cursor
         if (currentCard != null)
-        {
+        {            
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -75,11 +83,12 @@ public class GameManager : NetworkManager
                 newPos.y += 0.02f;
                 currentCard.transform.position = newPos;
 
-                // Do something with the object that was hit by the raycast.              
+                //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
                 if (objectHit.gameObject.tag == "ValidTopic")
-                {
+                {                    
                     SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
-                    if (Input.GetMouseButton(0))
+                    //place card
+                    if (Input.GetMouseButton(0) && !Input.GetMouseButton(1))
                     {
                         if (topicMatcher != null && topicMatcher.matchCode == currentCard.matchCode)
                         {
@@ -94,7 +103,7 @@ public class GameManager : NetworkManager
                         currentCard.transform.SetParent(topicMatcher.slotA.transform);
                         currentCard.transform.position = topicMatcher.slotA.transform.position;
                         currentCard = null;
-                        contextInfo.gameObject.SetActive(true);
+                       // contextInfo.gameObject.SetActive(true);
                     }
                 }
             }
@@ -122,6 +131,13 @@ public class GameManager : NetworkManager
         gameMenu.SetActive(true);
         RunAnimation();
         popupHandler.Show("Hosting game");
+    }
+
+    public Card GetCard()
+    {
+        Card tmp = gameCards[Random.Range(0, gameCards.Count)];
+        tmp.gameObject.SetActive(true);
+        return tmp;
     }
 
     public void JoinGame()
