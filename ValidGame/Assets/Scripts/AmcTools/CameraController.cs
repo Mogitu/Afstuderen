@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MouseLook : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     public float lookSpeed = 5.0f;
     public float moveSpeed = 1.0f;
@@ -17,7 +17,7 @@ public class MouseLook : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // Cursor.visible = false;	
+        //Cursor.visible = false;	
     }
 
     // Update is called once per frame
@@ -29,8 +29,7 @@ public class MouseLook : MonoBehaviour
             Vector3 movement = new Vector3(Input.GetAxis("Mouse X"),0,0)*Time.deltaTime;
             Vector3 newPos = transform.position + movement;
             Vector3 offSet = newPos - originalPos;          
-            transform.position = originalPos + Vector3.ClampMagnitude(offSet,maxDistance);
-           
+            transform.position = originalPos + Vector3.ClampMagnitude(offSet,maxDistance);           
             //Camera.main.transform.Translate(new Vector3(1, 0, 0) * Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime, Space.World);
             return;
         }

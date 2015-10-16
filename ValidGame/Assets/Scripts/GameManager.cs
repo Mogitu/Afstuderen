@@ -7,25 +7,26 @@ using System.Collections.Generic;
 
 public class GameManager : NetworkManager
 {
+    public static GameManager Instance { get; private set; }
+
     // Use this for initialization     
     public GameObject gameMenu;
     public GameObject mainMenu;
+    public GameObject mainSingleMenu;
+    public GameObject mainMultiMenu;
+    public GameObject goodParticle;
+    public GameObject wrongParticle;    
+
     public PopupHandler popupHandler;
     public Text ipAdress;
-    public InputField chatInput;
     public Text chatField;
+    public InputField chatInput;
 
-    public GameObject goodParticle;
-    public GameObject wrongParticle;
-    public GameObject contextInfo;
-
+    private GameObject mainCam;
     private Card currentCard;
     public List<Card> gameCards = new List<Card>();
     public SubtopicMatcher currentSubTopic;
-
-    public static GameManager Instance { get; private set; }
-
-    private GameObject mainCam;
+  
     private Animator camAnimator;
     private bool gameStarted;
 
@@ -48,10 +49,9 @@ public class GameManager : NetworkManager
             gameCards[i] = Instantiate(gameCards[i]);
             gameCards[i].gameObject.SetActive(false);
         }
-
         currentCard = GetCard();
     }
-
+   
     bool MatchCard()
     {
         if (currentCard.matchCode == currentSubTopic.matchCode)
@@ -88,7 +88,7 @@ public class GameManager : NetworkManager
                 {                    
                     SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
                     //place card
-                    if (Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
+                    if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1))
                     {
                         if (topicMatcher != null && topicMatcher.matchCode == currentCard.matchCode)
                         {
@@ -100,29 +100,32 @@ public class GameManager : NetworkManager
                             GameObject go = Instantiate(wrongParticle) as GameObject;
                             go.transform.position = topicMatcher.slotA.transform.position;
                         }
-                        //currentCard.transform.SetParent(topicMatcher.slotA.transform);
+                        currentCard.transform.SetParent(topicMatcher.slotA.transform);
                         currentCard.transform.position = topicMatcher.slotA.transform.position;
                         gameCards.Remove(currentCard);
-                        currentCard = GetCard();
-                       // contextInfo.gameObject.SetActive(true);
+                        currentCard = GetCard();                        
+                       //contextInfo.gameObject.SetActive(true);
                     }
                 }
             }
-        }
-        else
+        }     
+   
+        if(gameCards.Count<=0)
         {
-            /*
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                Transform objectHit = hit.transform;
-                Vector3 newPos = hit.point;
-                newPos.y += 0.02f;
-                contextInfo.transform.position = newPos;             
-            }
-             */
+           // camAnimator.enabled = true;
+           // camAnimator.SetBool("GameStarted",false);
+          //  camAnimator.SetBool("GameOver", true);
         }
+    }
+    public Card GetCard()
+    {
+        if (gameCards.Count > 0)
+        {
+            Card tmp = gameCards[Random.Range(0, gameCards.Count - 1)];
+            tmp.gameObject.SetActive(true);
+            return tmp;
+        }
+        return null;
     }
 
     public void HostGame()
@@ -130,19 +133,24 @@ public class GameManager : NetworkManager
         StartHost();
         mainMenu.SetActive(false);
         gameMenu.SetActive(true);
+        mainMultiMenu.SetActive(false);
         RunAnimation();
         popupHandler.Show("Hosting game");
     }
 
-    public Card GetCard()
+    public void StartPractice()
     {
-        if(gameCards.Count>0)
-        {
-            Card tmp = gameCards[Random.Range(0, gameCards.Count - 1)];
-            tmp.gameObject.SetActive(true);
-            return tmp;
-        }
-        return null;       
+        mainMenu.SetActive(false);
+        gameMenu.SetActive(false);
+        RunAnimation();
+        popupHandler.Show("Oefenen");
+    }  
+
+    public void ShowMultiplayerOptions()
+    {
+        mainMenu.SetActive(false);
+        mainSingleMenu.SetActive(false);
+        mainMultiMenu.SetActive(true);
     }
 
     public void JoinGame()
@@ -152,6 +160,7 @@ public class GameManager : NetworkManager
         Network.Connect(ipAdress.text, 7777);
         mainMenu.SetActive(false);
         gameMenu.SetActive(true);
+        mainMultiMenu.SetActive(false);
         RunAnimation();
         popupHandler.Show("Joining game");
     }
