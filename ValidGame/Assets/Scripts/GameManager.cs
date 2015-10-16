@@ -19,7 +19,7 @@ public class GameManager : NetworkManager
     public GameObject wrongParticle;
     public GameObject contextInfo;
 
-    public Card currentCard;
+    private Card currentCard;
     public List<Card> gameCards = new List<Card>();
     public SubtopicMatcher currentSubTopic;
 
@@ -45,11 +45,11 @@ public class GameManager : NetworkManager
         camAnimator = mainCam.GetComponent<Animator>();
         for (int i = 0; i < gameCards.Count;i++)
         {
-            Card tmp = Instantiate(gameCards[i]);
-            tmp.gameObject.SetActive(false);
+            gameCards[i] = Instantiate(gameCards[i]);
+            gameCards[i].gameObject.SetActive(false);
         }
 
-        //currentCard = GetCard();
+        currentCard = GetCard();
     }
 
     bool MatchCard()
@@ -88,7 +88,7 @@ public class GameManager : NetworkManager
                 {                    
                     SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
                     //place card
-                    if (Input.GetMouseButton(0) && !Input.GetMouseButton(1))
+                    if (Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
                     {
                         if (topicMatcher != null && topicMatcher.matchCode == currentCard.matchCode)
                         {
@@ -100,9 +100,10 @@ public class GameManager : NetworkManager
                             GameObject go = Instantiate(wrongParticle) as GameObject;
                             go.transform.position = topicMatcher.slotA.transform.position;
                         }
-                        currentCard.transform.SetParent(topicMatcher.slotA.transform);
+                        //currentCard.transform.SetParent(topicMatcher.slotA.transform);
                         currentCard.transform.position = topicMatcher.slotA.transform.position;
-                        currentCard = null;
+                        gameCards.Remove(currentCard);
+                        currentCard = GetCard();
                        // contextInfo.gameObject.SetActive(true);
                     }
                 }
@@ -135,9 +136,13 @@ public class GameManager : NetworkManager
 
     public Card GetCard()
     {
-        Card tmp = gameCards[Random.Range(0, gameCards.Count)];
-        tmp.gameObject.SetActive(true);
-        return tmp;
+        if(gameCards.Count>0)
+        {
+            Card tmp = gameCards[Random.Range(0, gameCards.Count - 1)];
+            tmp.gameObject.SetActive(true);
+            return tmp;
+        }
+        return null;       
     }
 
     public void JoinGame()
