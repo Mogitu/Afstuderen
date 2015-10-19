@@ -9,13 +9,9 @@ public class GameManager : NetworkManager
 {
     public static GameManager Instance { get; private set; }
 
-    // Use this for initialization     
-    public GameObject gameMenu;
-    public GameObject mainMenu;
-    public GameObject mainSingleMenu;
-    public GameObject mainMultiMenu;
+    // Use this for initialization       
     public GameObject goodParticle;
-    public GameObject wrongParticle;    
+    public GameObject wrongParticle;
 
     public PopupHandler popupHandler;
     public Text ipAdress;
@@ -25,6 +21,7 @@ public class GameManager : NetworkManager
     private GameObject mainCam;
     private Card currentCard;
     public List<Card> gameCards = new List<Card>();
+    public List<Card> placedCards = new List<Card>();
     public SubtopicMatcher currentSubTopic;
   
     private Animator camAnimator;
@@ -48,6 +45,7 @@ public class GameManager : NetworkManager
         {
             gameCards[i] = Instantiate(gameCards[i]);
             gameCards[i].gameObject.SetActive(false);
+           
         }
         currentCard = GetCard();
     }
@@ -99,23 +97,26 @@ public class GameManager : NetworkManager
                         {
                             GameObject go = Instantiate(wrongParticle) as GameObject;
                             go.transform.position = topicMatcher.slotA.transform.position;
-                        }
-                        currentCard.transform.SetParent(topicMatcher.slotA.transform);
+                        }                     
                         currentCard.transform.position = topicMatcher.slotA.transform.position;
                         gameCards.Remove(currentCard);
                         currentCard = GetCard();                        
-                       //contextInfo.gameObject.SetActive(true);
                     }
                 }
             }
-        }     
-   
-        if(gameCards.Count<=0)
+        }  
+        else if(currentCard ==null)
         {
-           // camAnimator.enabled = true;
-           // camAnimator.SetBool("GameStarted",false);
-          //  camAnimator.SetBool("GameOver", true);
-        }
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+               if(Input.GetMouseButtonDown(0)&& hit.transform.gameObject.tag=="ValidCard")
+               {
+                   currentCard = hit.transform.gameObject.GetComponent<Card>();
+               }
+            }
+        }     
     }
     public Card GetCard()
     {
@@ -130,40 +131,42 @@ public class GameManager : NetworkManager
 
     public void HostGame()
     {
-        StartHost();
-        mainMenu.SetActive(false);
-        gameMenu.SetActive(true);
-        mainMultiMenu.SetActive(false);
+        StartHost();       
         RunAnimation();
         popupHandler.Show("Hosting game");
     }
 
     public void StartPractice()
-    {
-        mainMenu.SetActive(false);
-        gameMenu.SetActive(false);
+    {       
         RunAnimation();
-        popupHandler.Show("Oefenen");
-    }  
-
-    public void ShowMultiplayerOptions()
-    {
-        mainMenu.SetActive(false);
-        mainSingleMenu.SetActive(false);
-        mainMultiMenu.SetActive(true);
-    }
+        popupHandler.Show("Practice");
+    }     
 
     public void JoinGame()
     {
         networkAddress = ipAdress.text;
         StartClient();
-        Network.Connect(ipAdress.text, 7777);
-        mainMenu.SetActive(false);
-        gameMenu.SetActive(true);
-        mainMultiMenu.SetActive(false);
+        Network.Connect(ipAdress.text, 7777);      
         RunAnimation();
         popupHandler.Show("Joining game");
     }
+
+    public void PlaceCard()
+    {
+
+    }
+
+    public void PickupCard()
+    {
+
+    }
+
+    public void SelectCard()
+    {
+
+    }
+
+   
 
     public void RunAnimation()
     {

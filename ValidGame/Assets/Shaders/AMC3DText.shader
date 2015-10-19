@@ -1,21 +1,18 @@
-﻿Shader "Custom/AMC3DText" {
+﻿Shader "GUI/3D Text Shader - Cull Back" {
 	Properties {
-		_Color ("Color", Color) = (1,1,1,1)
-		_MainTex ("Albedo (RGB)", 2D) = "white" {}		
+		_MainTex ("Font Texture", 2D) = "white" {}
+		_Color ("Text Color", Color) = (1,1,1,1)
 	}
+ 
 	SubShader {
-		Tags { "Queue"="3000" "IgnoreProjector"="True" "RenderType"="ZTest" } 
-
-		Lighting Off Cull back ZWrite Off ZTest On Fog { Mode Off } 
+		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
+		Lighting Off Cull Back ZWrite Off Fog { Mode Off }
 		Blend SrcAlpha OneMinusSrcAlpha
-
-		Pass
-		{
+		Pass {
 			Color [_Color]
-			SetTexture[_MainTex]
-			{
+			SetTexture [_MainTex] {
 				combine primary, texture * primary
 			}
-		}		
-	}		
+		}
+	}
 }
