@@ -20,8 +20,10 @@ public class GameManager : NetworkManager
 
     private GameObject mainCam;
     private Card currentCard;
+
     public List<Card> gameCards = new List<Card>();
     public List<Card> placedCards = new List<Card>();
+
     public SubtopicMatcher currentSubTopic;
   
     private Animator camAnimator;
@@ -47,7 +49,7 @@ public class GameManager : NetworkManager
             gameCards[i].gameObject.SetActive(false);
            
         }
-        currentCard = GetCard();
+        //currentCard = GetCard();
     }
    
     bool MatchCard()
@@ -100,7 +102,8 @@ public class GameManager : NetworkManager
                         }                     
                         currentCard.transform.position = topicMatcher.slotA.transform.position;
                         gameCards.Remove(currentCard);
-                        currentCard = GetCard();                        
+                        placedCards.Add(currentCard);
+                        currentCard = null;                  
                     }
                 }
             }
@@ -114,6 +117,8 @@ public class GameManager : NetworkManager
                if(Input.GetMouseButtonDown(0)&& hit.transform.gameObject.tag=="ValidCard")
                {
                    currentCard = hit.transform.gameObject.GetComponent<Card>();
+                   gameCards.Add(currentCard);
+                   placedCards.Remove(currentCard);
                }
             }
         }     
@@ -163,10 +168,8 @@ public class GameManager : NetworkManager
 
     public void SelectCard()
     {
-
-    }
-
-   
+        currentCard = GetCard();
+    }   
 
     public void RunAnimation()
     {
