@@ -120,7 +120,7 @@ public class GameManager : NetworkManager
                         gameCards.Remove(currentCard);
                         placedCards.Add(currentCard);
                         currentCard = null;
-                        gameState = GAMESTATE.INSPECTING;
+                        //gameState = GAMESTATE.INSPECTING;
                     }
                 }
             }

@@ -23,8 +23,7 @@ public class GUIHandler : MonoBehaviour
     private void PopulateCardBrowser()
     {
         GuiCard[] cards = Resources.LoadAll<GuiCard>("Gamecards/GUI");
-
-        int offSetX = -400;
+        int offSetX = -350;
         for (int i = 0; i < cards.Length; i++)
         {
             GuiCard obj = Instantiate(cards[i]);
