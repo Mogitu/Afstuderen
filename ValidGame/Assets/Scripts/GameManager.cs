@@ -12,18 +12,18 @@ using System.Collections.Generic;
  **/
 
 public class GameManager : NetworkManager
-{ 
+{
     public enum GAMESTATE
     {
         PLACING,
         BROWSING,
+        INSPECTING,
         GAMEOVER,
     }
 
     public static GameManager Instance { get; private set; } //Singleton instance
     public GAMESTATE gameState;
-    public List<Card> gameCards = new List<Card>();
-    public List<Card> placedCards = new List<Card>();      
+
     public GameObject goodParticle;
     public GameObject wrongParticle;
     public PopupHandler popupHandler;
@@ -31,12 +31,15 @@ public class GameManager : NetworkManager
     public Text chatField;
     public InputField chatInput;
     public GameObject gameBoard;
+    public GameObject contextInfoObject;
     public float cardOffsetY = 0.02f;
-    
-    private Card currentCard;        
+    public float contextInfoOffsetY = 0.5f;
+
+    private List<Card> gameCards = new List<Card>();
+    private List<Card> placedCards = new List<Card>();
+    private Card currentCard;
     private Animator camAnimator;
     private bool gameStarted;
- 
 
     void Awake()
     {
@@ -50,10 +53,10 @@ public class GameManager : NetworkManager
 
     void Start()
     {
-        gameState = GAMESTATE.PLACING;      
+        gameState = GAMESTATE.PLACING;
         camAnimator = Camera.main.GetComponent<Animator>();
         SpawnCards();
-    }    
+    }
 
     // Update is called once per frame
     void Update()
@@ -61,11 +64,11 @@ public class GameManager : NetworkManager
         if (Input.GetKeyDown(KeyCode.Return))
         {
             chatField.text += chatInput.text + "\n";
-            chatInput.text = "";        
+            chatInput.text = "";
         }
 
         //handle the different gamestates
-        switch(gameState)
+        switch (gameState)
         {
             case GAMESTATE.PLACING:
                 HandlePlacing();
@@ -73,13 +76,16 @@ public class GameManager : NetworkManager
             case GAMESTATE.BROWSING:
                 HandleBrowsing();
                 break;
+            case GAMESTATE.INSPECTING:
+                HandleInspecting();
+                break;
             case GAMESTATE.GAMEOVER:
-                break;            
-        }       
-    }   
+                break;
+        }
+    }
 
     private void HandlePlacing()
-    {       
+    {
         //make current card follow the cursor
         if (currentCard != null)
         {
@@ -114,6 +120,7 @@ public class GameManager : NetworkManager
                         gameCards.Remove(currentCard);
                         placedCards.Add(currentCard);
                         currentCard = null;
+                        gameState = GAMESTATE.INSPECTING;
                     }
                 }
             }
@@ -132,12 +139,32 @@ public class GameManager : NetworkManager
                     placedCards.Remove(currentCard);
                 }
             }
-        }     
+        }
+    }
+
+    private void HandleInspecting()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+            contextInfoObject.SetActive(true);
+            Transform objectHit = hit.transform;
+            Vector3 newPos = hit.point;
+
+            if (objectHit.gameObject.tag == "ValidCard")
+            {              
+                newPos.y += cardOffsetY;                
+                contextInfoObject.transform.position = newPos;
+                return;
+            }
+        }
+        contextInfoObject.SetActive(false);
     }
 
     private void HandleBrowsing()
     {
-       
+
     }
 
     private void HandleGameOver()
@@ -153,39 +180,39 @@ public class GameManager : NetworkManager
     public void DisableEnableScripts(GameObject gameObject, bool status)
     {
         MonoBehaviour[] scripts = gameObject.GetComponentsInChildren<MonoBehaviour>();
-        foreach(MonoBehaviour script in scripts)
+        foreach (MonoBehaviour script in scripts)
         {
-            script.enabled = status;            
+            script.enabled = status;
         }
     }
 
     private void SpawnCards()
     {
         Card[] cards = Resources.LoadAll<Card>("Gamecards/Scene");
-        for(int i=0; i< cards.Length;i++)
+        for (int i = 0; i < cards.Length; i++)
         {
             Card card = cards[i];
-            
+
             card = Instantiate(card);
-            card.gameObject.SetActive(false);   
+            card.gameObject.SetActive(false);
             gameCards.Add(card);
-        }        
+        }
     }
 
     public Card GetCard(string code)
     {
         if (gameCards.Count > 0)
         {
-            for (int i = 0; i < gameCards.Count;i++ )
+            for (int i = 0; i < gameCards.Count; i++)
             {
-                if(gameCards[i].matchCode == code)
+                if (gameCards[i].matchCode == code)
                 {
                     return gameCards[i];
                 }
             }
         }
         return null;
-    }   
+    }
 
     public void PlaceCard()
     {
@@ -209,7 +236,7 @@ public class GameManager : NetworkManager
     {
         RunAnimation();
         popupHandler.Show("Practice");
-    }     
+    }
 
     public void JoinGame()
     {

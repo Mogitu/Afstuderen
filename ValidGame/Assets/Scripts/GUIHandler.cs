@@ -33,10 +33,8 @@ public class GUIHandler : MonoBehaviour
             newPos.x += offSetX;
             offSetX += 100;
             obj.transform.position = newPos;
-
             Button objBtn = obj.GetComponent<Button>();
-            objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject);});
-          
+            objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject);});          
             browsableCards.Add(obj);
         }
     }
