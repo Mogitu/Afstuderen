@@ -5,29 +5,38 @@ using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameManager : NetworkManager
-{
-    public static GameManager Instance { get; private set; }
 
-    // Use this for initialization       
+/**
+ * PRELIMINARY GAMEMANAGER:
+ * Handles all game specific tasks, most tasks can be delegated to individual modules which will be developed later. *  
+ **/
+
+public class GameManager : NetworkManager
+{ 
+    public enum GAMESTATE
+    {
+        PLACING,
+        BROWSING,
+        GAMEOVER,
+    }
+
+    public static GameManager Instance { get; private set; } //Singleton instance
+    public GAMESTATE gameState;
+    public List<Card> gameCards = new List<Card>();
+    public List<Card> placedCards = new List<Card>();      
     public GameObject goodParticle;
     public GameObject wrongParticle;
-
     public PopupHandler popupHandler;
     public Text ipAdress;
     public Text chatField;
     public InputField chatInput;
-
-    private GameObject mainCam;
-    private Card currentCard;
-
-    public List<Card> gameCards = new List<Card>();
-    public List<Card> placedCards = new List<Card>();
-
-    public SubtopicMatcher currentSubTopic;
-  
+    public GameObject gameBoard;
+    public float cardOffsetY = 0.02f;
+    
+    private Card currentCard;        
     private Animator camAnimator;
     private bool gameStarted;
+ 
 
     void Awake()
     {
@@ -41,25 +50,10 @@ public class GameManager : NetworkManager
 
     void Start()
     {
-        mainCam = Camera.main.gameObject;
-        camAnimator = mainCam.GetComponent<Animator>();
-        for (int i = 0; i < gameCards.Count;i++)
-        {
-            gameCards[i] = Instantiate(gameCards[i]);
-            gameCards[i].gameObject.SetActive(false);
-           
-        }
-        //currentCard = GetCard();
-    }
-   
-    bool MatchCard()
-    {
-        if (currentCard.matchCode == currentSubTopic.matchCode)
-        {
-            return true;
-        }
-        return false;
-    }
+        gameState = GAMESTATE.PLACING;      
+        camAnimator = Camera.main.GetComponent<Animator>();
+        SpawnCards();
+    }    
 
     // Update is called once per frame
     void Update()
@@ -67,25 +61,40 @@ public class GameManager : NetworkManager
         if (Input.GetKeyDown(KeyCode.Return))
         {
             chatField.text += chatInput.text + "\n";
-            chatInput.text = "";
-            //StringMessage msgs = new StringMessage("testmessage");
-            //client.Send();
+            chatInput.text = "";        
         }
-        //make current follow the cursor
+
+        //handle the different gamestates
+        switch(gameState)
+        {
+            case GAMESTATE.PLACING:
+                HandlePlacing();
+                break;
+            case GAMESTATE.BROWSING:
+                HandleBrowsing();
+                break;
+            case GAMESTATE.GAMEOVER:
+                break;            
+        }       
+    }   
+
+    private void HandlePlacing()
+    {       
+        //make current card follow the cursor
         if (currentCard != null)
-        {            
+        {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
                 Transform objectHit = hit.transform;
                 Vector3 newPos = hit.point;
-                newPos.y += 0.02f;
+                newPos.y += cardOffsetY;
                 currentCard.transform.position = newPos;
 
                 //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
                 if (objectHit.gameObject.tag == "ValidTopic")
-                {                    
+                {
                     SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
                     //place card
                     if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1))
@@ -99,62 +108,84 @@ public class GameManager : NetworkManager
                         {
                             GameObject go = Instantiate(wrongParticle) as GameObject;
                             go.transform.position = topicMatcher.slotA.transform.position;
-                        }                     
+                        }
                         currentCard.transform.position = topicMatcher.slotA.transform.position;
+                        //currentCard.transform.parent = gameBoard.transform;
                         gameCards.Remove(currentCard);
                         placedCards.Add(currentCard);
-                        currentCard = null;                  
+                        currentCard = null;
                     }
                 }
             }
-        }  
-        else if(currentCard ==null)
+        }
+        else if (currentCard == null)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-               if(Input.GetMouseButtonDown(0)&& hit.transform.gameObject.tag=="ValidCard")
-               {
-                   currentCard = hit.transform.gameObject.GetComponent<Card>();
-                   gameCards.Add(currentCard);
-                   placedCards.Remove(currentCard);
-               }
+                if (Input.GetMouseButtonDown(0) && hit.transform.gameObject.tag == "ValidCard")
+                {
+                    currentCard = hit.transform.gameObject.GetComponent<Card>();
+                    currentCard.transform.parent = null;
+                    gameCards.Add(currentCard);
+                    placedCards.Remove(currentCard);
+                }
             }
         }     
     }
-    public Card GetCard()
+
+    private void HandleBrowsing()
+    {
+       
+    }
+
+    private void HandleGameOver()
+    {
+
+    }
+
+    private void HandleChat()
+    {
+
+    }
+
+    public void DisableEnableScripts(GameObject gameObject, bool status)
+    {
+        MonoBehaviour[] scripts = gameObject.GetComponentsInChildren<MonoBehaviour>();
+        foreach(MonoBehaviour script in scripts)
+        {
+            script.enabled = status;            
+        }
+    }
+
+    private void SpawnCards()
+    {
+        Card[] cards = Resources.LoadAll<Card>("Gamecards/Scene");
+        for(int i=0; i< cards.Length;i++)
+        {
+            Card card = cards[i];
+            
+            card = Instantiate(card);
+            card.gameObject.SetActive(false);   
+            gameCards.Add(card);
+        }        
+    }
+
+    public Card GetCard(string code)
     {
         if (gameCards.Count > 0)
         {
-            Card tmp = gameCards[Random.Range(0, gameCards.Count - 1)];
-            tmp.gameObject.SetActive(true);
-            return tmp;
+            for (int i = 0; i < gameCards.Count;i++ )
+            {
+                if(gameCards[i].matchCode == code)
+                {
+                    return gameCards[i];
+                }
+            }
         }
         return null;
-    }
-
-    public void HostGame()
-    {
-        StartHost();       
-        RunAnimation();
-        popupHandler.Show("Hosting game");
-    }
-
-    public void StartPractice()
-    {       
-        RunAnimation();
-        popupHandler.Show("Practice");
-    }     
-
-    public void JoinGame()
-    {
-        networkAddress = ipAdress.text;
-        StartClient();
-        Network.Connect(ipAdress.text, 7777);      
-        RunAnimation();
-        popupHandler.Show("Joining game");
-    }
+    }   
 
     public void PlaceCard()
     {
@@ -166,10 +197,35 @@ public class GameManager : NetworkManager
 
     }
 
-    public void SelectCard()
+    public void SelectCard(string code)
     {
-        currentCard = GetCard();
-    }   
+        GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, true);
+        currentCard = GetCard(code);
+        currentCard.gameObject.SetActive(true);
+        gameState = GAMESTATE.PLACING;
+    }
+
+    public void StartPractice()
+    {
+        RunAnimation();
+        popupHandler.Show("Practice");
+    }     
+
+    public void JoinGame()
+    {
+        networkAddress = ipAdress.text;
+        StartClient();
+        Network.Connect(ipAdress.text, 7777);
+        RunAnimation();
+        popupHandler.Show("Joining game");
+    }
+
+    public void HostGame()
+    {
+        StartHost();
+        RunAnimation();
+        popupHandler.Show("Hosting game");
+    }
 
     public void RunAnimation()
     {

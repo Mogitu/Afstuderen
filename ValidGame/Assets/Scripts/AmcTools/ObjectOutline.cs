@@ -20,11 +20,13 @@ public class ObjectOutline : MonoBehaviour {
 
     void OnMouseEnter()
     {
-        objectRenderer.material.color = hoverColor;
+        if(enabled)
+            objectRenderer.material.color = hoverColor;
     }
 
     void OnMouseExit()
     {
-        objectRenderer.material.color = normalColor;
+        if(enabled)
+            objectRenderer.material.color = normalColor;
     }
 }

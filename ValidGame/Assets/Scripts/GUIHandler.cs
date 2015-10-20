@@ -13,14 +13,21 @@ public class GUIHandler : MonoBehaviour
     public GameObject cardButton;
     public GameObject cardPanel;
 
-    public List<GameObject> browsableCards = new List<GameObject>();
+    private List<GuiCard> browsableCards = new List<GuiCard>();
 
     void Start()
     {
+        PopulateCardBrowser();
+    }
+
+    private void PopulateCardBrowser()
+    {
+        GuiCard[] cards = Resources.LoadAll<GuiCard>("Gamecards/GUI");
+
         int offSetX = -400;
-        for (int i = 0; i < browsableCards.Count; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
-            GameObject obj = Instantiate(browsableCards[i]);
+            GuiCard obj = Instantiate(cards[i]);
             obj.transform.SetParent(cardPanel.transform);
             Vector3 newPos = obj.transform.parent.transform.position;
             newPos.x += offSetX;
@@ -28,7 +35,9 @@ public class GUIHandler : MonoBehaviour
             obj.transform.position = newPos;
 
             Button objBtn = obj.GetComponent<Button>();
-            objBtn.onClick.AddListener(() => { ClickedCard(); objBtn.gameObject.SetActive(false); });
+            objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject);});
+          
+            browsableCards.Add(obj);
         }
     }
 
@@ -67,16 +76,22 @@ public class GUIHandler : MonoBehaviour
         if (cardPanel.activeSelf)
         {
             cardPanel.SetActive(false);
+            GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, true);
+            GameManager.Instance.gameState = GameManager.GAMESTATE.PLACING;
         }
         else
         {
             cardPanel.SetActive(true);
+            GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard,false);
+            GameManager.Instance.gameState = GameManager.GAMESTATE.BROWSING;
         }
     }
 
-    public void ClickedCard()
+    public void ClickedCard(GameObject obj)
     {
         ShowCards();
-        GameManager.Instance.SelectCard();
+        GuiCard card = obj.GetComponent<GuiCard>();
+        GameManager.Instance.SelectCard(card.matchCode);
+        obj.gameObject.SetActive(false); 
     }
 }
