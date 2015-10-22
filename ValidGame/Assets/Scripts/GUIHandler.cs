@@ -107,4 +107,10 @@ public class GUIHandler : MonoBehaviour
     {
         Application.LoadLevel("GameScene");
     }
+
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
