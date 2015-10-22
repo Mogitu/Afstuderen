@@ -40,6 +40,7 @@ public class GameManager : NetworkManager
     private Card currentCard;
     private Animator camAnimator;
     private bool gameStarted;
+    private float goodCards = 0;
 
     void Awake()
     {
@@ -67,6 +68,12 @@ public class GameManager : NetworkManager
             chatInput.text = "";
         }
 
+        if(gameCards.Count<=0 && gameState!= GAMESTATE.GAMEOVER)
+        {
+            gameState = GAMESTATE.GAMEOVER;
+            DetermineResults();
+        }
+
         //handle the different gamestates
         switch (gameState)
         {
@@ -80,6 +87,7 @@ public class GameManager : NetworkManager
                 HandleInspecting();
                 break;
             case GAMESTATE.GAMEOVER:
+                HandleGameOver();
                 break;
         }
     }
@@ -105,6 +113,7 @@ public class GameManager : NetworkManager
                     //place card
                     if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1))
                     {
+                        /*
                         if (topicMatcher != null && topicMatcher.matchCode == currentCard.matchCode)
                         {
                             GameObject go = Instantiate(goodParticle) as GameObject;
@@ -115,12 +124,12 @@ public class GameManager : NetworkManager
                             GameObject go = Instantiate(wrongParticle) as GameObject;
                             go.transform.position = topicMatcher.slotA.transform.position;
                         }
+                        */
                         currentCard.transform.position = topicMatcher.slotA.transform.position;
-                        //currentCard.transform.parent = gameBoard.transform;
+                        currentCard.transform.parent = topicMatcher.slotA.transform;
                         gameCards.Remove(currentCard);
                         placedCards.Add(currentCard);
-                        currentCard = null;
-                        //gameState = GAMESTATE.INSPECTING;
+                        currentCard = null;                      
                     }
                 }
             }
@@ -169,7 +178,31 @@ public class GameManager : NetworkManager
 
     private void HandleGameOver()
     {
+        
+       
+    }
 
+    private void DetermineResults()
+    {
+        Card[] cards = FindObjectsOfType<Card>();
+
+        for(int i=0; i< cards.Length; i++)
+        {
+            SubtopicMatcher matcher = cards[i].GetComponentInParent<SubtopicMatcher>();
+            if(matcher && matcher.matchCode == cards[i].matchCode)
+            {
+                GameObject go = Instantiate(goodParticle) as GameObject;
+                go.transform.position = cards[i].transform.position;
+                cards[i].GetComponent<Renderer>().material.color = Color.green;
+                goodCards++;
+            }
+            else
+            {                
+                GameObject go = Instantiate(wrongParticle) as GameObject;
+                go.transform.position = cards[i].transform.position;
+                cards[i].GetComponent<Renderer>().material.color = Color.red;
+            }
+        }
     }
 
     private void HandleChat()
@@ -222,6 +255,12 @@ public class GameManager : NetworkManager
     public void PickupCard()
     {
 
+    }
+
+    public string GetResultString()
+    {
+        float grade = Mathf.Ceil(goodCards / 6 * 100);       
+        return "With "+ (6-goodCards)+" errors you score: \n" +  grade.ToString() +"%";
     }
 
     public void SelectCard(string code)

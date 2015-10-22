@@ -12,6 +12,8 @@ public class GUIHandler : MonoBehaviour
     public GameObject mainMultiMenu;
     public GameObject cardButton;
     public GameObject cardPanel;
+    public GameObject gameOverPanel;
+    public Text resultText;
 
     private List<GuiCard> browsableCards = new List<GuiCard>();
 
@@ -33,8 +35,17 @@ public class GUIHandler : MonoBehaviour
             offSetX += 100;
             obj.transform.position = newPos;
             Button objBtn = obj.GetComponent<Button>();
-            objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject);});          
+            objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });
             browsableCards.Add(obj);
+        }
+    }
+
+    public void Update()
+    {
+        if (GameManager.Instance.gameState == GameManager.GAMESTATE.GAMEOVER)
+        {
+            gameOverPanel.SetActive(true);
+            resultText.text = GameManager.Instance.GetResultString();
         }
     }
 
@@ -79,7 +90,7 @@ public class GUIHandler : MonoBehaviour
         else
         {
             cardPanel.SetActive(true);
-            GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard,false);
+            GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, false);
             GameManager.Instance.gameState = GameManager.GAMESTATE.BROWSING;
         }
     }
@@ -89,6 +100,11 @@ public class GUIHandler : MonoBehaviour
         ShowCards();
         GuiCard card = obj.GetComponent<GuiCard>();
         GameManager.Instance.SelectCard(card.matchCode);
-        obj.gameObject.SetActive(false); 
+        obj.gameObject.SetActive(false);
+    }
+
+    public void ClickExit()
+    {
+        Application.LoadLevel("GameScene");
     }
 }
