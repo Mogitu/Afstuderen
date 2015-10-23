@@ -6,8 +6,7 @@ public class SubtopicMatcher : MonoBehaviour {
 	// Use this for initialization
     public string matchCode;
 
-    public GameObject slotA;
-    public GameObject slotB;
+    public bool occupied = false;
 	void Start () {
 	    
 
