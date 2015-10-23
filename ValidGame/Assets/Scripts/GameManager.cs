@@ -125,8 +125,11 @@ public class GameManager : NetworkManager
                             go.transform.position = topicMatcher.slotA.transform.position;
                         }
                         */
-                        currentCard.transform.position = topicMatcher.slotA.transform.position;
-                        currentCard.transform.parent = topicMatcher.slotA.transform;
+
+                       
+                            currentCard.transform.position = topicMatcher.slotA.transform.position;
+                            currentCard.transform.parent = topicMatcher.slotA.transform;
+                                   
                         gameCards.Remove(currentCard);
                         placedCards.Add(currentCard);
                         currentCard = null;                      
@@ -185,7 +188,6 @@ public class GameManager : NetworkManager
     private void DetermineResults()
     {
         Card[] cards = FindObjectsOfType<Card>();
-
         for(int i=0; i< cards.Length; i++)
         {
             SubtopicMatcher matcher = cards[i].GetComponentInParent<SubtopicMatcher>();

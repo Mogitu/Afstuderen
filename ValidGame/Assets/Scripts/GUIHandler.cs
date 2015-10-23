@@ -35,7 +35,7 @@ public class GUIHandler : MonoBehaviour
             offSetX += 100;
             obj.transform.position = newPos;
             Button objBtn = obj.GetComponent<Button>();
-            objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });
+            objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });           
             browsableCards.Add(obj);
         }
     }
@@ -101,7 +101,7 @@ public class GUIHandler : MonoBehaviour
         GuiCard card = obj.GetComponent<GuiCard>();
         GameManager.Instance.SelectCard(card.matchCode);
         obj.gameObject.SetActive(false);
-    }
+    }   
 
     public void ClickExit()
     {
