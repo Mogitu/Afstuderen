@@ -26,11 +26,11 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
         {
             //moves the camera sideways when moving the mouse
-            Vector3 movement = new Vector3(Input.GetAxis("Mouse X"),0,0)*Time.deltaTime;
-            Vector3 newPos = transform.position + movement;
-            Vector3 offSet = newPos - originalPos;          
-            transform.position = originalPos + Vector3.ClampMagnitude(offSet,maxDistance);           
-            //Camera.main.transform.Translate(new Vector3(1, 0, 0) * Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime, Space.World);
+           // Vector3 movement = new Vector3(Input.GetAxis("Mouse X"),0,0)*Time.deltaTime;
+           // Vector3 newPos = transform.position + movement;
+           // Vector3 offSet = newPos - originalPos;          
+           // transform.position = originalPos + Vector3.ClampMagnitude(offSet,maxDistance);           
+            Camera.main.transform.Translate(new Vector3(1, 0, 0) * Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime);
             return;
         }
 
@@ -46,6 +46,17 @@ public class CameraController : MonoBehaviour
 
             //set the final rotation values.
             Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+        }
+
+        float wheelMovement = Input.GetAxis("Mouse ScrollWheel");
+        
+        if (wheelMovement >0)
+        {
+            Camera.main.transform.Translate(Vector3.forward* Time.deltaTime*moveSpeed);
+        }
+        else if(wheelMovement<0)
+        {
+            Camera.main.transform.Translate(-Vector3.forward * Time.deltaTime * moveSpeed);
         }
     }
 

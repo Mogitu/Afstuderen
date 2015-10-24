@@ -13,6 +13,7 @@ public class GUIHandler : MonoBehaviour
     public GameObject cardButton;
     public GameObject cardPanel;
     public GameObject gameOverPanel;
+    public GameObject cardPanelContent;
     public Text resultText;
 
     private List<GuiCard> browsableCards = new List<GuiCard>();
@@ -29,7 +30,7 @@ public class GUIHandler : MonoBehaviour
         for (int i = 0; i < cards.Length; i++)
         {
             GuiCard obj = Instantiate(cards[i]);
-            obj.transform.SetParent(cardPanel.transform);
+            obj.transform.SetParent(cardPanelContent.transform);
             Vector3 newPos = obj.transform.parent.transform.position;
             newPos.x += offSetX;
             offSetX += 100;
