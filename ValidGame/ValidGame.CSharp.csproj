@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GuiCard.cs" />
     <Compile Include="Assets\Scripts\PopupHandler.cs" />
+    <Compile Include="Assets\Scripts\SubtopicDescription.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
   </ItemGroup>
   <ItemGroup>

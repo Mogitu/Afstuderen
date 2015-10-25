@@ -5,14 +5,11 @@ using System.Collections;
 
 public class GuiCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
-    public string matchCode = "A01";
-    public float maxScale = 2.0f;
-    private Vector2 originalPosition;
-    private Vector2 originalScale;
+    public string matchCode = "A01";  
+   
 	// Use this for initialization
 	void Start () {
-        originalScale= transform.localScale;
-        originalPosition = transform.position;
+        
 	}
 	
 	// Update is called once per frame
@@ -22,13 +19,26 @@ public class GuiCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.localScale = originalScale * maxScale;
-        //transform.position = new Vector2(0.5f, 0.5f);
+       
+        GUIHandler handler = GetComponentInParent<GUIHandler>();
+        GameObject info = handler.extraCardInfoPanel;
+        Image[] img = info.GetComponentsInChildren<Image>();
+        if(img[1])        
+        {
+            img[1].enabled = true;
+            img[1].sprite = GetComponent<Image>().sprite;
+        }
+       
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.localScale = originalScale;
-        //transform.position = originalPosition;
+        GUIHandler handler = GetComponentInParent<GUIHandler>();
+        GameObject info = handler.extraCardInfoPanel;
+        Image[] img = info.GetComponentsInChildren<Image>();
+        if (img[1])
+        {
+            img[1].enabled = false;
+        }
     }
 }
