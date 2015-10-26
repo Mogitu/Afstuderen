@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     public float maxDistanceHorizontal = 0.3f;
     public float maxVerticalDistance = 0.15f;
 
+
     private Vector3 originalPos;
 
     // Use this for initialization
@@ -26,27 +27,10 @@ public class CameraController : MonoBehaviour
     {
         //move horizontally and vertically 
         if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
-        {
-            /*
-            float x = Input.GetAxis("Mouse X");
-            float y = Input.GetAxis("Mouse Y");
-
-            // moves the camera sideways when moving the mouse
-            Vector3 movement = new Vector3(x, 0, 0) * Time.deltaTime;
-            Vector3 newPos = transform.position + movement;
-            Vector3 offSet = newPos - originalPos;
-            transform.position = originalPos + Vector3.ClampMagnitude(offSet, maxDistanceHorizontal);           
-
-            // moves the camera sideways when moving the mouse
-            Vector3 movementy = new Vector3(0, y, 0) * Time.deltaTime;
-            Vector3 newPosy = transform.position + movementy;
-            Vector3 offSety = newPosy - originalPos;
-            transform.position = originalPos + Vector3.ClampMagnitude(offSety, maxVerticalDistance);
-            */
-
-            Camera.main.transform.Translate(new Vector3(1, 0, 0) * Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime);
-            Camera.main.transform.Translate(new Vector3(0, 1, 0) * Input.GetAxis("Mouse Y") * moveSpeed * Time.deltaTime);
-            return;
+        {            
+            Camera.main.transform.Translate(new Vector3(Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime, Input.GetAxis("Mouse Y") * moveSpeed * Time.deltaTime, 0));
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -0.55f, 0.075f), Mathf.Clamp(transform.position.y, 0.29f,0.45f), Mathf.Clamp(transform.position.z,-0.55f, -0.1f));
+            return; 
         }
 
         //rotate the camera
@@ -62,6 +46,7 @@ public class CameraController : MonoBehaviour
 
             //set the final rotation values.
             Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+            return;
         }
 
         //move camera forward or backward
@@ -74,6 +59,9 @@ public class CameraController : MonoBehaviour
         {
             Camera.main.transform.Translate(-Vector3.forward * Time.deltaTime * moveSpeed);
         }
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -0.55f, 0.075f), Mathf.Clamp(transform.position.y, 0.29f, 0.45f), Mathf.Clamp(transform.position.z, -0.55f, -0.1f));
+
+
     }
 
     void DisableAnimator()

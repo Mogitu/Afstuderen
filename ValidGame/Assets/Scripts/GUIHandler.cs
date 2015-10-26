@@ -64,6 +64,9 @@ public class GUIHandler : MonoBehaviour
         if (GameManager.Instance.gameState == GameManager.GAMESTATE.GAMEOVER)
         {
             gameOverPanel.SetActive(true);
+            gameMenu.SetActive(false);
+            infoBar.SetActive(false);
+            cardButton.SetActive(false);
             resultText.text = GameManager.Instance.GetResultString();
         }
     }
