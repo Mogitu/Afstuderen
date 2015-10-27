@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -70,11 +72,15 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AmcTools\CameraController.cs" />
     <Compile Include="Assets\Scripts\AmcTools\ObjectOutline.cs" />
+    <Compile Include="Assets\Scripts\CameraHorizontalMovement.cs" />
+    <Compile Include="Assets\Scripts\CameraRotationalMovement.cs" />
+    <Compile Include="Assets\Scripts\CameraZoomMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\FaceCamera.cs" />
     <Compile Include="Assets\Scripts\GUIHandler.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GuiCard.cs" />
+    <Compile Include="Assets\Scripts\IMovement.cs" />
     <Compile Include="Assets\Scripts\PopupHandler.cs" />
     <Compile Include="Assets\Scripts\SubtopicDescription.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />

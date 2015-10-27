@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CameraController : MonoBehaviour
 {
     public float lookSpeed = 5.0f;
     public float moveSpeed = 1.0f;
+    public float zoomSpeed = 2.0f;
     public float verticalRangeUp = 15f;
     public float verticalRangeDown = 40f;
     public float horizontalRange = 90f;
@@ -15,11 +17,14 @@ public class CameraController : MonoBehaviour
 
 
     private Vector3 originalPos;
+    private List<IMovement> movementSet;
+    private IMovement activeMovement;
 
     // Use this for initialization
     void Start()
     {
         //Cursor.visible = false;	
+        movementSet = new List<IMovement>{ new CameraHorizontalMovement(), new CameraRotationalMovement(), new CameraZoomMovement() };
     }
 
     // Update is called once per frame
@@ -27,41 +32,31 @@ public class CameraController : MonoBehaviour
     {
         //move horizontally and vertically 
         if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
-        {            
-            Camera.main.transform.Translate(new Vector3(Input.GetAxis("Mouse X") * moveSpeed * Time.deltaTime, Input.GetAxis("Mouse Y") * moveSpeed * Time.deltaTime, 0));
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -0.55f, 0.075f), Mathf.Clamp(transform.position.y, 0.29f,0.45f), Mathf.Clamp(transform.position.z,-0.55f, -0.1f));
+        {
+            SetMovement(movementSet[0]);
+            activeMovement.Move(gameObject);
             return; 
         }
 
         //rotate the camera
         if (Input.GetMouseButton(1))
         {
-            //Add mouse axis movement to the rotation
-            horizontalRotation += Input.GetAxis("Mouse X") * lookSpeed;
-            verticalRotation -= Input.GetAxis("Mouse Y") * lookSpeed;
-
-            //keep rotation within allowed limits
-            horizontalRotation = Mathf.Clamp(horizontalRotation, -horizontalRange, horizontalRange);
-            verticalRotation = Mathf.Clamp(verticalRotation, -verticalRangeUp, verticalRangeDown);
-
-            //set the final rotation values.
-            Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+            SetMovement(movementSet[1]);
+            activeMovement.Move(gameObject);
             return;
         }
 
-        //move camera forward or backward
-        float wheelMovement = Input.GetAxis("Mouse ScrollWheel");
-        if (wheelMovement > 0)
+        //Zoom camera towards front
+        if(Input.GetAxis("Mouse ScrollWheel")!=0)
         {
-            Camera.main.transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+            SetMovement(movementSet[2]);
+            activeMovement.Move(gameObject);
         }
-        else if (wheelMovement < 0)
-        {
-            Camera.main.transform.Translate(-Vector3.forward * Time.deltaTime * moveSpeed);
-        }
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -0.55f, 0.075f), Mathf.Clamp(transform.position.y, 0.29f, 0.45f), Mathf.Clamp(transform.position.z, -0.55f, -0.1f));
+    }
 
-
+    void SetMovement(IMovement movement)
+    {
+        activeMovement = movement;
     }
 
     void DisableAnimator()

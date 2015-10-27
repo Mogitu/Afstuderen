@@ -4,8 +4,6 @@ using System.Collections;
 
 public class SubtopicDescription : MonoBehaviour
 {
-
-
     public TextMesh descriptionTxt;
     private GameObject infoObject;
     // Use this for initialization
@@ -28,13 +26,15 @@ public class SubtopicDescription : MonoBehaviour
     void OnMouseEnter()
     {
         Text infoText = infoObject.GetComponentInChildren<Text>();
-        infoText.text = descriptionTxt.text;
+        if(infoText)
+            infoText.text = descriptionTxt.text;
     }
 
 
     void OnMouseExit()
     {
         Text infoText = infoObject.GetComponentInChildren<Text>();
-        infoText.text = "";
+        if(infoText)
+            infoText.text = "";
     }
 }
