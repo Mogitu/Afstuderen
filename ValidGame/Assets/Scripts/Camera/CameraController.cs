@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     {
         //Cursor.visible = false;	
         movementSet = new Dictionary<string,IMovement>(){
-            {"Horizontal", new CameraHorizontalMovement()},
+            {"Horizontal", new CameraDirectionalMovement()},
             {"Rotational", new CameraRotationalMovement()},
             {"Zoom", new CameraZoomMovement()}
         };         

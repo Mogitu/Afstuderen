@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraHorizontalMovement :IMovement {
+public class CameraDirectionalMovement :IMovement {
 
 	public void Move(GameObject gameObject)
     {

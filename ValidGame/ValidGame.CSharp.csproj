@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
     <UnityVersion>5.2.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -70,21 +68,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AmcTools\CameraController.cs" />
-    <Compile Include="Assets\Scripts\AmcTools\ObjectOutline.cs" />
-    <Compile Include="Assets\Scripts\CameraHorizontalMovement.cs" />
-    <Compile Include="Assets\Scripts\CameraRotationalMovement.cs" />
-    <Compile Include="Assets\Scripts\CameraZoomMovement.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraHorizontalMovement.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraRotationalMovement.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraZoomMovement.cs" />
+    <Compile Include="Assets\Scripts\Camera\ObjectOutline.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\FaceCamera.cs" />
-    <Compile Include="Assets\Scripts\GameoverState.cs" />
     <Compile Include="Assets\Scripts\GUIHandler.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\GuiCard.cs" />
     <Compile Include="Assets\Scripts\IMovement.cs" />
-    <Compile Include="Assets\Scripts\PlayingState.cs" />
     <Compile Include="Assets\Scripts\PopupHandler.cs" />
+    <Compile Include="Assets\Scripts\States\GameState.cs" />
+    <Compile Include="Assets\Scripts\States\GameoverState.cs" />
+    <Compile Include="Assets\Scripts\States\PlayingState.cs" />
     <Compile Include="Assets\Scripts\SubtopicDescription.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
   </ItemGroup>
