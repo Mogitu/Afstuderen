@@ -11,18 +11,9 @@ using System.Collections.Generic;
  * Handles all game specific tasks, most tasks can be delegated to individual modules which will be developed later. *  
  **/
 
-public class GameManager : NetworkManager
+public class GameManager : MonoBehaviour
 {
-    public enum GAMESTATE
-    {
-        PLACING,
-        BROWSING,
-        INSPECTING,
-        GAMEOVER,
-    }
-
-    public static GameManager Instance { get; private set; } //Singleton instance
-    public GAMESTATE gameState;
+    public static GameManager Instance { get; private set; } //Singleton instance    
 
     public GameObject goodParticle;
     public GameObject wrongParticle;
@@ -35,12 +26,16 @@ public class GameManager : NetworkManager
     public float cardOffsetY = 0.02f;
     public float contextInfoOffsetY = 0.5f;
 
-    private List<Card> gameCards = new List<Card>();
-    private List<Card> placedCards = new List<Card>();
-    private Card currentCard;
+    public List<Card> gameCards = new List<Card>();
+    public List<Card> placedCards = new List<Card>();
+    public Card currentCard;
     private Animator camAnimator;
     private bool gameStarted;
     private float goodCards = 0;
+  
+    public GameState gameState;
+    public PlayingState playingState = new PlayingState();
+    public GameoverState gameOverState = new GameoverState();
 
     void Awake()
     {
@@ -54,100 +49,26 @@ public class GameManager : NetworkManager
 
     void Start()
     {
-        gameState = GAMESTATE.PLACING;
+        gameState = playingState;
         camAnimator = Camera.main.GetComponent<Animator>();
         SpawnCards();
     }
+   
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (gameCards.Count <= 0 && gameState != gameOverState)
         {
-            chatField.text += chatInput.text + "\n";
-            chatInput.text = "";
-        }
-
-        if (gameCards.Count <= 0 && gameState != GAMESTATE.GAMEOVER)
-        {
-            gameState = GAMESTATE.GAMEOVER;
+            gameState = gameOverState;
             DetermineResults();
         }
-
-        //handle the different gamestates
-        switch (gameState)
-        {
-            case GAMESTATE.PLACING:
-                HandlePlacing();
-                break;
-            case GAMESTATE.BROWSING:
-                HandleBrowsing();
-                break;
-            case GAMESTATE.INSPECTING:
-                HandleInspecting();
-                break;
-            case GAMESTATE.GAMEOVER:
-                HandleGameOver();
-                break;
-        }
-    }
-
-    private void HandlePlacing()
-    {
-        //make current card follow the cursor
-        if (currentCard != null)
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                Transform objectHit = hit.transform;
-                Vector3 newPos = hit.point;
-                newPos.y += cardOffsetY;
-                currentCard.transform.position = newPos;
-
-                //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
-                if (objectHit.gameObject.tag == "ValidTopic")
-                {
-                    SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
-                    //place card
-                    if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.occupied)
-                    {
-
-
-                        currentCard.transform.position = topicMatcher.transform.position;
-                        currentCard.transform.parent = topicMatcher.transform;
-                        topicMatcher.occupied = true;
-                        gameCards.Remove(currentCard);
-                        placedCards.Add(currentCard);
-                        currentCard = null;
-                    }
-                }
-            }
-        }
-        else if (currentCard == null)
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (Input.GetMouseButtonDown(0) && hit.transform.gameObject.tag == "ValidCard")
-                {
-                    Transform objectHit = hit.transform;
-                    SubtopicMatcher tm = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
-                    tm.occupied = false;
-                    currentCard = hit.transform.gameObject.GetComponent<Card>();
-                    currentCard.transform.parent = null;
-                    gameCards.Add(currentCard);
-                    placedCards.Remove(currentCard);
-                    
-                }
-            }
-        }
-    }
+        gameState.UpdateState(gameObject);            
+    }    
 
     private void HandleInspecting()
     {
+        
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
@@ -164,18 +85,9 @@ public class GameManager : NetworkManager
             }
         }
         contextInfoObject.SetActive(false);
+        
     }
 
-    private void HandleBrowsing()
-    {
-
-    }
-
-    private void HandleGameOver()
-    {
-
-
-    }
 
     private void DetermineResults()
     {
@@ -198,12 +110,7 @@ public class GameManager : NetworkManager
             }
         }
     }
-
-    private void HandleChat()
-    {
-
-    }
-
+  
     public void DisableEnableScripts(GameObject gameObject, bool status)
     {
         MonoBehaviour[] scripts = gameObject.GetComponentsInChildren<MonoBehaviour>();
@@ -239,17 +146,7 @@ public class GameManager : NetworkManager
             }
         }
         return null;
-    }
-
-    public void PlaceCard()
-    {
-
-    }
-
-    public void PickupCard()
-    {
-
-    }
+    }  
 
     public string GetResultString()
     {
@@ -262,7 +159,7 @@ public class GameManager : NetworkManager
         GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, true);
         currentCard = GetCard(code);
         currentCard.gameObject.SetActive(true);
-        gameState = GAMESTATE.PLACING;
+        //gameState = GAMESTATE.PLACING;
     }
 
     public void StartPractice()
@@ -271,21 +168,8 @@ public class GameManager : NetworkManager
         popupHandler.Show("Practice");
     }
 
-    public void JoinGame()
-    {
-        networkAddress = ipAdress.text;
-        StartClient();
-        Network.Connect(ipAdress.text, 7777);
-        RunAnimation();
-        popupHandler.Show("Joining game");
-    }
+    
 
-    public void HostGame()
-    {
-        StartHost();
-        RunAnimation();
-        popupHandler.Show("Hosting game");
-    }
 
     public void RunAnimation()
     {

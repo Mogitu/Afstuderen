@@ -14,17 +14,19 @@ public class CameraController : MonoBehaviour
     public float horizontalRotation = 0;
     public float maxDistanceHorizontal = 0.3f;
     public float maxVerticalDistance = 0.15f;
-
-
-    private Vector3 originalPos;
-    private List<IMovement> movementSet;
+    
+    private Dictionary<string, IMovement> movementSet;
     private IMovement activeMovement;
 
     // Use this for initialization
     void Start()
     {
         //Cursor.visible = false;	
-        movementSet = new List<IMovement>{ new CameraHorizontalMovement(), new CameraRotationalMovement(), new CameraZoomMovement() };
+        movementSet = new Dictionary<string,IMovement>(){
+            {"Horizontal", new CameraHorizontalMovement()},
+            {"Rotational", new CameraRotationalMovement()},
+            {"Zoom", new CameraZoomMovement()}
+        };         
     }
 
     // Update is called once per frame
@@ -33,30 +35,28 @@ public class CameraController : MonoBehaviour
         //move horizontally and vertically 
         if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
         {
-            SetMovement(movementSet[0]);
-            activeMovement.Move(gameObject);
+            SetMovement(movementSet["Horizontal"]);           
             return; 
         }
 
         //rotate the camera
         if (Input.GetMouseButton(1))
         {
-            SetMovement(movementSet[1]);
-            activeMovement.Move(gameObject);
+            SetMovement(movementSet["Rotational"]);            
             return;
         }
 
         //Zoom camera towards front
         if(Input.GetAxis("Mouse ScrollWheel")!=0)
         {
-            SetMovement(movementSet[2]);
-            activeMovement.Move(gameObject);
+            SetMovement(movementSet["Zoom"]);            
         }
     }
 
     void SetMovement(IMovement movement)
     {
         activeMovement = movement;
+        activeMovement.Move(gameObject);
     }
 
     void DisableAnimator()
@@ -64,7 +64,6 @@ public class CameraController : MonoBehaviour
         Animator anim = GetComponent<Animator>();
         anim.enabled = false;
         horizontalRotation = transform.rotation.y;
-        verticalRotation = 26;//transform.rotation.x;            
-        originalPos = transform.position;
+        verticalRotation = 26;//transform.rotation.x;              
     }
 }

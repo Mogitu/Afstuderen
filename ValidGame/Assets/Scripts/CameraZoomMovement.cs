@@ -3,7 +3,6 @@
 
 public class CameraZoomMovement : IMovement
 {
-
     public void Move(GameObject gameObject)
     {
         CameraController cont = gameObject.GetComponent<CameraController>();

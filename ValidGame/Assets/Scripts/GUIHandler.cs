@@ -34,8 +34,6 @@ public class GUIHandler : MonoBehaviour
         int col = 0;
         for (int i = 0; i < cards.Length; i++)
         {
-
-
             GuiCard obj = Instantiate(cards[i]);
             obj.transform.SetParent(cardPanelContent.transform);
             Vector3 newPos = obj.transform.parent.transform.position;
@@ -54,14 +52,12 @@ public class GUIHandler : MonoBehaviour
                 offSetY -= 200;
                 offSetX = -225;
             }
-
-
         }
     }
 
     public void Update()
     {
-        if (GameManager.Instance.gameState == GameManager.GAMESTATE.GAMEOVER)
+        if (GameManager.Instance.gameState == GameManager.Instance.gameOverState)
         {
             gameOverPanel.SetActive(true);
             gameMenu.SetActive(false);
@@ -79,42 +75,19 @@ public class GUIHandler : MonoBehaviour
         infoBar.SetActive(true);
         GameManager.Instance.StartPractice();
     }
-
-    public void ClickMultiPlayer()
-    {
-        mainMenu.SetActive(false);
-        mainSingleMenu.SetActive(false);
-        mainMultiMenu.SetActive(true);
-    }
-
-    public void ClickHost()
-    {
-        mainMenu.SetActive(false);
-        gameMenu.SetActive(true);
-        mainMultiMenu.SetActive(false);
-    }
-
-    public void ClickJoin()
-    {
-        mainMenu.SetActive(false);
-        gameMenu.SetActive(true);
-        mainMultiMenu.SetActive(false);
-        GameManager.Instance.JoinGame();
-    }
+   
 
     public void ShowCards()
     {
         if (cardPanel.activeSelf)
         {
             cardPanel.SetActive(false);
-            GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, true);
-            GameManager.Instance.gameState = GameManager.GAMESTATE.PLACING;
+            GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, true);          
         }
         else
         {
             cardPanel.SetActive(true);
-            GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, false);
-            GameManager.Instance.gameState = GameManager.GAMESTATE.BROWSING;
+            GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, false);           
         }
     }
 
