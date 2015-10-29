@@ -14,7 +14,6 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; } //Singleton instance    
-
     public GameObject goodParticle;
     public GameObject wrongParticle;
     public PopupHandler popupHandler;
@@ -34,8 +33,8 @@ public class GameManager : MonoBehaviour
     private float goodCards = 0;
   
     public GameState gameState;
-    public PlayingState playingState = new PlayingState();
-    public GameoverState gameOverState = new GameoverState();
+    public PlayingState playingState;
+    public GameoverState gameOverState;
 
     void Awake()
     {
@@ -49,6 +48,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        playingState = new PlayingState(Instance);
+        gameOverState = new GameoverState(Instance);
         gameState = playingState;
         camAnimator = Camera.main.GetComponent<Animator>();
         SpawnCards();
@@ -63,12 +64,11 @@ public class GameManager : MonoBehaviour
             gameState = gameOverState;
             DetermineResults();
         }
-        gameState.UpdateState(gameObject);            
+        gameState.UpdateState();            
     }    
 
     private void HandleInspecting()
-    {
-        
+    {        
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
@@ -84,10 +84,8 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
-        contextInfoObject.SetActive(false);
-        
+        contextInfoObject.SetActive(false);        
     }
-
 
     private void DetermineResults()
     {

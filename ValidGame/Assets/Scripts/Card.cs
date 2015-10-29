@@ -4,6 +4,8 @@ using System.Collections;
 public class Card : MonoBehaviour {
 
     public string matchCode;
+    public Material mat;
+    public TextMesh txtMesh;
 	// Use this for initialization
 	void Start () {
 	    

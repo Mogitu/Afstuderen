@@ -3,15 +3,15 @@
 
 public class PlayingState:GameState
 {
-    public PlayingState()
-    {
-
-    }
-    public override void UpdateState(GameObject gameObject)
+    public PlayingState(GameManager manager):base(manager)
     {
         
+        
+    }
+    public override void UpdateState()
+    {        
        //make current card follow the cursor
-       if (GameManager.Instance.currentCard != null)
+       if (gameManager.currentCard != null)
        {
            RaycastHit hit;
            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -19,8 +19,8 @@ public class PlayingState:GameState
            {
                Transform objectHit = hit.transform;
                Vector3 newPos = hit.point;
-               newPos.y += GameManager.Instance.cardOffsetY;
-               GameManager.Instance.currentCard.transform.position = newPos;
+               newPos.y += gameManager.cardOffsetY;
+               gameManager.currentCard.transform.position = newPos;
 
                //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
                if (objectHit.gameObject.tag == "ValidTopic")
@@ -29,17 +29,17 @@ public class PlayingState:GameState
                    //place card
                    if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.occupied)
                    {
-                       GameManager.Instance.currentCard.transform.position = topicMatcher.transform.position;
-                       GameManager.Instance.currentCard.transform.parent = topicMatcher.transform;
+                       gameManager.currentCard.transform.position = topicMatcher.transform.position;
+                       gameManager.currentCard.transform.parent = topicMatcher.transform;
                        topicMatcher.occupied = true;
-                       GameManager.Instance.gameCards.Remove(GameManager.Instance.currentCard);
-                       GameManager.Instance.placedCards.Add(GameManager.Instance.currentCard);
-                       GameManager.Instance.currentCard = null;
+                       gameManager.gameCards.Remove(gameManager.currentCard);
+                       gameManager.placedCards.Add(gameManager.currentCard);
+                       gameManager.currentCard = null;
                    }
                }
            }
        }
-       else if (GameManager.Instance.currentCard == null)
+       else if (gameManager.currentCard == null)
        {
            RaycastHit hit;
            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -50,11 +50,10 @@ public class PlayingState:GameState
                    Transform objectHit = hit.transform;
                    SubtopicMatcher tm = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
                    tm.occupied = false;
-                   GameManager.Instance.currentCard = hit.transform.gameObject.GetComponent<Card>();
-                   GameManager.Instance.currentCard.transform.parent = null;
-                   GameManager.Instance.gameCards.Add(GameManager.Instance.currentCard);
-                   GameManager.Instance.placedCards.Remove(GameManager.Instance.currentCard);
-                    
+                   gameManager.currentCard = hit.transform.gameObject.GetComponent<Card>();
+                   gameManager.currentCard.transform.parent = null;
+                   gameManager.gameCards.Add(gameManager.currentCard);
+                   gameManager.placedCards.Remove(gameManager.currentCard);                    
                }
            }
        }

@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour
     void SetMovement(IMovement movement)
     {
         activeMovement = movement;
-        activeMovement.Move(gameObject);
+        activeMovement.Move(this);
     }
 
     void DisableAnimator()

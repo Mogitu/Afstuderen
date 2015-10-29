@@ -4,10 +4,11 @@
 
 public class GameoverState : GameState
 {
-    public GameoverState() { }
+    public GameoverState(GameManager  manager):base(manager) {       
+    }
 
 
-    public override void UpdateState(GameObject gameObject)
+    public override void UpdateState()
     {
        
     }
