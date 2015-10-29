@@ -4,12 +4,28 @@ using System.Collections;
 public class Card : MonoBehaviour {
 
     public string matchCode;
-    public Material mat;
-    public TextMesh txtMesh;
+    public string title;
+    public string description;
+
+    public TextMesh txtMeshTitle;
+    public TextMesh txtMeshDesc;   
+
 	// Use this for initialization
-	void Start () {
-	    
+	void Start () {       
+
+        txtMeshTitle.text = title;
+        txtMeshDesc.text = description;    
 	}
+
+    public void SetData(string title, string description, string matchCode)
+    {
+        this.title = title;
+        this.description = description;
+
+        txtMeshTitle.text = title;
+        txtMeshDesc.text = description;
+        this.matchCode = matchCode;
+    }
 	
 	// Update is called once per frame
 	void Update () {
