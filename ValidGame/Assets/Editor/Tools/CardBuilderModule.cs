@@ -9,7 +9,8 @@ public class CardBuilderEditor : EditorWindow
     private string matchCodeStr= "A01";
     private bool groupEnabled;
     private bool myBool = true;
-    private float scale = 1.23f;
+    private float scale = 1.0f;
+    private Sprite sprite;
    
     [MenuItem("Valid/Card builder")]
     public static void ShowWindow()
@@ -24,10 +25,12 @@ public class CardBuilderEditor : EditorWindow
         cardTitleStr = EditorGUILayout.TextField("Card title", cardTitleStr);
         cardDescriptionStr = EditorGUILayout.TextField("Card Description", cardDescriptionStr);
         matchCodeStr = EditorGUILayout.TextField("Card Matchcode", matchCodeStr);
-        
+       
+        sprite = (Sprite)EditorGUILayout.ObjectField("Sprite", sprite, typeof(Sprite), false);      
+
         groupEnabled = EditorGUILayout.BeginToggleGroup("Optional Card Settings", groupEnabled);
         myBool = EditorGUILayout.Toggle("Enable Drag", myBool);
-        scale = EditorGUILayout.Slider("Card Scale", scale, -3, 3);
+        scale = EditorGUILayout.Slider("Card Scale", scale, 1, 10);
         EditorGUILayout.EndToggleGroup();
 
         if (GUILayout.Button("Build Card"))
@@ -39,9 +42,11 @@ public class CardBuilderEditor : EditorWindow
     void CreateCard()
     {
         GameObject go = Resources.Load<GameObject>("Tools/card");
-        go.transform.localScale *= scale;
-        Card card = go.GetComponent<Card>();
+        //go.transform.localScale *= scale;
+        CardEdit card = go.GetComponent<CardEdit>();
         card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr);
+        SpriteRenderer spr = card.sprite.GetComponent<SpriteRenderer>();
+        spr.sprite = this.sprite;
         Instantiate(go, Vector3.zero, Quaternion.identity);
     }
 }

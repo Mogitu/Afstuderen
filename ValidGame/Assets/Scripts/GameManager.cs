@@ -16,10 +16,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; } //Singleton instance    
     public GameObject goodParticle;
     public GameObject wrongParticle;
-    public PopupHandler popupHandler;
-    public Text ipAdress;
-    public Text chatField;
-    public InputField chatInput;
+    public PopupHandler popupHandler;   
+   
     public GameObject gameBoard;
     public GameObject contextInfoObject;
     public float cardOffsetY = 0.02f;
@@ -165,9 +163,6 @@ public class GameManager : MonoBehaviour
         RunAnimation();
         popupHandler.Show("Practice");
     }
-
-    
-
 
     public void RunAnimation()
     {
