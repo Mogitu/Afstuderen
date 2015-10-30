@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\States\PlayingState.cs" />
     <Compile Include="Assets\Scripts\SubtopicDescription.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
+    <Compile Include="Assets\Scripts\Timer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\AMC3DText.shader" />

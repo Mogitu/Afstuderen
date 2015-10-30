@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public PlayingState playingState;
     public GameoverState gameOverState;
 
+    private Dictionary<string, Timer>  timers = new Dictionary<string, Timer>();
+
     void Awake()
     {
         if (Instance != null && Instance == this)
@@ -62,7 +64,13 @@ public class GameManager : MonoBehaviour
             gameState = gameOverState;
             DetermineResults();
         }
-        gameState.UpdateState();            
+        gameState.UpdateState();
+
+        // Update all timers
+        foreach (KeyValuePair<string, Timer> entry in timers)
+        {
+            entry.Value.Tick(Time.deltaTime);
+        }
     }    
 
     private void HandleInspecting()
@@ -162,6 +170,54 @@ public class GameManager : MonoBehaviour
     {
         RunAnimation();
         popupHandler.Show("Practice");
+    }
+
+    // ------------------------------------------------------------------------------------------
+    // Name    :    RegisterTimer
+    // Desc    :    Can be called by any object to register a special timer with the game manager
+    //            with the specified name.
+    //    -----------------------------------------------------------------------------------------
+    public void RegisterTimer(string key)
+    {
+        // If a timer with this name does no already exist in
+        // our hash table
+        if (!timers.ContainsKey(key))
+        {
+            // Store the name and the index of the timer in the dictionary table
+            timers.Add(key, new Timer());
+        }
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Name    :    GetTimer
+    // Desc    :    Get value of timer
+    // ------------------------------------------------------------------------------------
+    public float GetTimer(string key)
+    {
+        Timer timer = null;
+
+        // Does a timer exist with the requested name
+        if (timers.TryGetValue(key, out timer))
+        {
+            // Return its time
+            return timer.GetTime();
+        }
+
+        // No timer found
+        return -1.0f;
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Name    :    UpdateTimer
+    // Desc    :   
+    // ------------------------------------------------------------------------------------
+    public void UpdateTimer(string key, float t)
+    {
+        Timer timer;
+        if (timers.TryGetValue(key, out timer))
+        {
+            timer.AddTime(t);
+        }
     }
 
     public void RunAnimation()
