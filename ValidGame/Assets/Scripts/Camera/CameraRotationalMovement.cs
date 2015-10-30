@@ -14,5 +14,6 @@ public class CameraRotationalMovement : IMovement {
         cont.verticalRotation = Mathf.Clamp(cont.verticalRotation, -cont.verticalRangeUp, cont.verticalRangeDown);
         //set the final rotation values.
         Camera.main.transform.localRotation = Quaternion.Euler(cont.verticalRotation, cont.horizontalRotation, 0);
+        
     }
 }

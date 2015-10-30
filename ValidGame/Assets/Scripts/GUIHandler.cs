@@ -28,10 +28,10 @@ public class GUIHandler : MonoBehaviour
 
     private void PopulateCardBrowser()
     {
-        GuiCard[] cards = Resources.LoadAll<GuiCard>("Gamecards/GUI");
+        GuiCard[] cards = Resources.LoadAll<GuiCard>("Gamecards/New/GUI");
         int offSetX = -225;
         int offSetY = 200;
-        int col = 0;
+        int col = 1;
         for (int i = 0; i < cards.Length; i++)
         {
             GuiCard obj = Instantiate(cards[i]);
@@ -46,7 +46,7 @@ public class GUIHandler : MonoBehaviour
             browsableCards.Add(obj);
             col++;
 
-            if (col >= 4)
+            if (col >= 5)
             {
                 col = 1;
                 offSetY -= 200;

@@ -9,7 +9,8 @@ public class PlayingState:GameState
         
     }
     public override void UpdateState()
-    {        
+    {
+        gameManager.Timers["GameTime"].Tick(Time.deltaTime);
        //make current card follow the cursor
        if (gameManager.currentCard != null)
        {
@@ -19,7 +20,7 @@ public class PlayingState:GameState
            {
                Transform objectHit = hit.transform;
                Vector3 newPos = hit.point;
-               newPos.y += gameManager.cardOffsetY;
+               newPos.y += gameManager.cardOffsetY;               
                gameManager.currentCard.transform.position = newPos;
 
                //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
@@ -29,8 +30,11 @@ public class PlayingState:GameState
                    //place card
                    if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.occupied)
                    {
-                       gameManager.currentCard.transform.position = topicMatcher.transform.position;
-                       gameManager.currentCard.transform.parent = topicMatcher.transform;
+                       Vector3 pos = topicMatcher.transform.position;
+                       pos.y +=0.0006f;
+                       gameManager.currentCard.transform.position = pos;
+                       
+                       gameManager.currentCard.transform.parent = topicMatcher.transform;                   
                        topicMatcher.occupied = true;
                        gameManager.gameCards.Remove(gameManager.currentCard);
                        gameManager.placedCards.Add(gameManager.currentCard);
@@ -50,7 +54,7 @@ public class PlayingState:GameState
                    Transform objectHit = hit.transform;
                    SubtopicMatcher tm = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
                    tm.occupied = false;
-                   gameManager.currentCard = hit.transform.gameObject.GetComponent<Card>();
+                   gameManager.currentCard = hit.transform.gameObject.GetComponent<CardEdit>();
                    gameManager.currentCard.transform.parent = null;
                    gameManager.gameCards.Add(gameManager.currentCard);
                    gameManager.placedCards.Remove(gameManager.currentCard);                    

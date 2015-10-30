@@ -1,16 +1,17 @@
 ﻿//C# Example
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardBuilderEditor : EditorWindow
 {
     private string cardTitleStr = "Title";
     private string cardDescriptionStr = "Desc";
     private string matchCodeStr= "A01";
-    private bool groupEnabled;
-    private bool myBool = true;
+    private bool groupEnabled;    
     private float scale = 1.0f;
     private Sprite sprite;
+    private Sprite guiSprite;
    
     [MenuItem("Valid/Card builder")]
     public static void ShowWindow()
@@ -26,13 +27,15 @@ public class CardBuilderEditor : EditorWindow
         cardDescriptionStr = EditorGUILayout.TextField("Card Description", cardDescriptionStr);
         matchCodeStr = EditorGUILayout.TextField("Card Matchcode", matchCodeStr);
        
-        sprite = (Sprite)EditorGUILayout.ObjectField("Sprite", sprite, typeof(Sprite), false);      
+        sprite = (Sprite)EditorGUILayout.ObjectField("Scenery sprite", sprite, typeof(Sprite), false);
+        guiSprite = (Sprite)EditorGUILayout.ObjectField("Browser sprite", guiSprite, typeof(Sprite),false);
 
-        groupEnabled = EditorGUILayout.BeginToggleGroup("Optional Card Settings", groupEnabled);
-        myBool = EditorGUILayout.Toggle("Enable Drag", myBool);
+        groupEnabled = EditorGUILayout.BeginToggleGroup("Optional Card Settings", groupEnabled);   
         scale = EditorGUILayout.Slider("Card Scale", scale, 1, 10);
         EditorGUILayout.EndToggleGroup();
 
+        GUILayout.Label("Building the card creates two objects, place them in the Resources folder", 
+                        EditorStyles.label);
         if (GUILayout.Button("Build Card"))
         {
             CreateCard();
@@ -47,6 +50,17 @@ public class CardBuilderEditor : EditorWindow
         card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr);
         SpriteRenderer spr = card.sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
-        Instantiate(go, Vector3.zero, Quaternion.identity);
+      
+        GameObject newGo = (GameObject)Instantiate(go, Vector3.zero, go.transform.rotation);
+        newGo.name = "SceneCard" + matchCodeStr;
+
+        GameObject go2 = Resources.Load<GameObject>("Tools/guiCard");
+        GuiCard guiCard = go2.GetComponent<GuiCard>();
+        guiCard.matchCode = this.matchCodeStr;
+        Image spr2 = guiCard.GetComponent<Image>();
+        spr2.sprite = guiSprite;
+     
+        GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
+        newGo2.name = "GUICard" + matchCodeStr;
     }
 }

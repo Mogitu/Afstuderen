@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour
     public float score = 0;
     public string scoreText;
 
-    public List<Card> gameCards = new List<Card>();
-    public List<Card> placedCards = new List<Card>();
-    public Card currentCard;
+    public List<CardEdit> gameCards = new List<CardEdit>();
+    public List<CardEdit> placedCards = new List<CardEdit>();
+    public CardEdit currentCard;
     private Animator camAnimator;
     private bool gameStarted;   
   
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         playingState = new PlayingState(Instance);
         gameOverState = new GameoverState(Instance);
         waitingState = new WaitingState(Instance);
-        gameState = playingState;
+        gameState = waitingState;
         camAnimator = Camera.main.GetComponent<Animator>();
         SpawnCards();
     }
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         // Update all timers
         foreach (KeyValuePair<string, Timer> entry in timers)
         {
-            entry.Value.Tick(Time.deltaTime);            
+           // entry.Value.Tick(Time.deltaTime);            
         }        
     }    
   
@@ -83,18 +83,17 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCards()
     {
-        Card[] cards = Resources.LoadAll<Card>("Gamecards/Scene");
+        CardEdit[] cards = Resources.LoadAll<CardEdit>("Gamecards/New/Scene");
         for (int i = 0; i < cards.Length; i++)
         {
-            Card card = cards[i];
-
+            CardEdit card = cards[i];
             card = Instantiate(card);
             card.gameObject.SetActive(false);
             gameCards.Add(card);
         }
     }
 
-    public Card GetCard(string code)
+    public CardEdit GetCard(string code)
     {
         if (gameCards.Count > 0)
         {
@@ -107,22 +106,20 @@ public class GameManager : MonoBehaviour
             }
         }
         return null;
-    }  
-
-   
+    }     
 
     public void SelectCard(string code)
     {
         GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, true);
         currentCard = GetCard(code);
-        currentCard.gameObject.SetActive(true);
-        //gameState = GAMESTATE.PLACING;
+        currentCard.gameObject.SetActive(true);       
     }
 
     public void StartPractice()
     {
         RunAnimation();
         popupHandler.Show("Practice");
+        gameState = playingState;
     }
 
     // ------------------------------------------------------------------------------------------
