@@ -16,7 +16,7 @@ public class Timer
     {
         timer=0.0f;
     }
-
+   
     // ------------------------------------------------------------------------------
     // Name    :    Tick
     // Desc    :    Perform an update of the timer by passing the number of seconds
@@ -26,7 +26,7 @@ public class Timer
     {
         // Decrement timer by seconds passed
         timer -= seconds;
-
+        
         // Clamp to zero
         if (timer<0.0f) timer = 0.0f;
     }

@@ -56,8 +56,13 @@ public class PlayingState:GameState
                    gameManager.placedCards.Remove(gameManager.currentCard);                    
                }
            }
+       }      
+       if((gameManager.GetTimer("GameTime")<=0) || (gameManager.gameCards.Count <= 0)){
+           gameManager.gameState = gameManager.gameOverState;
        }
-        
+       gameManager.timerText.text =  Mathf.FloorToInt(gameManager.Timers["GameTime"].GetTime()).ToString();
     }
+
+    
 }
 

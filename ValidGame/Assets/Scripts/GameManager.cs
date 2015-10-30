@@ -16,25 +16,27 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; } //Singleton instance    
     public GameObject goodParticle;
     public GameObject wrongParticle;
-    public PopupHandler popupHandler;   
+    public PopupHandler popupHandler;
+    public Text timerText;
+    public float maxGameTime=60.0f;
+    public float cardOffsetY = 0.2f;
    
     public GameObject gameBoard;
-    public GameObject contextInfoObject;
-    public float cardOffsetY = 0.02f;
-    public float contextInfoOffsetY = 0.5f;
+    public float score = 0;
+    public string scoreText;
 
     public List<Card> gameCards = new List<Card>();
     public List<Card> placedCards = new List<Card>();
     public Card currentCard;
     private Animator camAnimator;
-    private bool gameStarted;
-    private float goodCards = 0;
+    private bool gameStarted;   
   
     public GameState gameState;
     public PlayingState playingState;
     public GameoverState gameOverState;
+    public WaitingState waitingState;
 
-    private Dictionary<string, Timer>  timers = new Dictionary<string, Timer>();
+    private Dictionary<string, Timer> timers = new Dictionary<string, Timer>();   
 
     void Awake()
     {
@@ -48,8 +50,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        RegisterTimer("GameTime");
+        UpdateTimer("GameTime", maxGameTime);
         playingState = new PlayingState(Instance);
         gameOverState = new GameoverState(Instance);
+        waitingState = new WaitingState(Instance);
         gameState = playingState;
         camAnimator = Camera.main.GetComponent<Animator>();
         SpawnCards();
@@ -58,62 +63,14 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (gameCards.Count <= 0 && gameState != gameOverState)
-        {
-            gameState = gameOverState;
-            DetermineResults();
-        }
+    {      
         gameState.UpdateState();
-
         // Update all timers
         foreach (KeyValuePair<string, Timer> entry in timers)
         {
-            entry.Value.Tick(Time.deltaTime);
-        }
+            entry.Value.Tick(Time.deltaTime);            
+        }        
     }    
-
-    private void HandleInspecting()
-    {        
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
-        {
-            contextInfoObject.SetActive(true);
-            Transform objectHit = hit.transform;
-            Vector3 newPos = hit.point;
-
-            if (objectHit.gameObject.tag == "ValidCard")
-            {
-                newPos.y += cardOffsetY;
-                contextInfoObject.transform.position = newPos;
-                return;
-            }
-        }
-        contextInfoObject.SetActive(false);        
-    }
-
-    private void DetermineResults()
-    {
-        Card[] cards = FindObjectsOfType<Card>();
-        for (int i = 0; i < cards.Length; i++)
-        {
-            SubtopicMatcher matcher = cards[i].GetComponentInParent<SubtopicMatcher>();
-            if (matcher && matcher.matchCode == cards[i].matchCode)
-            {
-                GameObject go = Instantiate(goodParticle) as GameObject;
-                go.transform.position = cards[i].transform.position;
-                cards[i].GetComponent<Renderer>().material.color = Color.green;
-                goodCards++;
-            }
-            else
-            {
-                GameObject go = Instantiate(wrongParticle) as GameObject;
-                go.transform.position = cards[i].transform.position;
-                cards[i].GetComponent<Renderer>().material.color = Color.red;
-            }
-        }
-    }
   
     public void DisableEnableScripts(GameObject gameObject, bool status)
     {
@@ -152,11 +109,7 @@ public class GameManager : MonoBehaviour
         return null;
     }  
 
-    public string GetResultString()
-    {
-        float grade = Mathf.Ceil(goodCards / 6 * 100);
-        return "With " + (6 - goodCards) + " errors you score: \n" + grade.ToString() + "%";
-    }
+   
 
     public void SelectCard(string code)
     {
@@ -224,4 +177,10 @@ public class GameManager : MonoBehaviour
     {
         camAnimator.SetBool("GameStarted", true);
     }
+
+    public Dictionary<string, Timer> Timers
+    {
+        get { return timers; }
+        set { timers = value; }
+    }    
 }

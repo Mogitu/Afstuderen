@@ -58,12 +58,13 @@ public class GUIHandler : MonoBehaviour
     public void Update()
     {
         if (GameManager.Instance.gameState == GameManager.Instance.gameOverState)
-        {
+        {            
             gameOverPanel.SetActive(true);
             gameMenu.SetActive(false);
             infoBar.SetActive(false);
             cardButton.SetActive(false);
-            resultText.text = GameManager.Instance.GetResultString();
+            resultText.text = GameManager.Instance.scoreText;   
+           // GameManager.Instance.gameState = GameManager.Instance.waitingState;
         }
     }
 

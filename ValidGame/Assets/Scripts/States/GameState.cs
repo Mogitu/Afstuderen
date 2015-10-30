@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class GameState {
+public abstract class GameState{
 
     protected GameManager gameManager;
 
