@@ -34,7 +34,7 @@ public class CardBuilderEditor : EditorWindow
         scale = EditorGUILayout.Slider("Card Scale", scale, 1, 10);
         EditorGUILayout.EndToggleGroup();
 
-        GUILayout.Label("Building the card creates two objects, place them in the Resources folder", 
+        GUILayout.Label("Building the card creates two objects in the resources folder.", 
                         EditorStyles.label);
         if (GUILayout.Button("Build Card"))
         {
@@ -51,8 +51,10 @@ public class CardBuilderEditor : EditorWindow
         SpriteRenderer spr = card.sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
       
-        GameObject newGo = (GameObject)Instantiate(go, Vector3.zero, go.transform.rotation);
-        newGo.name = "SceneCard" + matchCodeStr;
+        //GameObject newGo = (GameObject)Instantiate(go, Vector3.zero, go.transform.rotation);
+        go.name = "SceneCard" + matchCodeStr;
+
+        PrefabUtility.CreatePrefab("Assets/Resources/GameCards/new/Scene/" + go.name + ".prefab", go);
 
         GameObject go2 = Resources.Load<GameObject>("Tools/guiCard");
         GuiCard guiCard = go2.GetComponent<GuiCard>();
@@ -60,7 +62,10 @@ public class CardBuilderEditor : EditorWindow
         Image spr2 = guiCard.GetComponent<Image>();
         spr2.sprite = guiSprite;
      
-        GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
-        newGo2.name = "GUICard" + matchCodeStr;
+
+        //GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
+        go2.name = "GUICard" + matchCodeStr;
+        PrefabUtility.CreatePrefab("Assets/Resources/GameCards/new/GUI/"+go2.name+".prefab", go2);
+       
     }
 }
