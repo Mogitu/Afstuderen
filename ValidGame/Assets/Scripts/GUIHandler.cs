@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using AMCTools;
 
 
 public class GUIHandler : MonoBehaviour
@@ -28,13 +29,13 @@ public class GUIHandler : MonoBehaviour
 
     private void PopulateCardBrowser()
     {
-        GuiCard[] cards = Resources.LoadAll<GuiCard>("Gamecards/New/GUI");
+        GuiCard[] cards = FindObjectsOfType<GuiCard>();//Resources.LoadAll<GuiCard>("Gamecards/New/GUI");
         int offSetX = -225;
         int offSetY = 200;
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
         {
-            GuiCard obj = Instantiate(cards[i]);
+            GuiCard obj = cards[i];
             obj.transform.SetParent(cardPanelContent.transform);
             Vector3 newPos = obj.transform.parent.transform.position;
             newPos.x += offSetX;

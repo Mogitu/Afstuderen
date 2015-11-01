@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
+using AMCTools;
 
 
 /**
@@ -83,11 +84,10 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCards()
     {
-        CardEdit[] cards = Resources.LoadAll<CardEdit>("Gamecards/New/Scene");
+        CardEdit[] cards = FindObjectsOfType<CardEdit>();//Resources.LoadAll<CardEdit>("Gamecards/New/Scene");
         for (int i = 0; i < cards.Length; i++)
         {
-            CardEdit card = cards[i];
-            card = Instantiate(card);
+            CardEdit card = cards[i];            
             card.gameObject.SetActive(false);
             gameCards.Add(card);
         }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using AMCTools;
 
 
 public class PlayingState:GameState
@@ -14,6 +15,9 @@ public class PlayingState:GameState
        //make current card follow the cursor
        if (gameManager.currentCard != null)
        {
+           gameManager.currentCard.transform.position = new Vector3(gameManager.currentCard.transform.position.x,
+                                                                     0.0250f,
+                                                                     gameManager.currentCard.transform.position.z);
            RaycastHit hit;
            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
            if (Physics.Raycast(ray, out hit))
