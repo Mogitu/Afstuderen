@@ -1,19 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Card : MonoBehaviour {
+namespace AMCTools
+{
+    public class Card : MonoBehaviour
+    {
+        public string matchCode;
+        public string title;
+        public string description;
 
-    public string matchCode;
- 
+        public SpriteRenderer sprite;
+        public TextMesh txtMeshTitle;
+        public TextMesh txtMeshDesc;
 
-	// Use this for initialization
-	void Start () {      
+        // Use this for initialization
+        void Start()
+        {
+            txtMeshTitle.text = title;
+            txtMeshDesc.text = description;
+        }
 
-           
-	}
-   
-	// Update is called once per frame
-	void Update () {
-	
-	}
+        //Set needed properties
+        public void SetData(string title, string description, string matchCode)
+        {
+            this.title = title;
+            this.description = description;
+            txtMeshTitle.text = title;
+            txtMeshDesc.text = description;
+            this.matchCode = matchCode;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+    }
 }
+

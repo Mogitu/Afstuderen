@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public interface IMovement{
-
-    void Move(CameraController cont);
+namespace VALIDGame
+{
+    public interface IMovement
+    {
+        void Move(CameraController cont);
+    }
 }

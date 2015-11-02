@@ -8,45 +8,64 @@ namespace AMCTools
     public class CardBuilderEditor : EditorWindow
     {
         private string cardTitleStr = "Title";
-        private string cardDescriptionStr = "Desc";
-        private string matchCodeStr = "A01";
-        private bool groupEnabled;
-        private string path = "";
+        private string cardDescriptionStr = "Placeholder description";
+        private string matchCodeStr = "1a";
+        private bool groupEnabled;      
 
         private Sprite sprite;
         private Sprite guiSprite;
 
-        [MenuItem("Valid/Card builder")]
+        private Texture text;
+
+        [MenuItem("AMC Centre/Tools/VALID/Card builder")]
         public static void ShowWindow()
         {
             //Show existing window instance. If one doesn't exist, make one.
-            EditorWindow.GetWindow(typeof(CardBuilderEditor));
+            EditorWindow.GetWindow(typeof(CardBuilderEditor),false, "Card builder");            
         }
 
         void OnGUI()
         {
             GUILayout.Label("Basic Card Settings", EditorStyles.boldLabel);
             cardTitleStr = EditorGUILayout.TextField("Card title", cardTitleStr);
-            cardDescriptionStr = EditorGUILayout.TextField("Card Description", cardDescriptionStr);
+
+            GUILayout.Label("Description", EditorStyles.label);
+            cardDescriptionStr = EditorGUILayout.TextArea(cardDescriptionStr, GUILayout.Height(100));
             matchCodeStr = EditorGUILayout.TextField("Card Matchcode", matchCodeStr);
 
             sprite = (Sprite)EditorGUILayout.ObjectField("Scenery sprite", sprite, typeof(Sprite), false);
-            guiSprite = (Sprite)EditorGUILayout.ObjectField("Browser sprite", guiSprite, typeof(Sprite), false);
-
-            groupEnabled = EditorGUILayout.BeginToggleGroup("Optional Card Settings", groupEnabled);
-            if (GUILayout.Button("Save"))
-            {
-                path = EditorUtility.SaveFolderPanel("Save textures to directory", "", "");
-            }
-            EditorGUILayout.EndToggleGroup();
-
-            GUILayout.Label("Building the card creates two objects in the resources folder.",
+            guiSprite = (Sprite)EditorGUILayout.ObjectField("Browser sprite", guiSprite, typeof(Sprite), false);                                    
+               
+            /**
+            EditorGUILayout.BeginVertical();
+            EditorGUI.DrawPreviewTexture(new Rect(new Vector2(0,300), new Vector2(800, 800)),AssetPreview.GetAssetPreview(PreviewObject().gameObject),PreviewObject().GetComponent<Renderer>().sharedMaterial);
+            EditorGUILayout.EndVertical();            
+            
+            GUILayout.Label("Building the card places 2 objects below the cards object in the scene, \n if this object does not exist it will be created.",
                             EditorStyles.label);
-
+             * 
+             */
             if (GUILayout.Button("Build Card"))
             {
                 CreateCard();
             }
+        }
+
+        private Card PreviewObject()
+        {
+            GameObject parent = GameObject.Find("Cards");
+            if (!parent)
+            {
+                parent = new GameObject();
+                parent.name = "Cards";
+            }
+            GameObject go = Resources.Load<GameObject>("card");
+            Card card = go.GetComponent<Card>();
+            card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr);
+            SpriteRenderer spr = card.sprite.GetComponent<SpriteRenderer>();
+            spr.sprite = this.sprite;
+            go.transform.rotation = Quaternion.identity;
+            return card;
         }
 
         void CreateCard()
@@ -56,36 +75,25 @@ namespace AMCTools
             {
                 parent = new GameObject();
                 parent.name = "Cards";
-            }          
-            Debug.Log(path);
-            GameObject go = Resources.Load<GameObject>("Tools/card");
-            //go.transform.localScale *= scale;
-            CardEdit card = go.GetComponent<CardEdit>();
+            }                 
+            GameObject go = Resources.Load<GameObject>("card");         
+            Card card = go.GetComponent<Card>();
             card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr);
             SpriteRenderer spr = card.sprite.GetComponent<SpriteRenderer>();
             spr.sprite = this.sprite;
 
-            GameObject go2 = Resources.Load<GameObject>("Tools/guiCard");
+            GameObject go2 = Resources.Load<GameObject>("guiCard");
             GuiCard guiCard = go2.GetComponent<GuiCard>();
             guiCard.matchCode = this.matchCodeStr;
             Image spr2 = guiCard.GetComponent<Image>();
             spr2.sprite = guiSprite;
-
-            if (path.Length != 0)
-            {
-                go.name = "SceneCard" + matchCodeStr;
-                PrefabUtility.CreatePrefab("Assets/" + go.name + ".prefab", go);
-
-                go2.name = "GUICard" + matchCodeStr;
-                PrefabUtility.CreatePrefab(path + go2.name + ".prefab", go2);
-            }
-            else
-            {
-                GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
-                newGo2.transform.parent = parent.transform;
-                GameObject newGo = (GameObject)Instantiate(go, Vector3.zero, go.transform.rotation);
-                newGo.transform.parent = parent.transform;
-            }
+            go.name = "SceneCard" + matchCodeStr;
+            go2.name = "GUICard" + matchCodeStr;
+                 
+            GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
+            newGo2.transform.SetParent(parent.transform,false);
+            GameObject newGo = (GameObject)Instantiate(go, Vector3.zero, go.transform.rotation);
+            newGo.transform.SetParent(parent.transform,false);            
         }
     }
 }
