@@ -6,13 +6,10 @@ namespace VALIDGame
     public class PlayingState : GameState
     { 
         public PlayingState(GameManager manager)
-            : base(manager)
-        {
-
-
+            : base(manager){
         }
 
-        //TODO: Replace pos.y offset for inspector property.
+        //TODO: Replace pos.y offset for inspector property, remove hardcoded values.
         public override void UpdateState()
         {           
             gameManager.Timers["GameTime"].Tick(Time.deltaTime);
@@ -41,7 +38,6 @@ namespace VALIDGame
                             Vector3 pos = topicMatcher.transform.position;
                             pos.y += 0.0006f;
                             gameManager.currentCard.transform.position = pos;
-
                             gameManager.currentCard.transform.parent = topicMatcher.transform;
                             topicMatcher.occupied = true;
                             gameManager.cardCollection.Remove(gameManager.currentCard);
@@ -73,7 +69,9 @@ namespace VALIDGame
             {
                 gameManager.gameState = gameManager.gameOverState;
             }
-            gameManager.timerText.text = Mathf.FloorToInt(gameManager.Timers["GameTime"].GetTime()).ToString();
+            int minute = (int)Mathf.Abs(gameManager.Timers["GameTime"].GetTime()/60);
+            int seconds = (int)gameManager.Timers["GameTime"].GetTime() % 60;
+            gameManager.timerText.text = minute.ToString()+":"+seconds.ToString();           
         }
     }
 }

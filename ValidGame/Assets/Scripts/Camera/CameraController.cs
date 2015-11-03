@@ -34,7 +34,7 @@ namespace VALIDGame
         void Update()
         {
             //move horizontally and vertically 
-            if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
+            if ((Input.GetMouseButton(0) && Input.GetMouseButton(1)) || Input.GetMouseButton(2))
             {
                 SetMovement(movementSet["Horizontal"]);
                 return;

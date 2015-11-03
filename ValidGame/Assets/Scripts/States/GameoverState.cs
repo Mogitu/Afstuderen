@@ -8,8 +8,7 @@ namespace VALIDGame
         private int goodCards = 0;
 
         public GameoverState(GameManager manager)
-            : base(manager)
-        {
+            : base(manager){
         }
 
         public override void UpdateState()
@@ -51,7 +50,7 @@ namespace VALIDGame
                     gameManager.placedCards[i].GetComponent<Renderer>().material.color = Color.red;
                 }
             }
-            gameManager.score = Mathf.Ceil(goodCards * 100 + (goodCards * 100 * gameManager.GetTimer("GameTime")));
+            gameManager.score = Mathf.Ceil(goodCards * 2 + (goodCards * 2 * gameManager.GetTimer("GameTime")));
             gameManager.scoreText = GetResultString(gameManager.score);
         }
 
