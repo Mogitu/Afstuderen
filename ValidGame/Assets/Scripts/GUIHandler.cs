@@ -65,8 +65,7 @@ namespace VALIDGame
                 gameMenu.SetActive(false);
                 infoBar.SetActive(false);
                 cardButton.SetActive(false);
-                resultText.text = GameManager.Instance.scoreText;
-                // GameManager.Instance.gameState = GameManager.Instance.waitingState;
+                resultText.text = GameManager.Instance.scoreText;            
             }
         }
 
@@ -106,7 +105,6 @@ namespace VALIDGame
         {
             Application.LoadLevel("GameScene");
         }
-
 
         public void QuitGame()
         {

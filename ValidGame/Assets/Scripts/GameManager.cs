@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using AMCTools;
 
-
 /**
  * PRELIMINARY GAMEMANAGER:
  * Handles all game specific tasks, most tasks can be delegated to individual modules which will be developed later. *  
@@ -22,43 +21,43 @@ namespace VALIDGame
         public Text timerText;
         public float maxGameTime = 60.0f;
         public float cardOffsetY = 0.2f;
-
-        public GameObject gameBoard;
-        public float score = 0;
-        public string scoreText;
-
-        public List<Card> gameCards = new List<Card>();
-        public List<Card> placedCards = new List<Card>();
-        public Card currentCard;
-        private Animator camAnimator;
-        private bool gameStarted;
-
         public GameState gameState;
         public PlayingState playingState;
         public GameoverState gameOverState;
         public WaitingState waitingState;
 
+        public GameObject gameBoard;
+        public float score = 0;
+        public string scoreText;
+
+        public List<Card> cardCollection = new List<Card>();
+        public List<Card> placedCards = new List<Card>();
+        public Card currentCard;
+        
+        private bool gameStarted;    
+
         private Dictionary<string, Timer> timers = new Dictionary<string, Timer>();
 
+        //Awake always gets called first upon sceneload and activation etc.
+        //We make sure there can be only one manager in the scene.
         void Awake()
         {
             if (Instance != null && Instance == this)
             {
                 Destroy(gameObject);
             }
-            Instance = this;            
+            Instance = this;
+            playingState = new PlayingState(Instance);
+            gameOverState = new GameoverState(Instance);
+            waitingState = new WaitingState(Instance);
         }
 
         void Start()
         {
             RegisterTimer("GameTime");
-            UpdateTimer("GameTime", maxGameTime);
-            playingState = new PlayingState(Instance);
-            gameOverState = new GameoverState(Instance);
-            waitingState = new WaitingState(Instance);
-            gameState = waitingState;
-            camAnimator = Camera.main.GetComponent<Animator>();
-            SpawnCards();
+            UpdateTimer("GameTime", maxGameTime);      
+            gameState = waitingState;          
+            CollectCards();            
         }
 
 
@@ -75,6 +74,7 @@ namespace VALIDGame
              * */
         }
 
+        //Disable/enable all attached monobehaviours on an object.
         public void DisableEnableScripts(GameObject gameObject, bool status)
         {
             MonoBehaviour[] scripts = gameObject.GetComponentsInChildren<MonoBehaviour>();
@@ -84,32 +84,36 @@ namespace VALIDGame
             }
         }
 
-        private void SpawnCards()
+        //Collects all cards that are created in the scene by the builder module and add them to the card collection.
+        private void CollectCards()
         {
-            Card[] cards = FindObjectsOfType<Card>();//Resources.LoadAll<CardEdit>("Gamecards/New/Scene");
+            Card[] cards = FindObjectsOfType<Card>();
             for (int i = 0; i < cards.Length; i++)
             {
                 Card card = cards[i];
                 card.gameObject.SetActive(false);
-                gameCards.Add(card);
+                cardCollection.Add(card);
             }
         }
 
+        //retreives the first card with the matching code
+        //TODO: currently does not account for multiple cards with the same match code; the first one is always returned.
         public Card GetCard(string code)
         {
-            if (gameCards.Count > 0)
+            if (cardCollection.Count > 0)
             {
-                for (int i = 0; i < gameCards.Count; i++)
+                for (int i = 0; i < cardCollection.Count; i++)
                 {
-                    if (gameCards[i].matchCode == code)
+                    if (cardCollection[i].matchCode == code)
                     {
-                        return gameCards[i];
+                        return cardCollection[i];
                     }
                 }
             }
             return null;
         }
 
+        //Executed by the gui handler to pick the current selected card in the card browser.
         public void SelectCard(string code)
         {
             GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, true);
@@ -117,6 +121,7 @@ namespace VALIDGame
             currentCard.gameObject.SetActive(true);
         }
 
+        //Start singleplayer practice
         public void StartPractice()
         {
             RunAnimation();
@@ -147,14 +152,12 @@ namespace VALIDGame
         public float GetTimer(string key)
         {
             Timer timer = null;
-
             // Does a timer exist with the requested name
             if (timers.TryGetValue(key, out timer))
             {
                 // Return its time
                 return timer.GetTime();
             }
-
             // No timer found
             return -1.0f;
         }
@@ -174,7 +177,7 @@ namespace VALIDGame
 
         public void RunAnimation()
         {
-            camAnimator.SetBool("GameStarted", true);
+            Camera.main.GetComponent<Animator>().SetBool("GameStarted", true);
         }
 
         public Dictionary<string, Timer> Timers

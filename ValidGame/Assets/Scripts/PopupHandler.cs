@@ -6,7 +6,6 @@ namespace VALIDGame
 {
     public class PopupHandler : MonoBehaviour
     {
-
         private Text texty;
         public float duration;
         private bool running;

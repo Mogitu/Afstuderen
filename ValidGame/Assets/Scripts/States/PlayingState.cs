@@ -5,7 +5,6 @@ namespace VALIDGame
 {
     public class PlayingState : GameState
     { 
-
         public PlayingState(GameManager manager)
             : base(manager)
         {
@@ -45,7 +44,7 @@ namespace VALIDGame
 
                             gameManager.currentCard.transform.parent = topicMatcher.transform;
                             topicMatcher.occupied = true;
-                            gameManager.gameCards.Remove(gameManager.currentCard);
+                            gameManager.cardCollection.Remove(gameManager.currentCard);
                             gameManager.placedCards.Add(gameManager.currentCard);
                             gameManager.currentCard = null;
                         }
@@ -65,12 +64,12 @@ namespace VALIDGame
                         tm.occupied = false;
                         gameManager.currentCard = hit.transform.gameObject.GetComponent<Card>();
                         gameManager.currentCard.transform.parent = null;
-                        gameManager.gameCards.Add(gameManager.currentCard);
+                        gameManager.cardCollection.Add(gameManager.currentCard);
                         gameManager.placedCards.Remove(gameManager.currentCard);
                     }
                 }
             }
-            if ((gameManager.GetTimer("GameTime") <= 0) || (gameManager.gameCards.Count <= 0))
+            if ((gameManager.GetTimer("GameTime") <= 0) || (gameManager.cardCollection.Count <= 0))
             {
                 gameManager.gameState = gameManager.gameOverState;
             }
