@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 9ede0c42700bb1f4aa45f8004808158d
-timeCreated: 1446202083
+guid: 54511754e4db48a4983c944acc48a55c
+timeCreated: 1446202325
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: cards2_0
-    21300002: cards2_1
-    21300004: cards2_2
-    21300006: cards2_3
+    21300000: Cards3_0
+    21300002: Cards3_1
+    21300004: Cards3_2
+    21300006: Cards3_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -54,47 +54,47 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: cards2_0
-      rect:
-        serializedVersion: 2
-        x: 22
-        y: 522
-        width: 336
-        height: 450
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: cards2_1
-      rect:
-        serializedVersion: 2
-        x: 363
-        y: 522
-        width: 335
-        height: 449
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: cards2_2
+    - name: Cards3_0
       rect:
         serializedVersion: 2
         x: 23
-        y: 69
-        width: 335
+        y: 522
+        width: 334
+        height: 448
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Cards3_1
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 521
+        width: 337
         height: 450
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: cards2_3
+    - name: Cards3_2
       rect:
         serializedVersion: 2
-        x: 364
-        y: 70
-        width: 334
-        height: 445
+        x: 24
+        y: 68
+        width: 333
+        height: 452
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-  spritePackingTag: 
+    - name: Cards3_3
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 67
+        width: 337
+        height: 451
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: SceneCards
   userData: 
   assetBundleName: 
   assetBundleVariant: 

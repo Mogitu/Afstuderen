@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d33c47dbe53db4a49a75e6545b77768a
-timeCreated: 1446112365
+guid: 936ad39bf0fed8144898c1140aa3c54c
+timeCreated: 1445254577
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -57,30 +57,30 @@ TextureImporter:
     - name: cards1_0
       rect:
         serializedVersion: 2
-        x: 23
-        y: 734
-        width: 329
-        height: 206
+        x: 22
+        y: 522
+        width: 337
+        height: 451
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: cards1_1
       rect:
         serializedVersion: 2
-        x: 368
-        y: 737
-        width: 326
-        height: 203
+        x: 363
+        y: 519
+        width: 339
+        height: 454
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: cards1_2
       rect:
         serializedVersion: 2
-        x: 25
-        y: 278
-        width: 324
-        height: 207
+        x: 21
+        y: 67
+        width: 338
+        height: 452
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -88,13 +88,13 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 365
-        y: 279
-        width: 326
-        height: 203
+        y: 68
+        width: 334
+        height: 451
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-  spritePackingTag: 
+  spritePackingTag: SceneCards
   userData: 
   assetBundleName: 
   assetBundleVariant: 

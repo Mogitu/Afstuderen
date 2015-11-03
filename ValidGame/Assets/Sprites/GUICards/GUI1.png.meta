@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 54511754e4db48a4983c944acc48a55c
-timeCreated: 1446202325
+guid: d33c47dbe53db4a49a75e6545b77768a
+timeCreated: 1446112365
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Cards3_0
-    21300002: Cards3_1
-    21300004: Cards3_2
-    21300006: Cards3_3
+    21300000: cards1_0
+    21300002: cards1_1
+    21300004: cards1_2
+    21300006: cards1_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -54,47 +54,47 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Cards3_0
+    - name: cards1_0
       rect:
         serializedVersion: 2
         x: 23
-        y: 522
-        width: 334
-        height: 448
+        y: 734
+        width: 329
+        height: 206
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Cards3_1
+    - name: cards1_1
       rect:
         serializedVersion: 2
-        x: 363
-        y: 521
-        width: 337
-        height: 450
+        x: 368
+        y: 737
+        width: 326
+        height: 203
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Cards3_2
+    - name: cards1_2
       rect:
         serializedVersion: 2
-        x: 24
-        y: 68
-        width: 333
-        height: 452
+        x: 25
+        y: 278
+        width: 324
+        height: 207
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Cards3_3
+    - name: cards1_3
       rect:
         serializedVersion: 2
-        x: 364
-        y: 67
-        width: 337
-        height: 451
+        x: 365
+        y: 279
+        width: 326
+        height: 203
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-  spritePackingTag: 
+  spritePackingTag: GUICards
   userData: 
   assetBundleName: 
   assetBundleVariant: 
