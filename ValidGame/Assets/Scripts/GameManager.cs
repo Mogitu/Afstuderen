@@ -32,28 +32,27 @@ namespace VALIDGame
 
         public List<Card> cardCollection = new List<Card>();
         public List<Card> placedCards = new List<Card>();
-        public Card currentCard;
-        
+        public Card currentCard;       
+ 
         private bool gameStarted;    
-
-        private Dictionary<string, Timer> timers = new Dictionary<string, Timer>();
+        private Dictionary<string, Timer> timers = new Dictionary<string, Timer>();     
 
         //Awake always gets called first upon sceneload and activation etc.
         //We make sure there can be only one manager in the scene.
         void Awake()
-        {
+        {            
             if (Instance != null && Instance == this)
             {
                 Destroy(gameObject);
             }
-            Instance = this;
-            playingState = new PlayingState(Instance);
-            gameOverState = new GameoverState(Instance);
-            waitingState = new WaitingState(Instance);
+            Instance = this;         
         }
 
         void Start()
         {
+            playingState = new PlayingState(Instance);
+            gameOverState = new GameoverState(Instance);
+            waitingState = new WaitingState(Instance);
             RegisterTimer("GameTime");
             UpdateTimer("GameTime", maxGameTime);      
             gameState = waitingState;          
@@ -63,7 +62,7 @@ namespace VALIDGame
 
         // Update is called once per frame
         void Update()
-        {
+        {          
             gameState.UpdateState();
             // Update all timers
             /*
@@ -71,7 +70,7 @@ namespace VALIDGame
             {
                 // entry.Value.Tick(Time.deltaTime);            
             }
-             * */
+            */
         }
 
         //Disable/enable all attached monobehaviours on an object.
