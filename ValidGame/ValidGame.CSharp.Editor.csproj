@@ -103,7 +103,6 @@
   <ItemGroup>
     <Compile Include="Assets\Editor\AmcModules\CustomPrefabEditor.cs" />
     <Compile Include="Assets\Editor\AmcModules\PrefabManagerEditor.cs" />
-    <Compile Include="Assets\Editor\Tools\BoardBuilder.cs" />
     <Compile Include="Assets\Editor\Tools\CardBuilderModule.cs" />
   </ItemGroup>
   <ItemGroup>

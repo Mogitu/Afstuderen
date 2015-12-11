@@ -81,15 +81,17 @@ namespace VALIDGame
 
 
         public void ShowCards()
-        {
+        {            
             if (cardPanel.activeSelf)
             {
-                cardPanel.SetActive(false);
+                EventManager.Instance.PostNotification(EVENT_TYPE.ENABLE, this);
+                cardPanel.SetActive(false);               
                 GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, true);
             }
             else
             {
-                cardPanel.SetActive(true);
+                EventManager.Instance.PostNotification(EVENT_TYPE.DISABLE, this);
+                cardPanel.SetActive(true);               
                 GameManager.Instance.DisableEnableScripts(GameManager.Instance.gameBoard, false);
             }
         }

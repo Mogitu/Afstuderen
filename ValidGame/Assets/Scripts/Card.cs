@@ -19,15 +19,28 @@ namespace AMCTools
 
         public SpriteRenderer sprite;
         public TextMesh txtMeshTitle;
-        public TextMesh txtMeshDesc;
+        public TextMesh txtMeshDesc;  
 
         // Use this for initialization
         void Start()
         {
             txtMeshTitle.text = title;
             txtMeshDesc.text = description;
+           
+            EventManager.Instance.AddListener(EVENT_TYPE.DISABLE, DisableCollider);
+            EventManager.Instance.AddListener(EVENT_TYPE.ENABLE, EnableCollider);
         }
 
+        void DisableCollider(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+        {
+            GetComponent<Collider>().enabled = false;                
+        }
+
+        void EnableCollider(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+        {
+            GetComponent<Collider>().enabled = true;        
+        }
+          
         //Set needed properties
         public void SetData(string title, string description, string matchCode)
         {
