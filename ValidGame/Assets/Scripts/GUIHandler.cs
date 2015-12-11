@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using AMCTools;
@@ -102,8 +103,8 @@ namespace VALIDGame
         }
 
         public void ClickExit()
-        {
-            Application.LoadLevel("GameScene");
+        {            
+            SceneManager.LoadScene("GameScene");
         }
 
         public void QuitGame()
