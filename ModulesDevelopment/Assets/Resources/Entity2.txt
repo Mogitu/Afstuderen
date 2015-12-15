@@ -1,0 +1,9 @@
+[CardComponent]
+{
+title="foo"
+stuff=Stuff2
+}
+[TestObject]
+{
+test="test2"
+}
