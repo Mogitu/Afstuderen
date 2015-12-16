@@ -119,22 +119,28 @@ public class PrefabManagerEditor : EditorWindow
             else if (selBuildInt == 1)
             {
                 script = EditorGUILayout.ObjectField(script, typeof(MonoScript), false) as MonoScript;
+
+                ScriptableObject scrObj;
+                SerializedObject obj;
+
                 if (script != null)
                 {
                     tmpGo = new GameObject();
+                    tmpGo.hideFlags = HideFlags.HideAndDontSave;
                     tmpComp = tmpGo.AddComponent(script.GetClass()) as AmcComponent;
 
                     requiredProperties = new List<SerializedProperty>();
                     optionalProperties = new List<SerializedProperty>();
-
+                    scrObj = ScriptableObject.CreateInstance(script.GetClass());
+                    obj = new SerializedObject(scrObj);
                     foreach (FieldInfo fieldInfo in tmpComp.GetType().GetFields(BindingFlags.Public |
-                                                                              BindingFlags.Instance |
-                                                                              BindingFlags.DeclaredOnly))
+                                                                                  BindingFlags.Instance |
+                                                                                  BindingFlags.DeclaredOnly))
                     {
+
                         if (AmcComponent.RequiresDefinition(fieldInfo))
                         {
-                            ScriptableObject scrObj = ScriptableObject.CreateInstance(script.GetClass());
-                            SerializedObject obj = new SerializedObject(scrObj);
+
                             SerializedProperty requiredProperty = obj.FindProperty(fieldInfo.Name);
 
                             if (requiredProperty != null)
@@ -143,17 +149,16 @@ public class PrefabManagerEditor : EditorWindow
                             }
                         }
                         else {
-                            ScriptableObject scrObj = ScriptableObject.CreateInstance(script.GetClass());
-                            SerializedObject obj = new SerializedObject(scrObj);
+
                             SerializedProperty optionalProperty = obj.FindProperty(fieldInfo.Name);
                             if (optionalProperty != null)
                             {
                                 optionalProperties.Add(optionalProperty);
                             }
                         }
-                       
                     }
-                    // obj.Update();
+
+                    obj.Update();
 
                     EditorGUILayout.LabelField("Required fields (" + requiredProperties.Count + ")");
                     EditorGUI.indentLevel++;
@@ -176,14 +181,14 @@ public class PrefabManagerEditor : EditorWindow
                     EditorGUI.indentLevel--;
 
                     //And always apply changes. This will update the serialized properties of the serialized object
-                    //obj.ApplyModifiedProperties();
+                    obj.ApplyModifiedProperties();
 
-                    if(GUILayout.Button("Instantiate!"))
+                    if (GUILayout.Button("Instantiate!"))
                     {
-                        GameObject newGo = Instantiate(tmpGo);
-                        newGo.name = "New Object";
+                        //   GameObject newGo = Instantiate(tmpGo);
+                        // newGo.name = "New Object";
                     }
-                    DestroyImmediate(tmpGo);
+                    // DestroyImmediate(tmpGo);
                 }
             }
             GUILayout.EndVertical();
