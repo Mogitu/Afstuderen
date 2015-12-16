@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using System.Reflection;
+using System.IO;
+
 
 public class PrefabManagerEditor : EditorWindow
 {
@@ -12,15 +14,27 @@ public class PrefabManagerEditor : EditorWindow
 
     private int selGridInt = 0;
     public string[] selStrings = new string[] { "External resources", "Build custom object" };
+    public string[] buildStrings = new string[] { "Script it!", "Select it!" };
+    private int selBuildInt = 0;
     private AmcCustomPrefab myPrefab;
     private PrefabManager man;
+
+
+    private MonoScript script;
+    List<SerializedProperty> requiredProperties;
+    List<SerializedProperty> optionalProperties;
+    AmcComponent tmpComp;
+    GameObject tmpGo;
+
 
     [MenuItem("AMC Tools/AMC Object Manager")]
     static void Init()
     {
         //GetWindow will either retrieve an existing window, or create a new one if one doesn't exist.
         //PrefabManagerEditor newManager = (PrefabManagerEditor)EditorWindow.GetWindow (typeof (PrefabManagerEditor));
-        EditorWindow.GetWindow(typeof(PrefabManagerEditor));
+        PrefabManagerEditor prefabManager = (PrefabManagerEditor)EditorWindow.GetWindow(typeof(PrefabManagerEditor));
+        prefabManager.titleContent = new GUIContent("AMC Prefabs");
+
     }
 
     void OnEnable()
@@ -29,70 +43,151 @@ public class PrefabManagerEditor : EditorWindow
         {
             man = new PrefabManager();
         }
+        // script = MonoScript.FromMonoBehaviour
     }
 
     public void OnGUI()
     {
         GUILayout.BeginHorizontal("Box");
-        selGridInt = GUILayout.SelectionGrid(selGridInt, selStrings, 2,GUILayout.Height(30));
+        selGridInt = GUILayout.SelectionGrid(selGridInt, selStrings, 2, GUILayout.Height(30));
         GUILayout.EndHorizontal();
 
-        GUILayout.BeginVertical("Box");
-        if (selGridInt == 1)
-        {
-            bool wrap = EditorStyles.textField.wordWrap;
-            EditorStyles.textField.wordWrap = true;
-            //Create a text area that fills the window
-            string updatedScript = EditorGUILayout.TextArea(scriptToParse, GUILayout.ExpandHeight(true));
-            EditorStyles.textField.wordWrap = wrap;
+        GUILayout.BeginHorizontal();
 
-            if (!updatedScript.Equals(scriptToParse))
-            {
-                //invalidate our prefab and script when the script changes
-                validScript = false;
-                error = false;
-            }
-            scriptToParse = updatedScript;
-
-            if (GUILayout.Button("Parse script"))
-            {
-                //Pass in the contents of the textarea as the script for this prefab
-                myPrefab = new AmcCustomPrefab("TestPrefab", scriptToParse);
-                if (myPrefab.PrepAndVerify())
-                {
-                    validScript = true;
-                    error = false;
-                }
-                else
-                {
-                    validScript = false;
-                    error = true;
-                }
-            }
-
-            //If it's valid, let the user know in the window, and give them the option to instantiate a copy.
-            if (validScript)
-            {
-                EditorGUILayout.HelpBox("Parse complete. No errors, check console for any warnings.", MessageType.Info, true);
-                if (GUILayout.Button("Instantiate"))
-                {
-                    myPrefab.Instantiate();
-                }
-            }
-
-            //If there's an error, the user know.
-            if (error)
-            {
-                EditorGUILayout.HelpBox("Error parsing! See console for errors.", MessageType.Error, true);
-            }
-        }
-        else if (selGridInt == 0)
+        if (selGridInt == 0)
         {
             if (GUILayout.Button("Load Resource folder"))
             {
                 man.SpawnAllPrefabs();
             }
         }
-        GUILayout.EndVertical();
+        else if (selGridInt == 1)
+        {
+            GUILayout.BeginVertical("Box");
+            selBuildInt = GUILayout.SelectionGrid(selBuildInt, buildStrings, 1, GUILayout.Width(100), GUILayout.Height(100));
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical("Box");
+            if (selBuildInt == 0)
+            {
+                bool wrap = EditorStyles.textField.wordWrap;
+                EditorStyles.textField.wordWrap = true;
+                //Create a text area that fills the window
+                string updatedScript = EditorGUILayout.TextArea(scriptToParse, GUILayout.ExpandHeight(true));
+                EditorStyles.textField.wordWrap = wrap;
+
+                if (!updatedScript.Equals(scriptToParse))
+                {
+                    //invalidate our prefab and script when the script changes
+                    validScript = false;
+                    error = false;
+                }
+                scriptToParse = updatedScript;
+
+                if (GUILayout.Button("Parse script"))
+                {
+                    //Pass in the contents of the textarea as the script for this prefab
+                    myPrefab = new AmcCustomPrefab("TestPrefab", scriptToParse);
+                    if (myPrefab.PrepAndVerify())
+                    {
+                        validScript = true;
+                        error = false;
+                    }
+                    else
+                    {
+                        validScript = false;
+                        error = true;
+                    }
+                }
+
+                //If it's valid, let the user know in the window, and give them the option to instantiate a copy.
+                if (validScript)
+                {
+                    EditorGUILayout.HelpBox("Parse complete. No errors, check console for any warnings.", MessageType.Info, true);
+                    if (GUILayout.Button("Instantiate"))
+                    {
+                        myPrefab.Instantiate();
+                    }
+                }
+
+                //If there's an error, the user know.
+                if (error)
+                {
+                    EditorGUILayout.HelpBox("Error parsing! See console for errors.", MessageType.Error, true);
+                }
+            }
+            else if (selBuildInt == 1)
+            {
+                script = EditorGUILayout.ObjectField(script, typeof(MonoScript), false) as MonoScript;
+                if (script != null)
+                {
+                    tmpGo = new GameObject();
+                    tmpComp = tmpGo.AddComponent(script.GetClass()) as AmcComponent;
+
+                    requiredProperties = new List<SerializedProperty>();
+                    optionalProperties = new List<SerializedProperty>();
+
+                    foreach (FieldInfo fieldInfo in tmpComp.GetType().GetFields(BindingFlags.Public |
+                                                                              BindingFlags.Instance |
+                                                                              BindingFlags.DeclaredOnly))
+                    {
+                        if (AmcComponent.RequiresDefinition(fieldInfo))
+                        {
+                            ScriptableObject scrObj = ScriptableObject.CreateInstance(script.GetClass());
+                            SerializedObject obj = new SerializedObject(scrObj);
+                            SerializedProperty requiredProperty = obj.FindProperty(fieldInfo.Name);
+
+                            if (requiredProperty != null)
+                            {
+                                requiredProperties.Add(requiredProperty);
+                            }
+                        }
+                        else {
+                            ScriptableObject scrObj = ScriptableObject.CreateInstance(script.GetClass());
+                            SerializedObject obj = new SerializedObject(scrObj);
+                            SerializedProperty optionalProperty = obj.FindProperty(fieldInfo.Name);
+                            if (optionalProperty != null)
+                            {
+                                optionalProperties.Add(optionalProperty);
+                            }
+                        }
+                       
+                    }
+                    // obj.Update();
+
+                    EditorGUILayout.LabelField("Required fields (" + requiredProperties.Count + ")");
+                    EditorGUI.indentLevel++;
+                    foreach (SerializedProperty required in requiredProperties)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(required);
+                        EditorGUILayout.EndHorizontal();
+                    }
+                    EditorGUI.indentLevel--;
+
+                    EditorGUILayout.LabelField("Optional fields (" + optionalProperties.Count + ")");
+                    EditorGUI.indentLevel++;
+                    foreach (SerializedProperty optional in optionalProperties)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(optional);
+                        EditorGUILayout.EndHorizontal();
+                    }
+                    EditorGUI.indentLevel--;
+
+                    //And always apply changes. This will update the serialized properties of the serialized object
+                    //obj.ApplyModifiedProperties();
+
+                    if(GUILayout.Button("Instantiate!"))
+                    {
+                        GameObject newGo = Instantiate(tmpGo);
+                        newGo.name = "New Object";
+                    }
+                    DestroyImmediate(tmpGo);
+                }
+            }
+            GUILayout.EndVertical();
+        }
+        GUILayout.EndHorizontal();
     }
 }

@@ -6,7 +6,7 @@ public class CardComponent : AmcComponent
     [PrefabAttribute(RequiresDefinition = true)]
     public string title;
 
-    [PrefabAttribute(RequiresDefinition = false)]
+    [PrefabAttribute(RequiresDefinition = false)]  
     public string color;
 
     [PrefabAttribute(RequiresDefinition = true)]

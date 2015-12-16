@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModulesDevelopment.CSharp", "ModulesDevelopment.CSharp.csproj", "{ECEAD618-A4A1-6D51-3F24-9393BAD8BC24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModulesDevelopment.CSharp.Editor", "ModulesDevelopment.CSharp.Editor.csproj", "{BEB4448E-139A-8CB9-F73B-DEF4F31AC1C7}"
