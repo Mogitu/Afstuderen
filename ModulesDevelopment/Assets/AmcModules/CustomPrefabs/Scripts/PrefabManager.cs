@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 
 /// <summary>
-/// Used to inherit from monobehaviour!
+/// Used to inherit from monobehaviour! DO NOT USE!
 /// </summary>
 public class PrefabManager
 {

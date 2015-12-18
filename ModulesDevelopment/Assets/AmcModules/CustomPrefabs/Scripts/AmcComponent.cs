@@ -5,9 +5,9 @@ using System;
 using System.Reflection;
 using System.Text;
 
-public class AmcComponent : MonoBehaviour
+public class AmcComponent : MonoBehaviour, IScriptGenerator, IDataSetter
 {
-    public bool SetData(ref Lexer lex)
+    public virtual bool SetData(ref Lexer lex)
     {
         bool returnValue = true;
         List<string> valuesSet = new List<string>(); //an easy way to keep track of the values we've already set
@@ -73,8 +73,21 @@ public class AmcComponent : MonoBehaviour
         return false;
     }
 
+
     //Added for Custom Editor
-    public string GenerateComponentScript()
+    public string GetPropertyString(FieldInfo fieldInfo)
+    {
+        if (fieldInfo.FieldType == typeof(string))
+            return "\"" + fieldInfo.GetValue(this).ToString() + "\"";
+        else if (fieldInfo.FieldType == typeof(Vector3))
+            return fieldInfo.GetValue(this).ToString().Replace("(", "").Replace(")", "");
+        else
+            return fieldInfo.GetValue(this).ToString();
+    }
+
+   
+    //Added for Custom Editor
+    public virtual string GenerateComponentScript()
     {
         StringBuilder generatedScript = new StringBuilder();
         generatedScript.AppendLine("[" + this.GetType().Name + "]{");
@@ -90,15 +103,5 @@ public class AmcComponent : MonoBehaviour
         generatedScript.AppendLine("}");
         return generatedScript.ToString();
     }
-
-    //Added for Custom Editor
-    public string GetPropertyString(FieldInfo fieldInfo)
-    {
-        if (fieldInfo.FieldType == typeof(string))
-            return "\"" + fieldInfo.GetValue(this).ToString() + "\"";
-        else if (fieldInfo.FieldType == typeof(Vector3))
-            return fieldInfo.GetValue(this).ToString().Replace("(", "").Replace(")", "");
-        else
-            return fieldInfo.GetValue(this).ToString();
-    }
 }
+

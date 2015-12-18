@@ -10,12 +10,9 @@ using System.Reflection;
 [CustomEditor(typeof(AmcComponent), true)]
 public class CustomPrefabEditor : Editor
 {
-
     List<SerializedProperty> requiredProperties;
     List<SerializedProperty> optionalProperties;
     AmcComponent advancedComponent;
-
-
     string generatedScript = "";
 
     void OnEnable()

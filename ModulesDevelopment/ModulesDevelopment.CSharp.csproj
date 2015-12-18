@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.0f4</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -64,9 +66,14 @@
   <ItemGroup>
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\AmcComponent.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\AmcCustomPrefab.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\AmcPrefabLoader.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\CustomComponentParser.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\IComponentParser.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\IDataSetter.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\IScriptGenerator.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\Lexer.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\PrefabManager.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\IAmcPrefabUtility.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\UnityComponentParser.cs" />
     <Compile Include="Assets\Scripts\GameObjects\ComponentTestA.cs" />
     <Compile Include="Assets\Scripts\GameObjects\ComponentTestB.cs" />
   </ItemGroup>
