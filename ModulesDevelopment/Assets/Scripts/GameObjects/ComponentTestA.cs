@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CardComponent : AmcComponent
+public class ComponentTestA : AmcComponent
 {
     [PrefabAttribute(RequiresDefinition = true)]
     public string title;

@@ -57,24 +57,18 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AmcModules\Scripts\AmcComponent.cs" />
-    <Compile Include="Assets\AmcModules\Scripts\AmcCustomPrefab.cs" />
-    <Compile Include="Assets\AmcModules\Scripts\AmcPrefabLoader.cs" />
-    <Compile Include="Assets\AmcModules\Scripts\Lexer.cs" />
-    <Compile Include="Assets\AmcModules\Scripts\PrefabManager.cs" />
-    <Compile Include="Assets\Scripts\GameObjects\CardComponent.cs" />
-    <Compile Include="Assets\Scripts\GameObjects\TestObject.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\AmcComponent.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\AmcCustomPrefab.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\AmcPrefabLoader.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\Lexer.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\PrefabManager.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\ComponentTestA.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\ComponentTestB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Entity1.txt" />

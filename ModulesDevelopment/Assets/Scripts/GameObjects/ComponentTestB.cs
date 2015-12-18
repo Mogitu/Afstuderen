@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TestObject:AmcComponent   {
+public class ComponentTestB:AmcComponent   {
    [PrefabAttribute(RequiresDefinition=true)]
    public string test;
 

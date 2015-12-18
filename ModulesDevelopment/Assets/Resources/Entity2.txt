@@ -1,9 +1,5 @@
-[CardComponent]
+[ComponentTestA]
 {
-title="foo"
-stuff=Stuff2
-}
-[TestObject]
-{
-test="test2"
+title="f"
+stuff=Stuff1
 }
