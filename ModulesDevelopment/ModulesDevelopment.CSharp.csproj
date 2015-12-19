@@ -73,6 +73,8 @@
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\Lexer.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\PrefabManager.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\IAmcPrefabUtility.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\SpriteParser.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\TransformParser.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\UnityComponentParser.cs" />
     <Compile Include="Assets\Scripts\GameObjects\ComponentTestA.cs" />
     <Compile Include="Assets\Scripts\GameObjects\ComponentTestB.cs" />

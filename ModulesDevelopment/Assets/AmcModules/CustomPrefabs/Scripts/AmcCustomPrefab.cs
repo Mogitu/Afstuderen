@@ -70,8 +70,7 @@ public class AmcCustomPrefab{
 		while(lex.GetTokenType() != Lexer.TokenType.EndOfInput) {
 			switch(lex.GetTokenType()) {
 			case Lexer.TokenType.ComponentToken:
-				string componentName = lex.GetToken();
-				
+				string componentName = lex.GetToken();				
 				//ensure correct syntax to continue
 				lex.NextToken();
 				if(lex.Match("]")) {
@@ -88,17 +87,18 @@ public class AmcCustomPrefab{
 					lex.Dispose();
 					return false;
 				}
-				//now continue on to parse component body
-
+                    //now continue on to parse component body                  
+                    IComponentParser parser;
 				if(Enum.IsDefined(typeof(SupportedUnityComponent), componentName)) {
-					//if the component is named as one of the built in supported unity components, use a special parser.
-					retVal &= ParseUnityComponent((SupportedUnityComponent)Enum.Parse(typeof(SupportedUnityComponent), componentName), ref lex, ref go);
-				} else {
-					//otherwise use the parser for our custom components.
-					retVal &= ParseCustomComponent(componentName, ref lex, ref go);
+                        parser = (IComponentParser)Activator.CreateInstance(Type.GetType(componentName + "Parser"));
+                        //new UnityComponentParser();
+                        //if the component is named as one of the built in supported unity components, use a special parser.					
+                    } else {
+                        parser = new CustomComponentParser();
+                        //otherwise use the parser for our custom components.                      
 				}
-
-				break;
+                    retVal &=parser.ParseComponent(componentName, ref lex, ref go);
+                    break;
 			case Lexer.TokenType.IdentifierToken:
 				if(lex.Match("Tags")) {
 					lex.NextToken();
@@ -120,147 +120,6 @@ public class AmcCustomPrefab{
 		return retVal;
 	}
 
-	private bool ParseUnityComponent(SupportedUnityComponent component, ref Lexer lex, ref GameObject go) {
-		bool retVal = true;
-		switch(component) {
-		case SupportedUnityComponent.Transform:
-			while(!lex.Match("}") && lex.GetTokenType() != Lexer.TokenType.EndOfInput) {
-				string field = lex.GetToken();
-				lex.NextToken();//equals symbol
-				if(lex.Match("=")) {
-					lex.NextToken();
-				} else {
-					Debug.Log("Syntax Error: Expected `=` after field name");
-					lex.NextToken();//try to continue anyway?
-				}
-				switch(field.ToLower()) {
-					case "position":
-						System.Object position = lex.GetObject();
-						Lexer.FinializeSpecialTypes(ref position, lex.GetTokenType());
-						go.transform.position = (Vector3)position;
-						break;
-					case "rotation":
-						System.Object rotation = lex.GetObject();
-						Lexer.FinializeSpecialTypes(ref rotation, lex.GetTokenType());
-						go.transform.rotation = Quaternion.Euler((Vector3)rotation);
-						break;
-					case "scale":
-						System.Object scale = lex.GetObject();
-						Lexer.FinializeSpecialTypes(ref scale, lex.GetTokenType());
-						go.transform.localScale = (Vector3)scale;
-						break;
-					default:
-						Debug.Log("`" + lex.GetToken() + "` not a supported field of Transform");
-						retVal = false;
-						break;
-				}
-				lex.NextToken();
-			}
-			break;
-
-		case SupportedUnityComponent.Mesh:
-                /*
-			//This component will add the required components for rendering a mesh
-			MeshFilter meshFilter = go.AddComponent<MeshFilter>();
-			MeshRenderer meshRenderer = go.AddComponent<MeshRenderer>();
-			while(!lex.Match("}") && lex.GetTokenType() != Lexer.TokenType.EndOfInput) {
-
-				//Ideally this would be expanded to also search through all loaded custom meshes (not use a switch statement)
-				//However, for this tutorial, we'll take a shortcut and only allow these primitives
-				if(lex.Match("meshtype")) {
-					string meshType = (string)lex.GetValue(Lexer.TokenType.IdentifierToken);
-					switch(meshType.ToLower()) {
-					case "cube":
-						//meshFilter.mesh = GameObject.FindObjectOfType<PrefabManager>().primitiveCube;
-						break;
-					case "sphere":
-						//meshFilter.mesh = GameObject.FindObjectOfType<PrefabManager>().primitiveSphere;
-						break;
-					case "capsule":
-					//	meshFilter.mesh = GameObject.FindObjectOfType<PrefabManager>().primitiveCapsule;
-						break;
-					default:
-						Debug.Log("Mesh type: `" + meshType + "` not supported!");
-						retVal = false;
-						break;
-					}
-				}
-				if(lex.Match("material")) {
-					string material = (string)lex.GetValue(Lexer.TokenType.IdentifierToken);
-					switch(material.ToLower()) {
-					case "default":
-					//	meshRenderer.material = GameObject.FindObjectOfType<PrefabManager>().defaultMaterial;
-						break;
-					default:
-						Debug.Log("Material: `" + material + "` not supported!");
-						retVal = false;
-						break;
-					}
-				}
-
-				lex.NextToken();
-                 
-			}
-                 */
-			break;
-
-		case SupportedUnityComponent.Collider:
-			Debug.Log(component);
-			//TODO Add support for defining our own colliders
-			//This component would accept a shape and dimensions            
-			while(!lex.Match("}") && lex.GetTokenType() != Lexer.TokenType.EndOfInput) {
-				lex.NextToken();
-			}
-			retVal = false;
-			break;
-        case SupportedUnityComponent.Sprite:
-            SpriteRenderer spr = go.AddComponent<SpriteRenderer>();          
-            while (!lex.Match("}") && lex.GetTokenType() != Lexer.TokenType.EndOfInput)
-            {
-                string field = lex.GetToken();
-                lex.NextToken();//equals symbol
-                if (lex.Match("="))
-                {
-                    lex.NextToken();
-                }
-                else
-                {
-                    Debug.Log("Syntax Error: Expected `=` after field name");
-                    lex.NextToken();//try to continue anyway?
-                }
-                switch (field.ToLower())
-                {
-                    case "color":
-                        System.Object color = lex.GetObject();
-                        Lexer.FinializeSpecialTypes(ref color, lex.GetTokenType());
-                        Color col;
-                        ColorUtility.TryParseHtmlString(((string)color).ToLower(),out col);
-                        spr.color = col;
-                        break;                  
-                }
-                lex.NextToken();
-            }
-			break;
-		default:
-			//looks like we added a keyword, but not the parsing code?
-			Debug.Log("Don't know how to parse Unity component: " + component);
-			retVal = false;
-			break;
-		}
-		return retVal;
-	}
-
-	private bool ParseCustomComponent(string componentName, ref Lexer lex, ref GameObject go) {
-		//AmcComponent customComponent = UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(go, "Assets/Scripts/Tools/AdvCustomPrefab.cs (223,34)", componentName) as AmcComponent;
-        AmcComponent customComponent = go.AddComponent(System.Type.GetType(componentName)) as AmcComponent;
-        bool setDataSuccess = false;
-		if(customComponent != null) {
-			setDataSuccess = customComponent.SetData(ref lex);
-		} else {
-			Debug.Log("Component " + componentName + " couldn't be added! Ensure it exists or isn't being added twice.");
-		}
-		return setDataSuccess;
-	}
 	
 	public GameObject Instantiate() {
 		if(gameObjectCopy != null) {

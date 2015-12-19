@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,20 @@ using System.Text;
 
 public class CustomComponentParser : IComponentParser
 {
-    public bool ParseComponent()
+    public bool ParseComponent(string componentName, ref Lexer lex, ref GameObject go)
     {
-        throw new NotImplementedException();
+        //AmcComponent customComponent = UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(go, "Assets/Scripts/Tools/AdvCustomPrefab.cs (223,34)", componentName) as AmcComponent;
+        AmcComponent customComponent = go.AddComponent(System.Type.GetType(componentName)) as AmcComponent;
+        bool setDataSuccess = false;
+        if (customComponent != null)
+        {
+            setDataSuccess = customComponent.SetData(ref lex);
+        }
+        else
+        {
+            Debug.Log("Component " + componentName + " couldn't be added! Ensure it exists or isn't being added twice.");
+        }
+        return setDataSuccess;
     }
 }
 
