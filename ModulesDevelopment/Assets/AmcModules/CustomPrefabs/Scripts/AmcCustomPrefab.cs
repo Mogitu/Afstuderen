@@ -3,177 +3,182 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class AmcCustomPrefab
+namespace AmcCustomPrefab
 {
-    public string name;
-    private string data;
-
-    private List<string> tags = new List<string>();
-    private List<string> components = new List<string>();
-
-    private GameObject gameObjectCopy;
-
-    public AmcCustomPrefab(string name, string data)
+    public class AmcCustomPrefab
     {
-        this.name = name;
-        this.data = data;
-    }
+        public string name;
+        private string data;
 
-    // PrepAndVerify will parse the script to ensure it's well formatted.
-    // This should be done at load time, so we can make the decision early
-    // if we want to keep it. Better than returning error half way into the
-    // game when we try to load the prefab.
-    public bool PrepAndVerify()
-    {
-        return Parse();
-    }
+        private List<string> tags = new List<string>();
+        private List<string> components = new List<string>();
 
-    public bool HasComponent(Type type)
-    {
-        string typeName = type.Name;
-        return components.Contains(typeName);
-    }
+        private GameObject gameObjectCopy;
 
-    private bool Parse()
-    {
-        //Due to the limitations of Unity (can't create GameObjects without also instantiating them)
-        // we're going to temporarily create a game object, get some data from it, and then destroy it
-        //This will verify the syntax of the file
-        gameObjectCopy = new GameObject(name);
-
-        tags.Clear();
-        components.Clear();
-
-        bool retVal = Parse(ref gameObjectCopy);
-
-        gameObjectCopy.SetActive(false);
-        gameObjectCopy.hideFlags = HideFlags.HideAndDontSave;
-
-        if (!retVal)
+        public AmcCustomPrefab(string name, string data)
         {
-            Debug.Log("Error parsing!");
-            if (Application.isEditor)
-            {
-                UnityEngine.Object.DestroyImmediate(gameObjectCopy);
-            }
-            else {
-                GameObject.Destroy(gameObjectCopy);
-            }
+            this.name = name;
+            this.data = data;
         }
-        return retVal;
-    }
 
-    public bool Parse(ref GameObject go)
-    {
-        bool retVal = true;
-        Lexer lex = new Lexer(data);
-        lex.NextToken();
-        while (lex.GetTokenType() != Lexer.TokenType.EndOfInput)
+        // PrepAndVerify will parse the script to ensure it's well formatted.
+        // This should be done at load time, so we can make the decision early
+        // if we want to keep it. Better than returning error half way into the
+        // game when we try to load the prefab.
+        public bool PrepAndVerify()
         {
-            switch (lex.GetTokenType())
+            return Parse();
+        }
+
+        public bool HasComponent(Type type)
+        {
+            string typeName = type.Name;
+            return components.Contains(typeName);
+        }
+
+        private bool Parse()
+        {
+            //Due to the limitations of Unity (can't create GameObjects without also instantiating them)
+            // we're going to temporarily create a game object, get some data from it, and then destroy it
+            //This will verify the syntax of the file
+            gameObjectCopy = new GameObject(name);
+
+            tags.Clear();
+            components.Clear();
+
+            bool retVal = Parse(ref gameObjectCopy);
+
+            gameObjectCopy.SetActive(false);
+            gameObjectCopy.hideFlags = HideFlags.HideAndDontSave;
+
+            if (!retVal)
             {
-                case Lexer.TokenType.ComponentToken:
-                    string componentName = lex.GetToken();
-                    //ensure correct syntax to continue
-                    lex.NextToken();
-                    if (lex.Match("]"))
-                    {
+                Debug.Log("Error parsing!");
+                if (Application.isEditor)
+                {
+                    UnityEngine.Object.DestroyImmediate(gameObjectCopy);
+                }
+                else {
+                    GameObject.Destroy(gameObjectCopy);
+                }
+            }
+            return retVal;
+        }
+
+        public bool Parse(ref GameObject go)
+        {
+            bool retVal = true;
+            Lexer lex = new Lexer(data);
+            lex.NextToken();
+            while (lex.GetTokenType() != Lexer.TokenType.EndOfInput)
+            {
+                switch (lex.GetTokenType())
+                {
+                    case Lexer.TokenType.ComponentToken:
+                        string componentName = lex.GetToken();
+                        //ensure correct syntax to continue
                         lex.NextToken();
-                        if (lex.Match("{"))
+                        if (lex.Match("]"))
                         {
                             lex.NextToken();
+                            if (lex.Match("{"))
+                            {
+                                lex.NextToken();
+                            }
+                            else {
+                                Debug.Log("Component declaration must be followed by an open bracket`{`");
+                                lex.Dispose();
+                                return false;
+                            }
                         }
                         else {
-                            Debug.Log("Component declaration must be followed by an open bracket`{`");
+                            Debug.Log("Component name must not have any spaces and must be closed with a square bracket `]`");
                             lex.Dispose();
                             return false;
                         }
-                    }
-                    else {
-                        Debug.Log("Component name must not have any spaces and must be closed with a square bracket `]`");
-                        lex.Dispose();
-                        return false;
-                    }
-                    //now continue on to parse component body                  
-                    IComponentParser parser;
-                    Type t = Type.GetType(componentName + "Parser");
-                    if (t != null)
-                    {
-                        parser = (IComponentParser)Activator.CreateInstance(t);
-                    }
-                    else
-                    {
-                        parser = new CustomComponentParser();
-                    }
-                    retVal &= parser.ParseComponent(componentName, ref lex, ref go);
-                    break;
-                case Lexer.TokenType.IdentifierToken:
-                    if (lex.Match("Tags"))
-                    {
-                        lex.NextToken();
-                        if (lex.Match("{"))
+                        //now continue on to parse component body                  
+                        IComponentParser parser;
+
+                        Type t = Type.GetType("AmcCustomPrefab."+componentName + "Parser");             
+                        if (t != null)
+                        {
+                            parser = (IComponentParser)Activator.CreateInstance(t);
+                        }
+                        else
+                        {
+                            parser = new CustomComponentParser();
+                        }
+                        retVal &= parser.ParseComponent(componentName, ref lex, ref go);
+                        break;
+                    case Lexer.TokenType.IdentifierToken:
+                        if (lex.Match("Tags"))
                         {
                             lex.NextToken();
-                            ParseTags(ref lex);
+                            if (lex.Match("{"))
+                            {
+                                lex.NextToken();
+                                ParseTags(ref lex);
+                            }
                         }
-                    }
-                    else {
-                        Debug.Log("Unexpected token: `" + lex.GetToken() + "`. Expected `Tags` token at this level.");
-                    }
-                    break;
-                default: //other tokens we might care about at this level would be meta information for the entity, like name, type and so on. Information specific to an entity.
-                    Debug.Log("Unexpected token: " + lex.GetToken());
-                    break;
+                        else {
+                            Debug.Log("Unexpected token: `" + lex.GetToken() + "`. Expected `Tags` token at this level.");
+                        }
+                        break;
+                    default: //other tokens we might care about at this level would be meta information for the entity, like name, type and so on. Information specific to an entity.
+                        Debug.Log("Unexpected token: " + lex.GetToken());
+                        break;
+                }
+                lex.NextToken();
             }
-            lex.NextToken();
+            lex.Dispose();
+            return retVal;
         }
-        lex.Dispose();
-        return retVal;
-    }
 
-    public GameObject Instantiate()
-    {
-        if (gameObjectCopy != null)
+        public GameObject Instantiate()
         {
-            GameObject go = GameObject.Instantiate(gameObjectCopy) as GameObject;
-            go.SetActive(true);
-            go.hideFlags = HideFlags.None;
-            return go;
+            if (gameObjectCopy != null)
+            {
+                GameObject go = GameObject.Instantiate(gameObjectCopy) as GameObject;
+                go.SetActive(true);
+                go.hideFlags = HideFlags.None;
+                return go;
+            }
+            else {
+                return null;
+            }
         }
-        else {
+
+        private void ParseTags(ref Lexer lex)
+        {
+            while (!lex.Match("}") && lex.GetTokenType() != Lexer.TokenType.EndOfInput)
+            {
+                if (lex.GetTokenType() == Lexer.TokenType.IdentifierToken)
+                {
+                    tags.Add(lex.GetToken());
+                }
+                lex.NextToken();
+            }
+        }
+
+        public Mesh GetMesh()
+        {
+            if (gameObjectCopy != null && gameObjectCopy.GetComponent<MeshFilter>() != null)
+                return gameObjectCopy.GetComponent<MeshFilter>().mesh;
             return null;
         }
-    }
 
-    private void ParseTags(ref Lexer lex)
-    {
-        while (!lex.Match("}") && lex.GetTokenType() != Lexer.TokenType.EndOfInput)
+        public Vector3 GetScale()
         {
-            if (lex.GetTokenType() == Lexer.TokenType.IdentifierToken)
-            {
-                tags.Add(lex.GetToken());
-            }
-            lex.NextToken();
+            if (gameObjectCopy != null)
+                return gameObjectCopy.transform.localScale;
+            return Vector3.one;
+        }
+
+        public List<string> GetTags()
+        {
+            return tags;
         }
     }
 
-    public Mesh GetMesh()
-    {
-        if (gameObjectCopy != null && gameObjectCopy.GetComponent<MeshFilter>() != null)
-            return gameObjectCopy.GetComponent<MeshFilter>().mesh;
-        return null;
-    }
 
-    public Vector3 GetScale()
-    {
-        if (gameObjectCopy != null)
-            return gameObjectCopy.transform.localScale;
-        return Vector3.one;
-    }
-
-    public List<string> GetTags()
-    {
-        return tags;
-    }   
 }
-

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AmcCustomPrefab;
 
 public class ComponentTestB:AmcComponent   {
    [PrefabAttribute(RequiresDefinition=true)]

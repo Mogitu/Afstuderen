@@ -4,23 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
-public class CustomComponentParser : IComponentParser
+namespace AmcCustomPrefab
 {
-    public bool ParseComponent(string componentName, ref Lexer lex, ref GameObject go)
+    public class CustomComponentParser : IComponentParser
     {
-        //AmcComponent customComponent = UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(go, "Assets/Scripts/Tools/AdvCustomPrefab.cs (223,34)", componentName) as AmcComponent;
-        AmcComponent customComponent = go.AddComponent(System.Type.GetType(componentName)) as AmcComponent;
-        bool setDataSuccess = false;
-        if (customComponent != null)
+        public bool ParseComponent(string componentName, ref Lexer lex, ref GameObject go)
         {
-            setDataSuccess = customComponent.SetData(ref lex);
+            //AmcComponent customComponent = UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(go, "Assets/Scripts/Tools/AdvCustomPrefab.cs (223,34)", componentName) as AmcComponent;
+            AmcComponent customComponent = go.AddComponent(System.Type.GetType(componentName)) as AmcComponent;
+            bool setDataSuccess = false;
+            if (customComponent != null)
+            {
+                setDataSuccess = customComponent.SetData(ref lex);
+            }
+            else
+            {
+                Debug.Log("Component " + componentName + " couldn't be added! Ensure it exists or isn't being added twice.");
+            }
+            return setDataSuccess;
         }
-        else
-        {
-            Debug.Log("Component " + componentName + " couldn't be added! Ensure it exists or isn't being added twice.");
-        }
-        return setDataSuccess;
     }
 }
+
 

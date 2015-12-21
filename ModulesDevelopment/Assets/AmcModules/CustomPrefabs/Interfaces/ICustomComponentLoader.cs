@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace AmcCustomPrefab
 {
-    public interface IDataSetter
+    interface ICustomComponentLoader
     {
-        bool SetData(ref Lexer lex);
+        void Load();
     }
 }
-
 
 

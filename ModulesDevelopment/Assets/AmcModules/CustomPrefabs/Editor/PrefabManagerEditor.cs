@@ -6,72 +6,88 @@ using System.Reflection;
 using System.IO;
 
 
-
-/// <summary>
-/// GUI for the custom prefab editor.
-/// TODO: Refactor to MVC/MVVM.
-/// </summary>
-public class PrefabManagerEditor : EditorWindow
+namespace AmcCustomPrefab
 {
-    private static string scriptToParse = "";
-    private bool validScript = false;
-    private bool error = false;
-
-    private int selGridInt = 0;
-    public string[] selStrings = new string[] { "External resources", "Build custom object" };
-    public string[] buildStrings = new string[] { "Script it!", "Select it!" };
-    private int selBuildInt = 0;
-    private AmcCustomPrefab myPrefab;
-    private PrefabManager man;
-
-
-    private MonoScript script;
-    List<SerializedProperty> requiredProperties;
-    List<SerializedProperty> optionalProperties;
-    AmcComponent tmpComp;
-    GameObject tmpGo;
-
-
-    [MenuItem("AMC Tools/AMC Object Manager")]
-    static void Init()
+    /// <summary>
+    /// GUI for the custom prefab editor.
+    /// TODO: Refactor to MVC/MVP/MVVM.
+    /// </summary>
+    public class PrefabManagerEditor : EditorWindow
     {
-        //GetWindow will either retrieve an existing window, or create a new one if one doesn't exist.
-        //PrefabManagerEditor newManager = (PrefabManagerEditor)EditorWindow.GetWindow (typeof (PrefabManagerEditor));
-        PrefabManagerEditor prefabManager = (PrefabManagerEditor)EditorWindow.GetWindow(typeof(PrefabManagerEditor));
-        prefabManager.titleContent = new GUIContent("AMC Prefabs");
+        private static string scriptToParse = "";
+        private bool validScript = false;
+        private bool error = false;
 
-    }
+        private int selGridInt = 0;
+        public string[] selStrings = new string[] { "External resources", "Build custom object" };
+        public string[] buildStrings = new string[] { "Script it!", "Select it!" };
+        private int selBuildInt = 0;
+        private AmcCustomPrefab myPrefab;
+        private PrefabManager man;
 
-    void OnEnable()
-    {
-        if (man == null)
+        private MonoScript script;
+        private List<SerializedProperty> requiredProperties;
+        private List<SerializedProperty> optionalProperties;
+        private AmcComponent tmpComp;
+        private GameObject tmpGo;
+
+        [MenuItem("AMC Tools/AMC Object Manager")]
+        static void Init()
         {
-            man = new PrefabManager();
+            //GetWindow will either retrieve an existing window, or create a new one if one doesn't exist.
+            //PrefabManagerEditor newManager = (PrefabManagerEditor)EditorWindow.GetWindow (typeof (PrefabManagerEditor));
+            PrefabManagerEditor prefabManager = (PrefabManagerEditor)EditorWindow.GetWindow(typeof(PrefabManagerEditor));
+            prefabManager.titleContent = new GUIContent("AMC Prefabs");
         }
-        // script = MonoScript.FromMonoBehaviour
-    }
 
-    public void OnGUI()
-    {
-        GUILayout.BeginHorizontal("Box");
-        selGridInt = GUILayout.SelectionGrid(selGridInt, selStrings, 2, GUILayout.Height(30));
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-
-        if (selGridInt == 0)
+        void OnEnable()
         {
-            if (GUILayout.Button("Load Resource folder"))
+            if (man == null)
             {
-                man.SpawnAllPrefabs();
+                man = new PrefabManager();
             }
+            // script = MonoScript.FromMonoBehaviour
         }
-        else if (selGridInt == 1)
-        {
-            GUILayout.BeginVertical("Box");
-            selBuildInt = GUILayout.SelectionGrid(selBuildInt, buildStrings, 1, GUILayout.Width(100), GUILayout.Height(100));
-            GUILayout.EndVertical();
 
+        void SpawnAllPrefabs()
+        {
+
+        }
+
+        public void OnGUI()
+        {
+            GUILayout.BeginHorizontal("Box");
+            selGridInt = GUILayout.SelectionGrid(selGridInt, selStrings, 2, GUILayout.Height(30));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (selGridInt == 0)
+            {
+                if(GUILayout.Button("Load"))
+                {
+                    string data = EditorUtility.OpenFilePanel("","","txt");
+                    man.LoadSingle(data);
+                }
+
+                if (GUILayout.Button("Load Resource folder"))
+                {
+                    man.SpawnAllPrefabs();
+                }
+            }
+            else if (selGridInt == 1)
+            {
+                GUILayout.BeginVertical("Box");
+                selBuildInt = GUILayout.SelectionGrid(selBuildInt, buildStrings, 1, GUILayout.Width(100), GUILayout.Height(100));
+                GUILayout.EndVertical();
+                GUIA();
+                GUIB();
+            }
+            GUILayout.EndHorizontal();
+        }
+
+
+        private void GUIA()
+        {
             GUILayout.BeginVertical("Box");
             if (selBuildInt == 0)
             {
@@ -113,10 +129,10 @@ public class PrefabManagerEditor : EditorWindow
                     {
                         myPrefab.Instantiate();
                     }
-                    if(GUILayout.Button("Save"))
+                    if (GUILayout.Button("Save"))
                     {
-                        string savePath = EditorUtility.SaveFilePanel("t","","","txt");
-                        System.IO.File.WriteAllText(savePath,scriptToParse);
+                        string savePath = EditorUtility.SaveFilePanel("t", "", "", "txt");
+                        System.IO.File.WriteAllText(savePath, scriptToParse);
                     }
                 }
 
@@ -126,13 +142,15 @@ public class PrefabManagerEditor : EditorWindow
                     EditorGUILayout.HelpBox("Error parsing! See console for errors.", MessageType.Error, true);
                 }
             }
-            else if (selBuildInt == 1)
-            {
-                script = EditorGUILayout.ObjectField(script, typeof(MonoScript), false) as MonoScript;
+        }
 
+        private void GUIB()
+        {
+            if (selBuildInt == 1)
+            {
+                script = EditorGUILayout.ObjectField("Script", script, typeof(MonoScript), false) as MonoScript;
                 ScriptableObject scrObj;
                 SerializedObject obj;
-
                 if (script != null)
                 {
                     tmpGo = new GameObject();
@@ -193,27 +211,28 @@ public class PrefabManagerEditor : EditorWindow
                     //And always apply changes. This will update the serialized properties of the serialized object
                     obj.ApplyModifiedProperties();
 
+                    GUILayout.BeginHorizontal();
                     if (GUILayout.Button("Instantiate!"))
                     {
                         //GameObject newGo = Instantiate(tmpGo);
                         //newGo.name = "New Object";
                     }
 
-                    if(GUILayout.Button("Save"))
+                    if (GUILayout.Button("Save"))
                     {
                         GameObject newGo = Instantiate(tmpGo);
-                        AmcComponent[] comps= newGo.GetComponents<AmcComponent>();
-                        foreach(AmcComponent cmp in comps)
+                        AmcComponent[] comps = newGo.GetComponents<AmcComponent>();
+                        foreach (AmcComponent cmp in comps)
                         {
                             Debug.Log("jan");
-                            File.WriteAllText("jan.txt",cmp.GenerateComponentScript());                     
+                            File.WriteAllText("jan.txt", cmp.GenerateComponentScript());
                         }
                     }
+                    GUILayout.EndHorizontal();
                     // DestroyImmediate(tmpGo);
                 }
             }
             GUILayout.EndVertical();
         }
-        GUILayout.EndHorizontal();
     }
 }

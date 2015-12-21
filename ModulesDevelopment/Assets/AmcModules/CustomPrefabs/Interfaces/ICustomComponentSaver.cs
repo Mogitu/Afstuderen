@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace AmcCustomPrefab
 {
-    public interface IDataSetter
+    public interface ICustomComponentSaver
     {
-        bool SetData(ref Lexer lex);
+        void Save(string scriptText, AmcComponent component = null);
     }
 }
-
-
-

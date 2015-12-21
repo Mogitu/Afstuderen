@@ -5,8 +5,10 @@ using UnityEditor;
 using System.Reflection;
 
 /// <summary>
-/// Custom inspector added to AmcComponents to generate scripts from their setup.
+/// Custom inspector added to AmcComponents to generate scripts from their setup.NOT IN USE CURRENTLY
 /// </summary>
+/// 
+/*
 [CustomEditor(typeof(AmcComponent), true)]
 public class CustomPrefabEditor : Editor
 {
@@ -81,3 +83,4 @@ public class CustomPrefabEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+*/

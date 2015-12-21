@@ -101,7 +101,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\CustomPrefabEditor.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\CustomPrefabEditorDONT_USE.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\PrefabManagerEditor.cs" />
   </ItemGroup>
   <ItemGroup>

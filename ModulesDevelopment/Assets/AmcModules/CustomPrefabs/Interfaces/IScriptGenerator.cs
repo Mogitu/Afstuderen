@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
-public interface IScriptGenerator
+namespace AmcCustomPrefab
 {
-    string GenerateComponentScript();
+    public interface IScriptGenerator
+    {
+        string GenerateComponentScript();
+    }
 }
+
