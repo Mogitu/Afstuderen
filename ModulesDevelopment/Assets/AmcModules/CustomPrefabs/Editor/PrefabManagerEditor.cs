@@ -6,6 +6,11 @@ using System.Reflection;
 using System.IO;
 
 
+
+/// <summary>
+/// GUI for the custom prefab editor.
+/// TODO: Refactor to MVC/MVVM.
+/// </summary>
 public class PrefabManagerEditor : EditorWindow
 {
     private static string scriptToParse = "";
@@ -108,6 +113,11 @@ public class PrefabManagerEditor : EditorWindow
                     {
                         myPrefab.Instantiate();
                     }
+                    if(GUILayout.Button("Save"))
+                    {
+                        string savePath = EditorUtility.SaveFilePanel("t","","","txt");
+                        System.IO.File.WriteAllText(savePath,scriptToParse);
+                    }
                 }
 
                 //If there's an error, the user know.
@@ -185,8 +195,19 @@ public class PrefabManagerEditor : EditorWindow
 
                     if (GUILayout.Button("Instantiate!"))
                     {
-                        //   GameObject newGo = Instantiate(tmpGo);
-                        // newGo.name = "New Object";
+                        //GameObject newGo = Instantiate(tmpGo);
+                        //newGo.name = "New Object";
+                    }
+
+                    if(GUILayout.Button("Save"))
+                    {
+                        GameObject newGo = Instantiate(tmpGo);
+                        AmcComponent[] comps= newGo.GetComponents<AmcComponent>();
+                        foreach(AmcComponent cmp in comps)
+                        {
+                            Debug.Log("jan");
+                            File.WriteAllText("jan.txt",cmp.GenerateComponentScript());                     
+                        }
                     }
                     // DestroyImmediate(tmpGo);
                 }

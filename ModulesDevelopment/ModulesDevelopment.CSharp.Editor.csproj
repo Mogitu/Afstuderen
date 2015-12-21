@@ -108,6 +108,8 @@
     <None Include="Assets\Resources\Entity1.txt" />
     <None Include="Assets\Resources\Entity2.txt" />
     <None Include="Assets\Resources\Entity3.txt" />
+    <None Include="Assets\Resources\Entity4.txt" />
+    <None Include="Assets\Resources\Entity5.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

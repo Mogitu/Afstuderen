@@ -1,0 +1,4 @@
+[ComponentTestB]
+{
+test="fdsf"
+}
