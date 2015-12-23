@@ -7,15 +7,5 @@ public class ComponentTestB:AmcComponent   {
    public string test;
 
    [PrefabAttribute(RequiresDefinition=false)]
-   public int count;
-
-   void Start()
-   {
-       Debug.Log("start");
-   }
-
-   void Update()
-   {
-       Debug.Log("Update");
-   }
+   public int count; 
 }
