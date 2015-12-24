@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace AmcCustomPrefab
 {
@@ -15,7 +10,6 @@ namespace AmcCustomPrefab
         {
             this.presenter = presenter;
         }
-
 
         public void Display()
         {

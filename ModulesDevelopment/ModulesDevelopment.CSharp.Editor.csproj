@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.0f4</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -103,15 +101,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\BrowseView.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\CreationPresenter.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\CustomPrefabEditorDONT_USE.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\IView.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\LoadResourcesView.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Models\IPrefabModel.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Models\PrefabModel.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Presenters\CreationPresenter.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Presenters\ResourcesPresenter.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Views\BrowseView.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Views\IView.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Views\LoadResourcesView.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Views\ScriptView.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Views\SelectView.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\PrefabManagerEditor.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\ResourcesPresenter.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\ScriptView.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\SelectView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Entity1.txt" />

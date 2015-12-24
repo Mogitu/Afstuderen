@@ -12,13 +12,14 @@ namespace AmcCustomPrefab
         private int selGridInt;
         private string[] selStrings = new string[] { "Browse", "Load ALL" };
         private PrefabManager man;
-        public ResourcesPresenter()
+        private IPrefabModel model;
+        public ResourcesPresenter(IPrefabModel model)
         {
             browseView = new BrowseView(this);
             loadResourcesView = new LoadResourcesView(this);
             man = new PrefabManager();
+            this.model = model;
         }      
-
 
         public void LoadAll()
         {
