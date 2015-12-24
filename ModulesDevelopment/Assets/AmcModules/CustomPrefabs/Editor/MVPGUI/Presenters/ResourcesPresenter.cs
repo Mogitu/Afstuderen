@@ -26,9 +26,9 @@ namespace AmcCustomPrefab
             man.SpawnAllPrefabs();
         }
 
-        public void Browse()
+        public void BrowseAndLoad(string path)
         {
-            string data = EditorUtility.OpenFilePanel("", "", "txt");
+            string data = path;
             man.LoadSingle(data);
         }
 

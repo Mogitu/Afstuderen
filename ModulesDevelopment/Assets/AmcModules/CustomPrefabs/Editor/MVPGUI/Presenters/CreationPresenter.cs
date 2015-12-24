@@ -157,14 +157,14 @@ namespace AmcCustomPrefab
             }
         }
 
-        public void SaveSelectedModel()
+        public void SaveSelectedModel(string destination)
         {
             GameObject newGo = GameObject.Instantiate(model.TmpGo);
             AmcComponent[] comps = newGo.GetComponents<AmcComponent>();
             foreach (AmcComponent cmp in comps)
             {
-                Debug.Log("jan");
-                File.WriteAllText("jan.txt", cmp.GenerateComponentScript());
+               
+                File.WriteAllText(destination, cmp.GenerateComponentScript());
             }
         }
         #endregion

@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
+using UnityEditor;
 
 namespace AmcCustomPrefab
 {
+    /// <summary>
+    /// View for browsing external prefab files
+    /// </summary>
     class BrowseView : IView
     {
         private ResourcesPresenter presenter;
@@ -12,11 +16,10 @@ namespace AmcCustomPrefab
         }
 
         public void Display()
-        {
-            
+        {            
             if(GUILayout.Button("Browse"))
             {
-                presenter.Browse();
+                presenter.BrowseAndLoad(EditorUtility.OpenFilePanel("", "", "txt"));
             }
         }
     }

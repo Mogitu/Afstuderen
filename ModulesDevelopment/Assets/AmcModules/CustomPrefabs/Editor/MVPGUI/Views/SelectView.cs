@@ -59,7 +59,7 @@ namespace AmcCustomPrefab
 
             if (GUILayout.Button("Save"))
             {
-                presenter.SaveSelectedModel();
+                presenter.SaveSelectedModel(EditorUtility.SaveFilePanel("t", "", "", "txt"));
             }
             GUILayout.EndHorizontal();
             // DestroyImmediate(tmpGo);
