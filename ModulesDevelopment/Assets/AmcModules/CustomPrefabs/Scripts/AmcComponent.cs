@@ -106,6 +106,4 @@ namespace AmcCustomPrefab
             return generatedScript.ToString();
         }
     }
-
-
 }

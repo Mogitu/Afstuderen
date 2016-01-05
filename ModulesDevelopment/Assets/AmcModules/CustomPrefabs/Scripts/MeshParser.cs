@@ -16,7 +16,26 @@ namespace AmcCustomPrefab
             MeshRenderer meshRenderer = go.AddComponent<MeshRenderer>();
             while (!lex.Match("}") && lex.GetTokenType() != Lexer.TokenType.EndOfInput)
             {
-
+                string field = lex.GetToken();
+                lex.NextToken();//equals symbol
+                if (lex.Match("="))
+                {
+                    lex.NextToken();
+                }
+                else
+                {
+                    Debug.Log("Syntax Error: Expected `=` after field name");
+                    lex.NextToken();//try to continue anyway?
+                }
+                switch (field.ToLower())
+                {
+                    case "filename":
+                        Debug.Log(lex.GetTokenType());
+                        Mesh mesh = Resources.Load<Mesh>(field);
+                        meshFilter.mesh = mesh;
+                        break;
+                }
+                /*
                 //Ideally this would be expanded to also search through all loaded custom meshes (not use a switch statement)
                 //However, for this tutorial, we'll take a shortcut and only allow these primitives
                 if (lex.Match("meshtype"))
@@ -53,7 +72,7 @@ namespace AmcCustomPrefab
                             break;
                     }
                 }
-
+                */
                 lex.NextToken();
 
             }

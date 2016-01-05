@@ -2,8 +2,15 @@ using System;
 using System.IO;
 using UnityEngine;
 
+
 namespace AmcCustomPrefab
 {
+    /// <summary>
+    /// Author : Maikel van Munsteren
+    /// Desc   : Class for reading the language that is defined for scripting custom components
+    /// TODO   : *Subdivide methods to better adhere to SOLID. Low priority because the class is not likely to change.
+    ///          *Improve comments
+    /// </summary>
     public class Lexer : IDisposable
     {
         private StreamReader input;

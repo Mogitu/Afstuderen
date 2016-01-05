@@ -99,7 +99,7 @@ namespace AmcCustomPrefab
                         //now continue on to parse component body                  
                         IComponentParser parser;
 
-                        Type t = Type.GetType("AmcCustomPrefab."+componentName + "Parser");             
+                        Type t = Type.GetType("AmcCustomPrefab." + componentName + "Parser");             
                         if (t != null)
                         {
                             parser = (IComponentParser)Activator.CreateInstance(t);
