@@ -73,7 +73,6 @@
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\CustomComponentScriptSaver.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\Lexer.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\MeshParser.cs" />
-    <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\PrefabManager.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\SpriteParser.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Scripts\TransformParser.cs" />
     <Compile Include="Assets\Scripts\GameObjects\CardComponent.cs" />

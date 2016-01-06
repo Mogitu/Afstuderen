@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEditor;
 using UnityEngine;
-using System.Reflection;
-using System.IO;
 
 namespace AmcCustomPrefab
 {
-    class SelectView : IView
+    /// <summary>
+    /// Author  :   Maikel van Munsteren.
+    /// Desc    :   View for build of objects bij selection.
+    /// </summary>
+    public class SelectView : IView
     {
-
         private CreationPresenter presenter;
 
         public SelectView(CreationPresenter presenter)
@@ -27,6 +27,7 @@ namespace AmcCustomPrefab
             presenter.WorkOnScript();
             //end
 
+            //Formats display for all required fields found on the model
             EditorGUILayout.LabelField("Required fields (" + presenter.model.RequiredProperties.Count + ")");
             EditorGUI.indentLevel++;
             foreach (SerializedProperty required in presenter.model.RequiredProperties)
@@ -37,6 +38,7 @@ namespace AmcCustomPrefab
             }
             EditorGUI.indentLevel--;
 
+            //Formats display for all optional fields found on the model
             EditorGUILayout.LabelField("Optional fields (" + presenter.model.OptionalProperties.Count + ")");
             EditorGUI.indentLevel++;
             foreach (SerializedProperty optional in presenter.model.OptionalProperties)

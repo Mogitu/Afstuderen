@@ -7,10 +7,13 @@ using System.Collections.Generic;
 
 namespace AmcCustomPrefab
 {
-    public class CreationPresenter
+    /// <summary>
+    /// Author  :   Maikel van Munsteren.
+    /// Desc    :   Presenter for the script and select views.
+    /// </summary>
+    public class CreationPresenter : IPresenter
     {
-        private IView scriptView;
-        private IView selectView;
+        private IView[] views;     
         private int selGridInt;
         private string[] selStrings = new string[] { "Select it!", "Script it!" };
         public IPrefabModel model;
@@ -20,32 +23,24 @@ namespace AmcCustomPrefab
         private bool error = false;
 
         //Selection vars
-        ScriptableObject scrObj;
-        SerializedObject obj;
+        private ScriptableObject scrObj;
+        private SerializedObject obj;
 
         public CreationPresenter(IPrefabModel model)
         {
             this.model = model;
-            scriptView = new ScriptView(this);
-            selectView = new SelectView(this);
+            views = new IView[]{ new SelectView(this),
+                                 new ScriptView(this)};
         }
 
-        public void Show()
+        public void ShowView()
         {
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical("Box");
             selGridInt = GUILayout.SelectionGrid(selGridInt, selStrings, 1, GUILayout.Width(100));
             GUILayout.EndVertical();
             GUILayout.BeginVertical("Box");
-            switch (selGridInt)
-            {
-                case 0:
-                    selectView.Display();
-                    break;
-                case 1:
-                    scriptView.Display();
-                    break;
-            }
+            views[selGridInt].Display();
             GUILayout.EndVertical();
             GUILayout.EndHorizontal();
         }

@@ -13,15 +13,14 @@ namespace AmcCustomPrefab
     public class CustomComponentParser : IComponentParser
     {
         /// <summary>
-        /// 
+        /// Parses component
         /// </summary>
         /// <param name="componentName"></param>
         /// <param name="lex"></param>
         /// <param name="go"></param>
         /// <returns></returns>
         public bool ParseComponent(string componentName, ref Lexer lex, ref GameObject go)
-        {
-            //AmcComponent customComponent = UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(go, "Assets/Scripts/Tools/AdvCustomPrefab.cs (223,34)", componentName) as AmcComponent;
+        {            
             AmcComponent customComponent = go.AddComponent(System.Type.GetType(componentName)) as AmcComponent;
             bool setDataSuccess = false;
             if (customComponent != null)

@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace AmcCustomPrefab
 {
+    /// <summary>
+    /// Author  :   Maikel van Munsteren.
+    /// Desc    :   Parses Transforms.
+    /// </summary>
     class TransformParser : IComponentParser
     {
         public bool ParseComponent(string component, ref Lexer lex, ref GameObject go)
@@ -51,6 +55,4 @@ namespace AmcCustomPrefab
             return retVal;
         }
     }
-
-
 }

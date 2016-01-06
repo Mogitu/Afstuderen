@@ -4,7 +4,8 @@ using UnityEditor;
 namespace AmcCustomPrefab
 {
     /// <summary>
-    /// View for browsing external prefab files
+    ///Author   :   Maikel van Munsteren.
+    ///Desc     :   View for displaying the browser.
     /// </summary>
     class BrowseView : IView
     {

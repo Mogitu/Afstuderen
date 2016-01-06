@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace AmcCustomPrefab
@@ -50,6 +51,11 @@ namespace AmcCustomPrefab
             {
                 EditorGUILayout.HelpBox("Error parsing! See console for errors.", MessageType.Error, true);
             }
+        }
+
+        public void SetPresenter()
+        {
+            throw new NotImplementedException();
         }
     }
 }

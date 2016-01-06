@@ -5,7 +5,9 @@ using UnityEditor;
 namespace AmcCustomPrefab
 {
     /// <summary>
-    /// MVP passive style inspired GUI for the custom prefab editor. 
+    /// Author  :   Maikel van Munsteren
+    /// Desc    :   MVP passive style inspired GUI for the custom prefab editor. 
+    /// TODO    :   Each of the presenters currently has 2 views, maybe assign each view to his own presenter to make code more readible later.
     /// </summary>
     public class PrefabManagerEditor : EditorWindow
     {        
@@ -13,8 +15,7 @@ namespace AmcCustomPrefab
 
         private int selGridInt = 0;
         private IPrefabModel scriptModel;
-        private ResourcesPresenter resourcesPresenter;
-        private CreationPresenter creationpresenter;
+        private IPresenter[] presenters;       
 
         [MenuItem("AMC Tools/AMC Object Manager")]
         static void Init()
@@ -26,9 +27,9 @@ namespace AmcCustomPrefab
         //Called after opening the window
         void OnEnable()
         {        
-            scriptModel = new PrefabModel();      
-            resourcesPresenter = new ResourcesPresenter(scriptModel);
-            creationpresenter = new CreationPresenter(scriptModel);
+            scriptModel = new PrefabModel();
+            presenters = new IPresenter[] { new ResourcesPresenter(scriptModel),
+                                           new CreationPresenter(scriptModel) };           
         }
 
         public void OnGUI()
@@ -37,17 +38,8 @@ namespace AmcCustomPrefab
             GUILayout.BeginHorizontal("Box");
             selGridInt = GUILayout.SelectionGrid(selGridInt, selStrings, 2, GUILayout.Height(30));
             GUILayout.EndHorizontal();
-
             //Show presenter based on the selection in the bar.
-            switch (selGridInt)
-            {
-                case 0:
-                    resourcesPresenter.Show();
-                    break;
-                case 1:
-                    creationpresenter.Show();
-                    break;
-            }
+            presenters[selGridInt].ShowView();            
         }
     }
 }

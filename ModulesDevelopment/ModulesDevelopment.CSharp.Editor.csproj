@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -128,6 +130,7 @@
     <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Models\IPrefabModel.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Models\PrefabModel.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Presenters\CreationPresenter.cs" />
+    <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Presenters\IPresenter.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Presenters\ResourcesPresenter.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Views\BrowseView.cs" />
     <Compile Include="Assets\AmcModules\CustomPrefabs\Editor\MVPGUI\Views\IView.cs" />
