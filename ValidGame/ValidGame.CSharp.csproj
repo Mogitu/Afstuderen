@@ -62,26 +62,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Animation\StartAnim.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraHorizontalMovement.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraRotationalMovement.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraZoomMovement.cs" />
-    <Compile Include="Assets\Scripts\Camera\IMovement.cs" />
-    <Compile Include="Assets\Scripts\Camera\ObjectOutline.cs" />
-    <Compile Include="Assets\Scripts\Card.cs" />
-    <Compile Include="Assets\Scripts\EventManager.cs" />
-    <Compile Include="Assets\Scripts\GUIHandler.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\GuiCard.cs" />
-    <Compile Include="Assets\Scripts\PopupHandler.cs" />
-    <Compile Include="Assets\Scripts\States\GameState.cs" />
-    <Compile Include="Assets\Scripts\States\GameoverState.cs" />
-    <Compile Include="Assets\Scripts\States\PlayingState.cs" />
-    <Compile Include="Assets\Scripts\States\WaitingState.cs" />
-    <Compile Include="Assets\Scripts\SubtopicDescription.cs" />
-    <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
-    <Compile Include="Assets\Scripts\Timer.cs" />
+    <Compile Include="Assets\Scripts\OLD\Animation\StartAnim.cs" />
+    <Compile Include="Assets\Scripts\OLD\Camera\CameraController.cs" />
+    <Compile Include="Assets\Scripts\OLD\Camera\CameraHorizontalMovement.cs" />
+    <Compile Include="Assets\Scripts\OLD\Camera\CameraRotationalMovement.cs" />
+    <Compile Include="Assets\Scripts\OLD\Camera\CameraZoomMovement.cs" />
+    <Compile Include="Assets\Scripts\OLD\Camera\IMovement.cs" />
+    <Compile Include="Assets\Scripts\OLD\Camera\ObjectOutline.cs" />
+    <Compile Include="Assets\Scripts\OLD\Card.cs" />
+    <Compile Include="Assets\Scripts\OLD\EventManager.cs" />
+    <Compile Include="Assets\Scripts\OLD\GUIHandler.cs" />
+    <Compile Include="Assets\Scripts\OLD\GameManager.cs" />
+    <Compile Include="Assets\Scripts\OLD\GuiCard.cs" />
+    <Compile Include="Assets\Scripts\OLD\PopupHandler.cs" />
+    <Compile Include="Assets\Scripts\OLD\States\GameState.cs" />
+    <Compile Include="Assets\Scripts\OLD\States\GameoverState.cs" />
+    <Compile Include="Assets\Scripts\OLD\States\PlayingState.cs" />
+    <Compile Include="Assets\Scripts\OLD\States\WaitingState.cs" />
+    <Compile Include="Assets\Scripts\OLD\SubtopicDescription.cs" />
+    <Compile Include="Assets\Scripts\OLD\SubtopicMatcher.cs" />
+    <Compile Include="Assets\Scripts\OLD\Timer.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Cards\CardChecker.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Cards\CardGrabber.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Cards\CardManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\AMC3DText.shader" />
