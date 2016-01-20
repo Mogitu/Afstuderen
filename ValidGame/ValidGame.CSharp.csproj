@@ -85,6 +85,14 @@
     <Compile Include="Assets\Scripts\Refactor\Cards\CardChecker.cs" />
     <Compile Include="Assets\Scripts\Refactor\Cards\CardGrabber.cs" />
     <Compile Include="Assets\Scripts\Refactor\Cards\CardManager.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\GameovermenuView.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\GameplayingView.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\GuiPresenter.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\IModel.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\IView.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\MainmenuView.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\Presenter.cs" />
+    <Compile Include="Assets\Scripts\Refactor\MainManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\AMC3DText.shader" />
