@@ -2,8 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace VALIDGame
-{
+
     public class PopupHandler : MonoBehaviour
     {
         private Text texty;
@@ -39,5 +38,5 @@ namespace VALIDGame
             texty.text = message;
         }
     }
-}
+
 

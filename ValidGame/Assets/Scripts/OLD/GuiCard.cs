@@ -2,10 +2,9 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
-using VALIDGame;
 
-namespace AMCTools
-{
+
+
     //TODO: Remove validgame namespace dependancy
     public class GuiCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
@@ -34,4 +33,4 @@ namespace AMCTools
             }
         }
     }
-}
+

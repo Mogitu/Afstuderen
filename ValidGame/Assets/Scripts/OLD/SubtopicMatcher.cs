@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace VALIDGame{
+
     //----------------------------------------------------------------------------------
     // Class    : SubtopicMatcher
     // Desc     : Attached to subtopic card holders to compare the placed cards with their matchcode,
@@ -13,5 +13,5 @@ namespace VALIDGame{
         public string matchCode;
         public bool occupied = false;      
     }
-}
+
 

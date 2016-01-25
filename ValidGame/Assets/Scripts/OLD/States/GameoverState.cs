@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VALIDGame
-{
+
     public class GameoverState : GameState
     {
         private bool firstRun = false;
@@ -59,7 +58,7 @@ namespace VALIDGame
             return "With " + (goodCards) + " good card(s) you score: \n" + score.ToString();
         }
     }
-}
+
 
 
 

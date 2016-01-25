@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace VALIDGame
-{
+
     public class CameraDirectionalMovement : IMovement
     {
         //Move camera up and down
@@ -14,6 +13,6 @@ namespace VALIDGame
                                                   Mathf.Clamp(cont.transform.position.z, -0.55f, -0.1f));
         }
     }
-}
+
 
 

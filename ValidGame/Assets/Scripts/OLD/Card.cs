@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace AMCTools
-{
+
     //----------------------------------------------------------------------------------
     // Class    : Card
     // Desc     : Contains all data used to populate the card front with.
@@ -51,5 +50,5 @@ namespace AMCTools
             this.matchCode = matchCode;
         }      
     }
-}
+
 

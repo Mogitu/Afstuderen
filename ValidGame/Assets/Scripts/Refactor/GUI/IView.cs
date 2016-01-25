@@ -7,4 +7,5 @@ using System.Collections;
 /// </summary>
 public interface IView {
     void SetPresenter(Presenter presenter);
+    bool IsActive { get; }  
 }

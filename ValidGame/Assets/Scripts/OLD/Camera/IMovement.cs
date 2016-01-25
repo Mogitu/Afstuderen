@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VALIDGame
-{
+
     //----------------------------------------------------------------------------------
     // Interface    : IMovement
     // Desc         : Implement this interface to set different control behaviours on the camera controller. 
@@ -10,4 +9,4 @@ namespace VALIDGame
     {
         void Move(CameraController cont);
     }
-}
+

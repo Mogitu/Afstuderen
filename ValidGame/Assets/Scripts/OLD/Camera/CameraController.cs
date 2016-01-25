@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace VALIDGame
-{
+
     public class CameraController : MonoBehaviour
     {
         public float lookSpeed = 5.0f;
@@ -60,4 +59,4 @@ namespace VALIDGame
             activeMovement.Move(this);
         }
     }
-}
+

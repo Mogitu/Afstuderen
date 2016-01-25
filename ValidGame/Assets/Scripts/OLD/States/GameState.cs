@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace VALIDGame
-{
+
     //----------------------------------------------------------------------------------
     // Class    : GameState
     // Desc     : Inherit from this class to create new gamestates for use in the gamemanager.
@@ -18,5 +17,5 @@ namespace VALIDGame
         }
         public virtual void UpdateState() { }
     }
-}
+
 

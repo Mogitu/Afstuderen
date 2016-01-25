@@ -4,14 +4,13 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
-using AMCTools;
+
 
 /**
  * PRELIMINARY GAMEMANAGER:
  * Handles all game specific tasks, most tasks can be delegated to individual modules which will be developed later. *  
  **/
-namespace VALIDGame
-{
+
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; } //Singleton instance    
@@ -185,4 +184,4 @@ namespace VALIDGame
             set { timers = value; }
         }
     }
-}
+

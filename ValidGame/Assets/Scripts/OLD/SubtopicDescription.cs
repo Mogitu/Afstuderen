@@ -2,8 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace VALIDGame
-{
     public class SubtopicDescription : MonoBehaviour
     {
         public TextMesh descriptionTxt;
@@ -41,4 +39,3 @@ namespace VALIDGame
         }
     }
 
-}

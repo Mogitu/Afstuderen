@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
-using AMCTools;
 
-namespace VALIDGame
-{
     public class PlayingState : GameState
     { 
         public PlayingState(GameManager manager)
@@ -74,5 +71,5 @@ namespace VALIDGame
             gameManager.timerText.text = minute.ToString()+":"+seconds.ToString();           
         }
     }
-}
+
 

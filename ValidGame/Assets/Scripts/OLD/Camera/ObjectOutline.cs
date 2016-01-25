@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace AMCTools
-{
+
     public class ObjectOutline : MonoBehaviour
     {
         // Use this for initialization  
@@ -38,4 +37,4 @@ namespace AMCTools
                 objectRenderer.material = defaultMat;
         }
     }
-}
+

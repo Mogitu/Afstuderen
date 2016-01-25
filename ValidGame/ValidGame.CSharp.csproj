@@ -87,6 +87,8 @@
     <Compile Include="Assets\Scripts\Refactor\Cards\CardChecker.cs" />
     <Compile Include="Assets\Scripts\Refactor\Cards\CardGrabber.cs" />
     <Compile Include="Assets\Scripts\Refactor\Cards\CardManager.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Cards\ICardManager.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\GameovermenuView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\GameplayingView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\GuiPresenter.cs" />

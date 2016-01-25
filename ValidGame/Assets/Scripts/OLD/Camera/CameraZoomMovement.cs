@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VALIDGame
-{
+
     public class CameraZoomMovement : IMovement
     {
         public void Move(CameraController cont)
@@ -13,6 +12,6 @@ namespace VALIDGame
                                                   Mathf.Clamp(cont.transform.position.z, -0.55f, -0.1f));
         }
     }
-}
+
 
 

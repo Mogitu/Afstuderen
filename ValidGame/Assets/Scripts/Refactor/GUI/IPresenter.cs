@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using UnityEngine;
 
 interface IPresenter
 {
     void ChangeView(View view);
     void ChangeView(string viewName);
+    void OpenView(string viewName);
+    void CloseView(string viewName);
+    GameObject GetView(string viewName);
+    void ToggleView(string viewName);
 }
     
 

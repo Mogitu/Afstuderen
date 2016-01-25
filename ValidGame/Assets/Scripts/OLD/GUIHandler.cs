@@ -3,10 +3,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
-using AMCTools;
 
-namespace VALIDGame
-{
+
+
     public class GUIHandler : MonoBehaviour
     {
         public GameObject gameMenu;
@@ -115,4 +114,4 @@ namespace VALIDGame
         }
     }
 
-}
+

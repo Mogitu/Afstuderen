@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace VALIDGame
-{
+
     public class CameraRotationalMovement : IMovement
     {
         public void Move(CameraController cont)
@@ -18,5 +17,5 @@ namespace VALIDGame
             Camera.main.transform.localRotation = Quaternion.Euler(cont.verticalRotation, cont.horizontalRotation, cont.gameObject.transform.rotation.z);
         }
     }
-}
+
 

@@ -1,5 +1,4 @@
-﻿namespace AMCTools
-{
+﻿
     //----------------------------------------------------------------------------------
     // Class : Timer
     // Desc     : Simple timer class that will always count back down to zero if set
@@ -51,4 +50,4 @@
             return timer;
         }
     }
-}
+
