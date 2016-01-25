@@ -1,27 +1,44 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   Concrete presenter that is responsible for the main gui and underlying views.
+/// Desc    :   Presenter that is responsible for the main gui and underlying views.
 /// </summary>
 public class GuiPresenter : Presenter {    
-    
-    public MainManager mainManager;
-    
-    public override void Awake()
+
+    public enum VIEWS
     {
-        base.Awake();
-    }  
+        MainmenuView,
+        GamePlayingView,
+        GameoverView
+    }
+    
+    public MainManager mainManager;   
+    
+    void Awake()
+    {
+        ChangeView(VIEWS.MainmenuView.ToString());
+    }   
     
     public void StartPracticeRound()
     {
-
+        ChangeView(VIEWS.GamePlayingView.ToString());
         mainManager.StartPracticeRound();
     }       	
+
+    public void StartMultiplayerRound()
+    {
+
+    }
+
+    public void Restart()
+    {
+        Debug.Log("Restarting");
+        ChangeView(VIEWS.MainmenuView.ToString());
+    }
    
     public void QuitApplication()
     {
         mainManager.QuitApplication();
-    }   
+    }     
 }

@@ -3,43 +3,39 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   Attach implemenation of this type to a canvas root object to make it an presenter, and get access to its underlying views.
+/// Desc    :   Concrete presenter
 /// </summary>
-public abstract class Presenter: MonoBehaviour {
+public abstract class Presenter: MonoBehaviour, IPresenter {
 
-    private IView currentview;
-    private List<IView> views;  
-
-    public virtual void Awake()
-    {
-        views = GetAllViews();
-    }  
-
-    public void ChangeView(IView view)
+    public List<View> views;
+    private View currentview;
+    
+    /// <summary>
+    /// Change the view based on an attached, concrete, view implementation.
+    /// </summary>
+    /// <param name="view">compare with a concrete view</param>
+    public void ChangeView(View view)
     {
         this.currentview = view;
     }
 
-    public void ChangeView(string viewName)
-    {
-        
-    }
-
     /// <summary>
-    /// Non recursive search on child objects(views) on this presenter.
+    /// Change the view based on a string compare.
+    /// TODO    :   Comparing enum with string == bad. Needs a future fix.
     /// </summary>
-    /// <returns>Views attached to this presenter.</returns>
-    private List<IView> GetAllViews()
-    {
-        //Create temporary array and set each presenter before adding them into a list.
-        IView[] tmpViews = GetComponentsInChildren<IView>();
-        List<IView> tmpList = new List<IView>();
-        for (int i = 0; i < tmpViews.Length; i++)
+    /// <param name="viewName">compare with gameobject name.</param>
+    public void ChangeView(string viewName)
+    {                       
+        for (int i=0; i< views.Count;i++)
         {
-            tmpViews[i].SetPresenter(this);                    
-            tmpList.Add(tmpViews[i]);
-            Debug.Log(tmpViews[i].ToString());  
+            if (views[i].name.Equals(viewName))
+            {
+                views[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                views[i].gameObject.SetActive(false);
+            }
         }
-        return tmpList;
-    }
+    }   
 }

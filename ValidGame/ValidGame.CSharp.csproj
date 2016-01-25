@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -89,9 +91,11 @@
     <Compile Include="Assets\Scripts\Refactor\GUI\GameplayingView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\GuiPresenter.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\IModel.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\IPresenter.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\IView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\MainmenuView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\Presenter.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\View.cs" />
     <Compile Include="Assets\Scripts\Refactor\MainManager.cs" />
   </ItemGroup>
   <ItemGroup>
