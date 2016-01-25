@@ -1,28 +1,28 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MainManager : MonoBehaviour {
-
     public GameState gameState;
-    public PlayingState playingState;
-    public GameoverState gameOverState;
-    public WaitingState waitingState;
+  //  public PlayingStateOld playingState;
+   // public GameoverStateOld gameOverState;
+   // public WaitingStateOld waitingState;
+    public int score;
 
     void Awake()
     {
-        playingState = new PlayingState(null);
-        gameOverState = new GameoverState(null);
-        waitingState = new WaitingState(null);
+      //  playingState = new PlayingStateOld(null);
+       // gameOverState = new GameoverStateOld(null);
+       // waitingState = new WaitingStateOld(null);
     }
 
 	// Use this for initialization
 	void Start () {
-	
+       // gameState = waitingState;
+        score=0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        gameState.UpdateState();
+       // gameState.UpdateState();
 	}
 
     public void StartMultiplayer(){
@@ -31,6 +31,7 @@ public class MainManager : MonoBehaviour {
 
     public void StartPracticeRound()
     {
+       // gameState = playingState;
         Debug.Log("Start practice");
     }
 

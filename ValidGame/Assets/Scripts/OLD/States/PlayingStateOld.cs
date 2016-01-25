@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
-    public class PlayingState : GameState
+    public class PlayingStateOld : GameStateOld
     { 
-        public PlayingState(GameManager manager)
+        public PlayingStateOld(GameManager manager)
             : base(manager){
         }
 
         //TODO: Replace pos.y offset for inspector property, remove hardcoded values.
         public override void UpdateState()
-        {           
+        {        
             gameManager.Timers["GameTime"].Tick(Time.deltaTime);
             //make current card follow the cursor
             if (gameManager.currentCard != null)

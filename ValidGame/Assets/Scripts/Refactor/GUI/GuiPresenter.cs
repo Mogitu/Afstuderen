@@ -21,7 +21,7 @@ public class GuiPresenter : Presenter {
     {
         ChangeView(VIEWS.MainmenuView.ToString());
     }   
-    
+        
     public void StartPracticeRound()
     {
         ChangeView(VIEWS.GamePlayingView.ToString());
@@ -35,8 +35,7 @@ public class GuiPresenter : Presenter {
 
     public void Restart()
     {
-        Debug.Log("Restarting");
-        //ChangeView(VIEWS.MainmenuView.ToString());
+        Debug.Log("Restarting");        
     }
    
     public void QuitApplication()
@@ -47,7 +46,7 @@ public class GuiPresenter : Presenter {
     public void ToggleCardbrowser()
     {
         ToggleView(VIEWS.CardbrowserView.ToString());  
-    }  
+    }     
 
     /// <summary>
     /// Update a text with the topic description on an object, if existing.

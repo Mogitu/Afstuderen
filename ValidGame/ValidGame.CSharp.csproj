@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -77,10 +75,10 @@
     <Compile Include="Assets\Scripts\OLD\GameManager.cs" />
     <Compile Include="Assets\Scripts\OLD\GuiCard.cs" />
     <Compile Include="Assets\Scripts\OLD\PopupHandler.cs" />
-    <Compile Include="Assets\Scripts\OLD\States\GameState.cs" />
-    <Compile Include="Assets\Scripts\OLD\States\GameoverState.cs" />
-    <Compile Include="Assets\Scripts\OLD\States\PlayingState.cs" />
-    <Compile Include="Assets\Scripts\OLD\States\WaitingState.cs" />
+    <Compile Include="Assets\Scripts\OLD\States\GameStateOld.cs" />
+    <Compile Include="Assets\Scripts\OLD\States\GameoverStateOld.cs" />
+    <Compile Include="Assets\Scripts\OLD\States\PlayingStateOld.cs" />
+    <Compile Include="Assets\Scripts\OLD\States\WaitingStateOld.cs" />
     <Compile Include="Assets\Scripts\OLD\SubtopicDescription.cs" />
     <Compile Include="Assets\Scripts\OLD\SubtopicMatcher.cs" />
     <Compile Include="Assets\Scripts\OLD\Timer.cs" />
@@ -98,6 +96,10 @@
     <Compile Include="Assets\Scripts\Refactor\GUI\MainmenuView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\Presenter.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\View.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Gamestates\GameState.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Gamestates\IGameState.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Gamestates\PlayingState.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Gamestates\WaitingState.cs" />
     <Compile Include="Assets\Scripts\Refactor\MainManager.cs" />
   </ItemGroup>
   <ItemGroup>

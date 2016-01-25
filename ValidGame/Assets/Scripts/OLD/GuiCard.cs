@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Collections;
 
+public class GuiCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    public string matchCode = "1a";
 
-
-    //TODO: Remove validgame namespace dependancy
-    public class GuiCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    //TODO: part of old system, remove after refactor.
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        public string matchCode = "1a";
-       
-        public void OnPointerEnter(PointerEventData eventData)
+        GUIHandler handler = GetComponentInParent<GUIHandler>();
+        if(handler != null) 
         {
-            GUIHandler handler = GetComponentInParent<GUIHandler>();
             GameObject info = handler.extraCardInfoPanel;
             Image[] img = info.GetComponentsInChildren<Image>();
             if (img[1])
@@ -20,17 +19,22 @@ using System.Collections;
                 img[1].enabled = true;
                 img[1].sprite = GetComponent<Image>().sprite;
             }
-        }
+        }      
+    }
 
-        public void OnPointerExit(PointerEventData eventData)
+    //TODO: part of old system, remove after refactor.
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GUIHandler handler = GetComponentInParent<GUIHandler>();
+        if(handler != null)
         {
-            GUIHandler handler = GetComponentInParent<GUIHandler>();
             GameObject info = handler.extraCardInfoPanel;
             Image[] img = info.GetComponentsInChildren<Image>();
             if (img[1])
             {
                 img[1].enabled = false;
             }
-        }
+        }       
     }
+}
 

@@ -1,6 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   Abstract view implementation.......
+/// </summary>
 public abstract class View : MonoBehaviour, IView
 {
     protected GuiPresenter presenter;
@@ -20,6 +23,7 @@ public abstract class View : MonoBehaviour, IView
 
     void Awake()
     {
+        //Retreive the presenter on the root canvas object and set it.
         Presenter tmp = GetComponentInParent<Presenter>();
         SetPresenter(tmp);
     }    

@@ -47,7 +47,6 @@ using System.Collections.Generic;
                 objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });
                 browsableCards.Add(obj);
                 col++;
-
                 if (col >= 5)
                 {
                     col = 1;

@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   exposes all required functionality needed for a presenter implementation
+/// </summary>
 interface IPresenter
 {
     void ChangeView(View view);
