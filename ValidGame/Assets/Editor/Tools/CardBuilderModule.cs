@@ -83,7 +83,7 @@ namespace AMCTools
             spr.sprite = this.sprite;
 
             GameObject go2 = Resources.Load<GameObject>("guiCard");
-            GuiCard guiCard = go2.GetComponent<GuiCard>();
+            GuiCardModel guiCard = go2.GetComponent<GuiCardModel>();
             guiCard.matchCode = this.matchCodeStr;
             Image spr2 = guiCard.GetComponent<Image>();
             spr2.sprite = guiSprite;

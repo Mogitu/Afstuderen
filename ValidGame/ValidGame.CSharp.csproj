@@ -62,33 +62,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\OLD\Animation\StartAnim.cs" />
-    <Compile Include="Assets\Scripts\OLD\Camera\CameraController.cs" />
-    <Compile Include="Assets\Scripts\OLD\Camera\CameraHorizontalMovement.cs" />
-    <Compile Include="Assets\Scripts\OLD\Camera\CameraRotationalMovement.cs" />
-    <Compile Include="Assets\Scripts\OLD\Camera\CameraZoomMovement.cs" />
-    <Compile Include="Assets\Scripts\OLD\Camera\IMovement.cs" />
-    <Compile Include="Assets\Scripts\OLD\Camera\ObjectOutline.cs" />
-    <Compile Include="Assets\Scripts\OLD\Card.cs" />
-    <Compile Include="Assets\Scripts\OLD\EventManager.cs" />
     <Compile Include="Assets\Scripts\OLD\GUIHandler.cs" />
     <Compile Include="Assets\Scripts\OLD\GameManager.cs" />
-    <Compile Include="Assets\Scripts\OLD\GuiCard.cs" />
     <Compile Include="Assets\Scripts\OLD\PopupHandler.cs" />
     <Compile Include="Assets\Scripts\OLD\States\GameStateOld.cs" />
     <Compile Include="Assets\Scripts\OLD\States\GameoverStateOld.cs" />
     <Compile Include="Assets\Scripts\OLD\States\PlayingStateOld.cs" />
     <Compile Include="Assets\Scripts\OLD\States\WaitingStateOld.cs" />
-    <Compile Include="Assets\Scripts\OLD\SubtopicDescription.cs" />
-    <Compile Include="Assets\Scripts\OLD\SubtopicMatcher.cs" />
     <Compile Include="Assets\Scripts\OLD\Timer.cs" />
+    <Compile Include="Assets\Scripts\Refactor\AnimationScripts\StartAnim.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Camera\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Camera\CameraHorizontalMovement.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Camera\CameraRotationalMovement.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Camera\CameraZoomMovement.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Camera\IMovement.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Card.cs" />
     <Compile Include="Assets\Scripts\Refactor\Cards\CardChecker.cs" />
     <Compile Include="Assets\Scripts\Refactor\Cards\CardGrabber.cs" />
     <Compile Include="Assets\Scripts\Refactor\Cards\CardManager.cs" />
     <Compile Include="Assets\Scripts\Refactor\Cards\ICardManager.cs" />
+    <Compile Include="Assets\Scripts\Refactor\EventManager.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\GameovermenuView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\GameplayingView.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GUI\GuiCardModel.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\GuiPresenter.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\IModel.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\IPresenter.cs" />
@@ -96,11 +93,16 @@
     <Compile Include="Assets\Scripts\Refactor\GUI\MainmenuView.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\Presenter.cs" />
     <Compile Include="Assets\Scripts\Refactor\GUI\View.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GameManaging\GameStateManager.cs" />
+    <Compile Include="Assets\Scripts\Refactor\GameManaging\MainManager.cs" />
     <Compile Include="Assets\Scripts\Refactor\Gamestates\GameState.cs" />
     <Compile Include="Assets\Scripts\Refactor\Gamestates\IGameState.cs" />
-    <Compile Include="Assets\Scripts\Refactor\Gamestates\PlayingState.cs" />
-    <Compile Include="Assets\Scripts\Refactor\Gamestates\WaitingState.cs" />
-    <Compile Include="Assets\Scripts\Refactor\MainManager.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Gamestates\Multiplayer\MultiplayerState.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Gamestates\Singleplayer\PlayingState.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Gamestates\Singleplayer\WaitingState.cs" />
+    <Compile Include="Assets\Scripts\Refactor\Misc\ObjectOutline.cs" />
+    <Compile Include="Assets\Scripts\Refactor\SubtopicDescription.cs" />
+    <Compile Include="Assets\Scripts\Refactor\SubtopicMatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\AMC3DText.shader" />

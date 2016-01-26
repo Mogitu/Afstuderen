@@ -7,6 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 public class GuiPresenter : Presenter {    
 
+    //TODO  :  Enum is probably not the best solution, but for now workable.
     public enum VIEWS
     {
         MainmenuView,
@@ -19,8 +20,19 @@ public class GuiPresenter : Presenter {
     
     void Awake()
     {
-        ChangeView(VIEWS.MainmenuView.ToString());
+        
     }   
+
+    void Start()
+    {
+        foreach (View v in views)
+        {
+            v.SetPresenter(this);
+        }
+        ChangeView(VIEWS.MainmenuView.ToString());
+    }
+
+    
         
     public void StartPracticeRound()
     {
@@ -30,12 +42,13 @@ public class GuiPresenter : Presenter {
 
     public void StartMultiplayerRound()
     {
-        Debug.Log("starting multiplayer");
+        ChangeView(VIEWS.GamePlayingView.ToString());
+        mainManager.StartMultiplayer();
     }
 
     public void Restart()
-    {
-        Debug.Log("Restarting");        
+    {        
+        mainManager.Restart();    
     }
    
     public void QuitApplication()
@@ -47,6 +60,17 @@ public class GuiPresenter : Presenter {
     {
         ToggleView(VIEWS.CardbrowserView.ToString());  
     }     
+
+    public void InitializeGuiCards()
+    {
+
+    }
+
+    public void PickCard(string code)
+    {
+        ToggleCardbrowser();
+        mainManager.PickCard(code);
+    }
 
     /// <summary>
     /// Update a text with the topic description on an object, if existing.
@@ -60,5 +84,5 @@ public class GuiPresenter : Presenter {
         {
             txt.text = desc.descriptionTxt.text;
         }        
-    }
+    }   
 }

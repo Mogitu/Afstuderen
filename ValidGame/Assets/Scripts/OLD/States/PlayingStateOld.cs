@@ -8,8 +8,7 @@
 
         //TODO: Replace pos.y offset for inspector property, remove hardcoded values.
         public override void UpdateState()
-        {        
-            gameManager.Timers["GameTime"].Tick(Time.deltaTime);
+        {                    
             //make current card follow the cursor
             if (gameManager.currentCard != null)
             {
@@ -62,13 +61,11 @@
                     }
                 }
             }
-            if ((gameManager.GetTimer("GameTime") <= 0) || (gameManager.cardCollection.Count <= 0))
+            if (gameManager.cardCollection.Count <= 0)
             {
                 gameManager.gameState = gameManager.gameOverState;
-            }
-            int minute = (int)Mathf.Abs(gameManager.Timers["GameTime"].GetTime()/60);
-            int seconds = (int)gameManager.Timers["GameTime"].GetTime() % 60;
-            gameManager.timerText.text = minute.ToString()+":"+seconds.ToString();           
+            }           
+            
         }
     }
 

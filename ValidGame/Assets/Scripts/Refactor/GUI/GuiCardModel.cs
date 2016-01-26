@@ -2,10 +2,17 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GuiCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GuiCardModel : MonoBehaviour, IModel /*IPointerEnterHandler, IPointerExitHandler*/
 {
     public string matchCode = "1a";
+    public GuiPresenter presenter;
 
+    public void SetPresenter(GuiPresenter presenter)
+    {
+        this.presenter = presenter;
+    }
+
+    /*
     //TODO: part of old system, remove after refactor.
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -36,5 +43,6 @@ public class GuiCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
         }       
     }
+    */
 }
 

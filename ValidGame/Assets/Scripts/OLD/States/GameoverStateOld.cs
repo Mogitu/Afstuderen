@@ -49,7 +49,7 @@ public class GameoverStateOld : GameStateOld
                 gameManager.placedCards[i].GetComponent<Renderer>().material.color = Color.red;
             }
         }
-        gameManager.score = Mathf.Ceil(goodCards * 2 + (goodCards * 2 * gameManager.GetTimer("GameTime")));
+        gameManager.score = Mathf.Ceil(goodCards * 2 + (goodCards * 2 ));
         gameManager.scoreText = GetResultString(gameManager.score);
     }
 

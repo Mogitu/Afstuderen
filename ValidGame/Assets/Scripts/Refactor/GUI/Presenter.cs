@@ -8,8 +8,8 @@ using System;
 /// </summary>
 public abstract class Presenter: MonoBehaviour, IPresenter {
 
-    public List<View> views; 
-   
+    public List<View> views;    
+
     /// <summary>
     /// Change the view based on an attached, concrete, view implementation.
     /// </summary>

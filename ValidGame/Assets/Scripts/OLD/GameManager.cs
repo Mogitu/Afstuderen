@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
-using UnityEngine.Networking.NetworkSystem;
-using System.Collections;
 using System.Collections.Generic;
 
 
@@ -49,9 +46,7 @@ public class GameManager : MonoBehaviour
     {
         playingState = new PlayingStateOld(Instance);
         gameOverState = new GameoverStateOld(Instance);
-        waitingState = new WaitingStateOld(Instance);
-        RegisterTimer("GameTime");
-        UpdateTimer("GameTime", maxGameTime);
+        waitingState = new WaitingStateOld(Instance);       
         gameState = waitingState;
         CollectCards();
     }
@@ -119,67 +114,15 @@ public class GameManager : MonoBehaviour
 
     //Start singleplayer practice
     public void StartPractice()
-    {
-        RunAnimation();
+    {       
         popupHandler.Show("Practice");
         gameState = playingState;
     }
 
-    // ------------------------------------------------------------------------------------------
-    // Name    :    RegisterTimer
-    // Desc    :    Can be called by any object to register a special timer with the game manager
-    //            with the specified name.
-    //    -----------------------------------------------------------------------------------------
-    public void RegisterTimer(string key)
-    {
-        // If a timer with this name does no already exist in
-        // our hash table
-        if (!timers.ContainsKey(key))
-        {
-            // Store the name and the index of the timer in the dictionary table
-            timers.Add(key, new Timer());
-        }
-    }
+   
 
-    // ------------------------------------------------------------------------------------
-    // Name    :    GetTimer
-    // Desc    :    Get value of timer
-    // ------------------------------------------------------------------------------------
-    public float GetTimer(string key)
-    {
-        Timer timer = null;
-        // Does a timer exist with the requested name
-        if (timers.TryGetValue(key, out timer))
-        {
-            // Return its time
-            return timer.GetTime();
-        }
-        // No timer found
-        return -1.0f;
-    }
+    
 
-    // ------------------------------------------------------------------------------------
-    // Name    :    UpdateTimer
-    // Desc    :   
-    // ------------------------------------------------------------------------------------
-    public void UpdateTimer(string key, float t)
-    {
-        Timer timer;
-        if (timers.TryGetValue(key, out timer))
-        {
-            timer.AddTime(t);
-        }
-    }
-
-    public void RunAnimation()
-    {
-        Camera.main.GetComponent<Animator>().SetBool("GameStarted", true);
-    }
-
-    public Dictionary<string, Timer> Timers
-    {
-        get { return timers; }
-        set { timers = value; }
-    }
+   
 }
 

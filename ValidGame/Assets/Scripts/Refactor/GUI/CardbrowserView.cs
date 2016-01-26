@@ -5,13 +5,14 @@ using System.Collections.Generic;
 
 public class CardbrowserView : View
 {
-    private List<GuiCard> browsableCards;
+    private List<GuiCardModel> browsableCards;
     public GameObject cardPanelContent;
     public Image extraInfoPanelImage;
 
     void Awake()
     {
-        browsableCards = new List<GuiCard>();
+        browsableCards = new List<GuiCardModel>();
+
     }
 
     void Start()
@@ -25,13 +26,13 @@ public class CardbrowserView : View
     /// </summary>
     private void PopulateContent()
     {
-        GuiCard[] cards = FindObjectsOfType<GuiCard>();
+        GuiCardModel[] cards = FindObjectsOfType<GuiCardModel>();
         int offSetX = -225;
         int offSetY = 200;
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
         {
-            GuiCard obj = cards[i];
+            GuiCardModel obj = cards[i];            
             obj.transform.SetParent(cardPanelContent.transform, false);
             Vector3 newPos = obj.transform.parent.transform.position;
             newPos.x += offSetX;
@@ -59,6 +60,7 @@ public class CardbrowserView : View
 
     /// <summary>
     /// Display the image of the current highlighted card on the infopanel
+    /// TODO    :   Maybe to much logic, decouple?
     /// </summary>
     private void UpdateInfoPanel()
     {
@@ -77,24 +79,22 @@ public class CardbrowserView : View
             // check any hits to see if any of them are blocking UI elements
             foreach (RaycastResult r in hits)
             {
-                GuiCard card = r.gameObject.GetComponent<GuiCard>();
-                Image img = card.GetComponent<Image>();
-                if (card != null && img.sprite != null)
+               GuiCardModel card = r.gameObject.GetComponent<GuiCardModel>();                              
+               if(card != null)
                 {
+                    Image img = card.GetComponent<Image>();
                     extraInfoPanelImage.sprite = img.sprite;
                     return;
-                }
+                }              
             }
         }
     }
 
+    //TODO  :   Ties card model to this view, defeating the purpose of mvp?
     public void ClickedCard(GameObject obj)
     {
-        /*
-        ShowCards();
-        GuiCard card = obj.GetComponent<GuiCard>();
-        GameManager.Instance.SelectCard(card.matchCode);
-        obj.gameObject.SetActive(false);
-        */
+        GuiCardModel card = obj.GetComponent<GuiCardModel>();        
+        presenter.PickCard(card.matchCode);
+        obj.SetActive(false);   
     }
 }

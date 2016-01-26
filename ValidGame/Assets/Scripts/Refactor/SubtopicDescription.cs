@@ -11,17 +11,8 @@ public class SubtopicDescription : MonoBehaviour
     {
         infoObject = GameObject.Find("Infobar");
     }
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /*
     /// <summary>
     /// TODO: OLD system, remove after refactor
     /// </summary>
@@ -42,5 +33,6 @@ public class SubtopicDescription : MonoBehaviour
         if (infoText)
             infoText.text = "";
     }
+    */
 }
 
