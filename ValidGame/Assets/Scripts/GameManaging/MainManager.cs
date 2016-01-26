@@ -11,7 +11,7 @@ public class MainManager : MonoBehaviour
     public CameraController cameraController;   
     private GameStateManager gamestateManager;
     private CardManager cardManager;
-    private int score;
+    public int score;
 
     void Awake()
     {
@@ -61,5 +61,16 @@ public class MainManager : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Quit!");
+    }
+
+    //Disable/enable all attached monobehaviours on an object.
+    //TODO  :   Leftover from old prototype, kept for temporary bookkeeping.
+    public void DisableEnableScripts(GameObject gameObject, bool status)
+    {
+        MonoBehaviour[] scripts = gameObject.GetComponentsInChildren<MonoBehaviour>();
+        foreach (MonoBehaviour script in scripts)
+        {
+            script.enabled = status;
+        }
     }
 }

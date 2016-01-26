@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
+using System.Collections;
 
-public class GameoverStateOld : GameStateOld
-{
+public class GameOverState : GameState{
     private bool firstRun = false;
     private int goodCards = 0;
 
-    public GameoverStateOld(GameManager manager)
-        : base(manager)
-    {
+    public GameOverState(MainManager manager)
+            : base(manager){
     }
 
     public override void UpdateState()
     {
+        /*
         //Only run this once
         if (!firstRun)
         {
@@ -26,11 +26,14 @@ public class GameoverStateOld : GameStateOld
             Camera.main.GetComponent<CameraController>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
+            
         }
+        */
     }
 
     public void DetermineResults()
     {
+    /*
         //Retreive all subtopicmatchers in the placed cards parents and check if their codes match
         for (int i = 0; i < gameManager.placedCards.Count; i++)
         {
@@ -49,12 +52,13 @@ public class GameoverStateOld : GameStateOld
                 gameManager.placedCards[i].GetComponent<Renderer>().material.color = Color.red;
             }
         }
-        gameManager.score = Mathf.Ceil(goodCards * 2 + (goodCards * 2 ));
-        gameManager.scoreText = GetResultString(gameManager.score);
+       // gameManager.score = Mathf.Ceil(goodCards * 2 + (goodCards * 2));
+       // gameManager.scoreText = GetResultString(gameManager.score);
+       */
     }
 
     public string GetResultString(float score)
     {
-        return "With " + (goodCards) + " good card(s) you score: \n" + score.ToString();
+    return "d";//"With " + (goodCards) + " good card(s) you score: \n" + score.ToString();
     }
 }
