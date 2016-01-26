@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class MainManager : MonoBehaviour
 {
+    public GuiPresenter guiPresenter;
     public CameraController cameraController;   
     private GameStateManager gamestateManager;
     private CardManager cardManager;
@@ -43,8 +44,9 @@ public class MainManager : MonoBehaviour
 
     public void EndGame()
     {
-        cameraController.RunGameEndAnimation();
-        gamestateManager.SetGameoverState();        
+        guiPresenter.ShowGameOverView();
+        gamestateManager.SetGameoverState();
+        cameraController.RunGameEndAnimation();      
     }
 
     public void Restart()

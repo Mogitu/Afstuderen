@@ -12,7 +12,7 @@ public class GuiPresenter : Presenter {
     {
         MainmenuView,
         GamePlayingView,
-        GameoverView,
+        GameovermenuView,
         CardbrowserView,
     }
     
@@ -70,6 +70,11 @@ public class GuiPresenter : Presenter {
     {
         ToggleCardbrowser();
         mainManager.PickCard(code);
+    }
+
+    public void ShowGameOverView()
+    {
+        ChangeView(VIEWS.GameovermenuView.ToString());
     }
 
     /// <summary>
