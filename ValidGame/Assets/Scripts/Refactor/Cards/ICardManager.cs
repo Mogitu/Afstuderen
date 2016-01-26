@@ -1,6 +1,4 @@
-﻿
-
-interface ICardManager
+﻿interface ICardManager
 {
 
 }

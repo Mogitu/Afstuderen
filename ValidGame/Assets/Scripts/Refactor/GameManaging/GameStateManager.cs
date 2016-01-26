@@ -1,5 +1,4 @@
-﻿
-/// <summary>
+﻿/// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Controls the flow of available gamestates in relation to the manager.
 /// TODO    :   Depends on concrete Mainmanager, should rather depend on an manager abstraction.(SOLID)

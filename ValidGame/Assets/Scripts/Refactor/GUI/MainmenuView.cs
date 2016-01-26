@@ -8,14 +8,12 @@ public class MainmenuView : View {
 
     public void ClickedStart()
     {          
-        presenter.StartPracticeRound();        
-        Debug.Log("start");
+        presenter.StartPracticeRound();            
     }
 
     public void ClickedMultiplayer()
     {
-        presenter.StartMultiplayerRound();
-        Debug.Log("Multiplayer");
+        presenter.StartMultiplayerRound();     
     }
 
     public void ClickedQuit()

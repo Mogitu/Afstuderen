@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class CardGrabber  {
+﻿public class CardGrabber  {
 
 
     public void PickUpCard()

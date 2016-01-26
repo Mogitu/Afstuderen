@@ -37,13 +37,13 @@ public class MainManager : MonoBehaviour
 
     public void StartPracticeRound()
     {
-        cameraController.StartAnimation();
+        cameraController.RunGameStartAnimation();
         gamestateManager.SetPlayingState();
     }
 
     public void EndGame()
     {
-        cameraController.EndAnimation();
+        cameraController.RunGameEndAnimation();
         gamestateManager.SetGameoverState();        
     }
 

@@ -62,12 +62,12 @@ public class CameraController : MonoBehaviour
     }
 
     //Played at the start of the game. Moves camera to gameboard and hands camera control over to the player. See the animation statemachine.
-    public void StartAnimation()
+    public void RunGameStartAnimation()
     {
         Camera.main.GetComponent<Animator>().SetBool("GameStarted", true);
     }
 
-    public void EndAnimation()
+    public void RunGameEndAnimation()
     {
         Camera.main.GetComponent<CameraController>().enabled = false;
         Camera.main.GetComponent<Animator>().enabled = true;

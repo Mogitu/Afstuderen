@@ -18,8 +18,7 @@ public class CardManager : ICardManager
     {
         cardCollection = new List<Card>();
         placedCards = new List<Card>();
-        CollectCards();
-        Debug.Log("length:" + cardCollection.Count);
+        CollectCards();       
         cardOffsetY = 0.2f;
         mainManager = manager;
     }
