@@ -9,9 +9,10 @@ using UnityEngine.SceneManagement;
 public class MainManager : MonoBehaviour
 {
     public GuiPresenter guiPresenter;
-    public CameraController cameraController;   
+    public CameraController cameraController;
     private GameStateManager gamestateManager;
     private CardManager cardManager;
+    public GameObject gameBoard;
     public int score;
 
     void Awake()
@@ -21,18 +22,26 @@ public class MainManager : MonoBehaviour
     }
 
     void Start()
-    {        
+    {
         score = 0;
     }
 
+    //Update all attached modules if they dont have their own monobehaviour update.
     void Update()
-    {      
+    {
         gamestateManager.UpdateCurrentState();
         cardManager.ManageCards();
     }
 
-    public void StartMultiplayer()
+    public void StartMultiplayerClient()
     {
+        cameraController.RunGameStartAnimation();
+        gamestateManager.SetMultiplayerState();
+    }
+
+    public void StartMultiplayerHost()
+    {
+        cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
     }
 
@@ -46,7 +55,7 @@ public class MainManager : MonoBehaviour
     {
         guiPresenter.ShowGameOverView();
         gamestateManager.SetGameoverState();
-        cameraController.RunGameEndAnimation();      
+        cameraController.RunGameEndAnimation();
     }
 
     public void Restart()
@@ -56,7 +65,7 @@ public class MainManager : MonoBehaviour
 
     public void PickCard(string code)
     {
-        cardManager.SelectCard(code);        
+        cardManager.SelectCard(code);
     }
 
     public void QuitApplication()
@@ -65,14 +74,37 @@ public class MainManager : MonoBehaviour
         Debug.Log("Quit!");
     }
 
-    //Disable/enable all attached monobehaviours on an object.
-    //TODO  :   Leftover from old prototype, kept for temporary bookkeeping.
-    public void DisableEnableScripts(GameObject gameObject, bool status)
+    public void ToggleCameraActive()
     {
-        MonoBehaviour[] scripts = gameObject.GetComponentsInChildren<MonoBehaviour>();
-        foreach (MonoBehaviour script in scripts)
+        if (cameraController.enabled)
         {
-            script.enabled = status;
+            cameraController.enabled = false;
+        }
+        else
+        {
+            cameraController.enabled = true;
         }
     }
+
+    public void ToggleAllColliders()
+    {
+        Collider[] cols = FindObjectsOfType<Collider>();
+        foreach(Collider col in cols)
+        {
+            if (col.enabled)
+            {
+                col.enabled = false;
+            }
+            else
+            {
+                col.enabled = true;
+            }           
+        }
+    }
+
+    //TODO  :   Violates LOD in gameoverstate class!
+    public CardManager CardManager
+    {
+        get { return cardManager; }
+    }    
 }

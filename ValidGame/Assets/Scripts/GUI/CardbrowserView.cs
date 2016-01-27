@@ -12,7 +12,6 @@ public class CardbrowserView : View
     void Awake()
     {
         browsableCards = new List<GuiCardModel>();
-
     }
 
     void Start()
@@ -22,7 +21,7 @@ public class CardbrowserView : View
 
     /// <summary>
     /// Attach all cards to the content browser.
-    /// TODO: get rid of hardcoded offsets.
+    /// TODO: get rid of hardcoded offsets. Also, perhaps, this is to much logic for in the view?
     /// </summary>
     private void PopulateContent()
     {
@@ -77,9 +76,9 @@ public class CardbrowserView : View
         if (hits.Count > 0)
         {
             // check any hits to see if any of them are blocking UI elements
-            foreach (RaycastResult r in hits)
+            foreach (RaycastResult result in hits)
             {
-               GuiCardModel card = r.gameObject.GetComponent<GuiCardModel>();                              
+               GuiCardModel card = result.gameObject.GetComponent<GuiCardModel>();                              
                if(card != null)
                 {
                     Image img = card.GetComponent<Image>();

@@ -1,64 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameOverState : GameState{
+public class GameOverState : GameState
+{
     private bool firstRun = false;
     private int goodCards = 0;
 
     public GameOverState(MainManager manager)
-            : base(manager){
+            : base(manager)
+    {
     }
 
     public override void UpdateState()
     {
-        /*
         //Only run this once
         if (!firstRun)
         {
             DetermineResults();
-            firstRun = true;
-            //Disable all scripts on the gameboard and camera to avoid interactivity with them(outlines etc)
-            MonoBehaviour[] scripts = gameManager.gameBoard.GetComponentsInChildren<MonoBehaviour>();
-            foreach (MonoBehaviour script in scripts)
-            {
-                script.enabled = false;
-            }
+            firstRun = true;       
             Camera.main.GetComponent<CameraController>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
-            
         }
-        */
     }
 
+    /// <summary>
+    /// Check how many cards are properly placed.
+    /// TODO    :   Violates law of demeter.
+    /// </summary>
     public void DetermineResults()
     {
-    /*
         //Retreive all subtopicmatchers in the placed cards parents and check if their codes match
-        for (int i = 0; i < gameManager.placedCards.Count; i++)
+        for (int i = 0; i < gameManager.CardManager.placedCards.Count; i++)//LOD violation
         {
-            SubtopicMatcher matcher = gameManager.placedCards[i].GetComponentInParent<SubtopicMatcher>();
-            if (matcher && matcher.matchCode == gameManager.placedCards[i].matchCode)
+            SubtopicMatcher matcher = gameManager.CardManager.placedCards[i].GetComponentInParent<SubtopicMatcher>();
+            if (matcher && matcher.matchCode == gameManager.CardManager.placedCards[i].matchCode)
             {
-                GameObject go = GameObject.Instantiate(gameManager.goodParticle) as GameObject;
-                go.transform.position = gameManager.placedCards[i].transform.position;
-                gameManager.placedCards[i].GetComponent<Renderer>().material.color = Color.green;
+                //GameObject go = GameObject.Instantiate(gameManager.goodParticle) as GameObject;
+                //go.transform.position = gameManager.placedCards[i].transform.position;
+                gameManager.CardManager.placedCards[i].GetComponent<Renderer>().material.color = Color.green;
                 goodCards++;
             }
             else
             {
-                GameObject go = GameObject.Instantiate(gameManager.wrongParticle) as GameObject;
-                go.transform.position = gameManager.placedCards[i].transform.position;
-                gameManager.placedCards[i].GetComponent<Renderer>().material.color = Color.red;
+                //GameObject go = GameObject.Instantiate(gameManager.wrongParticle) as GameObject;
+                // go.transform.position = gameManager.placedCards[i].transform.position;
+                gameManager.CardManager.placedCards[i].GetComponent<Renderer>().material.color = Color.red;
             }
         }
-       // gameManager.score = Mathf.Ceil(goodCards * 2 + (goodCards * 2));
-       // gameManager.scoreText = GetResultString(gameManager.score);
-       */
-    }
-
-    public string GetResultString(float score)
-    {
-    return "d";//"With " + (goodCards) + " good card(s) you score: \n" + score.ToString();
-    }
+        Debug.Log(goodCards+ " properly placed cards.");
+        // gameManager.score = Mathf.Ceil(goodCards * 2 + (goodCards * 2));
+        // gameManager.scoreText = GetResultString(gameManager.score);
+    }    
 }

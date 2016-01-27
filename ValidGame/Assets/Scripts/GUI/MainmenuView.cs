@@ -13,7 +13,7 @@ public class MainmenuView : View {
 
     public void ClickedMultiplayer()
     {
-        presenter.StartMultiplayerRound();     
+        presenter.ShowMultiplayerView();  
     }
 
     public void ClickedQuit()

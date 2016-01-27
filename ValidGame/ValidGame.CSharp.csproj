@@ -69,8 +69,6 @@
     <Compile Include="Assets\Scripts\Camera\CameraZoomMovement.cs" />
     <Compile Include="Assets\Scripts\Camera\IMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
-    <Compile Include="Assets\Scripts\Cards\CardChecker.cs" />
-    <Compile Include="Assets\Scripts\Cards\CardGrabber.cs" />
     <Compile Include="Assets\Scripts\Cards\CardManager.cs" />
     <Compile Include="Assets\Scripts\Cards\ICardManager.cs" />
     <Compile Include="Assets\Scripts\EventManager.cs" />
@@ -83,12 +81,13 @@
     <Compile Include="Assets\Scripts\GUI\IPresenter.cs" />
     <Compile Include="Assets\Scripts\GUI\IView.cs" />
     <Compile Include="Assets\Scripts\GUI\MainmenuView.cs" />
+    <Compile Include="Assets\Scripts\GUI\MultiplayermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\Presenter.cs" />
     <Compile Include="Assets\Scripts\GUI\View.cs" />
-    <Compile Include="Assets\Scripts\GameManaging\GameStateManager.cs" />
     <Compile Include="Assets\Scripts\GameManaging\MainManager.cs" />
     <Compile Include="Assets\Scripts\Gamestates\GameOverState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\GameState.cs" />
+    <Compile Include="Assets\Scripts\Gamestates\GameStateManager.cs" />
     <Compile Include="Assets\Scripts\Gamestates\IGameState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\MultiplayerState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\PlayingState.cs" />

@@ -4,12 +4,12 @@ using UnityEngine.UI;
 public class SubtopicDescription : MonoBehaviour
 {
     public TextMesh descriptionTxt;
-    private GameObject infoObject;
+    //private GameObject infoObject;
     // Use this for initialization
 
     void Awake()
     {
-        infoObject = GameObject.Find("Infobar");
+       // infoObject = GameObject.Find("Infobar");
     }
 
     /*

@@ -11,7 +11,7 @@ public class CardManager : ICardManager
     public Card currentCard;
     public List<Card> placedCards;
     private List<Card> cardCollection;
-    private float cardOffsetY;
+    //private float cardOffsetY;
     private MainManager mainManager;
 
     public CardManager(MainManager manager)
@@ -19,10 +19,11 @@ public class CardManager : ICardManager
         cardCollection = new List<Card>();
         placedCards = new List<Card>();
         CollectCards();       
-        cardOffsetY = 0.2f;
+        //cardOffsetY = 0.2f;
         mainManager = manager;
     }
 
+    //Call every frame in manager class.
     public void ManageCards()
     {
         if (currentCard != null)
@@ -40,6 +41,11 @@ public class CardManager : ICardManager
         }
     }
 
+
+    /// <summary>
+    /// Drag the card
+    /// TODO    :   Get rid of hardcoded literals.
+    /// </summary>
     public void DragCurrentCard()
     {
         //make current card follow the cursor
@@ -66,6 +72,10 @@ public class CardManager : ICardManager
         }       
     }
 
+    /// <summary>
+    /// Drop card
+    /// </summary>
+    /// <param name="obj"></param>
     public void DropCurrentCard(GameObject obj)
     {
         SubtopicMatcher topicMatcher = obj.gameObject.GetComponent<SubtopicMatcher>();
@@ -83,6 +93,10 @@ public class CardManager : ICardManager
         }
     }
 
+    /// <summary>
+    ///Pickup the card below the mouse cursor, if any,
+    ///TODO :   Not easy to see which card is selected here, refactor?
+    /// </summary>
     public void PickUpSelectedCard()
     {
         RaycastHit hit;

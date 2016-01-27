@@ -4,24 +4,25 @@ using UnityEngine.UI;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Presenter that is responsible for the main gui and underlying views.
+/// TODO    :   When this class grows to big it is an idea to split the gui up with multiple presenters.
 /// </summary>
-public class GuiPresenter : Presenter {    
+public class GuiPresenter : Presenter
+{
 
-    //TODO  :  Enum is probably not the best solution, but for now workable.
+    /// <summary>
+    ///Desc :   This enum needs to map to existing view names 1 on 1.
+    ///TODO :   Enum is probably not the best solution, but for now workable.
+    /// </summary>
     public enum VIEWS
     {
         MainmenuView,
         GamePlayingView,
         GameovermenuView,
         CardbrowserView,
+        MultiplayermenuView
     }
-    
-    public MainManager mainManager;   
-    
-    void Awake()
-    {
-        
-    }   
+
+    public MainManager mainManager;
 
     void Start()
     {
@@ -32,38 +33,45 @@ public class GuiPresenter : Presenter {
         ChangeView(VIEWS.MainmenuView.ToString());
     }
 
-    
-        
     public void StartPracticeRound()
     {
         ChangeView(VIEWS.GamePlayingView.ToString());
         mainManager.StartPracticeRound();
-    }       	
+    }
 
-    public void StartMultiplayerRound()
+    public void StartMultiplayerClient()
     {
         ChangeView(VIEWS.GamePlayingView.ToString());
-        mainManager.StartMultiplayer();
+        mainManager.StartMultiplayerClient();
+    }
+
+    //TODO  : start host instead of client.
+    public void StartMultiplayerHost()
+    {
+        ChangeView(VIEWS.GamePlayingView.ToString());
+        mainManager.StartMultiplayerClient();
     }
 
     public void Restart()
-    {        
-        mainManager.Restart();    
+    {
+        mainManager.Restart();
     }
-   
+
     public void QuitApplication()
     {
         mainManager.QuitApplication();
-    }     
+    }
 
     public void ToggleCardbrowser()
     {
-        ToggleView(VIEWS.CardbrowserView.ToString());  
-    }     
+        mainManager.ToggleCameraActive();
+        mainManager.ToggleAllColliders();
+        ToggleView(VIEWS.CardbrowserView.ToString());      
+    }
 
-    public void InitializeGuiCards()
+    public void ShowMainmenuView()
     {
-
+        ChangeView(VIEWS.MainmenuView.ToString());
     }
 
     public void PickCard(string code)
@@ -77,6 +85,11 @@ public class GuiPresenter : Presenter {
         ChangeView(VIEWS.GameovermenuView.ToString());
     }
 
+    public void ShowMultiplayerView()
+    {
+        ChangeView(VIEWS.MultiplayermenuView.ToString());
+    }
+
     /// <summary>
     /// Update a text with the topic description on an object, if existing.
     /// </summary>
@@ -85,9 +98,9 @@ public class GuiPresenter : Presenter {
     public void UpdateGuiText(Text txt, RaycastHit hit)
     {
         SubtopicDescription desc = hit.transform.gameObject.GetComponentInChildren<SubtopicDescription>();
-        if(desc !=null)
+        if (desc != null)
         {
             txt.text = desc.descriptionTxt.text;
-        }        
-    }   
+        }
+    }
 }

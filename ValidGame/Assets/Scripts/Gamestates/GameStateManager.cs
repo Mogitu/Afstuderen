@@ -9,12 +9,14 @@ public class GameStateManager {
     private PlayingState playingState;
     private WaitingState waitingState;
     private MultiplayerState multiPlayerState;
+    private GameOverState gameoverState;
 
     public GameStateManager(MainManager manager)
     {
         playingState = new PlayingState(manager);
         waitingState = new WaitingState(manager);
         multiPlayerState = new MultiplayerState(manager);
+        gameoverState = new GameOverState(manager);
         gameState = waitingState;
     }    
 	
@@ -35,7 +37,7 @@ public class GameStateManager {
 
     public void SetGameoverState()
     {
-
+        gameState = gameoverState;
     }
 
     public void SetMultiplayerState()
