@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public enum EVENT_TYPE
-{
-    ENABLE,
-    DISABLE
-}
-
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   .....
+/// </summary>
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; } //Singleton instance    
@@ -81,4 +79,10 @@ public class EventManager : MonoBehaviour
     {
         RemoveRedundancies();
     }
+}
+
+public enum EVENT_TYPE
+{
+    ENABLE,
+    DISABLE
 }

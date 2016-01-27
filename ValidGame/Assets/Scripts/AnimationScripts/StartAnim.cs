@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   ..
+/// </summary>
 public class StartAnim : StateMachineBehaviour {
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   ...
+/// </summary>
 public class GameOverState : GameState
 {
     private bool firstRun = false;

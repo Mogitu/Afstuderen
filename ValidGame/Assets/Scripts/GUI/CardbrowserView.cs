@@ -3,6 +3,10 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   
+/// </summary>
 public class CardbrowserView : View
 {
     private List<GuiCardModel> browsableCards;

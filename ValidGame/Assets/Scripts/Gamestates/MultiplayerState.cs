@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   .....
+/// </summary>
 public class MultiplayerState : GameState{
 
     public MultiplayerState(MainManager manager)
