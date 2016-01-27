@@ -9,16 +9,18 @@ using UnityEngine.SceneManagement;
 public class MainManager : MonoBehaviour
 {
     public GuiPresenter guiPresenter;
-    public CameraController cameraController;
-    private GameStateManager gamestateManager;
-    private CardManager cardManager;
+    public CameraController cameraController; 
     public GameObject gameBoard;
     public int score;
+
+    private GameStateManager gamestateManager;
+    private CardManager cardManager;
+    private NetworkManager networkManager; 
 
     void Awake()
     {
         gamestateManager = new GameStateManager(this);
-        cardManager = new CardManager(this);
+        cardManager = new CardManager(this);      
     }
 
     void Start()
@@ -31,19 +33,32 @@ public class MainManager : MonoBehaviour
     {
         gamestateManager.UpdateCurrentState();
         cardManager.ManageCards();
+        if(networkManager != null)
+        {
+            networkManager.Update();
+        }
+
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            networkManager.SendSocketMessage();
+        }
+    }
+
+    public void StartMultiplayerHost(string ip)
+    {
+        cameraController.RunGameStartAnimation();
+        gamestateManager.SetMultiplayerState();
+        networkManager = new NetworkManager();
+        networkManager.CreateHost(ip);
     }
 
     public void StartMultiplayerClient()
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-    }
-
-    public void StartMultiplayerHost()
-    {
-        cameraController.RunGameStartAnimation();
-        gamestateManager.SetMultiplayerState();
-    }
+        networkManager = new NetworkManager();
+        networkManager.CreateClient();
+    }  
 
     public void StartPracticeRound()
     {
@@ -60,6 +75,10 @@ public class MainManager : MonoBehaviour
 
     public void Restart()
     {
+        if(networkManager != null)
+        {
+            networkManager.Disconnect();
+        }      
         SceneManager.LoadScene("GameScene");
     }
 

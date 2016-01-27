@@ -19,7 +19,8 @@ public class GuiPresenter : Presenter
         GamePlayingView,
         GameovermenuView,
         CardbrowserView,
-        MultiplayermenuView
+        MultiplayermenuView,
+        MultiplayerGameplayView
     }
 
     public MainManager mainManager;
@@ -42,14 +43,16 @@ public class GuiPresenter : Presenter
     public void StartMultiplayerClient()
     {
         ChangeView(VIEWS.GamePlayingView.ToString());
+        OpenView(VIEWS.MultiplayerGameplayView.ToString());
         mainManager.StartMultiplayerClient();
     }
 
     //TODO  : start host instead of client.
-    public void StartMultiplayerHost()
+    public void StartMultiplayerHost(string ip)
     {
         ChangeView(VIEWS.GamePlayingView.ToString());
-        mainManager.StartMultiplayerClient();
+        OpenView(VIEWS.MultiplayerGameplayView.ToString());
+        mainManager.StartMultiplayerHost(ip);
     }
 
     public void Restart()
