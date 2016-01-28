@@ -21,7 +21,7 @@ public abstract class View : MonoBehaviour, IView
         this.presenter = (GuiPresenter)presenter;
     }
 
-    void Awake()
+    public virtual void Awake()
     {
         //Retreive the presenter on the root canvas object and set it.
         Presenter tmp = GetComponentInParent<Presenter>();

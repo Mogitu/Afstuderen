@@ -7,25 +7,26 @@ using System.Runtime.Serialization.Formatters.Binary;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   ...
 /// </summary>
-public class NetworkManager {
+public class MyNetworkManager
+{
 
-    private int reliableChannelId;   
+    private int reliableChannelId;
     private int socketId;
-    private int socketPort=8888;
+    private int socketPort = 8888;
     private int connectionId;
     private string ipAdress;
 
     private ConnectionConfig config;
     private HostTopology topology;
-    private const int maxConnections=10;
+    private const int maxConnections = 10;
     private MainManager manager;
 
-	public NetworkManager(MainManager manager)
+    public MyNetworkManager(MainManager manager)
     {
         NetworkTransport.Init();
         config = new ConnectionConfig();
-        reliableChannelId = config.AddChannel(QosType.Reliable);       
-        topology = new HostTopology(config,maxConnections);
+        reliableChannelId = config.AddChannel(QosType.Reliable);
+        topology = new HostTopology(config, maxConnections);
         this.manager = manager;
     }
 
@@ -47,27 +48,28 @@ public class NetworkManager {
             case NetworkEventType.ConnectEvent:
                 Debug.Log("incoming connection event received");
                 break;
-            case NetworkEventType.DataEvent:
+            case NetworkEventType.DataEvent:                
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
-                Debug.Log("incoming message event received: " + message);                
-                break;
+                //eventManager.PostNotification(EVENT_TYPE.SEND, null, message);
+                Debug.Log("incoming message event received: " + message);
+                break;              
             case NetworkEventType.DisconnectEvent:
                 Debug.Log("remote client event disconnected");
                 break;
         }
     }
-    
+
 
     public void CreateHost(string ip)
     {
-        ipAdress = ip;       
+        ipAdress = ip;
         //addhost actually justs starts a socket.
-        socketId = NetworkTransport.AddHost(topology, socketPort);        
+        socketId = NetworkTransport.AddHost(topology, socketPort);
         Debug.Log("Socket Open. SocketId is: " + socketId);
         byte error;
-        connectionId = NetworkTransport.Connect(socketId,ip, socketPort, 0, out error);      
+        connectionId = NetworkTransport.Connect(socketId, ip, socketPort, 0, out error);
     }
 
     public void CreateClient()
@@ -76,17 +78,16 @@ public class NetworkManager {
         socketId = NetworkTransport.AddHost(topology, socketPort);
         Debug.Log("Socket Open. SocketId is: " + socketId);
         byte error;
-        connectionId = NetworkTransport.Connect(socketId, ipAdress, socketPort, 0, out error);        
+        connectionId = NetworkTransport.Connect(socketId, ipAdress, socketPort, 0, out error);
     }
 
-
-    public void SendSocketMessage()
+    public void SendSocketMessage(string msgs)
     {
         byte error;
         byte[] buffer = new byte[1024];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
-        formatter.Serialize(stream, "HelloServer");
+        formatter.Serialize(stream, msgs);
         int bufferSize = 1024;
         NetworkTransport.Send(socketId, connectionId, reliableChannelId, buffer, bufferSize, out error);
     }

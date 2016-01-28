@@ -97,7 +97,9 @@
     <Compile Include="Assets\Scripts\Gamestates\WaitingState.cs" />
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
-    <Compile Include="Assets\Scripts\Networking\NetworkManager.cs" />
+    <Compile Include="Assets\Scripts\Networking\HighNetworkController.cs" />
+    <Compile Include="Assets\Scripts\Networking\INetworkController.cs" />
+    <Compile Include="Assets\Scripts\Networking\MyNetworkManager.cs" />
     <Compile Include="Assets\Scripts\SubtopicDescription.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
   </ItemGroup>

@@ -23,6 +23,7 @@ public class GuiPresenter : Presenter
     }
 
     public MainManager mainManager;
+    public EventManager eventManager;
 
     void Start()
     {
@@ -31,7 +32,7 @@ public class GuiPresenter : Presenter
             v.SetPresenter(this);
         }
         ChangeView(VIEWS.MainmenuView.ToString());
-        //mainManager.EventManager.AddListener(EVENT_TYPE.SEND);
+        //eventManager.AddListener(EVENT_TYPE.SEND, OnMessage);
     }
 
     public void StartPracticeRound()
@@ -93,10 +94,12 @@ public class GuiPresenter : Presenter
         ChangeView(VIEWS.MultiplayermenuView.ToString());
     }
 
-    public void OnMessage()
-    {
+    
 
-    }
+    public void PostMessage(string str)
+    {
+        eventManager.PostNotification(EVENT_TYPE.SEND, this, str);       
+    }     
 
     /// <summary>
     /// Update a text with the topic description on an object, if existing.

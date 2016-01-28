@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   .....
 /// </summary>
-public class EventManager 
+public class EventManager :MonoBehaviour
 {   
     public delegate void OnEvent(EVENT_TYPE Event_Type, Component Sender, object Param = null);
 
@@ -75,4 +75,5 @@ public enum EVENT_TYPE
     ENABLE,
     DISABLE,
     SEND,
+    RECEIVE,
 }

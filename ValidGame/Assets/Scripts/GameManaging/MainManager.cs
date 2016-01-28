@@ -15,14 +15,14 @@ public class MainManager : MonoBehaviour, IMainManager
 
     private GameStateManager gamestateManager;
     private CardManager cardManager;
-    private NetworkManager networkManager;
-    private EventManager eventManager;
+    // private NetworkManager networkManager;
+    public HighNetworkController networkController;
+    public EventManager eventManager;
 
     void Awake()
     {
         gamestateManager = new GameStateManager(this);
-        cardManager = new CardManager(this);
-        eventManager = new EventManager();  
+        cardManager = new CardManager(this);            
     }
 
     void Start()
@@ -35,31 +35,21 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         gamestateManager.UpdateCurrentState();
         cardManager.ManageCards();
-        if(networkManager != null)
-        {
-            networkManager.Update();
-        }
-
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            networkManager.SendSocketMessage();
-        }
+       
     }
 
     public void StartMultiplayerHost(string ip)
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-        networkManager = new NetworkManager(this);
-        networkManager.CreateHost(ip);
+        networkController.StartHost();       
     }
 
     public void StartMultiplayerClient(string ip)
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-        networkManager = new NetworkManager(this);
-        networkManager.CreateClient();
+        networkController.StartClient(ip);     
     }  
 
     public void StartPracticeRound()
@@ -76,11 +66,7 @@ public class MainManager : MonoBehaviour, IMainManager
     }
 
     public void RestartGame()
-    {
-        if(networkManager != null)
-        {
-            networkManager.Disconnect();
-        }      
+    {       
         SceneManager.LoadScene("GameScene");
     }
 
@@ -128,15 +114,4 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         get { return cardManager; }
     }      
-    
-    //TODO  :   LOD, again.
-    public EventManager EventManager
-    {
-        get { return eventManager; }
-    }
-
-    public void SendMessage()
-    {
-        
-    }
 }

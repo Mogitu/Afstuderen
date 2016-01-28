@@ -13,8 +13,9 @@ public class CardbrowserView : View
     public GameObject cardPanelContent;
     public Image extraInfoPanelImage;
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         browsableCards = new List<GuiCardModel>();
     }
 
