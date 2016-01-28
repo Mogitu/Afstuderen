@@ -5,22 +5,11 @@ using System.Collections.Generic;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   .....
 /// </summary>
-public class EventManager : MonoBehaviour
-{
-    public static EventManager Instance { get; private set; } //Singleton instance    
-
+public class EventManager 
+{   
     public delegate void OnEvent(EVENT_TYPE Event_Type, Component Sender, object Param = null);
 
-    private Dictionary<EVENT_TYPE, List<OnEvent>> Listeners = new Dictionary<EVENT_TYPE, List<OnEvent>>();
-
-    void Awake()
-    {
-        if (Instance != null && Instance == this)
-        {
-            Destroy(gameObject);
-        }
-        Instance = this;         
-    }
+    private Dictionary<EVENT_TYPE, List<OnEvent>> Listeners = new Dictionary<EVENT_TYPE, List<OnEvent>>();  
 
     public void AddListener(EVENT_TYPE Event_Type, OnEvent Listener)
     {
@@ -84,5 +73,6 @@ public class EventManager : MonoBehaviour
 public enum EVENT_TYPE
 {
     ENABLE,
-    DISABLE
+    DISABLE,
+    SEND,
 }

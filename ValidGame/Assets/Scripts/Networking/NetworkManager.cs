@@ -18,13 +18,15 @@ public class NetworkManager {
     private ConnectionConfig config;
     private HostTopology topology;
     private const int maxConnections=10;
+    private MainManager manager;
 
-	public NetworkManager()
+	public NetworkManager(MainManager manager)
     {
         NetworkTransport.Init();
         config = new ConnectionConfig();
         reliableChannelId = config.AddChannel(QosType.Reliable);       
         topology = new HostTopology(config,maxConnections);
+        this.manager = manager;
     }
 
     //TODO  :   Switch is ugly and hard to maintain.
@@ -49,13 +51,14 @@ public class NetworkManager {
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
-                Debug.Log("incoming message event received: " + message);
+                Debug.Log("incoming message event received: " + message);                
                 break;
             case NetworkEventType.DisconnectEvent:
                 Debug.Log("remote client event disconnected");
                 break;
         }
     }
+    
 
     public void CreateHost(string ip)
     {

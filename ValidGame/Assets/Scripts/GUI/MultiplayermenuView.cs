@@ -6,12 +6,11 @@ using UnityEngine.UI;
 /// </summary>
 public class MultiplayermenuView : View {
 
-
     public Text ipAdress;
 
     public void ClickedClient()
     {
-        presenter.StartMultiplayerClient();
+        presenter.StartMultiplayerClient(ipAdress.text);
     }
 
     public void ClickedHost()
@@ -23,4 +22,5 @@ public class MultiplayermenuView : View {
     {
         presenter.ShowMainmenuView();
     }	
+
 }

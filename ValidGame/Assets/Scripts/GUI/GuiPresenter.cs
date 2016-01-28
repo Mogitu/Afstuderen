@@ -8,7 +8,6 @@ using UnityEngine.UI;
 /// </summary>
 public class GuiPresenter : Presenter
 {
-
     /// <summary>
     ///Desc :   This enum needs to map to existing view names 1 on 1.
     ///TODO :   Enum is probably not the best solution, but for now workable.
@@ -32,6 +31,7 @@ public class GuiPresenter : Presenter
             v.SetPresenter(this);
         }
         ChangeView(VIEWS.MainmenuView.ToString());
+        //mainManager.EventManager.AddListener(EVENT_TYPE.SEND);
     }
 
     public void StartPracticeRound()
@@ -40,11 +40,11 @@ public class GuiPresenter : Presenter
         mainManager.StartPracticeRound();
     }
 
-    public void StartMultiplayerClient()
+    public void StartMultiplayerClient(string ip)
     {
         ChangeView(VIEWS.GamePlayingView.ToString());
         OpenView(VIEWS.MultiplayerGameplayView.ToString());
-        mainManager.StartMultiplayerClient();
+        mainManager.StartMultiplayerClient(ip);
     }
 
     //TODO  : start host instead of client.
@@ -57,7 +57,7 @@ public class GuiPresenter : Presenter
 
     public void Restart()
     {
-        mainManager.Restart();
+        mainManager.RestartGame();
     }
 
     public void QuitApplication()
@@ -91,6 +91,11 @@ public class GuiPresenter : Presenter
     public void ShowMultiplayerView()
     {
         ChangeView(VIEWS.MultiplayermenuView.ToString());
+    }
+
+    public void OnMessage()
+    {
+
     }
 
     /// <summary>

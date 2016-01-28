@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 /// Desc    :   Hooks all primary functionalities/modules together, after initializing them.
 /// TODO    :   In order to comply better with SOLID, this probably should implement an interface.
 /// </summary>
-public class MainManager : MonoBehaviour
+public class MainManager : MonoBehaviour, IMainManager
 {
     public GuiPresenter guiPresenter;
     public CameraController cameraController; 
@@ -15,12 +15,14 @@ public class MainManager : MonoBehaviour
 
     private GameStateManager gamestateManager;
     private CardManager cardManager;
-    private NetworkManager networkManager; 
+    private NetworkManager networkManager;
+    private EventManager eventManager;
 
     void Awake()
     {
         gamestateManager = new GameStateManager(this);
-        cardManager = new CardManager(this);      
+        cardManager = new CardManager(this);
+        eventManager = new EventManager();  
     }
 
     void Start()
@@ -48,15 +50,15 @@ public class MainManager : MonoBehaviour
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-        networkManager = new NetworkManager();
+        networkManager = new NetworkManager(this);
         networkManager.CreateHost(ip);
     }
 
-    public void StartMultiplayerClient()
+    public void StartMultiplayerClient(string ip)
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-        networkManager = new NetworkManager();
+        networkManager = new NetworkManager(this);
         networkManager.CreateClient();
     }  
 
@@ -73,7 +75,7 @@ public class MainManager : MonoBehaviour
         cameraController.RunGameEndAnimation();
     }
 
-    public void Restart()
+    public void RestartGame()
     {
         if(networkManager != null)
         {
@@ -119,11 +121,22 @@ public class MainManager : MonoBehaviour
                 col.enabled = true;
             }           
         }
-    }
+    }  
 
     //TODO  :   Violates LOD in gameoverstate class!
     public CardManager CardManager
     {
         get { return cardManager; }
-    }    
+    }      
+    
+    //TODO  :   LOD, again.
+    public EventManager EventManager
+    {
+        get { return eventManager; }
+    }
+
+    public void SendMessage()
+    {
+        
+    }
 }
