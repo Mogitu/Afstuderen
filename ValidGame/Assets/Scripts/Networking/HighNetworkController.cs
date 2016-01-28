@@ -43,12 +43,15 @@ public class HighNetworkController : NetworkManager
         eventManager.PostNotification(EVENT_TYPE.RECEIVE,this, msgA.text.ToString());
     }
 
-    void MyStartHost()
+    public void MyStartHost()
     {
-        StartServer();
-        myClient = new NetworkClient();        
-        myClient.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
-        myClient.Connect("127.0.0.1", 7777);                    
+        
+        StartHost();
+        client.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
+        // StartServer();
+        // myClient = new NetworkClient();        
+        //myClient.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
+        // myClient.Connect("127.0.0.1", 7777);                    
     }   
 }
 

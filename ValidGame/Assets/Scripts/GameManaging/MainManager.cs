@@ -42,7 +42,7 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-        networkController.StartHost();       
+        networkController.MyStartHost();
     }
 
     public void StartMultiplayerClient(string ip)
