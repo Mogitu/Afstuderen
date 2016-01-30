@@ -87,6 +87,7 @@ public class GuiPresenter : Presenter
     public void ShowGameOverView()
     {
         ChangeView(VIEWS.GameovermenuView.ToString());
+        eventManager.PostNotification(EVENT_TYPE.SENDSCORE,this, 1000);
     }
 
     public void ShowMultiplayerView()
@@ -96,10 +97,15 @@ public class GuiPresenter : Presenter
 
     
 
-    public void PostMessage(string str)
+    public void PostChatSend(string str)
     {
-        eventManager.PostNotification(EVENT_TYPE.SEND, this, str);       
+        eventManager.PostNotification(EVENT_TYPE.SENDCHAT, this, str);       
     }     
+
+    public void PostScoreSend(string str)
+    {
+        eventManager.PostNotification(EVENT_TYPE.SENDSCORE, this, str);
+    }
 
     /// <summary>
     /// Update a text with the topic description on an object, if existing.

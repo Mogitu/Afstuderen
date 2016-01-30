@@ -26,19 +26,22 @@ public class CardManager : ICardManager
     //Call every frame in manager class.
     public void ManageCards()
     {
-        if (currentCard != null)
+        if(cardCollection.Count >0)
         {
-            DragCurrentCard();
-        }
-        else if(currentCard == null && Input.GetMouseButtonDown(0))
-        {
-            PickUpSelectedCard();
-        }
+            if (currentCard != null)
+            {
+                DragCurrentCard();
+            }
+            else if (currentCard == null && Input.GetMouseButtonDown(0))
+            {
+                PickUpSelectedCard();
+            }
 
-        if(cardCollection.Count <=0)
-        {
-            mainManager.EndGame();
-        }
+            if (cardCollection.Count <= 0)
+            {
+                mainManager.EndGame();
+            }
+        }       
     }
 
 

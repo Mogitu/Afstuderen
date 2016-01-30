@@ -9,7 +9,7 @@ public class MultiplayerGameplayView : View {
     {
         base.Awake();
 
-        presenter.eventManager.AddListener(EVENT_TYPE.RECEIVE, OnReceived);
+        presenter.eventManager.AddListener(EVENT_TYPE.RECEIVECHAT, OnChatReceived);
     }
 
 
@@ -26,7 +26,7 @@ public class MultiplayerGameplayView : View {
     public void AppendAndSend()
     {
         string str = AppendTextToBox();
-        presenter.PostMessage(str);
+        presenter.PostChatSend(str);
     }
 
     public void AppendSingle(string str)
@@ -37,7 +37,7 @@ public class MultiplayerGameplayView : View {
         inputField.text = "";
     }
 
-    void OnReceived(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    void OnChatReceived(EVENT_TYPE Event_Type, Component Sender, object Param = null)
     {
         Debug.Log("network got: "+ Param.ToString());
         AppendSingle(Param.ToString());

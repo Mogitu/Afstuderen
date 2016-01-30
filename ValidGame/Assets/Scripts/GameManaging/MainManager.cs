@@ -34,15 +34,14 @@ public class MainManager : MonoBehaviour, IMainManager
     void Update()
     {
         gamestateManager.UpdateCurrentState();
-        cardManager.ManageCards();
-       
+        cardManager.ManageCards();       
     }
 
     public void StartMultiplayerHost(string ip)
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-        networkController.MyStartHost();
+        networkController.BeginHosting();
     }
 
     public void StartMultiplayerClient(string ip)

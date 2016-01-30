@@ -74,6 +74,8 @@ public enum EVENT_TYPE
 {
     ENABLE,
     DISABLE,
-    SEND,
-    RECEIVE,
+    SENDCHAT,
+    RECEIVECHAT,
+    RECEIVESCORE, 
+    SENDSCORE
 }
