@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\GUI\MainmenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\MultiplayerGameplayView.cs" />
     <Compile Include="Assets\Scripts\GUI\MultiplayermenuView.cs" />
+    <Compile Include="Assets\Scripts\GUI\PopupView.cs" />
     <Compile Include="Assets\Scripts\GUI\Presenter.cs" />
     <Compile Include="Assets\Scripts\GUI\View.cs" />
     <Compile Include="Assets\Scripts\GameManaging\MainManager.cs" />

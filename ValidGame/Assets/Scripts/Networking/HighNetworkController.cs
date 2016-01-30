@@ -6,6 +6,8 @@ public class MsgTypes
 {
     public static short MSG_CHAT = MsgType.Highest + 1;
     public static short MSG_SCORE = MsgType.Highest + 2;
+    public static short MSG_PLAYER_JOINED = MsgType.Highest + 3;
+    public static short MSG_PLAYER_LEFT = MsgType.Highest + 4;
 }
 
 public class ChatMessage : MessageBase
@@ -16,6 +18,16 @@ public class ChatMessage : MessageBase
 public class ScoreMessage: MessageBase
 {
     public int score;
+}
+
+public class PlayerLeftMessage : MessageBase
+{
+    public string text;
+}
+
+public class PlayerJoinedMessage :  MessageBase
+{
+    public string text;
 }
 
 
@@ -42,9 +54,7 @@ public class HighNetworkController : NetworkManager
         else
         {
             NetworkServer.SendToAll(MsgTypes.MSG_CHAT, msgA);
-        }
-        
-        //Debug.Log("Sent " + msgA.text);
+        }       
     }
 
     public void SendScoreMsgs(EVENT_TYPE Event_Type, Component Sender, object Param = null)
@@ -65,9 +75,9 @@ public class HighNetworkController : NetworkManager
     {
         myClient = new NetworkClient();
         myClient.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
-        myClient.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);
+        myClient.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);        
         myClient.Connect(ip, 7777);
-        isClient = true;
+        isClient = true;    
     }
 
     void OnChatMessageReceived(NetworkMessage msg)
@@ -84,11 +94,18 @@ public class HighNetworkController : NetworkManager
         eventManager.PostNotification(EVENT_TYPE.RECEIVESCORE, this, msgA.score.ToString());
     }  
 
+    void OnPlayerConnect(NetworkMessage msg)
+    {
+        Debug.Log("INC");
+        eventManager.PostNotification(EVENT_TYPE.PLAYERJOINED, this, "JOINED");
+    }
+
     public void BeginHosting()
     {
         NetworkServer.Listen(7777);       
         NetworkServer.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
-        NetworkServer.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);
+        NetworkServer.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);      
+        NetworkServer.RegisterHandler(MsgType.Connect, OnPlayerConnect);
     }
 }
 

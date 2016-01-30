@@ -40,6 +40,7 @@ public class MultiplayerGameplayView : View {
     void OnChatReceived(EVENT_TYPE Event_Type, Component Sender, object Param = null)
     {
         Debug.Log("network got: "+ Param.ToString());
-        AppendSingle(Param.ToString());
+        string msg = Param.ToString().Trim();
+        AppendSingle(msg);
     }
 }
