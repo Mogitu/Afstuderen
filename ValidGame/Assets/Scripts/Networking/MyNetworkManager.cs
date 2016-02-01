@@ -5,7 +5,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   ...
+/// Desc    :   LOW LEVEL CLASS, DONT USE
+/// TODO    :   Make it usable?
 /// </summary>
 public class MyNetworkManager
 {

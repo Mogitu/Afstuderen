@@ -39,7 +39,7 @@ public class CardManager : ICardManager
 
             if (cardCollection.Count <= 0)
             {
-                mainManager.EndGame();
+                mainManager.EndPracticeGame();
             }
         }       
     }

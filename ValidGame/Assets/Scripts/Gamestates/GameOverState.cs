@@ -20,7 +20,7 @@ public class GameOverState : GameState
         if (!firstRun)
         {
             DetermineResults();
-            firstRun = true;       
+            firstRun = true;
             Camera.main.GetComponent<CameraController>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
@@ -29,7 +29,7 @@ public class GameOverState : GameState
 
     /// <summary>
     /// Check how many cards are properly placed.
-    /// TODO    :   Violates law of demeter.
+    /// TODO    :   Violates law of demeter, like a madman.
     /// </summary>
     public void DetermineResults()
     {
@@ -47,12 +47,15 @@ public class GameOverState : GameState
             else
             {
                 //GameObject go = GameObject.Instantiate(gameManager.wrongParticle) as GameObject;
-                // go.transform.position = gameManager.placedCards[i].transform.position;
+                //go.transform.position = gameManager.placedCards[i].transform.position;
                 gameManager.CardManager.placedCards[i].GetComponent<Renderer>().material.color = Color.red;
             }
         }
-        Debug.Log(goodCards+ " properly placed cards.");
-        // gameManager.score = Mathf.Ceil(goodCards * 2 + (goodCards * 2));
-        // gameManager.scoreText = GetResultString(gameManager.score);
-    }    
+        Debug.Log(goodCards + " properly placed cards.");
+        if (gameManager.IsMultiplayerGame)
+        {
+            gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCOREMP, null, goodCards);
+        }
+        gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCORE, null, goodCards);
+    }
 }

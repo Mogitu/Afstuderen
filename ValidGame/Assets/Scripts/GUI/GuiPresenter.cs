@@ -75,7 +75,17 @@ public class GuiPresenter : Presenter
 
     public void ShowMainmenuView()
     {
-        ChangeView(VIEWS.MainmenuView.ToString());
+        ChangeView(VIEWS.MainmenuView.ToString());        
+    }
+
+    public void EndPracticeGame()
+    {
+        mainManager.EndPracticeGame();
+    }
+
+    public void EndMultiplayerGame()
+    {
+        mainManager.EndMultiplayerGame();
     }
 
     public void PickCard(string code)
@@ -86,8 +96,7 @@ public class GuiPresenter : Presenter
 
     public void ShowGameOverView()
     {
-        ChangeView(VIEWS.GameovermenuView.ToString());
-        eventManager.PostNotification(EVENT_TYPE.SENDSCORE,this, 1000);
+        ChangeView(VIEWS.GameovermenuView.ToString());        
     }
 
     public void ShowMultiplayerView()

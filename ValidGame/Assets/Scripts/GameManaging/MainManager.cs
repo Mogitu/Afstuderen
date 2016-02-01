@@ -15,8 +15,9 @@ public class MainManager : MonoBehaviour, IMainManager
 
     private GameStateManager gamestateManager;
     private CardManager cardManager;
+    private bool isMultiplayerGame;
     // private NetworkManager networkManager;
-    public HighNetworkController networkController;
+    public NetworkController networkController;
     public EventManager eventManager;
 
     void Awake()
@@ -42,26 +43,35 @@ public class MainManager : MonoBehaviour, IMainManager
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
         networkController.BeginHosting();
+        isMultiplayerGame = true;
     }
 
     public void StartMultiplayerClient(string ip)
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-        networkController.StartClient(ip);     
+        networkController.StartClient(ip);
+        isMultiplayerGame = true;
     }  
 
     public void StartPracticeRound()
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetPlayingState();
+        isMultiplayerGame = false;
     }
 
-    public void EndGame()
+    public void EndPracticeGame()
     {
         guiPresenter.ShowGameOverView();
         gamestateManager.SetGameoverState();
         cameraController.RunGameEndAnimation();
+    }
+
+    public void EndMultiplayerGame()
+    {
+        EndPracticeGame();
+        eventManager.PostNotification(EVENT_TYPE.SENDSCOREMP,this,5);
     }
 
     public void RestartGame()
@@ -113,4 +123,9 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         get { return cardManager; }
     }      
+
+    public bool IsMultiplayerGame
+    {
+        get { return isMultiplayerGame; }
+    }
 }
