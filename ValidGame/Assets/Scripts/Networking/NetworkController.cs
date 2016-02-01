@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using System;
+using System.Collections.Generic;
 
 
 /// <summary>
@@ -14,7 +14,10 @@ public class NetworkController : MonoBehaviour
     public int socketPort=7777;
 
     private NetworkClient myClient;
-    private bool isClient;    
+    private bool isClient;
+
+    //Experimental
+    private List<NetworkClient> clients;
 
     void Start()
     {
@@ -37,10 +40,10 @@ public class NetworkController : MonoBehaviour
     }
 
     public void SendScoreMsgs(EVENT_TYPE Event_Type, Component Sender, object Param = null)
-    {
-        Debug.Log("Sending score to network");
+    {        
         ScoreMessage msgA = new ScoreMessage();
         msgA.score = (int)Param;
+        Debug.Log("sending as score: "+ msgA.score);
         if (isClient && myClient != null)
         {
             myClient.Send(MsgTypes.MSG_SCORE, msgA);
@@ -72,7 +75,7 @@ public class NetworkController : MonoBehaviour
     {
         ScoreMessage msgA = msg.ReadMessage<ScoreMessage>();
         Debug.Log("Received score " + msgA.score);
-        eventManager.PostNotification(EVENT_TYPE.RECEIVESCOREMP, this, msgA.score.ToString());
+        eventManager.PostNotification(EVENT_TYPE.RECEIVESCOREMP, this, msgA.score);
     }
 
     void OnPlayerConnect(NetworkMessage msg)

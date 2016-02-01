@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   .....
+/// Desc    :   Eventmanager, place in scene or attach to objects in scene to use.
 /// </summary>
-public class EventManager :MonoBehaviour
-{   
+public class EventManager : MonoBehaviour
+{
     public delegate void OnEvent(EVENT_TYPE Event_Type, Component Sender, object Param = null);
 
-    private Dictionary<EVENT_TYPE, List<OnEvent>> Listeners = new Dictionary<EVENT_TYPE, List<OnEvent>>();  
+    private Dictionary<EVENT_TYPE, List<OnEvent>> Listeners = new Dictionary<EVENT_TYPE, List<OnEvent>>();
 
     public void AddListener(EVENT_TYPE Event_Type, OnEvent Listener)
     {
@@ -46,21 +46,20 @@ public class EventManager :MonoBehaviour
         Listeners.Remove(Event_Type);
     }
 
+    //Removes all redundantly added listeners.
     public void RemoveRedundancies()
-    {        
-        Dictionary<EVENT_TYPE, List<OnEvent>> TmpListeners = new Dictionary<EVENT_TYPE, List<OnEvent>>();        
+    {
+        Dictionary<EVENT_TYPE, List<OnEvent>> TmpListeners = new Dictionary<EVENT_TYPE, List<OnEvent>>();
         foreach (KeyValuePair<EVENT_TYPE, List<OnEvent>> Item in Listeners)
-        {           
+        {
             for (int i = Item.Value.Count - 1; i >= 0; i--)
             {
-                
                 if (Item.Value[i].Equals(null))
                     Item.Value.RemoveAt(i);
             }
-          
             if (Item.Value.Count > 0)
                 TmpListeners.Add(Item.Key, Item.Value);
-        }       
+        }
         Listeners = TmpListeners;
     }
 
@@ -76,7 +75,7 @@ public enum EVENT_TYPE
     DISABLE,
     SENDCHAT,
     RECEIVECHAT,
-    RECEIVESCORE, 
+    RECEIVESCORE,
     RECEIVESCOREMP,
     SENDSCORE,
     SENDSCOREMP,

@@ -70,8 +70,7 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void EndMultiplayerGame()
     {
-        EndPracticeGame();
-        eventManager.PostNotification(EVENT_TYPE.SENDSCOREMP,this,5);
+        EndPracticeGame();        
     }
 
     public void RestartGame()

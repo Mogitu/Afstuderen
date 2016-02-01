@@ -52,10 +52,16 @@ public class GameOverState : GameState
             }
         }
         Debug.Log(goodCards + " properly placed cards.");
+        SendScores();
+    }
+
+    public void SendScores()
+    {
         if (gameManager.IsMultiplayerGame)
         {
             gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCOREMP, null, goodCards);
         }
         gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCORE, null, goodCards);
+        gameManager.score = goodCards;
     }
 }

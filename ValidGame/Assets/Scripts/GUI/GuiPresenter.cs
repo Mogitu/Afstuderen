@@ -102,9 +102,7 @@ public class GuiPresenter : Presenter
     public void ShowMultiplayerView()
     {
         ChangeView(VIEWS.MultiplayermenuView.ToString());
-    }
-
-    
+    }    
 
     public void PostChatSend(string str)
     {

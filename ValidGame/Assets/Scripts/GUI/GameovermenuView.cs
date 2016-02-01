@@ -15,7 +15,14 @@ public class GameovermenuView : View {
         base.Awake();
         presenter.eventManager.AddListener(EVENT_TYPE.SENDSCORE, OnScoreReceived);
         presenter.eventManager.AddListener(EVENT_TYPE.RECEIVESCOREMP, OnScoreReceivedMP);
-        otherScoreTxt.text = "";
+        if(presenter.mainManager.IsMultiplayerGame)
+        {
+            otherScoreTxt.text = "Waiting for opponent to finish.";
+        }
+        else
+        {
+            otherScoreTxt.text = "";
+        }        
     }
 
     public void Restart()
@@ -30,8 +37,7 @@ public class GameovermenuView : View {
     }
 
     public void OnScoreReceivedMP(EVENT_TYPE Event_Type, Component Sender, object Param = null)
-    {
-        Debug.Log("MP Received score of " + Param);
+    {        
         otherScoreTxt.text = "Your opponent has " + Param + " good cards.";
         presenter.eventManager.PostNotification(EVENT_TYPE.SENDSCOREMP, this, presenter.mainManager.score);
     }
