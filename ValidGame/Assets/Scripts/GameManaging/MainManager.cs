@@ -29,6 +29,7 @@ public class MainManager : MonoBehaviour, IMainManager
     void Start()
     {
         score = 0;
+        eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, OnPlayerJoined);
     }
 
     //Update all attached modules if they dont have their own monobehaviour update.
@@ -36,14 +37,23 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         gamestateManager.UpdateCurrentState();
         cardManager.ManageCards();       
-    }
+    }      
 
     public void StartMultiplayerHost(string ip)
+    {       
+        networkController.BeginHosting();
+        isMultiplayerGame = true;
+    }
+
+    public void OnPlayerJoined(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    {
+        StartMultiplayerMatch();
+    }
+
+    void StartMultiplayerMatch()
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
-        networkController.BeginHosting();
-        isMultiplayerGame = true;
     }
 
     public void StartMultiplayerClient(string ip)

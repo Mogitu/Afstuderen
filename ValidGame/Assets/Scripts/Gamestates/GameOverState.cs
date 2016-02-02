@@ -59,7 +59,7 @@ public class GameOverState : GameState
     {
         if (gameManager.IsMultiplayerGame)
         {
-            gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCOREMP, null, goodCards);
+            gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCORENETWORK, null, goodCards);
         }
         gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCORE, null, goodCards);
         gameManager.score = goodCards;

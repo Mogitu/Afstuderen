@@ -16,13 +16,34 @@ public class NetworkController : MonoBehaviour
     private NetworkClient myClient;
     private bool isClient;
 
+
     //Experimental
     private List<NetworkClient> clients;
 
     void Start()
     {
         eventManager.AddListener(EVENT_TYPE.SENDCHAT, SendChatMsgs);
-        eventManager.AddListener(EVENT_TYPE.SENDSCOREMP, SendScoreMsgs);
+        eventManager.AddListener(EVENT_TYPE.SENDSCORENETWORK, SendScoreMsgs);
+    }
+
+    public void BeginHosting()
+    {
+        NetworkServer.Listen(socketPort);
+        NetworkServer.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
+        NetworkServer.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);
+        NetworkServer.RegisterHandler(MsgType.Connect, OnPlayerConnect);
+        NetworkServer.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
+
+    }
+
+    public void StartClient(string ip)
+    {
+        myClient = new NetworkClient();
+        myClient.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
+        myClient.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);
+        myClient.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
+        myClient.Connect(ip, socketPort);
+        isClient = true;
     }
 
     public void SendChatMsgs(EVENT_TYPE Event_Type, Component Sender, object Param = null)
@@ -52,49 +73,39 @@ public class NetworkController : MonoBehaviour
         {
             NetworkServer.SendToAll(MsgTypes.MSG_SCORE, msgA);
         }
-    }
-
-    public void StartClient(string ip)
-    {
-        myClient = new NetworkClient();
-        myClient.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
-        myClient.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);
-        myClient.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
-        myClient.Connect(ip, socketPort);
-        isClient = true;
-    }
+    }    
 
     void OnChatMessageReceived(NetworkMessage msg)
     {
         ChatMessage msgA = msg.ReadMessage<ChatMessage>();
         Debug.Log("Received Chat");
-        eventManager.PostNotification(EVENT_TYPE.RECEIVECHAT, this, msgA.text.ToString());
+        eventManager.PostNotification(EVENT_TYPE.RECEIVECHATNETWORK, this, msgA.text.ToString());
     }
 
     void OnScoreMessageReceived(NetworkMessage msg)
     {
         ScoreMessage msgA = msg.ReadMessage<ScoreMessage>();
         Debug.Log("Received score " + msgA.score);
-        eventManager.PostNotification(EVENT_TYPE.RECEIVESCOREMP, this, msgA.score);
+        eventManager.PostNotification(EVENT_TYPE.RECEIVESCORENETWORK, this, msgA.score);
     }
 
     void OnPlayerConnect(NetworkMessage msg)
     {  
         eventManager.PostNotification(EVENT_TYPE.PLAYERJOINED, this, "JOINED");
+        if(NetworkServer.connections.Count >=2)
+        {
+            Debug.Log("Game is ready");
+        }
     }
 
     void OnPlayerDissConnect(NetworkMessage msg)
     {
         eventManager.PostNotification(EVENT_TYPE.PLAYERLEFT, this, "LEFT");
-    }
+    }   
 
-    public void BeginHosting()
+    public int GetConnectionsCount
     {
-        NetworkServer.Listen(socketPort);
-        NetworkServer.RegisterHandler(MsgTypes.MSG_CHAT, OnChatMessageReceived);
-        NetworkServer.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);
-        NetworkServer.RegisterHandler(MsgType.Connect, OnPlayerConnect);
-        NetworkServer.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
+        get { return NetworkServer.connections.Count; }
     }
 }
 

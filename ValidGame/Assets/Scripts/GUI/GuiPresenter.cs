@@ -32,7 +32,7 @@ public class GuiPresenter : Presenter
             v.SetPresenter(this);
         }
         ChangeView(VIEWS.MainmenuView.ToString());
-        //eventManager.AddListener(EVENT_TYPE.SEND, OnMessage);
+        eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, StartMatch);
     }
 
     public void StartPracticeRound()
@@ -51,9 +51,13 @@ public class GuiPresenter : Presenter
     //TODO  : start host instead of client.
     public void StartMultiplayerHost(string ip)
     {
-        ChangeView(VIEWS.GamePlayingView.ToString());
-        OpenView(VIEWS.MultiplayerGameplayView.ToString());
+        ChangeView(VIEWS.MultiplayerGameplayView.ToString());
         mainManager.StartMultiplayerHost(ip);
+    }
+
+    public void StartMatch(EVENT_TYPE even, Component sender, object Param=null)
+    {
+        OpenView(VIEWS.GamePlayingView.ToString());        
     }
 
     public void Restart()

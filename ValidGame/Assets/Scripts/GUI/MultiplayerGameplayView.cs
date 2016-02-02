@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class MultiplayerGameplayView : View {
     public InputField inputField;
+    public Text messageTxt;
     public Text chatBoxTxt;
 
     public override void Awake()
     {
         base.Awake();
-        presenter.eventManager.AddListener(EVENT_TYPE.RECEIVECHAT, OnChatReceived);
+        presenter.eventManager.AddListener(EVENT_TYPE.RECEIVECHATNETWORK, OnChatReceived);
         presenter.eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, OnPlayerJoined);
         presenter.eventManager.AddListener(EVENT_TYPE.PLAYERLEFT, OnPlayerLeft);
     }
@@ -36,7 +37,7 @@ public class MultiplayerGameplayView : View {
         inputField.text = "";
     }
 
-    void OnChatReceived(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void OnChatReceived(EVENT_TYPE Event_Type, Component Sender, object Param = null)
     {      
         string msg = Param.ToString().Trim();
         AppendSingle(msg);
@@ -45,6 +46,7 @@ public class MultiplayerGameplayView : View {
     public void OnPlayerJoined(EVENT_TYPE Event_Type, Component Sender, object Param = null)
     {
         AppendSingle("Player joined!");
+        messageTxt.gameObject.SetActive(false);
     }
 
     public void OnPlayerLeft(EVENT_TYPE Event_Type, Component Sender, object Param = null)
