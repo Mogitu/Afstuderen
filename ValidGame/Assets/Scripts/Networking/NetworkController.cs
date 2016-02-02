@@ -33,7 +33,6 @@ public class NetworkController : MonoBehaviour
         NetworkServer.RegisterHandler(MsgTypes.MSG_SCORE, OnScoreMessageReceived);
         NetworkServer.RegisterHandler(MsgType.Connect, OnPlayerConnect);
         NetworkServer.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
-
     }
 
     public void StartClient(string ip)
