@@ -1,5 +1,0 @@
-[ComponentTestA]
-{
-title="f"
-stuff=Stuff1
-}

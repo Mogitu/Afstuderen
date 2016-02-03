@@ -92,6 +92,7 @@ public class GuiPresenter : Presenter
         mainManager.EndMultiplayerGame();
     }
 
+    //TODO  :   Dont like the way this is coupled to the mainmanager, and routes it to the current gamestate.
     public void PickCard(string code)
     {
         ToggleCardbrowser();
@@ -123,9 +124,9 @@ public class GuiPresenter : Presenter
     /// </summary>
     /// <param name="txt">The text mesh to update.</param>
     /// <param name="hit">The hit to use.</param>
-    public void UpdateGuiText(Text txt, RaycastHit hit)
+    public void UpdateContextInformationText(Text txt, RaycastHit hit)
     {
-        SubtopicDescription desc = hit.transform.gameObject.GetComponentInChildren<SubtopicDescription>();
+        ContextDescription desc = hit.transform.gameObject.GetComponentInChildren<ContextDescription>();
         if (desc != null)
         {
             txt.text = desc.descriptionTxt.text;

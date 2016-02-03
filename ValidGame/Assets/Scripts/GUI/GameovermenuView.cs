@@ -32,7 +32,7 @@ public class GameovermenuView : View {
 
     public void OnScoreReceived(EVENT_TYPE Event_Type, Component Sender, object Param = null)
     {
-        Debug.Log("Received score of " + Param);
+        Debug.Log("Received in gui score of " + Param);
         ownScoreTxt.text = "You have " +Param + " good cards.";
     }
 

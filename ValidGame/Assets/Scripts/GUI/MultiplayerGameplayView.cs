@@ -1,6 +1,12 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   View that contains all elements required for a multiplayer game.
+///             Should be shown together with the default gameplay view.
+/// TODO    :   The append methods are very vulnerable to errors in usage, refactor?
+/// </summary>
 public class MultiplayerGameplayView : View {
     public InputField inputField;
     public Text messageTxt;
@@ -14,6 +20,7 @@ public class MultiplayerGameplayView : View {
         presenter.eventManager.AddListener(EVENT_TYPE.PLAYERLEFT, OnPlayerLeft);
     }
 
+    //TODO  :   More descriptive naming.
     public string AppendTextToBox()
     {       
         string strA = inputField.text+"NEWLINE";
@@ -23,12 +30,14 @@ public class MultiplayerGameplayView : View {
         return strB;              
     }   
     
+    //TODO  :   More descriptive naming.
     public void AppendAndSend()
     {
         string str = AppendTextToBox();
         presenter.PostChatSend(str);
     }
 
+    //TODO  :   More descriptive naming.
     public void AppendSingle(string str)
     {
         string strA = str + "NEWLINE";

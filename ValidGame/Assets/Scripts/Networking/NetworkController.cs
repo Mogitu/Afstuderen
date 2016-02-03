@@ -16,7 +16,6 @@ public class NetworkController : MonoBehaviour
     private NetworkClient myClient;
     private bool isClient;
 
-
     //Experimental
     private List<NetworkClient> clients;
 
@@ -63,7 +62,7 @@ public class NetworkController : MonoBehaviour
     {        
         ScoreMessage msgA = new ScoreMessage();
         msgA.score = (int)Param;
-        Debug.Log("sending as score: "+ msgA.score);
+        Debug.Log("sending as score to gui: "+ msgA.score);
         if (isClient && myClient != null)
         {
             myClient.Send(MsgTypes.MSG_SCORE, msgA);
@@ -84,7 +83,7 @@ public class NetworkController : MonoBehaviour
     void OnScoreMessageReceived(NetworkMessage msg)
     {
         ScoreMessage msgA = msg.ReadMessage<ScoreMessage>();
-        Debug.Log("Received score " + msgA.score);
+        Debug.Log("Received network score " + msgA.score);
         eventManager.PostNotification(EVENT_TYPE.RECEIVESCORENETWORK, this, msgA.score);
     }
 

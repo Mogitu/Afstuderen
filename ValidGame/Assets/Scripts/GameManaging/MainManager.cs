@@ -14,7 +14,7 @@ public class MainManager : MonoBehaviour, IMainManager
     public int score;
 
     private GameStateManager gamestateManager;
-    private CardManager cardManager;
+    private CardController cardManager;
     private bool isMultiplayerGame;
     // private NetworkManager networkManager;
     public NetworkController networkController;
@@ -23,7 +23,7 @@ public class MainManager : MonoBehaviour, IMainManager
     void Awake()
     {
         gamestateManager = new GameStateManager(this);
-        cardManager = new CardManager(this);            
+        cardManager = new CardController(this);            
     }
 
     void Start()
@@ -128,7 +128,7 @@ public class MainManager : MonoBehaviour, IMainManager
     }  
 
     //TODO  :   Violates LOD in gameoverstate class!
-    public CardManager CardManager
+    public CardController CardManager
     {
         get { return cardManager; }
     }      

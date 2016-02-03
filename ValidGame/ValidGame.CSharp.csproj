@@ -64,7 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AnimationScripts\StartAnim.cs" />
+    <Compile Include="Assets\Scripts\Animation\StartAnim.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraHorizontalMovement.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraRotationalMovement.cs" />
@@ -72,8 +72,7 @@
     <Compile Include="Assets\Scripts\Camera\IMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Cards\CardManager.cs" />
-    <Compile Include="Assets\Scripts\Cards\ICardManager.cs" />
-    <Compile Include="Assets\Scripts\GameManaging\IMainManager.cs" />
+    <Compile Include="Assets\Scripts\Cards\ICardController.cs" />
     <Compile Include="Assets\Scripts\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameovermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameplayingView.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="Assets\Scripts\GUI\PopupView.cs" />
     <Compile Include="Assets\Scripts\GUI\Presenter.cs" />
     <Compile Include="Assets\Scripts\GUI\View.cs" />
+    <Compile Include="Assets\Scripts\GameManaging\IMainManager.cs" />
     <Compile Include="Assets\Scripts\GameManaging\MainManager.cs" />
     <Compile Include="Assets\Scripts\Gamestates\GameOverState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\GameState.cs" />
@@ -98,9 +98,9 @@
     <Compile Include="Assets\Scripts\Gamestates\WaitingState.cs" />
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
-    <Compile Include="Assets\Scripts\Networking\NetworkController.cs" />
     <Compile Include="Assets\Scripts\Networking\INetworkController.cs" />
-    <Compile Include="Assets\Scripts\SubtopicDescription.cs" />
+    <Compile Include="Assets\Scripts\Networking\NetworkController.cs" />
+    <Compile Include="Assets\Scripts\ContextDescription.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
   </ItemGroup>
   <ItemGroup>

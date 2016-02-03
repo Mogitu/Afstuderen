@@ -16,7 +16,7 @@ public abstract class Presenter: MonoBehaviour, IPresenter {
     /// <param name="view">compare with a concrete view</param>
     public void ChangeView(View view)
     {
-        
+        //Implement
     }
 
     /// <summary>
@@ -71,6 +71,11 @@ public abstract class Presenter: MonoBehaviour, IPresenter {
         }
     }
 
+    /// <summary>
+    /// Retreive a view from the views enumeration.
+    /// </summary>
+    /// <param name="viewName"></param>
+    /// <returns></returns>
     public GameObject GetView(string viewName)
     {
         for (int i = 0; i < views.Count; i++)
@@ -83,6 +88,10 @@ public abstract class Presenter: MonoBehaviour, IPresenter {
         return null;
     }
 
+    /// <summary>
+    /// Toggles visibility and active status of a view.
+    /// </summary>
+    /// <param name="viewName"></param>
     public void ToggleView(string viewName)
     {
         if (!GetView(viewName).activeSelf)

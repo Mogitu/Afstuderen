@@ -30,7 +30,7 @@ public class GameplayingView : View{
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 10))
         {
-            presenter.UpdateGuiText(infoText, hit);
+            presenter.UpdateContextInformationText(infoText, hit);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// Desc    :   Controls card behaviour etc.
 /// TODO    :   To much responsibilities? Decouple drag, drop, pickup BEHAVIOURS?
 /// </summary>
-public class CardManager : ICardManager
+public class CardController : ICardController
 {
     public Card currentCard;
     public List<Card> placedCards;
@@ -14,7 +14,7 @@ public class CardManager : ICardManager
     //private float cardOffsetY;
     private MainManager mainManager;
 
-    public CardManager(MainManager manager)
+    public CardController(MainManager manager)
     {
         cardCollection = new List<Card>();
         placedCards = new List<Card>();
