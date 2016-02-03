@@ -76,9 +76,8 @@
     <Compile Include="Assets\Scripts\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameovermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameplayingView.cs" />
-    <Compile Include="Assets\Scripts\GUI\GuiCardModel.cs" />
+    <Compile Include="Assets\Scripts\GUI\GuiCard.cs" />
     <Compile Include="Assets\Scripts\GUI\GuiPresenter.cs" />
-    <Compile Include="Assets\Scripts\GUI\IModel.cs" />
     <Compile Include="Assets\Scripts\GUI\IPresenter.cs" />
     <Compile Include="Assets\Scripts\GUI\IView.cs" />
     <Compile Include="Assets\Scripts\GUI\MainmenuView.cs" />
@@ -96,6 +95,7 @@
     <Compile Include="Assets\Scripts\Gamestates\MultiplayerState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\PlayingState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\WaitingState.cs" />
+    <Compile Include="Assets\Scripts\Misc\Enumeration.cs" />
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
     <Compile Include="Assets\Scripts\Networking\INetworkController.cs" />

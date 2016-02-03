@@ -9,14 +9,14 @@ using System.Collections.Generic;
 /// </summary>
 public class CardbrowserView : View
 {
-    private List<GuiCardModel> browsableCards;
+    private List<GuiCard> browsableCards;
     public GameObject cardPanelContent;
     public Image extraInfoPanelImage;
 
     public override void Awake()
     {
         base.Awake();
-        browsableCards = new List<GuiCardModel>();
+        browsableCards = new List<GuiCard>();
     }
 
     void Start()
@@ -30,13 +30,13 @@ public class CardbrowserView : View
     /// </summary>
     private void PopulateContent()
     {
-        GuiCardModel[] cards = FindObjectsOfType<GuiCardModel>();
+        GuiCard[] cards = FindObjectsOfType<GuiCard>();
         int offSetX = -225;
         int offSetY = 200;
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
         {
-            GuiCardModel obj = cards[i];            
+            GuiCard obj = cards[i];            
             obj.transform.SetParent(cardPanelContent.transform, false);
             Vector3 newPos = obj.transform.parent.transform.position;
             newPos.x += offSetX;
@@ -83,7 +83,7 @@ public class CardbrowserView : View
             // check any hits to see if any of them are blocking UI elements
             foreach (RaycastResult result in hits)
             {
-               GuiCardModel card = result.gameObject.GetComponent<GuiCardModel>();                              
+               GuiCard card = result.gameObject.GetComponent<GuiCard>();                              
                if(card != null)
                 {
                     Image img = card.GetComponent<Image>();
@@ -97,7 +97,7 @@ public class CardbrowserView : View
     //TODO  :   Ties card model to this view, defeating the purpose of mvp?
     public void ClickedCard(GameObject obj)
     {
-        GuiCardModel card = obj.GetComponent<GuiCardModel>();        
+        GuiCard card = obj.GetComponent<GuiCard>();        
         presenter.PickCard(card.matchCode);
         obj.SetActive(false);   
     }

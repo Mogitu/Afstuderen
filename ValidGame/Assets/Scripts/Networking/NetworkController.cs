@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
-
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Highlevel networkmanager
 /// TODO    :   Decouple message handling?
 /// </summary>
-public class NetworkController : MonoBehaviour
+public class NetworkController : MonoBehaviour, INetworkController
 {
     public EventManager eventManager;
     public int socketPort=7777;
@@ -99,7 +99,27 @@ public class NetworkController : MonoBehaviour
     void OnPlayerDissConnect(NetworkMessage msg)
     {
         eventManager.PostNotification(EVENT_TYPE.PLAYERLEFT, this, "LEFT");
-    }   
+    }
+
+    public void Disconnect()
+    {
+       // throw new NotImplementedException();
+    }
+
+    public void ReceiveMessage()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void SendMessage()
+    {
+       // throw new NotImplementedException();
+    }
+
+    public void AddListeners()
+    {
+        throw new NotImplementedException();
+    }
 
     public int GetConnectionsCount
     {
@@ -110,10 +130,10 @@ public class NetworkController : MonoBehaviour
 //Contains message types thate are used in the game
 public class MsgTypes
 {
-    public static short MSG_CHAT = MsgType.Highest + 1;
-    public static short MSG_SCORE = MsgType.Highest + 2;
-    public static short MSG_PLAYER_JOINED = MsgType.Highest + 3;
-    public static short MSG_PLAYER_LEFT = MsgType.Highest + 4;
+    public const short MSG_CHAT = MsgType.Highest + 1;
+    public const short MSG_SCORE = MsgType.Highest + 2;
+    public const short MSG_PLAYER_JOINED = MsgType.Highest + 3;
+    public const short MSG_PLAYER_LEFT = MsgType.Highest + 4;
 }
 
 //All custom messages below.

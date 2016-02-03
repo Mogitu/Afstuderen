@@ -69,6 +69,8 @@ public class EventManager : MonoBehaviour
     }
 }
 
+//All possible events
+//TODO  : replace enum.
 public enum EVENT_TYPE
 {
     ENABLE,

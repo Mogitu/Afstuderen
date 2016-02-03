@@ -4,6 +4,7 @@ using System.Collections;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Changes color of object when mouse hovers on it.
+/// TODO    :   Rather than OnMouseX, a raycast would be more stable on different platforms.
 /// </summary>
 
 public class ObjectOutline : MonoBehaviour

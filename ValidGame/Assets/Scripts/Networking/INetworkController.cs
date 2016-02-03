@@ -1,9 +1,10 @@
 ﻿public interface INetworkController
 {
-    void StartHost();
+    void BeginHosting();
     void StartClient(string ip);
-    void DisConnect();
-    void ReceiveMsgs();
-    void SendMsgs();
+    void AddListeners();
+    void ReceiveMessage();
+    void SendMessage();
+    void Disconnect();   
 }
 
