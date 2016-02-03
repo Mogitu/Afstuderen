@@ -45,7 +45,7 @@ public class MainManager : MonoBehaviour, IMainManager
         isMultiplayerGame = true;
     }
 
-    public void OnPlayerJoined(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void OnPlayerJoined(short Event_Type, Component Sender, object Param = null)
     {
         StartMultiplayerMatch();
     }

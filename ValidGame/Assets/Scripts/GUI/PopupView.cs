@@ -18,7 +18,7 @@ public class PopupView : View
         presenter.eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, OnPlayerJoined);
     }
 
-    public void OnPlayerJoined(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void OnPlayerJoined(short Event_Type, Component Sender, object Param = null)
     {
         Debug.Log("Player joined");
         popUpText.text = "Player joined";

@@ -46,19 +46,19 @@ public class MultiplayerGameplayView : View {
         inputField.text = "";
     }
 
-    public void OnChatReceived(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void OnChatReceived(short Event_Type, Component Sender, object Param = null)
     {      
         string msg = Param.ToString().Trim();
         AppendSingle(msg);
     }
 
-    public void OnPlayerJoined(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void OnPlayerJoined(short Event_Type, Component Sender, object Param = null)
     {
         AppendSingle("Player joined!");
         messageTxt.gameObject.SetActive(false);
     }
 
-    public void OnPlayerLeft(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void OnPlayerLeft(short Event_Type, Component Sender, object Param = null)
     {
         AppendSingle("Player left, gameover!");
         presenter.EndMultiplayerGame();

@@ -55,7 +55,7 @@ public class GuiPresenter : Presenter
         mainManager.StartMultiplayerHost(ip);
     }
 
-    public void StartMatch(EVENT_TYPE even, Component sender, object Param=null)
+    public void StartMatch(short event_type, Component sender, object Param=null)
     {
         OpenView(VIEWS.GamePlayingView.ToString());        
     }

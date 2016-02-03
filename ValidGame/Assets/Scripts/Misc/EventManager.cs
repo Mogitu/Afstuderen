@@ -7,11 +7,11 @@ using System.Collections.Generic;
 /// </summary>
 public class EventManager : MonoBehaviour
 {
-    public delegate void OnEvent(EVENT_TYPE Event_Type, Component Sender, object Param = null);
+    public delegate void OnEvent(short Event_Type, Component Sender, object Param = null);
 
-    private Dictionary<EVENT_TYPE, List<OnEvent>> Listeners = new Dictionary<EVENT_TYPE, List<OnEvent>>();
+    private Dictionary<short, List<OnEvent>> Listeners = new Dictionary<short, List<OnEvent>>();
 
-    public void AddListener(EVENT_TYPE Event_Type, OnEvent Listener)
+    public void AddListener(short Event_Type, OnEvent Listener)
     {
         List<OnEvent> ListenList = null;
         if (Listeners.TryGetValue(Event_Type, out ListenList))
@@ -24,7 +24,7 @@ public class EventManager : MonoBehaviour
         Listeners.Add(Event_Type, ListenList);
     }
 
-    public void PostNotification(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void PostNotification(short Event_Type, Component Sender, object Param = null)
     {
         List<OnEvent> ListenList = null;
         if (!Listeners.TryGetValue(Event_Type, out ListenList))
@@ -41,7 +41,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void RemoveEvent(EVENT_TYPE Event_Type)
+    public void RemoveEvent(short Event_Type)
     {
         Listeners.Remove(Event_Type);
     }
@@ -49,8 +49,8 @@ public class EventManager : MonoBehaviour
     //Removes all redundantly added listeners.
     public void RemoveRedundancies()
     {
-        Dictionary<EVENT_TYPE, List<OnEvent>> TmpListeners = new Dictionary<EVENT_TYPE, List<OnEvent>>();
-        foreach (KeyValuePair<EVENT_TYPE, List<OnEvent>> Item in Listeners)
+        Dictionary<short, List<OnEvent>> TmpListeners = new Dictionary<short, List<OnEvent>>();
+        foreach (KeyValuePair<short, List<OnEvent>> Item in Listeners)
         {
             for (int i = Item.Value.Count - 1; i >= 0; i--)
             {
@@ -69,18 +69,3 @@ public class EventManager : MonoBehaviour
     }
 }
 
-//All possible events
-//TODO  : replace enum.
-public enum EVENT_TYPE
-{
-    ENABLE,
-    DISABLE,
-    SENDCHAT,
-    RECEIVECHATNETWORK,
-    RECEIVESCORE,
-    RECEIVESCORENETWORK,
-    SENDSCORE,
-    SENDSCORENETWORK,
-    PLAYERJOINED,
-    PLAYERLEFT
-}

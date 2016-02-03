@@ -30,13 +30,13 @@ public class GameovermenuView : View {
         presenter.Restart();
     }    
 
-    public void OnScoreReceived(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void OnScoreReceived(short Event_Type, Component Sender, object Param = null)
     {
         Debug.Log("Received in gui score of " + Param);
         ownScoreTxt.text = "You have " +Param + " good cards.";
     }
 
-    public void OnScoreReceivedMP(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    public void OnScoreReceivedMP(short Event_Type, Component Sender, object Param = null)
     {        
         otherScoreTxt.text = "Your opponent has " + Param + " good cards.";
         presenter.eventManager.PostNotification(EVENT_TYPE.SENDSCORENETWORK, this, presenter.mainManager.score);
