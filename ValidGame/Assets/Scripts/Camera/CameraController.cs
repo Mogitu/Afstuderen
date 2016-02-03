@@ -18,14 +18,14 @@ public class CameraController : MonoBehaviour
     public float maxDistanceHorizontal = 0.3f;
     public float maxVerticalDistance = 0.15f;
 
-    private Dictionary<string, IMovement> movementSet;
-    private IMovement activeMovement;
+    private Dictionary<string, ICameraMovement> movementSet;
+    private ICameraMovement activeMovement;
 
     // Use this for initialization
     void Start()
     {
         //Cursor.visible = false;	
-        movementSet = new Dictionary<string, IMovement>(){
+        movementSet = new Dictionary<string, ICameraMovement>(){
             {"Horizontal", new CameraDirectionalMovement()},
             {"Rotational", new CameraRotationalMovement()},
             {"Zoom", new CameraZoomMovement()}};
@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    void SetMovement(IMovement movement)
+    void SetMovement(ICameraMovement movement)
     {
         activeMovement = movement;
         activeMovement.Move(this);

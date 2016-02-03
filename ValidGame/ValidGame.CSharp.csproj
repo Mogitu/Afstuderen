@@ -69,7 +69,7 @@
     <Compile Include="Assets\Scripts\Camera\CameraHorizontalMovement.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraRotationalMovement.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraZoomMovement.cs" />
-    <Compile Include="Assets\Scripts\Camera\IMovement.cs" />
+    <Compile Include="Assets\Scripts\Camera\ICameraMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Cards\CardManager.cs" />
     <Compile Include="Assets\Scripts\Cards\ICardController.cs" />

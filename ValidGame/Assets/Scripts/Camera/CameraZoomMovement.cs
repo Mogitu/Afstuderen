@@ -4,7 +4,7 @@
 /// Author  :   Maikel van Munsteren
 /// Desc    :   "Zooms" camera in and out. This is faked by just moving the camera along the forward(Z) axis.
 /// </summary>
-public class CameraZoomMovement : IMovement
+public class CameraZoomMovement : ICameraMovement
 {
     public void Move(CameraController cont)
     {

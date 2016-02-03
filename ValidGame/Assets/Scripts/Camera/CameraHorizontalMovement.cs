@@ -4,7 +4,7 @@
 /// Author  :   Maikel van Munsteren 
 /// Desc    :   Moves camera up and down
 /// </summary>
-public class CameraDirectionalMovement : IMovement
+public class CameraDirectionalMovement : ICameraMovement
 {
     //Move camera up and down
     public void Move(CameraController cont)

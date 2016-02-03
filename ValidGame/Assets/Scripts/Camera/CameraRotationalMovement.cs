@@ -4,7 +4,7 @@
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Rotates camera
 /// </summary>
-public class CameraRotationalMovement : IMovement
+public class CameraRotationalMovement : ICameraMovement
 {
     public void Move(CameraController cont)
     {

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Hooks all primary functionalities/modules together, after initializing them.
 /// TODO    :   In order to comply better with SOLID, this probably should implement an interface.
+///             A lot of functions can be placed to specific states.
 /// </summary>
 public class MainManager : MonoBehaviour, IMainManager
 {
@@ -14,7 +15,7 @@ public class MainManager : MonoBehaviour, IMainManager
     public int score;
 
     private GameStateManager gamestateManager;
-    private CardController cardManager;
+    private CardController cardController;//This should be placed somewhere else....probably a state?
     private bool isMultiplayerGame;
     // private NetworkManager networkManager;
     public NetworkController networkController;
@@ -23,34 +24,28 @@ public class MainManager : MonoBehaviour, IMainManager
     void Awake()
     {
         gamestateManager = new GameStateManager(this);
-        cardManager = new CardController(this);            
+        cardController = new CardController(this);            
     }
 
     void Start()
     {
-        score = 0;
-        eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, OnPlayerJoined);
+        score = 0;        
     }
 
     //Update all attached modules if they dont have their own monobehaviour update.
     void Update()
     {
         gamestateManager.UpdateCurrentState();
-        cardManager.ManageCards();       
+        cardController.ManageCards();       
     }      
 
     public void StartMultiplayerHost(string ip)
     {       
         networkController.BeginHosting();
         isMultiplayerGame = true;
-    }
+    }   
 
-    public void OnPlayerJoined(short Event_Type, Component Sender, object Param = null)
-    {
-        StartMultiplayerMatch();
-    }
-
-    void StartMultiplayerMatch()
+    public void StartMultiplayerMatch()
     {
         cameraController.RunGameStartAnimation();
         gamestateManager.SetMultiplayerState();
@@ -90,7 +85,7 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void PickCard(string code)
     {
-        cardManager.SelectCard(code);
+        cardController.SelectCard(code);
     }
 
     public void QuitApplication()
@@ -111,6 +106,7 @@ public class MainManager : MonoBehaviour, IMainManager
         }
     }
 
+    //For all colliders in the currently active scene.
     public void ToggleAllColliders()
     {
         Collider[] cols = FindObjectsOfType<Collider>();
@@ -130,7 +126,7 @@ public class MainManager : MonoBehaviour, IMainManager
     //TODO  :   Violates LOD in gameoverstate class!
     public CardController CardManager
     {
-        get { return cardManager; }
+        get { return cardController; }
     }      
 
     public bool IsMultiplayerGame
