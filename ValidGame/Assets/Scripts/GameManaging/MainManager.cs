@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class MainManager : MonoBehaviour, IMainManager
 {
     public GuiPresenter guiPresenter;
-    public CameraController cameraController; 
+    public CameraControllerDesktop cameraController; 
     public GameObject gameBoard;
     public int score;
 

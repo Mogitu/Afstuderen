@@ -10,12 +10,16 @@ namespace AMCTools
         private string cardTitleStr = "Title";
         private string cardDescriptionStr = "Placeholder description";
         private string matchCodeStr = "1a";
+#pragma warning disable CS0169 // The field 'CardBuilderEditor.groupEnabled' is never used
         private bool groupEnabled;      
+#pragma warning restore CS0169 // The field 'CardBuilderEditor.groupEnabled' is never used
 
         private Sprite sprite;
         private Sprite guiSprite;
 
+#pragma warning disable CS0169 // The field 'CardBuilderEditor.text' is never used
         private Texture text;
+#pragma warning restore CS0169 // The field 'CardBuilderEditor.text' is never used
 
         [MenuItem("AMC Centre/Tools/VALID/Card builder")]
         public static void ShowWindow()

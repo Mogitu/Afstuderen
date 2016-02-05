@@ -5,6 +5,7 @@
 /// </summary>
 public interface ICameraController
 {
-
+    void SetCameraMovement(ICameraMovement movement);
+    void HandleInput();
 }
 

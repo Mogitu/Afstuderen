@@ -34,8 +34,7 @@ public abstract class Presenter: MonoBehaviour, IPresenter {
     }
 
     /// <summary>
-    /// Open selected view, closes all others.
-    /// TODO    :   Comparing enum with string == bad. Needs a future fix.
+    /// Open selected view, closes all others.  
     /// </summary>
     /// <param name="viewName">compare with gameobject name.</param>
     public void ChangeView(string viewName)
@@ -86,7 +85,7 @@ public abstract class Presenter: MonoBehaviour, IPresenter {
     }
 
     /// <summary>
-    /// Retreive a view from the views enumeration.
+    /// Retreive a view
     /// </summary>
     /// <param name="viewName"></param>
     /// <returns></returns>

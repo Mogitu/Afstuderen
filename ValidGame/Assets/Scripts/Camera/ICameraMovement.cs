@@ -4,5 +4,5 @@
 // -----------------
 public interface ICameraMovement
 {
-    void Move(CameraController cont);
+    void Move(CameraControllerDesktop cont);
 }

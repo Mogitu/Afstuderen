@@ -6,7 +6,7 @@
 /// </summary>
 public class CameraZoomMovement : ICameraMovement
 {
-    public void Move(CameraController cont)
+    public void Move(CameraControllerDesktop cont)
     {
         //TODO: replace hardcoded values for inspector properties.
         Camera.main.transform.Translate(Input.GetAxis("Mouse ScrollWheel") * Vector3.forward * Time.deltaTime * cont.zoomSpeed);

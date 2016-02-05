@@ -6,7 +6,7 @@
 /// </summary>
 public class CameraRotationalMovement : ICameraMovement
 {
-    public void Move(CameraController cont)
+    public void Move(CameraControllerDesktop cont)
     {
         //Add mouse axis movement to the rotation.
         cont.horizontalRotation += Input.GetAxis("Mouse X") * cont.lookSpeed;

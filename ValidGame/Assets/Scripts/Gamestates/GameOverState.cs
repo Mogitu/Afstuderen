@@ -21,7 +21,7 @@ public class GameOverState : GameState
         {
             DetermineResults();
             firstRun = true;
-            Camera.main.GetComponent<CameraController>().enabled = false;
+            Camera.main.GetComponent<CameraControllerDesktop>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
         }

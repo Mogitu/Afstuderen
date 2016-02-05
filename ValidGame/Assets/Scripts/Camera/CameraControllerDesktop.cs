@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Handles common camera functions.
+/// TODO    :   Make this abstract.
 /// </summary>
-public class CameraController : MonoBehaviour, ICameraController
+public class CameraControllerDesktop : MonoBehaviour, ICameraController
 {
     public float lookSpeed = 5.0f;
     public float moveSpeed = 1.0f;
@@ -23,7 +25,7 @@ public class CameraController : MonoBehaviour, ICameraController
 
     // Use this for initialization
     void Start()
-    {    
+    {
         movementSet = new Dictionary<string, ICameraMovement>(){
             {"Horizontal", new CameraDirectionalMovement()},
             {"Rotational", new CameraRotationalMovement()},
@@ -33,28 +35,10 @@ public class CameraController : MonoBehaviour, ICameraController
     // Update is called once per frame
     void Update()
     {
-        //move horizontally and vertically 
-        if ((Input.GetMouseButton(0) && Input.GetMouseButton(1)) || Input.GetMouseButton(2))
-        {
-            SetMovement(movementSet["Horizontal"]);
-            return;
-        }
-
-        //rotate the camera
-        if (Input.GetMouseButton(1))
-        {
-            SetMovement(movementSet["Rotational"]);
-            return;
-        }
-
-        //Zoom camera towards front
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
-            SetMovement(movementSet["Zoom"]);
-        }
+        HandleInput();
     }
 
-    void SetMovement(ICameraMovement movement)
+    public void SetCameraMovement(ICameraMovement movement)
     {
         activeMovement = movement;
         activeMovement.Move(this);
@@ -68,8 +52,31 @@ public class CameraController : MonoBehaviour, ICameraController
 
     public void RunGameEndAnimation()
     {
-        Camera.main.GetComponent<CameraController>().enabled = false;
+        Camera.main.GetComponent<CameraControllerDesktop>().enabled = false;
         Camera.main.GetComponent<Animator>().enabled = true;
         Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
+    }
+
+    public void HandleInput()
+    {
+        //move horizontally and vertically 
+        if ((Input.GetMouseButton(0) && Input.GetMouseButton(1)) || Input.GetMouseButton(2))
+        {
+            SetCameraMovement(movementSet["Horizontal"]);
+            return;
+        }
+
+        //rotate the camera
+        if (Input.GetMouseButton(1))
+        {
+            SetCameraMovement(movementSet["Rotational"]);
+            return;
+        }
+
+        //Zoom camera towards front
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            SetCameraMovement(movementSet["Zoom"]);
+        }
     }
 }

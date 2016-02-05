@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Main menu. Start, quit, etc.
 /// </summary>

@@ -14,10 +14,7 @@ public class NetworkController : MonoBehaviour, INetworkController
     public int socketPort=7777;
 
     private NetworkClient myClient;
-    private bool isClient;
-
-    //Experimental
-    private List<NetworkClient> clients;
+    private bool isClient;  
 
     void Start()
     {

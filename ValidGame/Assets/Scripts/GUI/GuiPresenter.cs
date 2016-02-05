@@ -8,54 +8,40 @@ using UnityEngine.UI;
                 
 /// </summary>
 public class GuiPresenter : Presenter
-{
-    /// <summary>
-    ///Desc :   This enum needs to map to existing view names 1 on 1.
-    ///TODO :   Enum is probably not the best solution, but for now workable.
-    /// </summary>
-    public enum VIEWS
-    {
-        MainmenuView,
-        GamePlayingView,
-        GameovermenuView,
-        CardbrowserView,
-        MultiplayermenuView,
-        MultiplayerGameplayView
-    }
-
+{   
     public MainManager mainManager;
     public EventManager eventManager;
 
     public override void Start()
     {
         base.Start();
-        ChangeView(VIEWS.MainmenuView.ToString());
+        ChangeView(VIEWS.mainmenuView);
         eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, StartMatch);
     }  
 
     public void StartPracticeRound()
     {
-        ChangeView(VIEWS.GamePlayingView.ToString());
+        ChangeView(VIEWS.gamePlayingView);
         mainManager.StartPracticeRound();
     }
 
     public void StartMultiplayerClient(string ip)
     {
-        ChangeView(VIEWS.GamePlayingView.ToString());
-        OpenView(VIEWS.MultiplayerGameplayView.ToString());
+        ChangeView(VIEWS.gamePlayingView);
+        OpenView(VIEWS.multiplayerGameplayView);
         mainManager.StartMultiplayerClient(ip);
     }
 
     //TODO  : start host instead of client.
     public void StartMultiplayerHost(string ip)
     {
-        ChangeView(VIEWS.MultiplayerGameplayView.ToString());
+        ChangeView(VIEWS.multiplayerGameplayView);
         mainManager.StartMultiplayerHost(ip);
     }
 
     public void StartMatch(short event_type, Component sender, object Param=null)
     {
-        OpenView(VIEWS.GamePlayingView.ToString());        
+        OpenView(VIEWS.gamePlayingView);        
     }
 
     public void Restart()
@@ -72,12 +58,12 @@ public class GuiPresenter : Presenter
     {
         mainManager.ToggleCameraActive();
         mainManager.ToggleAllColliders();
-        ToggleView(VIEWS.CardbrowserView.ToString());      
+        ToggleView(VIEWS.cardbrowserView);      
     }
 
     public void ShowMainmenuView()
     {
-        ChangeView(VIEWS.MainmenuView.ToString());        
+        ChangeView(VIEWS.mainmenuView);        
     }
 
     public void EndPracticeGame()
@@ -99,12 +85,12 @@ public class GuiPresenter : Presenter
 
     public void ShowGameOverView()
     {
-        ChangeView(VIEWS.GameovermenuView.ToString());        
+        ChangeView(VIEWS.gameovermenuView);        
     }
 
     public void ShowMultiplayerView()
     {
-        ChangeView(VIEWS.MultiplayermenuView.ToString());
+        ChangeView(VIEWS.multiplayermenuView);
     }    
 
     public void PostChatSend(string str)
