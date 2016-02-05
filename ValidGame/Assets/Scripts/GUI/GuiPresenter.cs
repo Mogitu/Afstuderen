@@ -5,6 +5,7 @@ using UnityEngine.UI;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Presenter that is responsible for the main gui and underlying views.
 /// TODO    :   When this class grows to big it is an idea to split the gui up with multiple presenters.
+                
 /// </summary>
 public class GuiPresenter : Presenter
 {
@@ -25,15 +26,12 @@ public class GuiPresenter : Presenter
     public MainManager mainManager;
     public EventManager eventManager;
 
-    void Start()
+    public override void Start()
     {
-        foreach (View v in views)
-        {
-            v.SetPresenter(this);
-        }
+        base.Start();
         ChangeView(VIEWS.MainmenuView.ToString());
         eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, StartMatch);
-    }
+    }  
 
     public void StartPracticeRound()
     {
@@ -92,7 +90,7 @@ public class GuiPresenter : Presenter
         mainManager.EndMultiplayerGame();
     }
 
-    //TODO  :   Dont like the way this is coupled to the mainmanager, and routes it to the current gamestate.
+    //TODO  :   Reduce coupling between mainmanager, this presenter and the cardcontroller.
     public void PickCard(string code)
     {
         ToggleCardbrowser();

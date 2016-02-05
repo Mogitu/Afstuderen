@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   Eventmanager, place in scene or attach to objects in scene to use.
+/// Desc    :   Eventmanager, place in scene and drag it in a referenceslot on a gameobject that needs the evenmanager.
 /// </summary>
 public class EventManager : MonoBehaviour
 {

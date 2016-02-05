@@ -18,7 +18,7 @@ public class ObjectOutline : MonoBehaviour
     void Start()
     {
         objectRenderer = GetComponent<Renderer>();
-        highLightMat = (Material)Instantiate(objectRenderer.sharedMaterial);
+        highLightMat = (Material)Instantiate(objectRenderer.sharedMaterial);//Shared material because normal material will create extra instances "killing" performance.
         defaultMat = objectRenderer.sharedMaterial;
     }
 

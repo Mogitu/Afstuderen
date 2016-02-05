@@ -1,4 +1,8 @@
-﻿//All possible events
+﻿/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   Container for all game events.
+/// TODO    :   New/unused events need to be added/removed.
+/// </summary>
 public class EVENT_TYPE
 {
     public const short ENABLE = 1;

@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :
+/// Desc    :   Flyweight that checks retreives a "scenecard" on the matchcode of selected  card in the cardbrowser view.
 /// </summary>
 public class GuiCard : MonoBehaviour
 {

@@ -5,7 +5,7 @@ using UnityEngine;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   View that contains all elements required for a multiplayer game.
 ///             Should be shown together with the default gameplay view.
-/// TODO    :   The append methods are very vulnerable to errors in usage, refactor?
+/// TODO    :   The append methods are very vulnerable to errors in usage and have ambiguous names, refactor!
 /// </summary>
 public class MultiplayerGameplayView : View {
     public InputField inputField;

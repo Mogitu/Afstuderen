@@ -6,4 +6,3 @@ public interface ICameraMovement
 {
     void Move(CameraController cont);
 }
-

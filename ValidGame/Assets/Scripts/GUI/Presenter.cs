@@ -10,6 +10,20 @@ public abstract class Presenter: MonoBehaviour, IPresenter {
 
     public List<View> views;    
 
+
+    public virtual void Start()
+    {
+        SetAllPresenters();
+    }
+
+    public void SetAllPresenters()
+    {
+        foreach (View v in views)
+        {
+            v.SetPresenter(this);
+        }
+    }
+
     /// <summary>
     /// Change the view based on an attached, concrete, view implementation.
     /// </summary>

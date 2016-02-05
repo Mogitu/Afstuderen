@@ -1,6 +1,9 @@
 ﻿using UnityEngine.Networking;
 
-//Contains message types thate are used in the game
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   Contains all network event type. These map directly to custom defined messages below the container MsgTypes class.
+/// </summary>
 public class MsgTypes
 {
     public const short MSG_CHAT = MsgType.Highest + 1;

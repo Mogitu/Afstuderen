@@ -13,5 +13,3 @@ interface IPresenter
     GameObject GetView(string viewName);
     void ToggleView(string viewName);
 }
-    
-

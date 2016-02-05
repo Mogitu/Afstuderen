@@ -6,7 +6,7 @@
 ///             The matchcode is used to compare a card against the subtopic it is placed on.
 /// TODO    :   Currently used by both the ingame cards and the cardbuilder, the card builder needs to be 
 ///             Separated from this class by since it should not use scripts outside the editor folder.
-///             A flyweight/adapter/proxy object can be possible solutions.  
+///             A flyweight object can be a possible solutions.  
 /// </summary>
 public class Card : MonoBehaviour
 {

@@ -15,6 +15,3 @@ public class CameraZoomMovement : ICameraMovement
                                               Mathf.Clamp(cont.transform.position.z, -0.55f, -0.1f));
     }
 }
-
-
-

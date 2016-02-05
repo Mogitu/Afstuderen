@@ -2,7 +2,7 @@
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   ..
+/// Desc    :   Needs more research in usage patterns, for now it works however..
 /// </summary>
 public class StartAnim : StateMachineBehaviour {
 

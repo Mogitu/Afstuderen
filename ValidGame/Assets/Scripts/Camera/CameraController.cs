@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Handles common camera functions.
 /// </summary>
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, ICameraController
 {
     public float lookSpeed = 5.0f;
     public float moveSpeed = 1.0f;
@@ -23,8 +23,7 @@ public class CameraController : MonoBehaviour
 
     // Use this for initialization
     void Start()
-    {
-        //Cursor.visible = false;	
+    {    
         movementSet = new Dictionary<string, ICameraMovement>(){
             {"Horizontal", new CameraDirectionalMovement()},
             {"Rotational", new CameraRotationalMovement()},
@@ -74,4 +73,3 @@ public class CameraController : MonoBehaviour
         Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
     }
 }
-
