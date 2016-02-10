@@ -38,16 +38,12 @@ public class GameOverState : GameState
         {
             SubtopicMatcher matcher = gameManager.CardManager.placedCards[i].GetComponentInParent<SubtopicMatcher>();
             if (matcher && matcher.matchCode == gameManager.CardManager.placedCards[i].matchCode)
-            {
-                //GameObject go = GameObject.Instantiate(gameManager.goodParticle) as GameObject;
-                //go.transform.position = gameManager.placedCards[i].transform.position;
+            {                
                 gameManager.CardManager.placedCards[i].GetComponent<Renderer>().material.color = Color.green;
                 goodCards++;
             }
             else
-            {
-                //GameObject go = GameObject.Instantiate(gameManager.wrongParticle) as GameObject;
-                //go.transform.position = gameManager.placedCards[i].transform.position;
+            {              
                 gameManager.CardManager.placedCards[i].GetComponent<Renderer>().material.color = Color.red;
             }
         }

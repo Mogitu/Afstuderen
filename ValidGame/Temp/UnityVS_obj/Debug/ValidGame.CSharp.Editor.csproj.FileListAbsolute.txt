@@ -1,0 +1,14 @@
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\Assembly-CSharp-Editor.dll
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\Assembly-CSharp-Editor.pdb
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\UnityEditor.dll
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\UnityEngine.dll
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\UnityEngine.Networking.dll
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\Assembly-CSharp.pdb
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\UnityEngine.xml
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\UnityEditor.xml
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_bin\Debug\UnityEngine.Networking.xml
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_obj\Debug\ValidGame.CSharp.Editor.csprojResolveAssemblyReference.cache
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_obj\Debug\Assembly-CSharp-Editor.dll
+C:\Users\mmu\Afstuderen\ValidGame\Temp\UnityVS_obj\Debug\Assembly-CSharp-Editor.pdb

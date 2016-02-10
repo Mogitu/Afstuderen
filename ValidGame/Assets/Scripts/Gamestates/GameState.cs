@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :    Inherit from this class to create new gamestates for use in the gamemanager.
