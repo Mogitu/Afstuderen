@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -74,6 +72,7 @@
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Cards\CardManager.cs" />
     <Compile Include="Assets\Scripts\Cards\ICardController.cs" />
+    <Compile Include="Assets\Scripts\ContextDescription.cs" />
     <Compile Include="Assets\Scripts\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameovermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameplayingView.cs" />
@@ -87,6 +86,7 @@
     <Compile Include="Assets\Scripts\GUI\PopupView.cs" />
     <Compile Include="Assets\Scripts\GUI\Presenter.cs" />
     <Compile Include="Assets\Scripts\GUI\View.cs" />
+    <Compile Include="Assets\Scripts\GUI\Views.cs" />
     <Compile Include="Assets\Scripts\GameManaging\IMainManager.cs" />
     <Compile Include="Assets\Scripts\GameManaging\MainManager.cs" />
     <Compile Include="Assets\Scripts\Gamestates\GameOverState.cs" />
@@ -96,17 +96,14 @@
     <Compile Include="Assets\Scripts\Gamestates\MultiplayerState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\PlayingState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\WaitingState.cs" />
-    <Compile Include="Assets\Scripts\GUI\Views.cs" />
     <Compile Include="Assets\Scripts\Misc\Enumeration.cs" />
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
     <Compile Include="Assets\Scripts\Networking\INetworkController.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkController.cs" />
-    <Compile Include="Assets\Scripts\ContextDescription.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkMessages.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\AMC3DText.shader" />
