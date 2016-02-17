@@ -2,19 +2,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   Tool to help develop valid gamecards.
+/// TODO    :   SOLID!
+/// </summary>
 public class CardBuilderEditor : EditorWindow
 {
     private string cardTitleStr = "Title";
     private string cardDescriptionStr = "Placeholder description";
     private string matchCodeStr = "1a";
-    private bool groupEnabled;
-
     private Sprite sprite;
     private Sprite guiSprite;
-
-    private Texture text;
-
 
     [MenuItem("AMC Centre/Tools/VALID/Card builder")]
     public static void ShowWindow()

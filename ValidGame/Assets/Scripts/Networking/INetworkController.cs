@@ -1,4 +1,8 @@
-﻿public interface INetworkController
+﻿/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   
+/// </summary>
+public interface INetworkController
 {
     void BeginHosting();
     void StartClient(string ip);

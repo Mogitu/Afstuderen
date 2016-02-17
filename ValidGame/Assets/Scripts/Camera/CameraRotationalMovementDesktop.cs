@@ -19,5 +19,3 @@ public class CameraRotationalMovement : ICameraMovement
         Camera.main.transform.localRotation = Quaternion.Euler(cont.verticalRotation, cont.horizontalRotation, cont.gameObject.transform.rotation.z);
     }
 }
-
-
