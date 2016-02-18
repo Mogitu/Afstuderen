@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
-using System;
+using AMC.GUI;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren

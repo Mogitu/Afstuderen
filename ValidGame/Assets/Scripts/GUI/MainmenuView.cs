@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using AMC.GUI;
+/// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Main menu. Start, quit, etc.
 /// </summary>

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using AMC.GUI;
 
 public class MenuView : View
 {
@@ -10,12 +10,11 @@ public class MenuView : View
 
     public void StartServer()
     {
-        Debug.Log("Starting server");
-        presenter.ShowRunningView();
+        presenter.StartServer();
     }
 
-    public void StopServer()
+    public void QuitApp()
     {
-        Debug.Log("Stopping server");
+        presenter.QuitApp();
     }
 }

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
+using AMC.GUI;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Multiplayerview

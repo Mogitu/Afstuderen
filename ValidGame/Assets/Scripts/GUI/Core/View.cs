@@ -4,14 +4,16 @@
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Abstract view implementation.......
 /// </summary>
-public abstract class View : MonoBehaviour, IView
+namespace AMC.GUI
 {
-    public abstract void SetPresenter(IPresenter presenter);   
-    public virtual void Awake()
+    public abstract class View : MonoBehaviour, IView
     {
-        //Retreive the presenter on the root canvas object and set it.
-        IPresenter tmp = GetComponentInParent<IPresenter>();
-        SetPresenter(tmp);
+        public abstract void SetPresenter(IPresenter presenter);
+        public virtual void Awake()
+        {
+            //Retreive the presenter on the root canvas object and set it.
+            IPresenter tmp = GetComponentInParent<IPresenter>();
+            SetPresenter(tmp);
+        }
     }
 }
-

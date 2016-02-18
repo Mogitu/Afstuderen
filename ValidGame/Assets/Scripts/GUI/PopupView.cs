@@ -1,6 +1,6 @@
-﻿using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using AMC.GUI;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren

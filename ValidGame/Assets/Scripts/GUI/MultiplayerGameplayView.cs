@@ -1,5 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using AMC.GUI;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren

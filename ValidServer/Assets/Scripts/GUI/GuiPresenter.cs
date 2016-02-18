@@ -1,6 +1,15 @@
-﻿public class GuiPresenter : Presenter {	
-    public void ShowRunningView()
+﻿using UnityEngine;
+using AMC.GUI;
+
+public class GuiPresenter : Presenter {
+	
+    public void StartServer()
     {
-        ChangeView(Views.RunningView);
+        Debug.Log("Start");
+    }
+
+    public void QuitApp()
+    {
+        Debug.Log("Quit");
     }
 }
