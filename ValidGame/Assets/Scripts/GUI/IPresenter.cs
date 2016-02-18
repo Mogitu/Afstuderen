@@ -4,7 +4,7 @@
 /// Author  :   Maikel van Munsteren
 /// Desc    :   exposes all required functionality needed for a presenter implementation
 /// </summary>
-interface IPresenter
+public interface IPresenter
 {
     void ChangeView(View view);
     void ChangeView(string viewName);

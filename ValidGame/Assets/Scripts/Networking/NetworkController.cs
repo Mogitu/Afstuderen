@@ -123,6 +123,3 @@ public class NetworkController : MonoBehaviour, INetworkController
         get { return NetworkServer.connections.Count; }
     }
 }
-
-
-
