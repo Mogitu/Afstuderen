@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -12,6 +13,7 @@ public class CardbrowserView : View
     private List<GuiCard> browsableCards;
     public GameObject cardPanelContent;
     public Image extraInfoPanelImage;
+    private GuiPresenter presenter;
 
     public override void Awake()
     {
@@ -100,5 +102,10 @@ public class CardbrowserView : View
         GuiCard card = obj.GetComponent<GuiCard>();        
         presenter.PickCard(card.matchCode);
         obj.SetActive(false);   
+    }
+
+    public override void SetPresenter(IPresenter presenter)
+    {
+        this.presenter = (GuiPresenter)presenter;
     }
 }

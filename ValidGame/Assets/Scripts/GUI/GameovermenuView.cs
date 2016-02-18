@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class GameovermenuView : View {
 
     public Text ownScoreTxt;
-    public Text otherScoreTxt;  
+    public Text otherScoreTxt;
+    private GuiPresenter presenter;
 
     public override void Awake()
     {
@@ -40,5 +41,10 @@ public class GameovermenuView : View {
     {        
         otherScoreTxt.text = "Your opponent has " + Param + " good cards.";
         presenter.eventManager.PostNotification(EVENT_TYPE.SENDSCORENETWORK, this, presenter.mainManager.score);
+    }
+
+    public override void SetPresenter(IPresenter presenter)
+    {
+        this.presenter = (GuiPresenter)presenter;
     }
 }

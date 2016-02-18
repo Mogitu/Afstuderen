@@ -6,7 +6,8 @@ using UnityEngine.UI;
 /// </summary>
 public class MultiplayermenuView : View {
 
-    public Text ipAdress;    
+    public Text ipAdress;
+    private GuiPresenter presenter;
 
     public void ClickedClient()
     {
@@ -21,5 +22,10 @@ public class MultiplayermenuView : View {
     public void GoBack()
     {
         presenter.ShowMainmenuView();
+    }
+
+    public override void SetPresenter(IPresenter presenter)
+    {
+        this.presenter = (GuiPresenter)presenter;
     }
 }

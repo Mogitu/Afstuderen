@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class PopupView : View
 {
     public Text popUpText;
+    private GuiPresenter presenter;
 
     public override void Awake()
     {
@@ -22,6 +23,11 @@ public class PopupView : View
     {
         Debug.Log("Player joined");
         popUpText.text = "Player joined";
+    }
+
+    public override void SetPresenter(IPresenter presenter)
+    {
+        this.presenter = (GuiPresenter)presenter;
     }
 }
 

@@ -68,6 +68,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\GUI\Core\IPresenter.cs" />
+    <Compile Include="Assets\Scripts\GUI\Core\IView.cs" />
+    <Compile Include="Assets\Scripts\GUI\Core\Presenter.cs" />
+    <Compile Include="Assets\Scripts\GUI\Core\View.cs" />
+    <Compile Include="Assets\Scripts\GUI\GuiPresenter.cs" />
+    <Compile Include="Assets\Scripts\GUI\MenuView.cs" />
+    <Compile Include="Assets\Scripts\GUI\RunningView.cs" />
+    <Compile Include="Assets\Scripts\GUI\Views.cs" />
     <Compile Include="Assets\Scripts\ValidServer.cs" />
     <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
     <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />

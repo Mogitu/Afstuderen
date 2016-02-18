@@ -12,9 +12,8 @@ public class GuiPresenter : Presenter
     public MainManager mainManager;
     public EventManager eventManager;
 
-    public override void Start()
-    {
-        base.Start();
+    public  void Start()
+    {        
         ChangeView(VIEWS.mainmenuView);
         eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, StartMatch);
     }  

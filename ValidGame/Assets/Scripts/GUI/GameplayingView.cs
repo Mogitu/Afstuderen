@@ -9,6 +9,7 @@ public class GameplayingView : View{
 
     public GameObject infoBar;
     public Text infoText;
+    private GuiPresenter presenter;
 
     public void OpenCardView(){
         presenter.ToggleCardbrowser();    
@@ -32,5 +33,10 @@ public class GameplayingView : View{
         {
             presenter.UpdateContextInformationText(infoText, hit);
         }
+    }
+
+    public override void SetPresenter(IPresenter presenter)
+    {
+        this.presenter = (GuiPresenter)presenter;
     }
 }

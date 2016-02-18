@@ -11,6 +11,7 @@ public class MultiplayerGameplayView : View {
     public InputField inputField;
     public Text messageTxt;
     public Text chatBoxTxt;
+    private GuiPresenter presenter;
 
     public override void Awake()
     {
@@ -62,5 +63,10 @@ public class MultiplayerGameplayView : View {
     {
         AppendSingle("Player left, gameover!");
         presenter.EndMultiplayerGame();
+    }
+
+    public override void SetPresenter(IPresenter presenter)
+    {
+        this.presenter = (GuiPresenter)presenter;
     }
 }
