@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -69,8 +67,9 @@
     <Compile Include="Assets\Scripts\Camera\CameraHorizontalMovementDesktop.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraRotationalMovementDesktop.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraZoomMovementDesktop.cs" />
-    <Compile Include="Assets\Scripts\Camera\ICameraController.cs" />
-    <Compile Include="Assets\Scripts\Camera\ICameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Camera\Core\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Camera\Core\ICameraController.cs" />
+    <Compile Include="Assets\Scripts\Camera\Core\ICameraMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Cards\CardManager.cs" />
     <Compile Include="Assets\Scripts\Cards\ICardController.cs" />

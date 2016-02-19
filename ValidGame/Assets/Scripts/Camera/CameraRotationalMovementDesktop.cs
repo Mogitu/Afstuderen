@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
-
+using AMC.Camera;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Rotates camera
 /// </summary>
-public class CameraRotationalMovement : ICameraMovement
+public class CameraRotationalMovementDesktop : ICameraMovement
 {
-    public void Move(CameraControllerDesktop cont)
+    public void Move(ICameraController controller)
     {
+        CameraControllerDesktop cont = (CameraControllerDesktop)controller;
         //Add mouse axis movement to the rotation.
         cont.horizontalRotation += Input.GetAxis("Mouse X") * cont.lookSpeed;
         cont.verticalRotation -= Input.GetAxis("Mouse Y") * cont.lookSpeed;

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using AMC.Camera;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   ...
@@ -21,7 +21,7 @@ public class GameOverState : GameState
         {
             DetermineResults();
             firstRun = true;
-            Camera.main.GetComponent<CameraControllerDesktop>().enabled = false;
+            Camera.main.GetComponent<CameraController>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
         }
@@ -29,7 +29,7 @@ public class GameOverState : GameState
 
     /// <summary>
     /// Check how many cards are properly placed.
-    /// TODO    :   Violates law of demeter, like a madman.
+    /// TODO    :   Violates law of demeter!
     /// </summary>
     public void DetermineResults()
     {

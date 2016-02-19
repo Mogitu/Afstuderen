@@ -3,9 +3,13 @@
 /// Desc    :   Interface to a controller that defines movement implementations etc.
 /// TODO    :   Create functions etc.
 /// </summary>
-public interface ICameraController
+namespace AMC.Camera
 {
-    void SetCameraMovement(ICameraMovement movement);
-    void HandleInput();
+    public interface ICameraController
+    {
+        void SetCameraMovement(ICameraMovement movement);
+        void HandleInput();
+    }
 }
+
 

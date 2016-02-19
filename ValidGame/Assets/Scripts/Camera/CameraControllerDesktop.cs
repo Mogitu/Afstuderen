@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System;
+using AMC.Camera;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Handles common camera functions.
 /// TODO    :   Make this abstract.
 /// </summary>
-public class CameraControllerDesktop : MonoBehaviour, ICameraController
+public class CameraControllerDesktop : CameraController
 {
     public float lookSpeed = 5.0f;
     public float moveSpeed = 1.0f;
@@ -27,22 +27,11 @@ public class CameraControllerDesktop : MonoBehaviour, ICameraController
     void Start()
     {
         movementSet = new Dictionary<string, ICameraMovement>(){
-            {"Horizontal", new CameraDirectionalMovement()},
-            {"Rotational", new CameraRotationalMovement()},
-            {"Zoom", new CameraZoomMovement()}};
+            {"Horizontal", new CameraDirectionalMovementDesktop()},
+            {"Rotational", new CameraRotationalMovementDesktop()},
+            {"Zoom", new CameraZoomMovementDesktop()}};
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        HandleInput();
-    }
-
-    public void SetCameraMovement(ICameraMovement movement)
-    {
-        activeMovement = movement;
-        activeMovement.Move(this);
-    }
+  
 
     //Played at the start of the game. Moves camera to gameboard and hands camera control over to the player. See the animation statemachine.
     public void RunGameStartAnimation()
@@ -52,12 +41,12 @@ public class CameraControllerDesktop : MonoBehaviour, ICameraController
 
     public void RunGameEndAnimation()
     {
-        Camera.main.GetComponent<CameraControllerDesktop>().enabled = false;
+        Camera.main.GetComponent<CameraController>().enabled =false;
         Camera.main.GetComponent<Animator>().enabled = true;
         Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
     }
 
-    public void HandleInput()
+    public override void HandleInput()
     {
         //move horizontally and vertically 
         if ((Input.GetMouseButton(0) && Input.GetMouseButton(1)) || Input.GetMouseButton(2))
@@ -78,5 +67,5 @@ public class CameraControllerDesktop : MonoBehaviour, ICameraController
         {
             SetCameraMovement(movementSet["Zoom"]);
         }
-    }
+    }   
 }
