@@ -77,7 +77,12 @@
     <Compile Include="Assets\Scripts\GUI\GuiPresenter.cs" />
     <Compile Include="Assets\Scripts\GUI\MenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\RunningView.cs" />
-    <Compile Include="Assets\Scripts\ValidServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\IMasterClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\IMasterServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\IMatch.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\MasterClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\MasterServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\ValidServer.cs" />
     <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
     <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
     <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using AMC.Networking;
 
 public class ValidServer : MonoBehaviour {
 
