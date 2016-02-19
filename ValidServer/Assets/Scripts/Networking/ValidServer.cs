@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using AMC.Networking;
 
-public class ValidServer : MonoBehaviour {
+public class ValidServer : AmcServer{
 
 	// Use this for initialization
 	void Start () {

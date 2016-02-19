@@ -4,9 +4,8 @@
 /// </summary>
 namespace AMC.Networking
 {
-    public interface IMasterClient 
+    public interface IAmcClient 
     {
 
     }
 }
-

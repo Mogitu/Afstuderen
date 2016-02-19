@@ -4,9 +4,10 @@
 /// </summary>
 namespace AMC.Networking
 {
-    public interface IMasterServer
+    public interface IAmcServer
     {
-       
+        void StartServer();
+        void StopServer();
+        
     }
 }
-

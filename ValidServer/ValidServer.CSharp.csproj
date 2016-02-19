@@ -77,11 +77,12 @@
     <Compile Include="Assets\Scripts\GUI\GuiPresenter.cs" />
     <Compile Include="Assets\Scripts\GUI\MenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\RunningView.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\IMasterClient.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\IMasterServer.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\IMatch.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\MasterClient.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\MasterServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\IAmcClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\IAmcServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\IAmcMatch.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\AmcClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\AmcServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\AmcMatch.cs" />
     <Compile Include="Assets\Scripts\Networking\ValidServer.cs" />
     <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
     <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />

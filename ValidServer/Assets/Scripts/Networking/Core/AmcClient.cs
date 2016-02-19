@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
-
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   
 /// </summary>
 namespace AMC.Networking
 {
-    public class MasterServer : MonoBehaviour
+    public abstract class AmcClient : MonoBehaviour, IAmcClient
     {
-
         // Use this for initialization
         void Start()
         {
