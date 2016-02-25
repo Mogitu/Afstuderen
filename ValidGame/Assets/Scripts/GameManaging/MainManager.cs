@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using AMC.Networking;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -10,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class MainManager : MonoBehaviour, IMainManager
 {
     public GuiPresenter guiPresenter;
-    public CameraControllerDesktop cameraController; 
+    public CameraControllerDesktop cameraController;
     public GameObject gameBoard;
     public int score;
 
@@ -24,20 +25,25 @@ public class MainManager : MonoBehaviour, IMainManager
     void Awake()
     {
         gamestateManager = new GameStateManager(this);
-        cardController = new CardController(this);            
+        cardController = new CardController(this);
     }
 
     void Start()
     {
-        score = 0;        
+        score = 0;
     }
 
     //Update all attached modules if they dont have their own monobehaviour update.
     void Update()
     {
         gamestateManager.UpdateCurrentState();
-        cardController.ManageCards();       
-    }      
+        cardController.ManageCards();
+    }
+
+    private void AddListeners()
+    {
+        
+    }
 
     public void StartMultiplayerHost(string ip)
     {       

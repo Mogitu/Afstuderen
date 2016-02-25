@@ -14,5 +14,5 @@ public class EVENT_TYPE
     public const short SENDSCORE = 7;
     public const short SENDSCORENETWORK = 8;
     public const short PLAYERJOINED = 9;
-    public const short PLAYERLEFT = 10;
+    public const short PLAYERLEFT = 10;  
 }
