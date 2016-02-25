@@ -19,7 +19,7 @@ public class MainManager : MonoBehaviour, IMainManager
     private CardController cardController;//This should be placed somewhere else....probably a state?
     private bool isMultiplayerGame;
     // private NetworkManager networkManager;
-    public NetworkController networkController;
+    public ValidNetworkController networkController;
     public EventManager eventManager;
 
     void Awake()
