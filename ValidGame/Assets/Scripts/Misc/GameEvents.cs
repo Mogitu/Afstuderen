@@ -5,14 +5,16 @@
 /// </summary>
 public class EVENT_TYPE
 {
-    public const short ENABLE = 1;
-    public const short DISABLE = 2;
-    public const short SENDCHAT = 3;
-    public const short RECEIVECHATNETWORK = 4;
-    public const short RECEIVESCORE = 5;
-    public const short RECEIVESCORENETWORK = 6;
-    public const short SENDSCORE = 7;
-    public const short SENDSCORENETWORK = 8;
-    public const short PLAYERJOINED = 9;
-    public const short PLAYERLEFT = 10;  
+    public const short Enable = 1;
+    public const short Disable = 2;
+    public const short SendSchat = 3;
+    public const short ReceiveChatNetwork = 4;
+    public const short ReceiveScore = 5;
+    public const short ReceiveScoreNetwork = 6;
+    public const short SendScore = 7;
+    public const short SendScoreNetwork = 8;
+    public const short PlayerJoined = 9;
+    public const short PlayerLeft = 10;
+
+    public const short SendCardToOpponent = 11;
 }

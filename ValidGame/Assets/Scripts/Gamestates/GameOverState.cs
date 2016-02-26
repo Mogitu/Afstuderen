@@ -6,8 +6,8 @@ using AMC.Camera;
 /// </summary>
 public class GameOverState : GameState
 {
-    private bool firstRun = false;
-    private int goodCards = 0;
+    private bool FirstRun = false;
+    private int GoodCards = 0;
 
     public GameOverState(MainManager manager)
             : base(manager)
@@ -17,10 +17,10 @@ public class GameOverState : GameState
     public override void UpdateState()
     {
         //Only run this once
-        if (!firstRun)
+        if (!FirstRun)
         {
             DetermineResults();
-            firstRun = true;
+            FirstRun = true;
             Camera.main.GetComponent<CameraController>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
@@ -34,30 +34,30 @@ public class GameOverState : GameState
     public void DetermineResults()
     {
         //Retreive all subtopicmatchers in the placed cards parents and check if their codes match
-        for (int i = 0; i < gameManager.CardManager.placedCards.Count; i++)//LOD violation
+        for (int i = 0; i < GameManager.CardManager.PlacedCards.Count; i++)//LOD violation
         {
-            SubtopicMatcher matcher = gameManager.CardManager.placedCards[i].GetComponentInParent<SubtopicMatcher>();
-            if (matcher && matcher.matchCode == gameManager.CardManager.placedCards[i].matchCode)
+            SubtopicMatcher matcher = GameManager.CardManager.PlacedCards[i].GetComponentInParent<SubtopicMatcher>();
+            if (matcher && matcher.MatchCode == GameManager.CardManager.PlacedCards[i].MatchCode)
             {                
-                gameManager.CardManager.placedCards[i].GetComponent<Renderer>().material.color = Color.green;
-                goodCards++;
+                GameManager.CardManager.PlacedCards[i].GetComponent<Renderer>().material.color = Color.green;
+                GoodCards++;
             }
             else
             {              
-                gameManager.CardManager.placedCards[i].GetComponent<Renderer>().material.color = Color.red;
+                GameManager.CardManager.PlacedCards[i].GetComponent<Renderer>().material.color = Color.red;
             }
         }
-        Debug.Log(goodCards + " properly placed cards.");
+        Debug.Log(GoodCards + " properly placed cards.");
         SendScores();
     }
 
     public void SendScores()
     {
-        if (gameManager.IsMultiplayerGame)
+        if (GameManager.IsMultiplayerGame)
         {
-            gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCORENETWORK, null, goodCards);
+            GameManager.EventManager.PostNotification(EVENT_TYPE.SendScoreNetwork, null, GoodCards);
         }
-        gameManager.eventManager.PostNotification(EVENT_TYPE.SENDSCORE, null, goodCards);
-        gameManager.score = goodCards;
+        GameManager.EventManager.PostNotification(EVENT_TYPE.SendScore, null, GoodCards);
+        GameManager.Score = GoodCards;
     }
 }

@@ -10,47 +10,37 @@ namespace AMC.Networking
 {
     public class AmcClient : IAmcClient
     {
-        private NetworkClient client;
-        private string ipAdress;
-        private int socketPort;
+        private NetworkClient Client;
+        private string IpAdress;
+        private int SocketPort;        
 
         public AmcClient()
         {
+            IpAdress = "127.0.0.1";
+            SocketPort = 7777;
 
+            Client = new NetworkClient();
+            Client.Connect(IpAdress, SocketPort);
         }
 
         public AmcClient(string ipAdress, int socketPort)
         {
-            this.ipAdress = ipAdress;
-            this.socketPort = socketPort;
-        }
+            IpAdress = ipAdress;
+            SocketPort = socketPort;
 
-        private void Init()
-        {
-            client = new NetworkClient();
-            client.Connect(ipAdress, socketPort);
+            Client = new NetworkClient();
+            Client.Connect(IpAdress, SocketPort);
         }
+     
 
         public void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage)
         {
-            client.RegisterHandler(msgType, networkMessage);
+            Client.RegisterHandler(msgType, networkMessage);
         }
 
         public void SendMessage(short msgType, MessageBase msgs)
         {
-            client.Send(msgType, msgs);
-        }
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+            Client.Send(msgType, msgs);
+        }         
     }
 }

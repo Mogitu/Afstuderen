@@ -6,6 +6,6 @@
 /// </summary>
 public class GuiCard : MonoBehaviour
 {
-    public string matchCode = "1a";  
+    public string MatchCode = "1a";  
 }
 

@@ -8,8 +8,8 @@
 public class SubtopicMatcher : MonoBehaviour
 {
     // Use this for initialization
-    public string matchCode;
-    public bool occupied = false;
+    public string MatchCode;
+    public bool Occupied = false;
 }
 
 

@@ -5,43 +5,43 @@
 /// </summary>
 public class GameStateManager {
 
-    private GameState gameState;
-    private PlayingState playingState;
-    private WaitingState waitingState;
-    private MultiplayerState multiPlayerState;
-    private GameOverState gameoverState;
+    private GameState GameState;
+    private PlayingState PlayingState;
+    private WaitingState WaitingState;
+    private MultiplayerState MultiPlayerState;
+    private GameOverState GameoverState;
 
     public GameStateManager(MainManager manager)
     {
-        playingState = new PlayingState(manager);
-        waitingState = new WaitingState(manager);
-        multiPlayerState = new MultiplayerState(manager);
-        gameoverState = new GameOverState(manager);
-        gameState = waitingState;
+        PlayingState = new PlayingState(manager);
+        WaitingState = new WaitingState(manager);
+        MultiPlayerState = new MultiplayerState(manager);
+        GameoverState = new GameOverState(manager);
+        GameState = WaitingState;
     }    
 	
 	public void UpdateCurrentState()
     {
-        gameState.UpdateState();
+        GameState.UpdateState();
     }
 
     public void SetPlayingState()
     {
-        gameState = playingState;
+        GameState = PlayingState;
     }
 
     public void SetWaitingState()
     {
-        gameState = waitingState;
+        GameState = WaitingState;
     }
 
     public void SetGameoverState()
     {
-        gameState = gameoverState;
+        GameState = GameoverState;
     }
 
     public void SetMultiplayerState()
     {
-        gameState = multiPlayerState;
+        GameState = MultiPlayerState;
     }
 }

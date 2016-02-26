@@ -1,4 +1,5 @@
-﻿using UnityEngine.Networking;
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -6,29 +7,37 @@
 /// </summary>
 public class MsgTypes
 {
-    public const short MSG_CHAT = MsgType.Highest + 1;
-    public const short MSG_SCORE = MsgType.Highest + 2;
-    public const short MSG_PLAYER_JOINED = MsgType.Highest + 3;
-    public const short MSG_PLAYER_LEFT = MsgType.Highest + 4;
+    public const short MsgChat = MsgType.Highest + 1;
+    public const short MsgScore = MsgType.Highest + 2;
+    public const short MsgPlayerJoined = MsgType.Highest + 3;
+    public const short MsgPlayerLeft = MsgType.Highest + 4;
+
+    public const short MsgOnOpponentCardReceived = MsgType.Highest + 5;
 }
 
 //All custom messages below.
 public class ChatMessage : MessageBase
 {
-    public string text;
+    public string Text;
 }
 
 public class ScoreMessage : MessageBase
 {
-    public int score;
+    public int Score;
 }
 
 public class PlayerLeftMessage : MessageBase
 {
-    public string text;
+    public string Text;
 }
 
 public class PlayerJoinedMessage : MessageBase
 {
-    public string text;
+    public string Text;
+}
+
+public class CardToOpponentMessage : MessageBase
+{
+    public string CardName;
+    public Vector3 Position;
 }

@@ -60,7 +60,7 @@ public class CardBuilderEditor : EditorWindow
         GameObject go = Resources.Load<GameObject>("card");
         Card card = go.GetComponent<Card>();
         card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr);
-        SpriteRenderer spr = card.sprite.GetComponent<SpriteRenderer>();
+        SpriteRenderer spr = card.Sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
         go.transform.rotation = Quaternion.identity;
         return card;
@@ -77,12 +77,12 @@ public class CardBuilderEditor : EditorWindow
         GameObject go = Resources.Load<GameObject>("card");
         Card card = go.GetComponent<Card>();
         card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr);
-        SpriteRenderer spr = card.sprite.GetComponent<SpriteRenderer>();
+        SpriteRenderer spr = card.Sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
 
         GameObject go2 = Resources.Load<GameObject>("guiCard");
         GuiCard guiCard = go2.GetComponent<GuiCard>();
-        guiCard.matchCode = this.matchCodeStr;
+        guiCard.MatchCode = this.matchCodeStr;
         Image spr2 = guiCard.GetComponent<Image>();
         spr2.sprite = guiSprite;
         go.name = "SceneCard" + matchCodeStr;

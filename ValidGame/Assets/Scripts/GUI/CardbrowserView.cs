@@ -10,15 +10,15 @@ using AMC.GUI;
 /// </summary>
 public class CardbrowserView : View
 {
-    private List<GuiCard> browsableCards;
-    public GameObject cardPanelContent;
-    public Image extraInfoPanelImage;
-    private GuiPresenter presenter;
+    private List<GuiCard> BrowsableCards;
+    public GameObject CardPanelContent;
+    public Image ExtraInfoPanelImage;
+    private GuiPresenter Presenter;
 
     public override void Awake()
     {
         base.Awake();
-        browsableCards = new List<GuiCard>();
+        BrowsableCards = new List<GuiCard>();
     }
 
     void Start()
@@ -39,7 +39,7 @@ public class CardbrowserView : View
         for (int i = 0; i < cards.Length; i++)
         {
             GuiCard obj = cards[i];            
-            obj.transform.SetParent(cardPanelContent.transform, false);
+            obj.transform.SetParent(CardPanelContent.transform, false);
             Vector3 newPos = obj.transform.parent.transform.position;
             newPos.x += offSetX;
             newPos.y += offSetY;
@@ -47,7 +47,7 @@ public class CardbrowserView : View
             obj.transform.position = newPos;
             Button objBtn = obj.GetComponent<Button>();
             objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });
-            browsableCards.Add(obj);
+            BrowsableCards.Add(obj);
             col++;
 
             if (col >= 5)
@@ -89,7 +89,7 @@ public class CardbrowserView : View
                if(card != null)
                 {
                     Image img = card.GetComponent<Image>();
-                    extraInfoPanelImage.sprite = img.sprite;
+                    ExtraInfoPanelImage.sprite = img.sprite;
                     return;
                 }              
             }
@@ -100,12 +100,12 @@ public class CardbrowserView : View
     public void ClickedCard(GameObject obj)
     {
         GuiCard card = obj.GetComponent<GuiCard>();        
-        presenter.PickCard(card.matchCode);
+        Presenter.PickCard(card.MatchCode);
         obj.SetActive(false);   
     }
 
     public override void SetPresenter(IPresenter presenter)
     {
-        this.presenter = (GuiPresenter)presenter;
+        this.Presenter = (GuiPresenter)presenter;
     }
 }

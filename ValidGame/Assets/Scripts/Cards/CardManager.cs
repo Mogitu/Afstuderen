@@ -8,38 +8,38 @@ using System.Collections.Generic;
 /// </summary>
 public class CardController : ICardController
 {
-    public Card currentCard;
-    public List<Card> placedCards;
-    private List<Card> cardCollection;
+    public Card CurrentCard;
+    public List<Card> PlacedCards;
+    private List<Card> CardCollection;
     //private float cardOffsetY;
-    private MainManager mainManager;
+    private MainManager MainManager;
 
     public CardController(MainManager manager)
     {
-        cardCollection = new List<Card>();
-        placedCards = new List<Card>();
+        CardCollection = new List<Card>();
+        PlacedCards = new List<Card>();
         CollectCards();       
         //cardOffsetY = 0.2f;
-        mainManager = manager;
+        MainManager = manager;
     }
 
     //Call every frame in manager class.
     public void ManageCards()
     {
-        if(cardCollection.Count >0)
+        if(CardCollection.Count >0)
         {
-            if (currentCard != null)
+            if (CurrentCard != null)
             {
                 DragCurrentCard();
             }
-            else if (currentCard == null && Input.GetMouseButtonDown(0))
+            else if (CurrentCard == null && Input.GetMouseButtonDown(0))
             {
                 PickUpSelectedCard();
             }
 
-            if (cardCollection.Count <= 0)
+            if (CardCollection.Count <= 0)
             {
-                mainManager.EndPracticeGame();
+                MainManager.EndPracticeGame();
             }
         }       
     }
@@ -52,11 +52,11 @@ public class CardController : ICardController
     public void DragCurrentCard()
     {
         //make current card follow the cursor
-        if (currentCard != null)
+        if (CurrentCard != null)
         {
-            currentCard.transform.position = new Vector3(currentCard.transform.position.x,
+            CurrentCard.transform.position = new Vector3(CurrentCard.transform.position.x,
                                                                        0.0250f,
-                                                                       currentCard.transform.position.z);
+                                                                       CurrentCard.transform.position.z);
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -64,7 +64,7 @@ public class CardController : ICardController
                 Transform objectHit = hit.transform;
                 Vector3 newPos = hit.point;
                 newPos.y = 0.24f;// cardOffsetY; //gameManager.cardOffsetY;
-                currentCard.transform.position = newPos;               
+                CurrentCard.transform.position = newPos;               
                 
                 //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
                 if (objectHit.gameObject.tag == "ValidTopic")
@@ -83,16 +83,24 @@ public class CardController : ICardController
     {
         SubtopicMatcher topicMatcher = obj.gameObject.GetComponent<SubtopicMatcher>();
         //place card
-        if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.occupied)
+        if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.Occupied)
         {
             Vector3 pos = topicMatcher.transform.position;
             pos.y += 0.0006f;
-            currentCard.transform.position = pos;
-            currentCard.transform.parent = topicMatcher.transform;
-            topicMatcher.occupied = true;
-            cardCollection.Remove(currentCard);
-            placedCards.Add(currentCard);
-            currentCard = null;
+            CurrentCard.transform.position = pos;
+            CurrentCard.transform.parent = topicMatcher.transform;
+            topicMatcher.Occupied = true;
+            CardCollection.Remove(CurrentCard);
+            PlacedCards.Add(CurrentCard);
+            //route message to opponent
+            if (MainManager.IsMultiplayerGame)
+            {
+                object[] currentCardData = { CurrentCard.MatchCode, CurrentCard.transform.position};
+                MainManager.SendCardToOppent(currentCardData);
+            }
+            CurrentCard = null;         
+
+           
         }
     }
 
@@ -110,11 +118,11 @@ public class CardController : ICardController
             {
                 Transform objectHit = hit.transform;
                 SubtopicMatcher tm = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
-                tm.occupied = false;
-                currentCard = hit.transform.gameObject.GetComponent<Card>();
-                currentCard.transform.parent = null;
-                cardCollection.Add(currentCard);
-                placedCards.Remove(currentCard);
+                tm.Occupied = false;
+                CurrentCard = hit.transform.gameObject.GetComponent<Card>();
+                CurrentCard.transform.parent = null;
+                CardCollection.Add(CurrentCard);
+                PlacedCards.Remove(CurrentCard);
             }
         }
     }
@@ -123,13 +131,13 @@ public class CardController : ICardController
     //TODO: currently does not account for multiple cards with the same match code; the first one is always returned.
     public Card GetCard(string code)
     {
-        if (cardCollection.Count > 0)
+        if (CardCollection.Count > 0)
         {
-            for (int i = 0; i < cardCollection.Count; i++)
+            for (int i = 0; i < CardCollection.Count; i++)
             {
-                if (cardCollection[i].matchCode == code)
+                if (CardCollection[i].MatchCode == code)
                 {
-                    return cardCollection[i];
+                    return CardCollection[i];
                 }
             }
         }
@@ -139,8 +147,8 @@ public class CardController : ICardController
     //Executed by the gui handler to pick the current selected card in the card browser.
     public void SelectCard(string code)
     {       
-        currentCard = GetCard(code);
-        currentCard.gameObject.SetActive(true);
+        CurrentCard = GetCard(code);
+        CurrentCard.gameObject.SetActive(true);
     }
 
     //Collects all cards that are created in the scene by the builder module and add them to the card collection.
@@ -151,7 +159,7 @@ public class CardController : ICardController
         {
             Card card = cards[i];
             card.gameObject.SetActive(false);
-            cardCollection.Add(card);
-        }
+            CardCollection.Add(card);
+        }       
     }
 }

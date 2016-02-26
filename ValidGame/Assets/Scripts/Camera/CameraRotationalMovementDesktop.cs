@@ -10,13 +10,13 @@ public class CameraRotationalMovementDesktop : ICameraMovement
     {
         CameraControllerDesktop cont = (CameraControllerDesktop)controller;
         //Add mouse axis movement to the rotation.
-        cont.horizontalRotation += Input.GetAxis("Mouse X") * cont.lookSpeed;
-        cont.verticalRotation -= Input.GetAxis("Mouse Y") * cont.lookSpeed;
+        cont.HorizontalRotation += Input.GetAxis("Mouse X") * cont.LookSpeed;
+        cont.VerticalRotation -= Input.GetAxis("Mouse Y") * cont.LookSpeed;
 
         //keep rotation within allowed limits.
-        cont.horizontalRotation = Mathf.Clamp(cont.horizontalRotation, -cont.horizontalRange, cont.horizontalRange);
-        cont.verticalRotation = Mathf.Clamp(cont.verticalRotation, -cont.verticalRangeUp, cont.verticalRangeDown);
+        cont.HorizontalRotation = Mathf.Clamp(cont.HorizontalRotation, -cont.HorizontalRange, cont.HorizontalRange);
+        cont.VerticalRotation = Mathf.Clamp(cont.VerticalRotation, -cont.VerticalRangeUp, cont.VerticalRangeDown);
         //set the final rotation values.
-        Camera.main.transform.localRotation = Quaternion.Euler(cont.verticalRotation, cont.horizontalRotation, cont.gameObject.transform.rotation.z);
+        Camera.main.transform.localRotation = Quaternion.Euler(cont.VerticalRotation, cont.HorizontalRotation, cont.gameObject.transform.rotation.z);
     }
 }

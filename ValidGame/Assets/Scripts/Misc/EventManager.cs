@@ -7,49 +7,49 @@ using System.Collections.Generic;
 /// </summary>
 public class EventManager : MonoBehaviour
 {
-    public delegate void OnEvent(short Event_Type, Component Sender, object Param = null);
+    public delegate void OnEvent(short event_Type, Component sender, object param = null);
 
     private Dictionary<short, List<OnEvent>> Listeners = new Dictionary<short, List<OnEvent>>();
 
-    public void AddListener(short Event_Type, OnEvent Listener)
+    public void AddListener(short event_Type, OnEvent listener)
     {
-        List<OnEvent> ListenList = null;
-        if (Listeners.TryGetValue(Event_Type, out ListenList))
+        List<OnEvent> listenList = null;
+        if (Listeners.TryGetValue(event_Type, out listenList))
         {
-            ListenList.Add(Listener);
+            listenList.Add(listener);
             return;
         }
-        ListenList = new List<OnEvent>();
-        ListenList.Add(Listener);
-        Listeners.Add(Event_Type, ListenList);
+        listenList = new List<OnEvent>();
+        listenList.Add(listener);
+        Listeners.Add(event_Type, listenList);
     }
 
-    public void PostNotification(short Event_Type, Component Sender, object Param = null)
+    public void PostNotification(short event_Type, Component sender, object param = null)
     {
-        List<OnEvent> ListenList = null;
-        if (!Listeners.TryGetValue(Event_Type, out ListenList))
+        List<OnEvent> listenList = null;
+        if (!Listeners.TryGetValue(event_Type, out listenList))
         {
             return;
         }
 
-        for (int i = 0; i < ListenList.Count; i++)
+        for (int i = 0; i < listenList.Count; i++)
         {
-            if (!ListenList[i].Equals(null))
+            if (!listenList[i].Equals(null))
             {
-                ListenList[i](Event_Type, Sender, Param);
+                listenList[i](event_Type, sender, param);
             }
         }
     }
 
-    public void RemoveEvent(short Event_Type)
+    public void RemoveEvent(short event_Type)
     {
-        Listeners.Remove(Event_Type);
+        Listeners.Remove(event_Type);
     }
 
     //Removes all redundantly added listeners.
     public void RemoveRedundancies()
     {
-        Dictionary<short, List<OnEvent>> TmpListeners = new Dictionary<short, List<OnEvent>>();
+        Dictionary<short, List<OnEvent>> tmpListeners = new Dictionary<short, List<OnEvent>>();
         foreach (KeyValuePair<short, List<OnEvent>> Item in Listeners)
         {
             for (int i = Item.Value.Count - 1; i >= 0; i--)
@@ -58,9 +58,9 @@ public class EventManager : MonoBehaviour
                     Item.Value.RemoveAt(i);
             }
             if (Item.Value.Count > 0)
-                TmpListeners.Add(Item.Key, Item.Value);
+                tmpListeners.Add(Item.Key, Item.Value);
         }
-        Listeners = TmpListeners;
+        Listeners = tmpListeners;
     }
 
     public void OnLevelWasLoaded()

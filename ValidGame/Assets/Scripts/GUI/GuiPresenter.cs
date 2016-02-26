@@ -10,97 +10,97 @@ using AMC.GUI;
 /// </summary>
 public class GuiPresenter : Presenter
 {   
-    public MainManager mainManager;
-    public EventManager eventManager;
+    public MainManager MainManager;
+    public EventManager EventManager;
 
     public  void Start()
     {        
-        ChangeView(VIEWS.mainmenuView);
-        eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, StartMatch);
+        ChangeView(VIEWS.MainmenuView);
+        EventManager.AddListener(EVENT_TYPE.PlayerJoined, StartMatch);
     }  
 
     public void StartPracticeRound()
     {
-        ChangeView(VIEWS.gamePlayingView);
-        mainManager.StartPracticeRound();
+        ChangeView(VIEWS.GamePlayingView);
+        MainManager.StartPracticeRound();
     }
 
     public void StartMultiplayerClient(string ip)
     {
-        ChangeView(VIEWS.gamePlayingView);
-        OpenView(VIEWS.multiplayerGameplayView);
-        mainManager.StartMultiplayerClient(ip);
+        ChangeView(VIEWS.GamePlayingView);
+        OpenView(VIEWS.MultiplayerGameplayView);
+        MainManager.StartMultiplayerClient(ip);
     }
 
     //TODO  : start host instead of client.
     public void StartMultiplayerHost(string ip)
     {
-        ChangeView(VIEWS.multiplayerGameplayView);
-        mainManager.StartMultiplayerHost(ip);
+        ChangeView(VIEWS.MultiplayerGameplayView);
+        MainManager.StartMultiplayerHost(ip);
     }
 
     public void StartMatch(short event_type, Component sender, object Param=null)
     {
-        OpenView(VIEWS.gamePlayingView);        
+        OpenView(VIEWS.GamePlayingView);        
     }
 
     public void Restart()
     {
-        mainManager.RestartGame();
+        MainManager.RestartGame();
     }
 
     public void QuitApplication()
     {
-        mainManager.QuitApplication();
+        MainManager.QuitApplication();
     }
 
     public void ToggleCardbrowser()
     {
-        mainManager.ToggleCameraActive();
-        mainManager.ToggleAllColliders();
-        ToggleView(VIEWS.cardbrowserView);      
+        MainManager.ToggleCameraActive();
+        MainManager.ToggleAllColliders();
+        ToggleView(VIEWS.CardbrowserView);      
     }
 
     public void ShowMainmenuView()
     {
-        ChangeView(VIEWS.mainmenuView);        
+        ChangeView(VIEWS.MainmenuView);        
     }
 
     public void EndPracticeGame()
     {
-        mainManager.EndPracticeGame();
+        MainManager.EndPracticeGame();
     }
 
     public void EndMultiplayerGame()
     {
-        mainManager.EndMultiplayerGame();
+        MainManager.EndMultiplayerGame();
     }
 
     //TODO  :   Reduce coupling between mainmanager, this presenter and the cardcontroller.
     public void PickCard(string code)
     {
         ToggleCardbrowser();
-        mainManager.PickCard(code);
+        MainManager.PickCard(code);
     }
 
     public void ShowGameOverView()
     {
-        ChangeView(VIEWS.gameovermenuView);        
+        ChangeView(VIEWS.GameovermenuView);        
     }
 
     public void ShowMultiplayerView()
     {
-        ChangeView(VIEWS.multiplayermenuView);
+        ChangeView(VIEWS.MultiplayermenuView);
     }    
 
     public void PostChatSend(string str)
     {
-        eventManager.PostNotification(EVENT_TYPE.SENDCHAT, this, str);       
+        EventManager.PostNotification(EVENT_TYPE.SendSchat, this, str);       
     }     
 
     public void PostScoreSend(string str)
     {
-        eventManager.PostNotification(EVENT_TYPE.SENDSCORE, this, str);
+        EventManager.PostNotification(EVENT_TYPE.SendScore, this, str);
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class GuiPresenter : Presenter
         ContextDescription desc = hit.transform.gameObject.GetComponentInChildren<ContextDescription>();
         if (desc != null)
         {
-            txt.text = desc.descriptionTxt.text;
+            txt.text = desc.DescriptionText;
         }
     }
 }

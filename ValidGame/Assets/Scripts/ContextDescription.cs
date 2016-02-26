@@ -6,6 +6,14 @@
 /// </summary>
 public class ContextDescription : MonoBehaviour
 {
-    public TextMesh descriptionTxt;     
+    private TextMesh DescriptionTxtMesh;     
+    void Awake()
+    {
+        DescriptionTxtMesh = GetComponentInChildren<TextMesh>();
+    }
+
+    public string DescriptionText{
+        get { return DescriptionTxtMesh.text; }
+    }
 }
 

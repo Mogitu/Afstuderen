@@ -10,28 +10,28 @@
 /// </summary>
 public class Card : MonoBehaviour
 {
-    public string matchCode;
-    public string title;
-    public string description;
+    public string MatchCode;
+    public string Title;
+    public string Description;
 
-    public SpriteRenderer sprite;
-    public TextMesh txtMeshTitle;
-    public TextMesh txtMeshDesc;
+    public SpriteRenderer Sprite;
+    public TextMesh TxtMeshTitle;
+    public TextMesh TxtMeshDesc;
 
     // Use this for initialization
     void Start()
     {
-        txtMeshTitle.text = title;
-        txtMeshDesc.text = description;
+        TxtMeshTitle.text = Title;
+        TxtMeshDesc.text = Description;
     }
 
     //Set needed properties
     public void SetData(string title, string description, string matchCode)
     {
-        this.title = title;
-        this.description = description;
-        txtMeshTitle.text = title;
-        txtMeshDesc.text = description;
-        this.matchCode = matchCode;
+        Title = title;
+        Description = description;
+        TxtMeshTitle.text = title;
+        TxtMeshDesc.text = description;
+        MatchCode = matchCode;
     }
 }

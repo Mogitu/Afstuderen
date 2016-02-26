@@ -8,19 +8,19 @@ using AMC.GUI;
 /// </summary>
 public class GameplayingView : View{
 
-    public GameObject infoBar;
-    public Text infoText;
-    private GuiPresenter presenter;
+    public GameObject InfoBar;
+    public Text InfoText;
+    private GuiPresenter Presenter;
 
     public void OpenCardView(){
-        presenter.ToggleCardbrowser();    
+        Presenter.ToggleCardbrowser();    
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            presenter.Restart();
+            Presenter.Restart();
         }
         CheckForDescriptionHit();
     }
@@ -32,12 +32,12 @@ public class GameplayingView : View{
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 10))
         {
-            presenter.UpdateContextInformationText(infoText, hit);
+            Presenter.UpdateContextInformationText(InfoText, hit);
         }
     }
 
     public override void SetPresenter(IPresenter presenter)
     {
-        this.presenter = (GuiPresenter)presenter;
+        this.Presenter = (GuiPresenter)presenter;
     }
 }

@@ -10,34 +10,34 @@ using AMC.Networking;
 /// </summary>
 public class MainManager : MonoBehaviour, IMainManager
 {
-    public GuiPresenter guiPresenter;
-    public CameraControllerDesktop cameraController;
-    public GameObject gameBoard;
-    public int score;
+    public GuiPresenter GuiPresenter;
+    public CameraControllerDesktop CameraController;
+    public GameObject GameBoard;
+    public int Score;
 
-    private GameStateManager gamestateManager;
-    private CardController cardController;//This should be placed somewhere else....probably a state?
-    private bool isMultiplayerGame;
+    private GameStateManager GamestateManager;
+    private CardController CardController;//This should be placed somewhere else....probably a state?
+   
     // private NetworkManager networkManager;
-    public ValidNetworkController networkController;
-    public EventManager eventManager;
+    public ValidNetworkController NetworkController;
+    public EventManager EventManager;
 
     void Awake()
     {
-        gamestateManager = new GameStateManager(this);
-        cardController = new CardController(this);
+        GamestateManager = new GameStateManager(this);
+        CardController = new CardController(this);
     }
 
     void Start()
     {
-        score = 0;
+        Score = 0;
     }
 
     //Update all attached modules if they dont have their own monobehaviour update.
     void Update()
     {
-        gamestateManager.UpdateCurrentState();
-        cardController.ManageCards();
+        GamestateManager.UpdateCurrentState();
+        CardController.ManageCards();
     }
 
     private void AddListeners()
@@ -47,36 +47,36 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void StartMultiplayerHost(string ip)
     {       
-        networkController.BeginHosting();
-        isMultiplayerGame = true;
+        NetworkController.BeginHosting();
+        IsMultiplayerGame = true;
     }   
 
     public void StartMultiplayerMatch()
     {
-        cameraController.RunGameStartAnimation();
-        gamestateManager.SetMultiplayerState();
+        CameraController.RunGameStartAnimation();
+        GamestateManager.SetMultiplayerState();
     }
 
     public void StartMultiplayerClient(string ip)
     {
-        cameraController.RunGameStartAnimation();
-        gamestateManager.SetMultiplayerState();
-        networkController.StartClient(ip);
-        isMultiplayerGame = true;
+        CameraController.RunGameStartAnimation();
+        GamestateManager.SetMultiplayerState();
+        NetworkController.StartClient(ip);
+        IsMultiplayerGame = true;
     }  
 
     public void StartPracticeRound()
     {
-        cameraController.RunGameStartAnimation();
-        gamestateManager.SetPlayingState();
-        isMultiplayerGame = false;
+        CameraController.RunGameStartAnimation();
+        GamestateManager.SetPlayingState();
+        IsMultiplayerGame = false;
     }
 
     public void EndPracticeGame()
     {
-        guiPresenter.ShowGameOverView();
-        gamestateManager.SetGameoverState();
-        cameraController.RunGameEndAnimation();
+        GuiPresenter.ShowGameOverView();
+        GamestateManager.SetGameoverState();
+        CameraController.RunGameEndAnimation();
     }
 
     public void EndMultiplayerGame()
@@ -91,7 +91,12 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void PickCard(string code)
     {
-        cardController.SelectCard(code);
+        CardController.SelectCard(code);
+    }
+
+    public void SendCardToOppent(object param)
+    {
+        EventManager.PostNotification(EVENT_TYPE.SendCardToOpponent, null,param);
     }
 
     public void QuitApplication()
@@ -102,13 +107,13 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void ToggleCameraActive()
     {
-        if (cameraController.enabled)
+        if (CameraController.enabled)
         {
-            cameraController.enabled = false;
+            CameraController.enabled = false;
         }
         else
         {
-            cameraController.enabled = true;
+            CameraController.enabled = true;
         }
     }
 
@@ -132,11 +137,12 @@ public class MainManager : MonoBehaviour, IMainManager
     //TODO  :   Violates LOD in gameoverstate class!
     public CardController CardManager
     {
-        get { return cardController; }
+        get { return CardController; }
     }      
 
     public bool IsMultiplayerGame
     {
-        get { return isMultiplayerGame; }
+        get;
+        set;
     }
 }

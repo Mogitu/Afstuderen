@@ -6,11 +6,11 @@
 /// </summary>
 public abstract class GameState: IGameState
 {
-    protected MainManager gameManager;
+    protected MainManager GameManager;
     //overridable base methods
     public GameState(MainManager gameManager)
     {
-        this.gameManager = gameManager;
+        this.GameManager = gameManager;
     }
 
     public virtual void UpdateState() { }

@@ -10,10 +10,10 @@ namespace AMC.GUI
 {
     public abstract class Presenter : MonoBehaviour, IPresenter
     {
-        private Dictionary<string, GameObject> views;
+        private Dictionary<string, GameObject> Views;
         void Awake()
         {
-            views = GetAllViews();
+            Views = GetAllViews();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace AMC.GUI
         /// <param name="viewName">compare with gameobject name.</param>
         public void ChangeView(string viewName)
         {
-            foreach (KeyValuePair<string, GameObject> go in views)
+            foreach (KeyValuePair<string, GameObject> go in Views)
             {
                 if (go.Key == viewName)
                 {
@@ -49,7 +49,7 @@ namespace AMC.GUI
         /// <param name="viewName"></param>
         public void OpenView(string viewName)
         {
-            views[viewName].SetActive(true);
+            Views[viewName].SetActive(true);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace AMC.GUI
         /// <param name="viewName"></param>
         public void CloseView(string viewName)
         {
-            views[viewName].SetActive(false);
+            Views[viewName].SetActive(false);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace AMC.GUI
         /// <returns></returns>
         public GameObject GetView(string viewName)
         {
-            return views[viewName];
+            return Views[viewName];
         }
 
         /// <summary>

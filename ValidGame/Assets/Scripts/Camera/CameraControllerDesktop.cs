@@ -9,24 +9,24 @@ using AMC.Camera;
 /// </summary>
 public class CameraControllerDesktop : CameraController
 {
-    public float lookSpeed = 5.0f;
-    public float moveSpeed = 1.0f;
-    public float zoomSpeed = 2.0f;
-    public float verticalRangeUp = 15f;
-    public float verticalRangeDown = 40f;
-    public float horizontalRange = 90f;
-    public float verticalRotation = 0;
-    public float horizontalRotation = 0;
-    public float maxDistanceHorizontal = 0.3f;
-    public float maxVerticalDistance = 0.15f;
+    public float LookSpeed = 5.0f;
+    public float MoveSpeed = 1.0f;
+    public float ZoomSpeed = 2.0f;
+    public float VerticalRangeUp = 15f;
+    public float VerticalRangeDown = 40f;
+    public float HorizontalRange = 90f;
+    public float VerticalRotation = 0;
+    public float HorizontalRotation = 0;
+    public float MaxDistanceHorizontal = 0.3f;
+    public float MaxVerticalDistance = 0.15f;
 
-    private Dictionary<string, ICameraMovement> movementSet;
-    private ICameraMovement activeMovement;
+    private Dictionary<string, ICameraMovement> MovementSet;
+    private ICameraMovement ActiveMovement;
 
     // Use this for initialization
     void Start()
     {
-        movementSet = new Dictionary<string, ICameraMovement>(){
+        MovementSet = new Dictionary<string, ICameraMovement>(){
             {"Horizontal", new CameraDirectionalMovementDesktop()},
             {"Rotational", new CameraRotationalMovementDesktop()},
             {"Zoom", new CameraZoomMovementDesktop()}};
@@ -51,21 +51,21 @@ public class CameraControllerDesktop : CameraController
         //move horizontally and vertically 
         if ((Input.GetMouseButton(0) && Input.GetMouseButton(1)) || Input.GetMouseButton(2))
         {
-            SetCameraMovement(movementSet["Horizontal"]);
+            SetCameraMovement(MovementSet["Horizontal"]);
             return;
         }
 
         //rotate the camera
         if (Input.GetMouseButton(1))
         {
-            SetCameraMovement(movementSet["Rotational"]);
+            SetCameraMovement(MovementSet["Rotational"]);
             return;
         }
 
         //Zoom camera towards front
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            SetCameraMovement(movementSet["Zoom"]);
+            SetCameraMovement(MovementSet["Zoom"]);
         }
     }   
 }

@@ -5,25 +5,25 @@
 /// </summary>
 public class MainmenuView : View {
 
-    private GuiPresenter presenter;
+    private GuiPresenter Presenter;
 
     public void ClickedStart()
     {          
-        presenter.StartPracticeRound();            
+        Presenter.StartPracticeRound();            
     }
 
     public void ClickedMultiplayer()
     {
-        presenter.ShowMultiplayerView();  
+        Presenter.ShowMultiplayerView();  
     }
 
     public void ClickedQuit()
     {
-        presenter.QuitApplication();
+        Presenter.QuitApplication();
     }
 
     public override void SetPresenter(IPresenter presenter)
     {
-        this.presenter = (GuiPresenter)presenter;
+        this.Presenter = (GuiPresenter)presenter;
     }
 }

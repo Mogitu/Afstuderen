@@ -6,26 +6,26 @@ using AMC.GUI;
 /// </summary>
 public class MultiplayermenuView : View {
 
-    public Text ipAdress;
-    private GuiPresenter presenter;
+    public Text IpAdress;
+    private GuiPresenter Presenter;
 
     public void ClickedClient()
     {
-        presenter.StartMultiplayerClient(ipAdress.text);
+        Presenter.StartMultiplayerClient(IpAdress.text);
     }
 
     public void ClickedHost()
     {
-        presenter.StartMultiplayerHost(ipAdress.text);        
+        Presenter.StartMultiplayerHost(IpAdress.text);        
     }
 
     public void GoBack()
     {
-        presenter.ShowMainmenuView();
+        Presenter.ShowMainmenuView();
     }
 
     public override void SetPresenter(IPresenter presenter)
     {
-        this.presenter = (GuiPresenter)presenter;
+        Presenter = (GuiPresenter)presenter;
     }
 }

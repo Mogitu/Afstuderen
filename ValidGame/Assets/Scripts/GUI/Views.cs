@@ -4,10 +4,10 @@
 /// </summary>
 public class VIEWS
 {
-    public const string mainmenuView = "MainmenuView";
-    public const string gamePlayingView = "GamePlayingView";
-    public const string gameovermenuView = "GameovermenuView";
-    public const string cardbrowserView = "CardbrowserView";
-    public const string multiplayermenuView = "MultiplayermenuView";
-    public const string multiplayerGameplayView = "MultiplayerGameplayView";
+    public const string MainmenuView = "MainmenuView";
+    public const string GamePlayingView = "GamePlayingView";
+    public const string GameovermenuView = "GameovermenuView";
+    public const string CardbrowserView = "CardbrowserView";
+    public const string MultiplayermenuView = "MultiplayermenuView";
+    public const string MultiplayerGameplayView = "MultiplayerGameplayView";
 }

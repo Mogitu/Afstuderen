@@ -8,46 +8,45 @@ using AMC.GUI;
 /// </summary>
 public class GameovermenuView : View {
 
-    public Text ownScoreTxt;
-    public Text otherScoreTxt;
-    private GuiPresenter presenter;
+    public Text OwnScoreTxt;
+    public Text OtherScoreTxt;
+    private GuiPresenter Presenter;
 
     public override void Awake()
     {
         base.Awake();
-        presenter.eventManager.AddListener(EVENT_TYPE.SENDSCORE, OnScoreReceived);
-        presenter.eventManager.AddListener(EVENT_TYPE.RECEIVESCORENETWORK, OnScoreReceivedMP);
-        /*
-        if(presenter.mainManager.IsMultiplayerGame)
+        Presenter.EventManager.AddListener(EVENT_TYPE.SendScore, OnScoreReceived);
+        Presenter.EventManager.AddListener(EVENT_TYPE.ReceiveScoreNetwork, OnScoreReceivedMP);
+       
+        if(Presenter.MainManager.IsMultiplayerGame)
         {
-            otherScoreTxt.text = "Waiting for opponent to finish.";
+            OtherScoreTxt.text = "Waiting for opponent to finish.";
         }
         else
         {
-            otherScoreTxt.text = "";
-        }   
-        */     
+            OtherScoreTxt.text = "";
+        }             
     }
 
     public void Restart()
     {
-        presenter.Restart();
+        Presenter.Restart();
     }    
 
     public void OnScoreReceived(short Event_Type, Component Sender, object Param = null)
     {
         Debug.Log("Received in gui score of " + Param);
-        ownScoreTxt.text = "You have " +Param + " good cards.";
+        OwnScoreTxt.text = "You have " +Param + " good cards.";
     }
 
     public void OnScoreReceivedMP(short Event_Type, Component Sender, object Param = null)
     {        
-        otherScoreTxt.text = "Your opponent has " + Param + " good cards.";
-       // presenter.eventManager.PostNotification(EVENT_TYPE.SENDSCORENETWORK, this, presenter.mainManager.score);
+        OtherScoreTxt.text = "Your opponent has " + Param + " good cards.";
+        Presenter.EventManager.PostNotification(EVENT_TYPE.SendScoreNetwork, this, Presenter.MainManager.Score);
     }
 
     public override void SetPresenter(IPresenter presenter)
     {
-        this.presenter = (GuiPresenter)presenter;
+        Presenter = (GuiPresenter)presenter;
     }
 }

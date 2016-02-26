@@ -9,7 +9,7 @@ public class WaitingState : GameState {
 
     public WaitingState(MainManager manager)
             : base(manager){
-        manager.eventManager.AddListener(EVENT_TYPE.PLAYERJOINED, OnPlayerJoined);
+        manager.EventManager.AddListener(EVENT_TYPE.PlayerJoined, OnPlayerJoined);
     }
 
     public override void UpdateState()
@@ -19,6 +19,6 @@ public class WaitingState : GameState {
 
     public void OnPlayerJoined(short Event_Type, Component Sender, object Param = null)
     {
-        gameManager.StartMultiplayerMatch();
+        GameManager.StartMultiplayerMatch();
     }
 }

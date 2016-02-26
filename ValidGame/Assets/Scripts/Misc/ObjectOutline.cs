@@ -10,31 +10,31 @@ using System.Collections;
 public class ObjectOutline : MonoBehaviour
 {
     // Use this for initialization  
-    public Color hoverColor;
-    private Renderer objectRenderer;
-    private Material defaultMat;
-    private Material highLightMat;
+    public Color HoverColor;
+    private Renderer ObjectRenderer;
+    private Material DefaultMat;
+    private Material HighLightMat;
 
     void Start()
     {
-        objectRenderer = GetComponent<Renderer>();
-        highLightMat = (Material)Instantiate(objectRenderer.sharedMaterial);//Shared material because normal material will create extra instances "killing" performance.
-        defaultMat = objectRenderer.sharedMaterial;
+        ObjectRenderer = GetComponent<Renderer>();
+        HighLightMat = (Material)Instantiate(ObjectRenderer.sharedMaterial);//Shared material because normal material will create extra instances "killing" performance.
+        DefaultMat = ObjectRenderer.sharedMaterial;
     }
 
     void OnMouseEnter()
     {
         if (enabled)
         {
-            objectRenderer.material = highLightMat;
-            highLightMat.color = hoverColor;
+            ObjectRenderer.material = HighLightMat;
+            HighLightMat.color = HoverColor;
         }
     }
 
     void OnMouseExit()
     {
         if (enabled)
-            objectRenderer.material = defaultMat;
+            ObjectRenderer.material = DefaultMat;
     }
 }
 

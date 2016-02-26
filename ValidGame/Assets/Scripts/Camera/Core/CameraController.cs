@@ -7,7 +7,7 @@ namespace AMC.Camera
 {
     public abstract class CameraController : MonoBehaviour, ICameraController
     {
-        private ICameraMovement activeMovement;
+        private ICameraMovement ActiveMovement;
 
         void Update()
         {
@@ -17,8 +17,8 @@ namespace AMC.Camera
 
         public void SetCameraMovement(ICameraMovement movement)
         {
-            activeMovement = movement;
-            activeMovement.Move(this);
+            ActiveMovement = movement;
+            ActiveMovement.Move(this);
         }
     }
 }
