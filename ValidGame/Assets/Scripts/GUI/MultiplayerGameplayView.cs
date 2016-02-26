@@ -17,9 +17,9 @@ public class MultiplayerGameplayView : View {
     public override void Awake()
     {
         base.Awake();
-        Presenter.EventManager.AddListener(EVENT_TYPE.ReceiveChatNetwork, OnChatReceived);
-        Presenter.EventManager.AddListener(EVENT_TYPE.PlayerJoined, OnPlayerJoined);
-        Presenter.EventManager.AddListener(EVENT_TYPE.PlayerLeft, OnPlayerLeft);
+        Presenter.EventManager.AddListener(GameEvents.ReceiveChatNetwork, OnChatReceived);
+        Presenter.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
+        Presenter.EventManager.AddListener(GameEvents.PlayerLeft, OnPlayerLeft);
     }
 
     //TODO  :   More descriptive naming.

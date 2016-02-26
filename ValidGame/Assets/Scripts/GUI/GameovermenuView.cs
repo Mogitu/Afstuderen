@@ -15,8 +15,8 @@ public class GameovermenuView : View {
     public override void Awake()
     {
         base.Awake();
-        Presenter.EventManager.AddListener(EVENT_TYPE.SendScore, OnScoreReceived);
-        Presenter.EventManager.AddListener(EVENT_TYPE.ReceiveScoreNetwork, OnScoreReceivedMP);
+        Presenter.EventManager.AddListener(GameEvents.SendScore, OnScoreReceived);
+        Presenter.EventManager.AddListener(GameEvents.ReceiveScoreNetwork, OnScoreReceivedMP);
        
         if(Presenter.MainManager.IsMultiplayerGame)
         {
@@ -42,7 +42,7 @@ public class GameovermenuView : View {
     public void OnScoreReceivedMP(short Event_Type, Component Sender, object Param = null)
     {        
         OtherScoreTxt.text = "Your opponent has " + Param + " good cards.";
-        Presenter.EventManager.PostNotification(EVENT_TYPE.SendScoreNetwork, this, Presenter.MainManager.Score);
+        Presenter.EventManager.PostNotification(GameEvents.SendScoreNetwork, this, Presenter.MainManager.Score);
     }
 
     public override void SetPresenter(IPresenter presenter)

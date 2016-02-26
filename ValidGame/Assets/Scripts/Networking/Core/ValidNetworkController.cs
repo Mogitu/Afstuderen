@@ -19,50 +19,51 @@ public class ValidNetworkController : NetworkController
 
     void Start()
     {
-        EventManager.AddListener(EVENT_TYPE.SendSchat, SendChatMsgs);
-        EventManager.AddListener(EVENT_TYPE.SendScoreNetwork, SendScoreMsgs);
-        EventManager.AddListener(EVENT_TYPE.SendCardToOpponent, SendOpponentCard);
+        EventManager.AddListener(GameEvents.SendSchat, SendChatMsgs);
+        EventManager.AddListener(GameEvents.SendScoreNetwork, SendScoreMsgs);
+        EventManager.AddListener(GameEvents.SendCardToOpponent, SendOpponentCard);
     }
 
     public void SendOpponentCard(short Event_Type, Component Sender, object param = null)
     {
         Debug.Log("Sending card");
-        CardToOpponentMessage msgA = new CardToOpponentMessage();
-        msgA.CardName = "jan";
-      
+        CardToOpponentMessage msgA = (CardToOpponentMessage)param;
         if (IsClient && Client != null)
         {
-            Client.SendMessage(MsgTypes.MsgOnOpponentCardReceived, msgA);
+            Client.SendMessage(NetworkMessages.OpponentCard, msgA);
         }
         else
         {
-            Server.SendMessage(MsgTypes.MsgOnOpponentCardReceived, msgA);
+            Server.SendMessage(NetworkMessages.OpponentCard, msgA);
         }
     }
 
     public void OnOpponentCardReceived(NetworkMessage msg)
     {
         CardToOpponentMessage msgA = msg.ReadMessage<CardToOpponentMessage>();
-        Debug.Log("Card : "+msgA.CardName);
+        Debug.Log(msgA.CardName);
+        string name = msgA.CardName.Trim();
+        GameObject go = Instantiate(GameObject.Find(name).gameObject);
+        go.transform.position = msgA.Position;
     }
 
     public override void BeginHosting()
     {
         Server = new AmcServer(SocketPort);
-        Server.RegisterHandler(MsgTypes.MsgChat, OnChatMessageReceived);
-        Server.RegisterHandler(MsgTypes.MsgScore, OnScoreMessageReceived);
+        Server.RegisterHandler(NetworkMessages.MsgChat, OnChatMessageReceived);
+        Server.RegisterHandler(NetworkMessages.MsgScore, OnScoreMessageReceived);
         Server.RegisterHandler(MsgType.Connect, OnPlayerConnect);
         Server.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
-        Server.RegisterHandler(MsgTypes.MsgOnOpponentCardReceived, OnOpponentCardReceived);
+        Server.RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);
     }
 
     public override void StartClient(string ip)
     {
         Client = new AmcClient(ip, SocketPort);
-        Client.RegisterHandler(MsgTypes.MsgChat, OnChatMessageReceived);
-        Client.RegisterHandler(MsgTypes.MsgScore, OnScoreMessageReceived);
+        Client.RegisterHandler(NetworkMessages.MsgChat, OnChatMessageReceived);
+        Client.RegisterHandler(NetworkMessages.MsgScore, OnScoreMessageReceived);
         Client.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
-        Client.RegisterHandler(MsgTypes.MsgOnOpponentCardReceived, OnOpponentCardReceived);
+        Client.RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);
         IsClient = true;
     }
 
@@ -72,11 +73,11 @@ public class ValidNetworkController : NetworkController
         msgA.Text = param.ToString();
         if (IsClient && Client != null)
         {
-            Client.SendMessage(MsgTypes.MsgChat, msgA);
+            Client.SendMessage(NetworkMessages.MsgChat, msgA);
         }
         else
         {
-            Server.SendMessage(MsgTypes.MsgChat, msgA);
+            Server.SendMessage(NetworkMessages.MsgChat, msgA);
         }
     }
 
@@ -87,11 +88,11 @@ public class ValidNetworkController : NetworkController
         Debug.Log("sending as score to gui: " + msgA.Score);
         if (IsClient && Client != null)
         {
-            Client.SendMessage(MsgTypes.MsgScore, msgA);
+            Client.SendMessage(NetworkMessages.MsgScore, msgA);
         }
         else
         {
-            Server.SendMessage(MsgTypes.MsgScore, msgA);
+            Server.SendMessage(NetworkMessages.MsgScore, msgA);
         }
     }
 
@@ -99,19 +100,19 @@ public class ValidNetworkController : NetworkController
     {
         ChatMessage msgA = msg.ReadMessage<ChatMessage>();
         Debug.Log("Received Chat");
-        EventManager.PostNotification(EVENT_TYPE.ReceiveChatNetwork, this, msgA.Text.ToString());
+        EventManager.PostNotification(GameEvents.ReceiveChatNetwork, this, msgA.Text.ToString());
     }
 
     void OnScoreMessageReceived(NetworkMessage msg)
     {
         ScoreMessage msgA = msg.ReadMessage<ScoreMessage>();
         Debug.Log("Received network score " + msgA.Score);
-        EventManager.PostNotification(EVENT_TYPE.ReceiveScoreNetwork, this, msgA.Score);
+        EventManager.PostNotification(GameEvents.ReceiveScoreNetwork, this, msgA.Score);
     }
 
     void OnPlayerConnect(NetworkMessage msg)
     {
-        EventManager.PostNotification(EVENT_TYPE.PlayerJoined, this, "JOINED");
+        EventManager.PostNotification(GameEvents.PlayerJoined, this, "JOINED");
         if (Server.ConnectionCount >= 2)
         {
             Debug.Log("Game is ready");
@@ -120,7 +121,7 @@ public class ValidNetworkController : NetworkController
 
     void OnPlayerDissConnect(NetworkMessage msg)
     {
-        EventManager.PostNotification(EVENT_TYPE.PlayerLeft, this, "LEFT");
+        EventManager.PostNotification(GameEvents.PlayerLeft, this, "LEFT");
     }
 
     public override void Disconnect()

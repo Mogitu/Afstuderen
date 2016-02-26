@@ -95,12 +95,12 @@ public class CardController : ICardController
             //route message to opponent
             if (MainManager.IsMultiplayerGame)
             {
-                object[] currentCardData = { CurrentCard.MatchCode, CurrentCard.transform.position};
-                MainManager.SendCardToOppent(currentCardData);
+                CardToOpponentMessage msg = new CardToOpponentMessage();
+                msg.CardName = CurrentCard.name;
+                msg.Position = CurrentCard.transform.position;
+                MainManager.SendCardToOppent(msg);
             }
-            CurrentCard = null;         
-
-           
+            CurrentCard = null;                   
         }
     }
 
@@ -117,8 +117,8 @@ public class CardController : ICardController
             if (hit.transform.gameObject.tag == "ValidCard")
             {
                 Transform objectHit = hit.transform;
-                SubtopicMatcher tm = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
-                tm.Occupied = false;
+                SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
+                topicMatcher.Occupied = false;
                 CurrentCard = hit.transform.gameObject.GetComponent<Card>();
                 CurrentCard.transform.parent = null;
                 CardCollection.Add(CurrentCard);
@@ -158,7 +158,7 @@ public class CardController : ICardController
         for (int i = 0; i < cards.Length; i++)
         {
             Card card = cards[i];
-            card.gameObject.SetActive(false);
+            //card.gameObject.SetActive(false);
             CardCollection.Add(card);
         }       
     }

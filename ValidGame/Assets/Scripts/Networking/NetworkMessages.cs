@@ -5,14 +5,14 @@ using UnityEngine.Networking;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Contains all network event type. These map directly to custom defined messages below the container MsgTypes class.
 /// </summary>
-public class MsgTypes
+public class NetworkMessages
 {
     public const short MsgChat = MsgType.Highest + 1;
     public const short MsgScore = MsgType.Highest + 2;
     public const short MsgPlayerJoined = MsgType.Highest + 3;
     public const short MsgPlayerLeft = MsgType.Highest + 4;
 
-    public const short MsgOnOpponentCardReceived = MsgType.Highest + 5;
+    public const short OpponentCard = MsgType.Highest + 5;
 }
 
 //All custom messages below.

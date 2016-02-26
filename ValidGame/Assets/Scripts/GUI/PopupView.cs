@@ -16,7 +16,7 @@ public class PopupView : View
     public override void Awake()
     {
         base.Awake();
-        Presenter.EventManager.AddListener(EVENT_TYPE.PlayerJoined, OnPlayerJoined);
+        Presenter.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
     }
 
     public void OnPlayerJoined(short Event_Type, Component Sender, object Param = null)

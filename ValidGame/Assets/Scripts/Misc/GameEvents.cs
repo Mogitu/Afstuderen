@@ -3,7 +3,7 @@
 /// Desc    :   Container for all game events.
 /// TODO    :   New/unused events need to be added/removed.
 /// </summary>
-public class EVENT_TYPE
+public class GameEvents
 {
     public const short Enable = 1;
     public const short Disable = 2;

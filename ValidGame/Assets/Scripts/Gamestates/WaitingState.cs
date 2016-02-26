@@ -9,7 +9,7 @@ public class WaitingState : GameState {
 
     public WaitingState(MainManager manager)
             : base(manager){
-        manager.EventManager.AddListener(EVENT_TYPE.PlayerJoined, OnPlayerJoined);
+        manager.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
     }
 
     public override void UpdateState()

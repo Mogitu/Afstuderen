@@ -94,9 +94,9 @@ public class MainManager : MonoBehaviour, IMainManager
         CardController.SelectCard(code);
     }
 
-    public void SendCardToOppent(object param)
+    public void SendCardToOppent(CardToOpponentMessage param)
     {
-        EventManager.PostNotification(EVENT_TYPE.SendCardToOpponent, null,param);
+        EventManager.PostNotification(GameEvents.SendCardToOpponent, null,param);
     }
 
     public void QuitApplication()

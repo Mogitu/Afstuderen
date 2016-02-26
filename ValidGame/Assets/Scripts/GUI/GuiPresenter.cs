@@ -16,7 +16,7 @@ public class GuiPresenter : Presenter
     public  void Start()
     {        
         ChangeView(VIEWS.MainmenuView);
-        EventManager.AddListener(EVENT_TYPE.PlayerJoined, StartMatch);
+        EventManager.AddListener(GameEvents.PlayerJoined, StartMatch);
     }  
 
     public void StartPracticeRound()
@@ -95,12 +95,12 @@ public class GuiPresenter : Presenter
 
     public void PostChatSend(string str)
     {
-        EventManager.PostNotification(EVENT_TYPE.SendSchat, this, str);       
+        EventManager.PostNotification(GameEvents.SendSchat, this, str);       
     }     
 
     public void PostScoreSend(string str)
     {
-        EventManager.PostNotification(EVENT_TYPE.SendScore, this, str);
+        EventManager.PostNotification(GameEvents.SendScore, this, str);
     }
 
     /// <summary>
