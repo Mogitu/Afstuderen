@@ -38,24 +38,44 @@ public class CardbrowserView : View
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
         {
-            GuiCard obj = cards[i];            
-            obj.transform.SetParent(CardPanelContent.transform, false);
-            Vector3 newPos = obj.transform.parent.transform.position;
-            newPos.x += offSetX;
-            newPos.y += offSetY;
-            offSetX += 150;
-            obj.transform.position = newPos;
-            Button objBtn = obj.GetComponent<Button>();
-            objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });
-            BrowsableCards.Add(obj);
-            col++;
-
-            if (col >= 5)
+            GuiCard obj = cards[i];
+            //TODO: this needs to be smaller!  
+            if (Presenter.GetTeamType == TeamType.CheckAndAct)
             {
-                col = 1;
-                offSetY -= 200;
-                offSetX = -225;
+                if (obj.typeOfCard == CardType.Check || obj.typeOfCard == CardType.Act)
+                {
+                    AddCard(obj, ref offSetX, ref offSetY, ref col);
+                }
             }
+            else if (Presenter.GetTeamType == TeamType.PlanAndDo)
+            {
+                if (obj.typeOfCard == CardType.Plan || obj.typeOfCard == CardType.Do)
+                {
+                    AddCard(obj, ref offSetX, ref offSetY, ref col);
+                }
+            }
+        }
+    }
+
+    //TODO: Split this up into smaller methods.
+    private void AddCard(GuiCard obj, ref int offSetX, ref int offSetY, ref int col)
+    {
+        obj.transform.SetParent(CardPanelContent.transform, false);
+        Vector3 newPos = obj.transform.parent.transform.position;
+        newPos.x += offSetX;
+        newPos.y += offSetY;
+        offSetX += 150;
+        obj.transform.position = newPos;
+        Button objBtn = obj.GetComponent<Button>();
+        objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });
+        BrowsableCards.Add(obj);
+        col++;
+
+        if (col >= 5)
+        {
+            col = 1;
+            offSetY -= 200;
+            offSetX = -225;
         }
     }
 
@@ -85,13 +105,13 @@ public class CardbrowserView : View
             // check any hits to see if any of them are blocking UI elements
             foreach (RaycastResult result in hits)
             {
-               GuiCard card = result.gameObject.GetComponent<GuiCard>();                              
-               if(card != null)
+                GuiCard card = result.gameObject.GetComponent<GuiCard>();
+                if (card != null)
                 {
                     Image img = card.GetComponent<Image>();
                     ExtraInfoPanelImage.sprite = img.sprite;
                     return;
-                }              
+                }
             }
         }
     }
@@ -99,13 +119,13 @@ public class CardbrowserView : View
     //TODO  :   Ties card model to this view, defeating the purpose of mvp?
     public void ClickedCard(GameObject obj)
     {
-        GuiCard card = obj.GetComponent<GuiCard>();        
+        GuiCard card = obj.GetComponent<GuiCard>();
         Presenter.PickCard(card.MatchCode);
-        obj.SetActive(false);   
+        obj.SetActive(false);
     }
 
     public override void SetPresenter(IPresenter presenter)
     {
-        this.Presenter = (GuiPresenter)presenter;
+        Presenter = (GuiPresenter)presenter;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using AMC.Networking;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -10,6 +9,8 @@ using AMC.Networking;
 /// </summary>
 public class MainManager : MonoBehaviour, IMainManager
 {
+    
+
     public GuiPresenter GuiPresenter;
     public CameraControllerDesktop CameraController;
     public GameObject GameBoard;
@@ -17,15 +18,19 @@ public class MainManager : MonoBehaviour, IMainManager
 
     private GameStateManager GamestateManager;
     private CardController CardController;//This should be placed somewhere else....probably a state?
+    public TeamType MyTeamType { get; private set; }
    
     // private NetworkManager networkManager;
     public ValidNetworkController NetworkController;
     public EventManager EventManager;
+    
 
+    
     void Awake()
     {
+        MyTeamType = TeamType.CheckAndAct;
         GamestateManager = new GameStateManager(this);
-        CardController = new CardController(this);
+        CardController = new CardController(this);        
     }
 
     void Start()
@@ -145,4 +150,10 @@ public class MainManager : MonoBehaviour, IMainManager
         get;
         set;
     }
+}
+
+public enum TeamType
+{
+    CheckAndAct,
+    PlanAndDo
 }

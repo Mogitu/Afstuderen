@@ -59,7 +59,7 @@ public class CardBuilderEditor : EditorWindow
         }
         GameObject go = Resources.Load<GameObject>("card");
         Card card = go.GetComponent<Card>();
-        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr);
+        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr, card.TypeOfCard);
         SpriteRenderer spr = card.Sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
         go.transform.rotation = Quaternion.identity;
@@ -76,7 +76,7 @@ public class CardBuilderEditor : EditorWindow
         }
         GameObject go = Resources.Load<GameObject>("card");
         Card card = go.GetComponent<Card>();
-        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr);
+        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr, card.TypeOfCard);
         SpriteRenderer spr = card.Sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
 

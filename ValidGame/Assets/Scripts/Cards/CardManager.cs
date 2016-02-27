@@ -17,10 +17,10 @@ public class CardController : ICardController
     public CardController(MainManager manager)
     {
         CardCollection = new List<Card>();
-        PlacedCards = new List<Card>();
-        CollectCards();       
+        PlacedCards = new List<Card>();               
         //cardOffsetY = 0.2f;
         MainManager = manager;
+        CollectCards();
     }
 
     //Call every frame in manager class.
@@ -158,8 +158,22 @@ public class CardController : ICardController
         for (int i = 0; i < cards.Length; i++)
         {
             Card card = cards[i];
-            //card.gameObject.SetActive(false);
-            CardCollection.Add(card);
+            //collect only cards of the current teamtype
+            if(MainManager.MyTeamType == TeamType.CheckAndAct)
+            {
+                if(card.TypeOfCard == CardType.Check || card.TypeOfCard == CardType.Act)
+                {
+                    CardCollection.Add(card);
+                }
+            }
+            else if(MainManager.MyTeamType == TeamType.PlanAndDo)
+            {
+                if (card.TypeOfCard == CardType.Plan || card.TypeOfCard == CardType.Do)
+                {
+                    CardCollection.Add(card);
+                }
+            }
+            //card.gameObject.SetActive(false);           
         }       
     }
 }

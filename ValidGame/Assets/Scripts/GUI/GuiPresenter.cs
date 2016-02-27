@@ -103,6 +103,10 @@ public class GuiPresenter : Presenter
         EventManager.PostNotification(GameEvents.SendScore, this, str);
     }
 
+    public TeamType GetTeamType {
+        get { return MainManager.MyTeamType; }
+    }
+   
     /// <summary>
     /// Update a text with the topic description on an object, if existing.
     /// </summary>

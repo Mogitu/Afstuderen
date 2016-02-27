@@ -38,6 +38,6 @@ public class GameplayingView : View{
 
     public override void SetPresenter(IPresenter presenter)
     {
-        this.Presenter = (GuiPresenter)presenter;
+        Presenter = (GuiPresenter)presenter;
     }
 }

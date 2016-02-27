@@ -20,8 +20,7 @@ public class CameraControllerDesktop : CameraController
     public float MaxDistanceHorizontal = 0.3f;
     public float MaxVerticalDistance = 0.15f;
 
-    private Dictionary<string, ICameraMovement> MovementSet;
-    private ICameraMovement ActiveMovement;
+    private Dictionary<string, ICameraMovement> MovementSet;   
 
     // Use this for initialization
     void Start()
