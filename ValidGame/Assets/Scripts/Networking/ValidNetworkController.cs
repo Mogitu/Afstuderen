@@ -14,8 +14,7 @@ public class ValidNetworkController : NetworkController
     public int SocketPort = 7777;
 
     private AmcClient Client;
-    private AmcServer Server;
-    // private bool IsClient { get; set; }
+    private AmcServer Server;    
     private bool IsClient;
 
     void Start()

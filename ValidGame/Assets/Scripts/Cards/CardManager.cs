@@ -17,16 +17,16 @@ public class CardController : ICardController
     public CardController(MainManager manager)
     {
         CardCollection = new List<Card>();
-        PlacedCards = new List<Card>();               
+        PlacedCards = new List<Card>();
         //cardOffsetY = 0.2f;
         MainManager = manager;
-        CollectCards();
+        //CollectCards();
     }
 
     //Call every frame in manager class.
     public void ManageCards()
     {
-        if(CardCollection.Count >0)
+        if (CardCollection.Count > 0)
         {
             if (CurrentCard != null)
             {
@@ -41,7 +41,7 @@ public class CardController : ICardController
             {
                 MainManager.EndPracticeGame();
             }
-        }       
+        }
     }
 
 
@@ -64,15 +64,15 @@ public class CardController : ICardController
                 Transform objectHit = hit.transform;
                 Vector3 newPos = hit.point;
                 newPos.y = 0.24f;// cardOffsetY; //gameManager.cardOffsetY;
-                CurrentCard.transform.position = newPos;               
-                
+                CurrentCard.transform.position = newPos;
+
                 //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
                 if (objectHit.gameObject.tag == "ValidTopic")
                 {
                     DropCurrentCard(objectHit.gameObject);
-                }                
+                }
             }
-        }       
+        }
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public class CardController : ICardController
                 msg.Position = CurrentCard.transform.position;
                 MainManager.SendCardToOppent(msg);
             }
-            CurrentCard = null;                   
+            CurrentCard = null;
         }
     }
 
@@ -146,27 +146,27 @@ public class CardController : ICardController
 
     //Executed by the gui handler to pick the current selected card in the card browser.
     public void SelectCard(string code)
-    {       
+    {
         CurrentCard = GetCard(code);
-        CurrentCard.gameObject.SetActive(true);
+        // CurrentCard.gameObject.SetActive(true);
     }
 
     //Collects all cards that are created in the scene by the builder module and add them to the card collection.
-    private void CollectCards()
+    public void CollectCards()
     {
         Card[] cards = Object.FindObjectsOfType<Card>();
         for (int i = 0; i < cards.Length; i++)
         {
             Card card = cards[i];
             //collect only cards of the current teamtype
-            if(MainManager.MyTeamType == TeamType.CheckAndAct)
+            if (MainManager.MyTeamType == TeamType.CheckAndAct)
             {
-                if(card.TypeOfCard == CardType.Check || card.TypeOfCard == CardType.Act)
+                if (card.TypeOfCard == CardType.Check || card.TypeOfCard == CardType.Act)
                 {
                     CardCollection.Add(card);
                 }
             }
-            else if(MainManager.MyTeamType == TeamType.PlanAndDo)
+            else if (MainManager.MyTeamType == TeamType.PlanAndDo)
             {
                 if (card.TypeOfCard == CardType.Plan || card.TypeOfCard == CardType.Do)
                 {
@@ -174,6 +174,6 @@ public class CardController : ICardController
                 }
             }
             //card.gameObject.SetActive(false);           
-        }       
+        }
     }
 }

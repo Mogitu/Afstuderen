@@ -18,8 +18,7 @@ public class MainManager : MonoBehaviour, IMainManager
 
     private GameStateManager GamestateManager;
     private CardController CardController;//This should be placed somewhere else....probably a state?
-    // public TeamType MyTeamType { get; private set; }
-    public TeamType MyTeamType;
+    public TeamType MyTeamType { get; private set; }   
     // private NetworkManager networkManager;
     public ValidNetworkController NetworkController;
     public EventManager EventManager;
@@ -54,7 +53,8 @@ public class MainManager : MonoBehaviour, IMainManager
     {       
         NetworkController.BeginHosting();
         IsMultiplayerGame = true;
-       // MyTeamType = TeamType.CheckAndAct;
+        MyTeamType = TeamType.CheckAndAct;
+        CardController.CollectCards();
     }   
 
     public void StartMultiplayerMatch()
@@ -69,7 +69,8 @@ public class MainManager : MonoBehaviour, IMainManager
         GamestateManager.SetMultiplayerState();
         NetworkController.StartClient(ip);
         IsMultiplayerGame = true;
-       // MyTeamType = TeamType.PlanAndDo;
+        MyTeamType = TeamType.PlanAndDo;
+        CardController.CollectCards();
     }  
 
     public void StartPracticeRound()
