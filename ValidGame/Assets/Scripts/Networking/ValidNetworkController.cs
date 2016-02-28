@@ -15,7 +15,8 @@ public class ValidNetworkController : NetworkController
 
     private AmcClient Client;
     private AmcServer Server;
-    private bool IsClient { get; set; }
+    // private bool IsClient { get; set; }
+    private bool IsClient;
 
     void Start()
     {
@@ -40,10 +41,9 @@ public class ValidNetworkController : NetworkController
 
     public void OnOpponentCardReceived(NetworkMessage msg)
     {
-        CardToOpponentMessage msgA = msg.ReadMessage<CardToOpponentMessage>();
-        Debug.Log(msgA.CardName);
+        CardToOpponentMessage msgA = msg.ReadMessage<CardToOpponentMessage>();     
         string name = msgA.CardName.Trim();
-        GameObject go = Instantiate(GameObject.Find(name).gameObject);
+        GameObject go = GameObject.Find(name).gameObject;
         go.transform.position = msgA.Position;
     }
 
@@ -55,6 +55,7 @@ public class ValidNetworkController : NetworkController
         Server.RegisterHandler(MsgType.Connect, OnPlayerConnect);
         Server.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
         Server.RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);
+        IsClient = false;
     }
 
     public override void StartClient(string ip)

@@ -107,8 +107,8 @@
     <Compile Include="Assets\Scripts\Networking\Core\IAmcServer.cs" />
     <Compile Include="Assets\Scripts\Networking\Core\INetworkController.cs" />
     <Compile Include="Assets\Scripts\Networking\Core\NetworkController.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\ValidNetworkController.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkMessages.cs" />
+    <Compile Include="Assets\Scripts\Networking\ValidNetworkController.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
   </ItemGroup>
   <ItemGroup>
