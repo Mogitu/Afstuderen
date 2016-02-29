@@ -8,10 +8,10 @@ using UnityEngine.Networking;
 /// </summary>
 namespace AMC.Networking
 {
-    public interface IAmcClient
+    public interface IAmcClient: INetworkContext
     {
-        void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage);
-        void SendMessage(short msgType, MessageBase msgs);
+         string IpAdress { get; set; }
+         int SocketPort { get; set; }
     }
 }
 

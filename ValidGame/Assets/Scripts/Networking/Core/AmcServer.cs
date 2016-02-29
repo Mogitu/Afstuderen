@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Networking;
+﻿using UnityEngine.Networking;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -10,8 +8,6 @@ namespace AMC.Networking
 {
     public class AmcServer:IAmcServer
     {     
-        private int SocketPort;
-
         public AmcServer()
         {
             SocketPort = 7777;
@@ -37,6 +33,12 @@ namespace AMC.Networking
         public int ConnectionCount
         {
             get { return NetworkServer.connections.Count; }
+        }
+
+        public int SocketPort
+        {
+            get;
+            set;
         }
     }
 }

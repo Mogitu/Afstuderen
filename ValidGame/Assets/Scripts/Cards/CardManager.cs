@@ -13,14 +13,23 @@ public class CardController : ICardController
     private List<Card> CardCollection;
     //private float cardOffsetY;
     private MainManager MainManager;
+    private EventManager EventManager;
 
-    public CardController(MainManager manager)
+    public CardController(MainManager manager, EventManager eventManager)
     {
         CardCollection = new List<Card>();
         PlacedCards = new List<Card>();
         //cardOffsetY = 0.2f;
         MainManager = manager;
+        EventManager = eventManager;
         //CollectCards();
+        EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
+    }
+
+    public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
+    {
+        //GameObject go = (GameObject)param;
+        Debug.Log("Received card in cardmanager from opponent");
     }
 
     //Call every frame in manager class.

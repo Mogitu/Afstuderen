@@ -4,32 +4,26 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Hooks all primary functionalities/modules together, after initializing them.
-/// TODO    :   In order to comply better with SOLID, this probably should implement an interface.
-///             A lot of functions can be placed to specific states.
+/// TODO    :   A lot of functions can be placed to specific states.
 /// </summary>
 public class MainManager : MonoBehaviour, IMainManager
 {
-    
-
     public GuiPresenter GuiPresenter;
     public CameraControllerDesktop CameraController;
     public GameObject GameBoard;
-    public int Score;
-
-    private GameStateManager GamestateManager;
-    private CardController CardController;//This should be placed somewhere else....probably a state?
-    public TeamType MyTeamType { get; private set; }   
-    // private NetworkManager networkManager;
+    public int Score { get; set; }    
+    public TeamType MyTeamType { get; private set; }    
     public ValidNetworkController NetworkController;
     public EventManager EventManager;
-    
 
-    
+    private GameStateManager GamestateManager;
+    private CardController _CardController;
+
     void Awake()
     {
         MyTeamType = TeamType.CheckAndAct;
         GamestateManager = new GameStateManager(this);
-        CardController = new CardController(this);        
+        _CardController = new CardController(this, EventManager);        
     }
 
     void Start()
@@ -42,16 +36,11 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         GamestateManager.UpdateCurrentState();
         CardController.ManageCards();
-    }
-
-    private void AddListeners()
-    {
-        
-    }
+    }  
 
     public void StartMultiplayerHost(string ip)
     {       
-        NetworkController.BeginHosting();
+        NetworkController.StartHosting();
         IsMultiplayerGame = true;
         MyTeamType = TeamType.CheckAndAct;
         CardController.CollectCards();
@@ -78,6 +67,7 @@ public class MainManager : MonoBehaviour, IMainManager
         CameraController.RunGameStartAnimation();
         GamestateManager.SetPlayingState();
         IsMultiplayerGame = false;
+        CardController.CollectCards();
     }
 
     public void EndPracticeGame()
@@ -106,12 +96,7 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         EventManager.PostNotification(GameEvents.SendCardToOpponent, null,param);
     }
-
-    public void QuitApplication()
-    {
-        Application.Quit();
-        Debug.Log("Quit!");
-    }
+   
 
     public void ToggleCameraActive()
     {
@@ -140,18 +125,24 @@ public class MainManager : MonoBehaviour, IMainManager
                 col.enabled = true;
             }           
         }
-    }  
+    }
 
-    //TODO  :   Violates LOD in gameoverstate class!
-    public CardController CardManager
+    public void QuitApplication()
     {
-        get { return CardController; }
+        Application.Quit();
+        Debug.Log("Quit!");
+    }
+
+   
+    public CardController CardController
+    {
+        get { return _CardController; }
     }      
 
     public bool IsMultiplayerGame
     {
         get;
-        set;
+        private set;
     }
 }
 

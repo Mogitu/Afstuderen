@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -11,8 +12,7 @@ namespace AMC.Networking
     public class AmcClient : IAmcClient
     {
         private NetworkClient Client;
-        private string IpAdress;
-        private int SocketPort;        
+
 
         public AmcClient()
         {
@@ -31,7 +31,18 @@ namespace AMC.Networking
             Client = new NetworkClient();
             Client.Connect(IpAdress, SocketPort);
         }
-     
+
+        public string IpAdress
+        {
+            get;
+            set;
+        }
+
+        public int SocketPort
+        {
+            get;
+            set;
+        }
 
         public void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage)
         {
@@ -41,6 +52,6 @@ namespace AMC.Networking
         public void SendMessage(short msgType, MessageBase msgs)
         {
             Client.Send(msgType, msgs);
-        }         
+        }
     }
 }

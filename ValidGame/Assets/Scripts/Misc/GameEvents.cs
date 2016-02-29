@@ -17,4 +17,5 @@ public class GameEvents
     public const short PlayerLeft = 10;
 
     public const short SendCardToOpponent = 11;
+    public const short CardReceivedFromOpponent = 12;
 }

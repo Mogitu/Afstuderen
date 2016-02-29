@@ -34,17 +34,17 @@ public class GameOverState : GameState
     public void DetermineResults()
     {
         //Retreive all subtopicmatchers in the placed cards parents and check if their codes match
-        for (int i = 0; i < GameManager.CardManager.PlacedCards.Count; i++)//LOD violation
+        for (int i = 0; i < GameManager.CardController.PlacedCards.Count; i++)//LOD violation
         {
-            SubtopicMatcher matcher = GameManager.CardManager.PlacedCards[i].GetComponentInParent<SubtopicMatcher>();
-            if (matcher && matcher.MatchCode == GameManager.CardManager.PlacedCards[i].MatchCode)
+            SubtopicMatcher matcher = GameManager.CardController.PlacedCards[i].GetComponentInParent<SubtopicMatcher>();
+            if (matcher && matcher.MatchCode == GameManager.CardController.PlacedCards[i].MatchCode)
             {                
-                GameManager.CardManager.PlacedCards[i].GetComponent<Renderer>().material.color = Color.green;
+                GameManager.CardController.PlacedCards[i].GetComponent<Renderer>().material.color = Color.green;
                 GoodCards++;
             }
             else
             {              
-                GameManager.CardManager.PlacedCards[i].GetComponent<Renderer>().material.color = Color.red;
+                GameManager.CardController.PlacedCards[i].GetComponent<Renderer>().material.color = Color.red;
             }
         }
         Debug.Log(GoodCards + " properly placed cards.");

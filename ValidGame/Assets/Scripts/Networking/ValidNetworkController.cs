@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using System;
 using AMC.Networking;
 
 /// <summary>
@@ -11,11 +10,7 @@ using AMC.Networking;
 public class ValidNetworkController : NetworkController
 {
     public EventManager EventManager;
-    public int SocketPort = 7777;
-
-    private AmcClient Client;
-    private AmcServer Server;    
-    private bool IsClient;
+    public int SocketPort = 7777;    
 
     void Start()
     {
@@ -25,17 +20,9 @@ public class ValidNetworkController : NetworkController
     }
 
     public void SendOpponentCard(short Event_Type, Component Sender, object param = null)
-    {
-        Debug.Log("Sending card");
-        CardToOpponentMessage msgA = (CardToOpponentMessage)param;
-        if (IsClient && Client != null)
-        {
-            Client.SendMessage(NetworkMessages.OpponentCard, msgA);
-        }
-        else
-        {
-            Server.SendMessage(NetworkMessages.OpponentCard, msgA);
-        }
+    {       
+        CardToOpponentMessage msgA = (CardToOpponentMessage)param;    
+        NetworkContext.SendMessage(NetworkMessages.OpponentCard, msgA);
     }
 
     public void OnOpponentCardReceived(NetworkMessage msg)
@@ -44,26 +31,20 @@ public class ValidNetworkController : NetworkController
         string name = msgA.CardName.Trim();
         GameObject go = GameObject.Find(name).gameObject;
         go.transform.position = msgA.Position;
+        EventManager.PostNotification(GameEvents.CardReceivedFromOpponent,this, go);
     }
 
-    public override void BeginHosting()
-    {
-        Server = new AmcServer(SocketPort);
-        Server.RegisterHandler(NetworkMessages.MsgChat, OnChatMessageReceived);
-        Server.RegisterHandler(NetworkMessages.MsgScore, OnScoreMessageReceived);
-        Server.RegisterHandler(MsgType.Connect, OnPlayerConnect);
-        Server.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
-        Server.RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);
+    public void StartHosting()
+    {   
+        CreateServerContext<AmcServer>(SocketPort);
+        AddHandlers();  
         IsClient = false;
     }
 
-    public override void StartClient(string ip)
-    {
-        Client = new AmcClient(ip, SocketPort);
-        Client.RegisterHandler(NetworkMessages.MsgChat, OnChatMessageReceived);
-        Client.RegisterHandler(NetworkMessages.MsgScore, OnScoreMessageReceived);
-        Client.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
-        Client.RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);
+    public  void StartClient(string ip)
+    {    
+        CreateClientContext<AmcClient>(ip,SocketPort);
+        AddHandlers();
         IsClient = true;
     }
 
@@ -71,52 +52,31 @@ public class ValidNetworkController : NetworkController
     {
         ChatMessage msgA = new ChatMessage();
         msgA.Text = param.ToString();
-        if (IsClient && Client != null)
-        {
-            Client.SendMessage(NetworkMessages.MsgChat, msgA);
-        }
-        else
-        {
-            Server.SendMessage(NetworkMessages.MsgChat, msgA);
-        }
+        NetworkContext.SendMessage(NetworkMessages.MsgChat, msgA);      
     }
 
     public void SendScoreMsgs(short event_Type, Component sender, object param = null)
     {
         ScoreMessage msgA = new ScoreMessage();
-        msgA.Score = (int)param;
-        Debug.Log("sending as score to gui: " + msgA.Score);
-        if (IsClient && Client != null)
-        {
-            Client.SendMessage(NetworkMessages.MsgScore, msgA);
-        }
-        else
-        {
-            Server.SendMessage(NetworkMessages.MsgScore, msgA);
-        }
+        msgA.Score = (int)param;        
+        NetworkContext.SendMessage(NetworkMessages.MsgScore, msgA);       
     }
 
     void OnChatMessageReceived(NetworkMessage msg)
     {
-        ChatMessage msgA = msg.ReadMessage<ChatMessage>();
-        Debug.Log("Received Chat");
+        ChatMessage msgA = msg.ReadMessage<ChatMessage>();       
         EventManager.PostNotification(GameEvents.ReceiveChatNetwork, this, msgA.Text.ToString());
     }
 
     void OnScoreMessageReceived(NetworkMessage msg)
     {
-        ScoreMessage msgA = msg.ReadMessage<ScoreMessage>();
-        Debug.Log("Received network score " + msgA.Score);
+        ScoreMessage msgA = msg.ReadMessage<ScoreMessage>();       
         EventManager.PostNotification(GameEvents.ReceiveScoreNetwork, this, msgA.Score);
     }
 
     void OnPlayerConnect(NetworkMessage msg)
     {
-        EventManager.PostNotification(GameEvents.PlayerJoined, this, "JOINED");
-        if (Server.ConnectionCount >= 2)
-        {
-            Debug.Log("Game is ready");
-        }
+        EventManager.PostNotification(GameEvents.PlayerJoined, this, "Client joined");      
     }
 
     void OnPlayerDissConnect(NetworkMessage msg)
@@ -124,24 +84,13 @@ public class ValidNetworkController : NetworkController
         EventManager.PostNotification(GameEvents.PlayerLeft, this, "LEFT");
     }
 
-    public override void Disconnect()
+    public override void AddHandlers()
     {
-        // throw new NotImplementedException();
-    }
-
-    public override void ReceiveMessage()
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void SendMessage()
-    {
-        // throw new NotImplementedException();
-    }
-
-    public override void AddListeners()
-    {
-        throw new NotImplementedException();
+        NetworkContext.RegisterHandler(NetworkMessages.MsgChat, OnChatMessageReceived);
+        NetworkContext.RegisterHandler(NetworkMessages.MsgScore, OnScoreMessageReceived);
+        NetworkContext.RegisterHandler(MsgType.Connect, OnPlayerConnect);
+        NetworkContext.RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
+        NetworkContext.RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);
     }
 
     public int GetConnectionsCount
