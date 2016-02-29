@@ -66,13 +66,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Animation\StartAnim.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraControllerDesktop.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraHorizontalMovementDesktop.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraRotationalMovementDesktop.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraZoomMovementDesktop.cs" />
     <Compile Include="Assets\Scripts\Camera\Core\CameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\Core\ICameraController.cs" />
     <Compile Include="Assets\Scripts\Camera\Core\ICameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Camera\Desktop\CameraControllerDesktop.cs" />
+    <Compile Include="Assets\Scripts\Camera\Desktop\CameraHorizontalMovementDesktop.cs" />
+    <Compile Include="Assets\Scripts\Camera\Desktop\CameraRotationalMovementDesktop.cs" />
+    <Compile Include="Assets\Scripts\Camera\Desktop\CameraZoomMovementDesktop.cs" />
+    <Compile Include="Assets\Scripts\Camera\Topview\TopviewController.cs" />
+    <Compile Include="Assets\Scripts\Camera\Topview\TopviewMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Cards\CardManager.cs" />
     <Compile Include="Assets\Scripts\ContextDescription.cs" />

@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+
+//Import the developed modules
+using AMC.GUI;
 using AMC.Networking;
+using AMC.Camera;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -9,12 +13,15 @@ using AMC.Networking;
 /// </summary>
 public class MainManager : MonoBehaviour, IMainManager
 {
-    public GuiPresenter GuiPresenter;
-    public CameraControllerDesktop CameraController;
-    public GameObject GameBoard;
-    public int Score { get; set; }    
-    public TeamType MyTeamType { get; private set; }    
+    //current modules developed for internalship
+    public Presenter Presenter;
+    public CameraController CameraController;
     public NetworkController NetworkController;
+
+    //other fields
+    public GameObject GameBoard;
+    public int Score { get; set; }
+    public TeamType MyTeamType { get; private set; }
     public EventManager EventManager;
 
     private GameStateManager GamestateManager;
@@ -24,7 +31,7 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         MyTeamType = TeamType.CheckAndAct;
         GamestateManager = new GameStateManager(this);
-        _CardController = new CardController(this, EventManager);        
+        _CardController = new CardController(this, EventManager);
     }
 
     void Start()
@@ -37,35 +44,35 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         GamestateManager.UpdateCurrentState();
         CardController.ManageCards();
-    }  
+    }
 
     public void StartMultiplayerHost(string ip)
-    {       
+    {
         NetworkController.StartHosting();
         IsMultiplayerGame = true;
         MyTeamType = TeamType.CheckAndAct;
         CardController.CollectCards();
-    }   
+    }
 
     public void StartMultiplayerMatch()
     {
-        CameraController.RunGameStartAnimation();
-        GamestateManager.SetMultiplayerState();        
+        RunGameStartAnimation();
+        GamestateManager.SetMultiplayerState();
     }
 
     public void StartMultiplayerClient(string ip)
     {
-        CameraController.RunGameStartAnimation();
+        RunGameStartAnimation();
         GamestateManager.SetMultiplayerState();
         NetworkController.StartClient(ip);
         IsMultiplayerGame = true;
         MyTeamType = TeamType.PlanAndDo;
         CardController.CollectCards();
-    }  
+    }
 
     public void StartPracticeRound()
     {
-        CameraController.RunGameStartAnimation();
+        RunGameStartAnimation();
         GamestateManager.SetPlayingState();
         IsMultiplayerGame = false;
         CardController.CollectCards();
@@ -73,18 +80,18 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void EndPracticeGame()
     {
-        GuiPresenter.ShowGameOverView();
+        Presenter.ChangeView(VIEWS.GameovermenuView);
         GamestateManager.SetGameoverState();
-        CameraController.RunGameEndAnimation();
+        RunGameEndAnimation();
     }
 
     public void EndMultiplayerGame()
     {
-        EndPracticeGame();        
+        EndPracticeGame();
     }
 
     public void RestartGame()
-    {       
+    {
         SceneManager.LoadScene("GameScene");
     }
 
@@ -95,9 +102,22 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void SendCardToOppent(CardToOpponentMessage param)
     {
-        EventManager.PostNotification(GameEvents.SendCardToOpponent, null,param);
+        EventManager.PostNotification(GameEvents.SendCardToOpponent, null, param);
     }
-   
+
+    //Played at the start of the game. Moves camera to gameboard and hands camera control over to the player. See the animation statemachine.
+    public void RunGameStartAnimation()
+    {
+        Camera.main.GetComponent<Animator>().SetBool("GameStarted", true);
+    }
+
+    public void RunGameEndAnimation()
+    {
+        Camera.main.GetComponent<CameraController>().enabled = false;
+        Camera.main.GetComponent<Animator>().enabled = true;
+        Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
+    }
+
 
     public void ToggleCameraActive()
     {
@@ -115,7 +135,7 @@ public class MainManager : MonoBehaviour, IMainManager
     public void ToggleAllColliders()
     {
         Collider[] cols = FindObjectsOfType<Collider>();
-        foreach(Collider col in cols)
+        foreach (Collider col in cols)
         {
             if (col.enabled)
             {
@@ -124,7 +144,7 @@ public class MainManager : MonoBehaviour, IMainManager
             else
             {
                 col.enabled = true;
-            }           
+            }
         }
     }
 
@@ -134,11 +154,11 @@ public class MainManager : MonoBehaviour, IMainManager
         Debug.Log("Quit!");
     }
 
-   
+
     public CardController CardController
     {
         get { return _CardController; }
-    }      
+    }
 
     public bool IsMultiplayerGame
     {

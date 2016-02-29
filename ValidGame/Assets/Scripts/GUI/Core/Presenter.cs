@@ -11,6 +11,7 @@ namespace AMC.GUI
     public abstract class Presenter : MonoBehaviour, IPresenter
     {
         private Dictionary<string, GameObject> Views;
+
         void Awake()
         {
             Views = GetAllViews();
