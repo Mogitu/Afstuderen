@@ -9,6 +9,6 @@ namespace AMC.Networking
     public interface INetworkContext
     {
         void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage);
-        void SendMessage(short msgType, MessageBase msgs);
+        void SendMessage(short msgType, MessageBase msgs);      
     }
 }

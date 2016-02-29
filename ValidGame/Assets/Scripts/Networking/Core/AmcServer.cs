@@ -13,13 +13,18 @@ namespace AMC.Networking
         public AmcServer()
         {
             SocketPort = 7777;
-            NetworkServer.Listen(SocketPort);
+            Setup(SocketPort);
         }
 
         public AmcServer(int socketPort)
         {
             SocketPort = socketPort;
-            NetworkServer.Listen(SocketPort);
+            Setup(socketPort);
+        }
+
+        private void Setup(int socketPort)
+        {
+            NetworkServer.Listen(socketPort);
         }
 
         public void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage)

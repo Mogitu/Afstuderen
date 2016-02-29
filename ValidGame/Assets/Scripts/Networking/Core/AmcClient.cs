@@ -20,8 +20,7 @@ namespace AMC.Networking
             IpAdress = "127.0.0.1";
             SocketPort = 7777;
 
-            Client = new NetworkClient();
-            Client.Connect(IpAdress, SocketPort);
+            Setup(IpAdress, SocketPort);
         }
 
         public AmcClient(string ipAdress, int socketPort)
@@ -29,6 +28,12 @@ namespace AMC.Networking
             IpAdress = ipAdress;
             SocketPort = socketPort;
 
+            Setup(IpAdress, SocketPort);
+
+        }
+
+        private void Setup(string ipAdress, int socketPort)
+        {
             Client = new NetworkClient();
             Client.Connect(IpAdress, SocketPort);
         }
