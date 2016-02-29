@@ -6,10 +6,10 @@ using System.Collections.Generic;
 /// Desc    :   Controls card behaviour etc.
 /// TODO    :   To much responsibilities? Decouple drag, drop, pickup BEHAVIOURS?
 /// </summary>
-public class CardController : ICardController
+public class CardController
 {
-    public Card CurrentCard;
-    public List<Card> PlacedCards;
+    public List<Card> PlacedCards { get; private set; }
+    private Card CurrentCard;   
     private List<Card> CardCollection;
     //private float cardOffsetY;
     private MainManager MainManager;

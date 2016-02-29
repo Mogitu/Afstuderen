@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using AMC.Networking;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -13,7 +14,7 @@ public class MainManager : MonoBehaviour, IMainManager
     public GameObject GameBoard;
     public int Score { get; set; }    
     public TeamType MyTeamType { get; private set; }    
-    public ValidNetworkController NetworkController;
+    public NetworkController NetworkController;
     public EventManager EventManager;
 
     private GameStateManager GamestateManager;

@@ -5,9 +5,8 @@
 /// 
 namespace AMC.Networking
 {
-    public interface INetworkController
+    public interface INetworkController : INetworkContext
     {
-       // void StartHosting();
-       // void StartClient(string ip);       
+       
     }
 }

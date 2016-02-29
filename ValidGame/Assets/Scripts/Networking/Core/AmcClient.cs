@@ -12,7 +12,8 @@ namespace AMC.Networking
     public class AmcClient : IAmcClient
     {
         private NetworkClient Client;
-
+        public string IpAdress { get; set; }
+        public int SocketPort { get; set; }
 
         public AmcClient()
         {
@@ -30,18 +31,6 @@ namespace AMC.Networking
 
             Client = new NetworkClient();
             Client.Connect(IpAdress, SocketPort);
-        }
-
-        public string IpAdress
-        {
-            get;
-            set;
-        }
-
-        public int SocketPort
-        {
-            get;
-            set;
         }
 
         public void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage)

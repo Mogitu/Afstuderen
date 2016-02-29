@@ -6,16 +6,18 @@
 /// </summary>
 namespace AMC.Networking
 {
-    public class AmcServer:IAmcServer
-    {     
+    public class AmcServer : IAmcServer
+    {
+        public int SocketPort { get; set; }
+
         public AmcServer()
         {
             SocketPort = 7777;
             NetworkServer.Listen(SocketPort);
         }
 
-        public AmcServer( int socketPort)
-        {            
+        public AmcServer(int socketPort)
+        {
             SocketPort = socketPort;
             NetworkServer.Listen(SocketPort);
         }
@@ -27,18 +29,12 @@ namespace AMC.Networking
 
         public void SendMessage(short msgType, MessageBase msgs)
         {
-         NetworkServer.SendToAll(msgType, msgs);
+            NetworkServer.SendToAll(msgType, msgs);
         }
 
         public int ConnectionCount
         {
             get { return NetworkServer.connections.Count; }
-        }
-
-        public int SocketPort
-        {
-            get;
-            set;
         }
     }
 }
