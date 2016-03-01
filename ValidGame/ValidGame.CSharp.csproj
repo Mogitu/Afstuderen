@@ -63,10 +63,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AmcModules\Camera\Scripts\CameraController.cs" />
+    <Compile Include="Assets\AmcModules\Camera\Scripts\ICameraController.cs" />
+    <Compile Include="Assets\AmcModules\Camera\Scripts\ICameraMovement.cs" />
+    <Compile Include="Assets\AmcModules\GUI\Scripts\IPresenter.cs" />
+    <Compile Include="Assets\AmcModules\GUI\Scripts\IView.cs" />
+    <Compile Include="Assets\AmcModules\GUI\Scripts\Presenter.cs" />
+    <Compile Include="Assets\AmcModules\GUI\Scripts\View.cs" />
+    <Compile Include="Assets\AmcModules\Networking\Scripts\AmcClient.cs" />
+    <Compile Include="Assets\AmcModules\Networking\Scripts\AmcServer.cs" />
+    <Compile Include="Assets\AmcModules\Networking\Scripts\IAmcClient.cs" />
+    <Compile Include="Assets\AmcModules\Networking\Scripts\IAmcServer.cs" />
+    <Compile Include="Assets\AmcModules\Networking\Scripts\INetworkContext.cs" />
+    <Compile Include="Assets\AmcModules\Networking\Scripts\INetworkController.cs" />
+    <Compile Include="Assets\AmcModules\Networking\Scripts\NetworkController.cs" />
+    <Compile Include="Assets\AmcModules\Networking\Scripts\StandardNetworkController.cs" />
     <Compile Include="Assets\Scripts\Animation\StartAnim.cs" />
-    <Compile Include="Assets\Scripts\Camera\Core\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Camera\Core\ICameraController.cs" />
-    <Compile Include="Assets\Scripts\Camera\Core\ICameraMovement.cs" />
     <Compile Include="Assets\Scripts\Camera\Desktop\CameraControllerDesktop.cs" />
     <Compile Include="Assets\Scripts\Camera\Desktop\CameraHorizontalMovementDesktop.cs" />
     <Compile Include="Assets\Scripts\Camera\Desktop\CameraRotationalMovementDesktop.cs" />
@@ -77,10 +89,6 @@
     <Compile Include="Assets\Scripts\Cards\CardManager.cs" />
     <Compile Include="Assets\Scripts\ContextDescription.cs" />
     <Compile Include="Assets\Scripts\GUI\CardbrowserView.cs" />
-    <Compile Include="Assets\Scripts\GUI\Core\IPresenter.cs" />
-    <Compile Include="Assets\Scripts\GUI\Core\IView.cs" />
-    <Compile Include="Assets\Scripts\GUI\Core\Presenter.cs" />
-    <Compile Include="Assets\Scripts\GUI\Core\View.cs" />
     <Compile Include="Assets\Scripts\GUI\GameovermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameplayingView.cs" />
     <Compile Include="Assets\Scripts\GUI\GuiCard.cs" />
@@ -102,14 +110,6 @@
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\Scripts\AmcClient.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\Scripts\AmcServer.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\Scripts\IAmcClient.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\Scripts\IAmcServer.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\Scripts\INetworkContext.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\Scripts\INetworkController.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\Scripts\NetworkController.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\Scripts\StandardNetworkController.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkMessages.cs" />
     <Compile Include="Assets\Scripts\Networking\ValidNetworkController.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
