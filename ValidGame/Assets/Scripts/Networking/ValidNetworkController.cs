@@ -22,7 +22,7 @@ public class ValidNetworkController : NetworkController
     public void SendOpponentCard(short Event_Type, Component Sender, object param = null)
     {
         CardToOpponentMessage msgA = (CardToOpponentMessage)param;
-        SendMessage(NetworkMessages.OpponentCard, msgA);
+        SendNetworkMessage(NetworkMessages.OpponentCard, msgA);
     }
 
     public void OnOpponentCardReceived(NetworkMessage msg)
@@ -36,30 +36,26 @@ public class ValidNetworkController : NetworkController
 
     public override void StartHosting()
     {
-        CreateServerContext<AmcServer>(SocketPort);
-        AddHandlers();
-        IsClient = false;
+        CreateServerContext<AmcServer>(SocketPort);               
     }
 
     public override void StartClient(string ip)
     {
-        CreateClientContext<AmcClient>(ip, SocketPort);
-        AddHandlers();
-        IsClient = true;
+        CreateClientContext<AmcClient>(ip, SocketPort);              
     }
 
     private void SendChatMsgs(short event_Type, Component sender, object param = null)
     {
         ChatMessage msgA = new ChatMessage();
         msgA.Text = param.ToString();
-        SendMessage(NetworkMessages.MsgChat, msgA);
+        SendNetworkMessage(NetworkMessages.MsgChat, msgA);
     }
 
     private void SendScoreMsgs(short event_Type, Component sender, object param = null)
     {
         ScoreMessage msgA = new ScoreMessage();
         msgA.Score = (int)param;
-        SendMessage(NetworkMessages.MsgScore, msgA);
+        SendNetworkMessage(NetworkMessages.MsgScore, msgA);
     }
 
     private void OnChatMessageReceived(NetworkMessage msg)
@@ -74,25 +70,21 @@ public class ValidNetworkController : NetworkController
         EventManager.PostNotification(GameEvents.ReceiveScoreNetwork, this, msgA.Score);
     }
 
-    private void OnPlayerConnect(NetworkMessage msg)
+    protected override void OnConnectionReceived(NetworkMessage msg)
     {
         EventManager.PostNotification(GameEvents.PlayerJoined, this, "Client joined");
     }
 
-    private void OnPlayerDissConnect(NetworkMessage msg)
+    protected override void OnDisconnect(NetworkMessage msg)   
     {
         EventManager.PostNotification(GameEvents.PlayerLeft, this, "LEFT");
     }
-
+   
     protected override void AddHandlers()
-    {
-        //Build in NETWORK messages
-        RegisterHandler(MsgType.Connect, OnPlayerConnect);
-        RegisterHandler(MsgType.Disconnect, OnPlayerDissConnect);
-
+    {        
         //Custom NETWORK messages
         RegisterHandler(NetworkMessages.MsgChat, OnChatMessageReceived);
         RegisterHandler(NetworkMessages.MsgScore, OnScoreMessageReceived);
-        RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);
+        RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);        
     }
 }

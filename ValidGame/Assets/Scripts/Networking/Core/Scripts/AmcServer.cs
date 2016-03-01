@@ -32,9 +32,19 @@ namespace AMC.Networking
             NetworkServer.RegisterHandler(msgType, networkMessage);
         }
 
-        public void SendMessage(short msgType, MessageBase msgs)
+        public void SendNetworkMessage(short msgType, MessageBase msgs)
         {
             NetworkServer.SendToAll(msgType, msgs);
+        }
+
+        public void Disconnect()
+        {
+            NetworkServer.DisconnectAll();           
+        }
+
+        public void DisconnectedClient(int connectionID)
+        {            
+            NetworkServer.connections[connectionID].Disconnect();
         }
 
         public int ConnectionCount

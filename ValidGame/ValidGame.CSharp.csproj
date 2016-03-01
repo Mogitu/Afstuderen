@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -104,13 +102,14 @@
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\AmcClient.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\AmcServer.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\IAmcClient.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\IAmcServer.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\INetworkContext.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\INetworkController.cs" />
-    <Compile Include="Assets\Scripts\Networking\Core\NetworkController.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\Scripts\AmcClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\Scripts\AmcServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\Scripts\IAmcClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\Scripts\IAmcServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\Scripts\INetworkContext.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\Scripts\INetworkController.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\Scripts\NetworkController.cs" />
+    <Compile Include="Assets\Scripts\Networking\Core\Scripts\StandardNetworkController.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkMessages.cs" />
     <Compile Include="Assets\Scripts\Networking\ValidNetworkController.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />

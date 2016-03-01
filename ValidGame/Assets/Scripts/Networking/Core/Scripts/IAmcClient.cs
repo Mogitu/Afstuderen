@@ -14,4 +14,3 @@ namespace AMC.Networking
          int SocketPort { get; set; }
     }
 }
-

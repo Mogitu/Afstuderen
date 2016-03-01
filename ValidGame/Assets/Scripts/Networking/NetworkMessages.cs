@@ -11,7 +11,6 @@ public class NetworkMessages
     public const short MsgScore = MsgType.Highest + 2;
     public const short MsgPlayerJoined = MsgType.Highest + 3;
     public const short MsgPlayerLeft = MsgType.Highest + 4;
-
     public const short OpponentCard = MsgType.Highest + 5;
 }
 
@@ -28,7 +27,7 @@ public class ScoreMessage : MessageBase
 
 public class PlayerLeftMessage : MessageBase
 {
-    public string Text;
+    public string Text;    
 }
 
 public class PlayerJoinedMessage : MessageBase

@@ -28,6 +28,9 @@ namespace AMC.Networking
             AmcServer = new T();
             AmcServer.SocketPort = socketPort;
             NetworkContext = AmcServer;
+            IsClient = false;
+            AddInternalHandlers();
+            AddHandlers();
         }
 
         /// <summary>
@@ -42,16 +45,41 @@ namespace AMC.Networking
             AmcClient.IpAdress = ip;
             AmcClient.SocketPort = socketPort;
             NetworkContext = AmcClient;
+            IsClient = true;
+            AddInternalHandlers();
+            AddHandlers();
         }
 
-        public void SendMessage(short msgType, MessageBase msg)
+        public void SendNetworkMessage(short msgType, MessageBase msg)
         {
-            NetworkContext.SendMessage(msgType, msg);
+            NetworkContext.SendNetworkMessage(msgType, msg);
         }
 
         public void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage)
         {
             NetworkContext.RegisterHandler(msgType, networkMessage);
+        }
+
+        public void Disconnect()
+        {
+            NetworkContext.Disconnect();
+        }
+
+        private void AddInternalHandlers()
+        {
+            RegisterHandler(MsgType.Connect, OnConnectionReceived);
+            RegisterHandler(MsgType.Disconnect, OnDisconnect);
+        }
+
+
+        protected virtual void OnConnectionReceived(NetworkMessage msg)
+        {
+            Debug.Log("Connection received.");
+        }
+
+        protected virtual void OnDisconnect(NetworkMessage msg)
+        {
+            Debug.Log("Connection left.");
         }
     }
 }

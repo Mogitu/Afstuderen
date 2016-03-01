@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using UnityEngine.Networking;
-using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -43,9 +41,14 @@ namespace AMC.Networking
             Client.RegisterHandler(msgType, networkMessage);
         }
 
-        public void SendMessage(short msgType, MessageBase msgs)
+        public void SendNetworkMessage(short msgType, MessageBase msgs)
         {
             Client.Send(msgType, msgs);
+        }
+
+        public void Disconnect()
+        {
+            Client.Disconnect();
         }
     }
 }
