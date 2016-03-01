@@ -7,8 +7,7 @@
 namespace AMC.Networking
 {
     public class StandardNetworkController : NetworkController
-    {
-        public int SocketPort = 7777;
+    {       
         // Use this for initialization
         void Start()
         {
@@ -17,16 +16,12 @@ namespace AMC.Networking
 
         public override void StartClient(string ip)
         {
-            CreateClientContext<AmcClient>(ip, SocketPort);
-            AddHandlers();
-            IsClient = true;
+            CreateClientContext<AmcClient>(ip, SocketPort);            
         }
 
         public override void StartHosting()
         {
-            CreateServerContext<AmcServer>(SocketPort);
-            AddHandlers();
-            IsClient = false;
+            CreateServerContext<AmcServer>(SocketPort);          
         }
 
         protected override void AddHandlers()

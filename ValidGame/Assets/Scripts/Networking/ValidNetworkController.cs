@@ -9,8 +9,7 @@ using AMC.Networking;
 
 public class ValidNetworkController : NetworkController
 {
-    public EventManager EventManager;
-    public int SocketPort = 7777;
+    public EventManager EventManager;   
 
     void Start()
     {

@@ -8,6 +8,9 @@ namespace AMC.Networking
 {
     public abstract class NetworkController : MonoBehaviour, INetworkController
     {
+        public int SocketPort = 7777;
+        public string IpAdress = "127.0.0.1";
+
         private INetworkContext NetworkContext;
         private IAmcServer AmcServer;
         private IAmcClient AmcClient;
