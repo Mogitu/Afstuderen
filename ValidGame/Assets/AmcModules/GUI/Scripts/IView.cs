@@ -7,7 +7,7 @@ namespace AMC.GUI
 {
     public interface IView
     {
-        void SetPresenter(IPresenter presenter);
+        //void SetPresenter(IPresenter presenter);
     }
 }
    

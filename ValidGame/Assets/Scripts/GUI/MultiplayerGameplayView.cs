@@ -12,14 +12,14 @@ public class MultiplayerGameplayView : View {
     public InputField InputField;
     public Text MessageTxt;
     public Text ChatBoxTxt;
-    private GuiPresenter Presenter;
+    private GuiPresenter GuiPresenter;
 
-    public override void Awake()
+    void Awake()
     {
-        base.Awake();
-        Presenter.EventManager.AddListener(GameEvents.ReceiveChatNetwork, OnChatReceived);
-        Presenter.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
-        Presenter.EventManager.AddListener(GameEvents.PlayerLeft, OnPlayerLeft);
+        GuiPresenter = GetPresenterType<GuiPresenter>();
+        GuiPresenter.EventManager.AddListener(GameEvents.ReceiveChatNetwork, OnChatReceived);
+        GuiPresenter.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
+        GuiPresenter.EventManager.AddListener(GameEvents.PlayerLeft, OnPlayerLeft);
     }
 
     //TODO  :   More descriptive naming.
@@ -36,7 +36,7 @@ public class MultiplayerGameplayView : View {
     public void AppendAndSend()
     {
         string str = AppendTextToBox();
-        Presenter.PostChatSend(str);
+        GuiPresenter.PostChatSend(str);
     }
 
     //TODO  :   More descriptive naming.
@@ -63,11 +63,6 @@ public class MultiplayerGameplayView : View {
     public void OnPlayerLeft(short Event_Type, Component Sender, object Param = null)
     {
         AppendSingle("Player left, gameover!");
-        Presenter.EndMultiplayerGame();
-    }
-
-    public override void SetPresenter(IPresenter presenter)
-    {
-        this.Presenter = (GuiPresenter)presenter;
-    }
+        GuiPresenter.EndMultiplayerGame();
+    }   
 }

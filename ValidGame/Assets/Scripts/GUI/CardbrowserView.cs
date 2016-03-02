@@ -13,12 +13,12 @@ public class CardbrowserView : View
     private List<GuiCard> BrowsableCards;
     public GameObject CardPanelContent;
     public Image ExtraInfoPanelImage;
-    private GuiPresenter Presenter;
+    private GuiPresenter GuiPresenter;
 
-    public override void Awake()
+    void Awake()
     {
-        base.Awake();
-        BrowsableCards = new List<GuiCard>();
+        GuiPresenter = GetPresenterType<GuiPresenter>();
+        BrowsableCards = new List<GuiCard>();       
     }
 
     void Start()
@@ -40,14 +40,14 @@ public class CardbrowserView : View
         {
             GuiCard obj = cards[i];
             //TODO: this needs to be smaller!  
-            if (Presenter.GetTeamType == TeamType.CheckAndAct)
+            if (GuiPresenter.GetTeamType == TeamType.CheckAndAct)
             {
                 if (obj.typeOfCard == CardType.Check || obj.typeOfCard == CardType.Act)
                 {
                     AddCard(obj, ref offSetX, ref offSetY, ref col);
                 }
             }
-            else if (Presenter.GetTeamType == TeamType.PlanAndDo)
+            else if (GuiPresenter.GetTeamType == TeamType.PlanAndDo)
             {
                 if (obj.typeOfCard == CardType.Plan || obj.typeOfCard == CardType.Do)
                 {
@@ -120,12 +120,8 @@ public class CardbrowserView : View
     public void ClickedCard(GameObject obj)
     {
         GuiCard card = obj.GetComponent<GuiCard>();
-        Presenter.PickCard(card.MatchCode);
+        //Presenter.PickCard(card.MatchCode);
+        GetPresenterType<GuiPresenter>().PickCard(card.MatchCode);
         obj.SetActive(false);
-    }
-
-    public override void SetPresenter(IPresenter presenter)
-    {
-        Presenter = (GuiPresenter)presenter;
-    }
+    }   
 }

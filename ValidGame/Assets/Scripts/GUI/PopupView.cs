@@ -11,23 +11,18 @@ using AMC.GUI;
 public class PopupView : View
 {
     public Text PopUpText;
-    private GuiPresenter Presenter;
+    private GuiPresenter GuiPresenter;
 
-    public override void Awake()
+    void Awake()
     {
-        base.Awake();
-        Presenter.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
+        GuiPresenter = GetPresenterType<GuiPresenter>();
+        GuiPresenter.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
     }
 
     public void OnPlayerJoined(short Event_Type, Component Sender, object Param = null)
     {
         Debug.Log("Player joined");
         PopUpText.text = "Player joined";
-    }
-
-    public override void SetPresenter(IPresenter presenter)
-    {
-        this.Presenter = (GuiPresenter)presenter;
-    }
+    }   
 }
 

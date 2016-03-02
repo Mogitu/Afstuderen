@@ -10,17 +10,22 @@ public class GameplayingView : View{
 
     public GameObject InfoBar;
     public Text InfoText;
-    private GuiPresenter Presenter;
+    private GuiPresenter GuiPresenter;
 
-    public void OpenCardView(){
-        Presenter.ToggleCardbrowser();    
+    void Awake()
+    {
+        GuiPresenter = GetPresenterType<GuiPresenter>();
+    }
+
+    public void OpenCardView(){       
+        GuiPresenter.ToggleCardbrowser();    
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Presenter.Restart();
+            GuiPresenter.Restart();
         }
         CheckForDescriptionHit();
     }
@@ -32,12 +37,7 @@ public class GameplayingView : View{
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 10))
         {
-            Presenter.UpdateContextInformationText(InfoText, hit);
+            GuiPresenter.UpdateContextInformationText(InfoText, hit);
         }
-    }
-
-    public override void SetPresenter(IPresenter presenter)
-    {
-        Presenter = (GuiPresenter)presenter;
-    }
+    }   
 }

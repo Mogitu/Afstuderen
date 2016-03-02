@@ -7,25 +7,25 @@ using AMC.GUI;
 public class MultiplayermenuView : View {
 
     public Text IpAdress;
-    private GuiPresenter Presenter;
+    private GuiPresenter GuiPresenter;
+
+    void Awake()
+    {
+        GuiPresenter = GetPresenterType<GuiPresenter>();
+    }
 
     public void ClickedClient()
     {
-        Presenter.StartMultiplayerClient(IpAdress.text);
+        GuiPresenter.StartMultiplayerClient(IpAdress.text);
     }
 
     public void ClickedHost()
     {
-        Presenter.StartMultiplayerHost(IpAdress.text);        
+        GuiPresenter.StartMultiplayerHost(IpAdress.text);        
     }
 
     public void GoBack()
     {
-        Presenter.ShowMainmenuView();
-    }
-
-    public override void SetPresenter(IPresenter presenter)
-    {
-        Presenter = (GuiPresenter)presenter;
-    }
+        GuiPresenter.ShowMainmenuView();
+    }   
 }
