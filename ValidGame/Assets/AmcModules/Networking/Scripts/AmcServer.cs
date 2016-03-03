@@ -13,7 +13,7 @@ namespace AMC.Networking
 
         public AmcServer()
         {
-            SetupListening(SocketPort);
+            //SetupListening(SocketPort);
         }
 
         public AmcServer(int socketPort)

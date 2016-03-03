@@ -4,9 +4,10 @@
 /// </summary>
 namespace AMC.Networking
 {
-    public interface IAmcClient: INetworkContext
+    public interface IAmcClient : INetworkContext
     {
-         string IpAdress { get; set; }
-         int SocketPort { get; set; }
+        string IpAdress { get; set; }
+        int SocketPort { get; set; }
+        void SetupConnection(string ipAdress, int socketPort);
     }
 }

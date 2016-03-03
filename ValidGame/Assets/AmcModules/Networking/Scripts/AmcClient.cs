@@ -14,24 +14,19 @@ namespace AMC.Networking
 
         public AmcClient()
         {
-            IpAdress = "127.0.0.1";
-            SocketPort = 7777;
-
-            Setup(IpAdress, SocketPort);
+            //SetupConnection("127.0.0.1", 7777);
         }
 
         public AmcClient(string ipAdress, int socketPort)
         {
-            IpAdress = ipAdress;
-            SocketPort = socketPort;
-
-            Setup(IpAdress, SocketPort);
-
+            SetupConnection(IpAdress, SocketPort);
         }
 
-        private void Setup(string ipAdress, int socketPort)
+        public void SetupConnection(string ipAdress, int socketPort)
         {
             Client = new NetworkClient();
+            IpAdress = ipAdress;
+            SocketPort = socketPort;
             Client.Connect(IpAdress, SocketPort);
         }
 

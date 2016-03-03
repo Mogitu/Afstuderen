@@ -8,7 +8,7 @@ namespace AMC.Networking
 {
     public abstract class NetworkController : MonoBehaviour, INetworkController
     {
-        public int SocketPort = 7777;
+        public int SocketPort = 8080;
         public string IpAdress = "127.0.0.1";
 
         private INetworkContext NetworkContext;
@@ -54,6 +54,7 @@ namespace AMC.Networking
             AmcClient = new T();
             AmcClient.IpAdress = ip;
             AmcClient.SocketPort = socketPort;
+            AmcClient.SetupConnection(ip, socketPort);
             NetworkContext = AmcClient;
             IsClient = true;
             AddInternalHandlers();
