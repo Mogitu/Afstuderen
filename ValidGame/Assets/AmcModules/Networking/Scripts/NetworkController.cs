@@ -19,14 +19,15 @@ namespace AMC.Networking
 
         protected abstract void AddHandlers();
         public abstract void StartHosting();
-        public abstract void StartClient(string ip);
+        public abstract void StartClient(string ipAdress);
+        public abstract void StartClient();
 
         /// <summary>
         /// Create a NEW server context
         /// </summary>
         /// <typeparam name="T">The type of server to create. This must implement the IAmcServer interface.</typeparam>
         /// <param name="socketPort">Listen to this port</param>
-        protected void CreateServerContext<T>(int socketPort) where T : IAmcServer, new()
+        protected virtual void CreateServerContext<T>(int socketPort) where T : IAmcServer, new()
         {
             AmcServer = new T();
             AmcServer.SocketPort = socketPort;
@@ -36,13 +37,18 @@ namespace AMC.Networking
             AddHandlers();
         }
 
+        protected virtual void CreateServerContext<T>() where T : IAmcServer, new()
+        {
+            CreateServerContext<T>(SocketPort);
+        }
+
         /// <summary>
         /// Create a NEW client context
         /// </summary>
         /// <typeparam name="T">The type of client to create. This must implement the IAmcClient interface.</typeparam>
         /// <param name="ip">Connect to this ip</param>
         /// <param name="socketPort">Listen to this port</param>
-        protected void CreateClientContext<T>(string ip, int socketPort) where T : IAmcClient, new()
+        protected virtual void CreateClientContext<T>(string ip, int socketPort) where T : IAmcClient, new()
         {
             AmcClient = new T();
             AmcClient.IpAdress = ip;
@@ -53,17 +59,27 @@ namespace AMC.Networking
             AddHandlers();
         }
 
-        public void SendNetworkMessage(short msgType, MessageBase msg)
+        protected virtual void CreateClientContext<T>() where T : IAmcClient, new()
+        {
+            CreateClientContext<T>(IpAdress, SocketPort);
+        }
+
+        public virtual void SendNetworkMessage(short msgType, MessageBase msg)
         {
             NetworkContext.SendNetworkMessage(msgType, msg);
         }
 
-        public void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage)
+        public virtual void SendNetworkMessage(short msgType)
+        {
+            NetworkContext.SendNetworkMessage(msgType);
+        }
+
+        public virtual void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage)
         {
             NetworkContext.RegisterHandler(msgType, networkMessage);
         }
 
-        public void Disconnect()
+        public virtual void Disconnect()
         {
             NetworkContext.Disconnect();
         }
@@ -73,7 +89,6 @@ namespace AMC.Networking
             RegisterHandler(MsgType.Connect, OnConnectionReceived);
             RegisterHandler(MsgType.Disconnect, OnDisconnect);
         }
-
 
         protected virtual void OnConnectionReceived(NetworkMessage msg)
         {

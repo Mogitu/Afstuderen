@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Networking;
-
-/// <summary>
+﻿/// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   
 /// </summary>

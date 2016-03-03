@@ -10,6 +10,7 @@ namespace AMC.Networking
     {
         void RegisterHandler(short msgType, NetworkMessageDelegate networkMessage);
         void SendNetworkMessage(short msgType, MessageBase msgs);
+        void SendNetworkMessage(short msgType);
         void Disconnect();
     }
 }

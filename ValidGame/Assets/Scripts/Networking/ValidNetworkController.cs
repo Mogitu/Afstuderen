@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using AMC.Networking;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -41,6 +42,11 @@ public class ValidNetworkController : NetworkController
     public override void StartClient(string ip)
     {
         CreateClientContext<AmcClient>(ip, SocketPort);              
+    }
+
+    public override void StartClient()
+    {
+        CreateClientContext<AmcClient>(IpAdress, SocketPort);
     }
 
     private void SendChatMsgs(short event_Type, Component sender, object param = null)
@@ -86,4 +92,6 @@ public class ValidNetworkController : NetworkController
         RegisterHandler(NetworkMessages.MsgScore, OnScoreMessageReceived);
         RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);        
     }
+
+   
 }

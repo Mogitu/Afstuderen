@@ -8,7 +8,6 @@ namespace AMC.Networking
     public interface IAmcServer:INetworkContext
     {
        int SocketPort { get; set; }
-       void DisconnectedClient(int connectionId);   
-          
+       void DisconnectedClient(int connectionId);             
     }
 }

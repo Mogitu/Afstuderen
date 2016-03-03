@@ -1,6 +1,5 @@
-﻿using System;
-using UnityEngine.Networking;
-
+﻿using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :
@@ -46,9 +45,14 @@ namespace AMC.Networking
             Client.Send(msgType, msgs);
         }
 
+        public void SendNetworkMessage(short msgType)
+        {
+            Client.Send(msgType, new IntegerMessage());
+        }
+
         public void Disconnect()
         {
             Client.Disconnect();
-        }
+        }       
     }
 }

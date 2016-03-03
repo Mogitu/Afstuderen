@@ -1,5 +1,4 @@
-﻿using System;
-/// <summary>
+﻿/// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Standard/demo view
 /// </summary>

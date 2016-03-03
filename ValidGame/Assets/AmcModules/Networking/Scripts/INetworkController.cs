@@ -7,6 +7,8 @@ namespace AMC.Networking
 {
     public interface INetworkController : INetworkContext
     {
-       
+        void StartHosting();
+        void StartClient();
+        void StartClient(string ipAdress);
     }
 }

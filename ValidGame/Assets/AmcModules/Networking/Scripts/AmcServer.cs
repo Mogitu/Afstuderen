@@ -1,4 +1,5 @@
 ﻿using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -37,6 +38,11 @@ namespace AMC.Networking
             NetworkServer.SendToAll(msgType, msgs);
         }
 
+        public void SendNetworkMessage(short msgType)
+        {
+            NetworkServer.SendToAll(msgType, new IntegerMessage());
+        }
+
         public void Disconnect()
         {
             NetworkServer.DisconnectAll();           
@@ -45,7 +51,7 @@ namespace AMC.Networking
         public void DisconnectedClient(int connectionID)
         {            
             NetworkServer.connections[connectionID].Disconnect();
-        }
+        }       
 
         public int ConnectionCount
         {
