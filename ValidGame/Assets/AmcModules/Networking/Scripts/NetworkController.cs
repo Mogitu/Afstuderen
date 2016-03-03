@@ -31,6 +31,7 @@ namespace AMC.Networking
         {
             AmcServer = new T();
             AmcServer.SocketPort = socketPort;
+            AmcServer.SetupListening(socketPort);
             NetworkContext = AmcServer;
             IsClient = false;
             AddInternalHandlers();

@@ -14,5 +14,3 @@ namespace AMC.Camera
         void HandleInput();
     }
 }
-
-

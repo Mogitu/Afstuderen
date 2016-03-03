@@ -13,18 +13,17 @@ namespace AMC.Networking
 
         public AmcServer()
         {
-            SocketPort = 7777;
-            Setup(SocketPort);
+            SetupListening(SocketPort);
         }
 
         public AmcServer(int socketPort)
-        {
-            SocketPort = socketPort;
-            Setup(socketPort);
+        {           
+            SetupListening(socketPort);
         }
 
-        private void Setup(int socketPort)
+        public void SetupListening(int socketPort)
         {
+            SocketPort = socketPort;
             NetworkServer.Listen(socketPort);
         }
 
