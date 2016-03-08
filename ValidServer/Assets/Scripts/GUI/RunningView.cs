@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AMC.GUI;
 
-public class RunningView : MonoBehaviour {
+public class RunningView : View{
 
 	// Use this for initialization
 	void Start () {

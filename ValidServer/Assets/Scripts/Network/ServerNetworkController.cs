@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using AMC.Networking;
-using System;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
@@ -18,6 +16,8 @@ public class ServerNetworkController : NetworkController
     {
         ConnectionIds = new List<int>();
         Matches = new List<Match>();
+
+        EventManager.AddListener(ServerEvents.StartServer,Begin);
     }
 
     public override void StartClient()
@@ -33,6 +33,11 @@ public class ServerNetworkController : NetworkController
     public override void StartHosting()
     {
         CreateServerContext<AmcServer>();
+    }
+
+    private void Begin(short event_Type, Component sender, object param = null)
+    {
+        StartHosting();
     }
 
     protected override void AddHandlers()
@@ -89,8 +94,8 @@ public class ServerNetworkController : NetworkController
                 break;
             }
         }
-
-        MessageBase msgBase= msg.ReadMessage<ChatMessage>();
+     
+        MessageBase msgBase = msg.ReadMessage<ChatMessage>();
 
         /*
         if(msg.ReadMessage<ChatMessage>() != null)
@@ -128,5 +133,3 @@ public class ServerNetworkController : NetworkController
         }        
     }
 }
-
-
