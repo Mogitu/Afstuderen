@@ -1,10 +1,15 @@
-﻿using AMC.GUI;
+﻿using UnityEngine;
+using System.Collections;
 
-public class RunningView : View
-{
-    private GuiPresenter presenter;
-    public override void SetPresenter(IPresenter presenter)
-    {
-        this.presenter = (GuiPresenter)presenter;
-    }   
+public class RunningView : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
 }
