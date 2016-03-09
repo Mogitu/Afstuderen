@@ -7,17 +7,14 @@ public class ServerNetworkController : NetworkController
 {
     [SerializeField]
     private EventManager EventManager;
-
     private List<int> ConnectionIds;
-
     private List<Match> Matches;
 
     void Start()
     {
         ConnectionIds = new List<int>();
         Matches = new List<Match>();
-
-        EventManager.AddListener(ServerEvents.StartServer,Begin);
+        EventManager.AddListener(ServerEvents.StartServer, Begin);
     }
 
     public override void StartClient()
@@ -42,9 +39,130 @@ public class ServerNetworkController : NetworkController
 
     protected override void AddHandlers()
     {
-        for (short i = MsgType.Highest; i < MsgType.Highest + 20; i++)
+        RegisterHandler(NetworkMessages.MsgChat, OnChat);
+        RegisterHandler(NetworkMessages.MsgPlayerJoined, OnPlayerJoined);
+        RegisterHandler(NetworkMessages.MsgPlayerLeft, OnPlayerLeft);
+        RegisterHandler(NetworkMessages.MsgScore, OnScore);
+        RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCard);
+    }
+
+    private void OnChat(NetworkMessage msg)
+    {
+        ChatMessage msgBase = msg.ReadMessage<ChatMessage>();
+        Match match = null;
+        int connId = msg.conn.connectionId;
+        //find correct match by basis of connection id
+        for (int i = 0; i < Matches.Count; i++)
         {
-            RegisterHandler(i, Relay);
+            if (Matches[i].ConnectionA == msg.conn.connectionId || Matches[i].ConnectionB == msg.conn.connectionId)
+            {
+                match = Matches[i];
+                break;
+            }
+        }
+        if (connId == match.ConnectionA)
+        {
+            NetworkServer.SendToClient(match.ConnectionB, msg.msgType, msgBase);
+        }
+        else if (connId == match.ConnectionB)
+        {
+            NetworkServer.SendToClient(match.ConnectionA, msg.msgType, msgBase);
+        }
+    }
+
+    private void OnPlayerJoined(NetworkMessage msg)
+    {
+        PlayerJoinedMessage msgBase = msg.ReadMessage<PlayerJoinedMessage>();
+        Match match = null;
+        int connId = msg.conn.connectionId;
+        //find correct match by basis of connection id
+        for (int i = 0; i < Matches.Count; i++)
+        {
+            if (Matches[i].ConnectionA == msg.conn.connectionId || Matches[i].ConnectionB == msg.conn.connectionId)
+            {
+                match = Matches[i];
+                break;
+            }
+        }
+        if (connId == match.ConnectionA)
+        {
+            NetworkServer.SendToClient(match.ConnectionB, msg.msgType, msgBase);
+        }
+        else if (connId == match.ConnectionB)
+        {
+            NetworkServer.SendToClient(match.ConnectionA, msg.msgType, msgBase);
+        }
+    }
+
+    private void OnPlayerLeft(NetworkMessage msg)
+    {
+        PlayerLeftMessage msgBase = msg.ReadMessage<PlayerLeftMessage>();
+        Match match = null;
+        int connId = msg.conn.connectionId;
+        //find correct match by basis of connection id
+        for (int i = 0; i < Matches.Count; i++)
+        {
+            if (Matches[i].ConnectionA == msg.conn.connectionId || Matches[i].ConnectionB == msg.conn.connectionId)
+            {
+                match = Matches[i];
+                break;
+            }
+        }
+        if (connId == match.ConnectionA)
+        {
+            NetworkServer.SendToClient(match.ConnectionB, msg.msgType, msgBase);
+        }
+        else if (connId == match.ConnectionB)
+        {
+            NetworkServer.SendToClient(match.ConnectionA, msg.msgType, msgBase);
+        }
+    }
+
+    private void OnScore(NetworkMessage msg)
+    {
+        ScoreMessage msgBase = msg.ReadMessage<ScoreMessage>();
+        Match match = null;
+        int connId = msg.conn.connectionId;
+        //find correct match by basis of connection id
+        for (int i = 0; i < Matches.Count; i++)
+        {
+            if (Matches[i].ConnectionA == msg.conn.connectionId || Matches[i].ConnectionB == msg.conn.connectionId)
+            {
+                match = Matches[i];
+                break;
+            }
+        }
+        if (connId == match.ConnectionA)
+        {
+            NetworkServer.SendToClient(match.ConnectionB, msg.msgType, msgBase);
+        }
+        else if (connId == match.ConnectionB)
+        {
+            NetworkServer.SendToClient(match.ConnectionA, msg.msgType, msgBase);
+        }
+    }
+
+    private void OnOpponentCard(NetworkMessage msg)
+    {
+        CardToOpponentMessage msgBase = msg.ReadMessage<CardToOpponentMessage>();
+        Match match = null;
+        int connId = msg.conn.connectionId;
+        //find correct match by basis of connection id
+        for (int i = 0; i < Matches.Count; i++)
+        {
+            if (Matches[i].ConnectionA == msg.conn.connectionId || Matches[i].ConnectionB == msg.conn.connectionId)
+            {
+                match = Matches[i];
+                break;
+            }
+        }
+        if (connId == match.ConnectionA)
+        {
+            NetworkServer.SendToClient(match.ConnectionB, msg.msgType, msgBase);
+        }
+        else if (connId == match.ConnectionB)
+        {
+            NetworkServer.SendToClient(match.ConnectionA, msg.msgType, msgBase);
         }
     }
 
@@ -67,12 +185,13 @@ public class ServerNetworkController : NetworkController
         if (match.ConnectionA == 0)
         {
             match.ConnectionA = msg.conn.connectionId;
-        }else if(match.ConnectionB ==0)
+        }
+        else if (match.ConnectionB == 0)
         {
             match.ConnectionB = msg.conn.connectionId;
-        }        
+        }
+        EventManager.PostNotification(ServerEvents.ClientJoined, this, null);
     }
-
 
     protected override void OnDisconnect(NetworkMessage msg)
     {
@@ -80,56 +199,8 @@ public class ServerNetworkController : NetworkController
         ConnectionIds.Remove(msg.conn.connectionId);
     }
 
-
-    private void Relay(NetworkMessage msg)
+    private void Relay<T>(short msgType, NetworkMessage msg) where T : MessageBase
     {
-        Match match= null;
-        int connId = msg.conn.connectionId;
-        //find correct match by basis of connection id
-        for(int i=0;i < Matches.Count; i++)
-        {
-            if (Matches[i].ConnectionA == msg.conn.connectionId || Matches[i].ConnectionB == msg.conn.connectionId)
-            {
-                match = Matches[i];
-                break;
-            }
-        }
-     
-        MessageBase msgBase = msg.ReadMessage<ChatMessage>();
 
-        /*
-        if(msg.ReadMessage<ChatMessage>() != null)
-        {
-            msgBase = msg.ReadMessage<ChatMessage>();
-        }
-
-       
-        if (msg.ReadMessage<ScoreMessage>() != null)
-        {
-            msgBase = msg.ReadMessage<ScoreMessage>();
-        }
-
-        if (msg.ReadMessage<PlayerLeftMessage>() != null)
-        {
-            msgBase = msg.ReadMessage<PlayerLeftMessage>();
-        }
-
-        if (msg.ReadMessage<PlayerJoinedMessage>() != null)
-        {
-            msgBase = msg.ReadMessage<PlayerJoinedMessage>();
-        }
-
-        if (msg.ReadMessage<CardToOpponentMessage>() != null)
-        {
-            msgBase = msg.ReadMessage<CardToOpponentMessage>();
-        }
-        */
-        if (connId == match.ConnectionA)
-        {            
-            NetworkServer.SendToClient(match.ConnectionB, msg.msgType,msgBase);
-        }else if(connId == match.ConnectionB)
-        {
-            NetworkServer.SendToClient(match.ConnectionA, msg.msgType, msgBase);
-        }        
     }
 }
