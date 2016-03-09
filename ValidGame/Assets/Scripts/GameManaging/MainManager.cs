@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 //Import the developed modules
 using AMC.GUI;
@@ -39,6 +40,23 @@ public class MainManager : MonoBehaviour, IMainManager
         Score = 0;
     }
 
+
+    //TODO: this is just a test method!
+    private string ReadFileItem(string item, string path)
+    {
+        StreamReader reader = new StreamReader(path);
+        string line;
+        while((line = reader.ReadLine())!= string.Empty)
+        {
+            string[] value = line.Split('=');
+            if (value[0] == item)
+            {
+                return value[1];
+            }
+        }
+        return null;
+    }
+
     //Update all attached modules if they dont have their own monobehaviour update.
     void Update()
     {
@@ -62,9 +80,11 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void StartMultiplayerClient(string ip)
     {
-        RunGameStartAnimation();
+        //RunGameStartAnimation();
         GamestateManager.SetMultiplayerState();
-        NetworkController.StartClient(ip);
+        string adress = ReadFileItem("ip", "config.ini");
+        Debug.Log(adress);
+        NetworkController.StartClient(adress);
         IsMultiplayerGame = true;
         MyTeamType = TeamType.PlanAndDo;
         CardController.CollectCards();
