@@ -10,4 +10,5 @@ public class VIEWS
     public const string CardbrowserView = "CardbrowserView";
     public const string MultiplayermenuView = "MultiplayermenuView";
     public const string MultiplayerGameplayView = "MultiplayerGameplayView";
+    public const string MatchMakerView = "MatchMakerView";
 }

@@ -96,6 +96,7 @@
     <Compile Include="Assets\Scripts\GUI\GuiCard.cs" />
     <Compile Include="Assets\Scripts\GUI\GuiPresenter.cs" />
     <Compile Include="Assets\Scripts\GUI\MainmenuView.cs" />
+    <Compile Include="Assets\Scripts\GUI\MatchMakerView.cs" />
     <Compile Include="Assets\Scripts\GUI\MultiplayerGameplayView.cs" />
     <Compile Include="Assets\Scripts\GUI\MultiplayermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\PopupView.cs" />

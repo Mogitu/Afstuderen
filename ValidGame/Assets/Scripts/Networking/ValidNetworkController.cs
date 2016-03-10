@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using AMC.Networking;
-using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren

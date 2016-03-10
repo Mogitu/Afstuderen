@@ -30,7 +30,7 @@ public class GuiPresenter : Presenter
     {
         //ChangeView(VIEWS.GamePlayingView);
         //OpenView(VIEWS.MultiplayerGameplayView);
-        CloseView(VIEWS.MultiplayermenuView);
+        ChangeView(VIEWS.MatchMakerView);
         MainManager.StartMultiplayerClient();
     }
 
