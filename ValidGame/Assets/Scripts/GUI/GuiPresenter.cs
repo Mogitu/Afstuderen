@@ -9,15 +9,16 @@ using AMC.GUI;
 
 /// </summary>
 public class GuiPresenter : Presenter
-{   
+{
     public MainManager MainManager;
     public EventManager EventManager;
 
-    public  void Start()
-    {        
+    public void Start()
+    {
         ChangeView(VIEWS.MainmenuView);
         EventManager.AddListener(GameEvents.PlayerJoined, StartMatch);
-    }  
+        EventManager.AddListener(GameEvents.ReceivedTeamType, OpenMultiplayerViews);
+    }
 
     public void StartPracticeRound()
     {
@@ -25,23 +26,30 @@ public class GuiPresenter : Presenter
         MainManager.StartPracticeRound();
     }
 
-    public void StartMultiplayerClient(string ip)
+    public void StartMultiplayerClient()
+    {
+        //ChangeView(VIEWS.GamePlayingView);
+        //OpenView(VIEWS.MultiplayerGameplayView);
+        CloseView(VIEWS.MultiplayermenuView);
+        MainManager.StartMultiplayerClient();
+    }
+
+    private void OpenMultiplayerViews(short eventType, Component sender, object param = null)
     {
         ChangeView(VIEWS.GamePlayingView);
         OpenView(VIEWS.MultiplayerGameplayView);
-        MainManager.StartMultiplayerClient(ip);
     }
 
     //TODO  : start host instead of client.
-    public void StartMultiplayerHost(string ip)
+    public void StartMultiplayerHost()
     {
         ChangeView(VIEWS.MultiplayerGameplayView);
-        MainManager.StartMultiplayerHost(ip);
+        MainManager.StartMultiplayerHost();
     }
 
-    public void StartMatch(short event_type, Component sender, object Param=null)
+    public void StartMatch(short event_type, Component sender, object Param = null)
     {
-        OpenView(VIEWS.GamePlayingView);        
+        OpenView(VIEWS.GamePlayingView);
     }
 
     public void Restart()
@@ -58,12 +66,12 @@ public class GuiPresenter : Presenter
     {
         MainManager.ToggleCameraActive();
         MainManager.ToggleAllColliders();
-        ToggleView(VIEWS.CardbrowserView);      
+        ToggleView(VIEWS.CardbrowserView);
     }
 
     public void ShowMainmenuView()
     {
-        ChangeView(VIEWS.MainmenuView);        
+        ChangeView(VIEWS.MainmenuView);
     }
 
     public void EndPracticeGame()
@@ -85,28 +93,29 @@ public class GuiPresenter : Presenter
 
     public void ShowGameOverView()
     {
-        ChangeView(VIEWS.GameovermenuView);        
+        ChangeView(VIEWS.GameovermenuView);
     }
 
     public void ShowMultiplayerView()
     {
         ChangeView(VIEWS.MultiplayermenuView);
-    }    
+    }
 
     public void PostChatSend(string str)
     {
-        EventManager.PostNotification(GameEvents.SendSchat, this, str);       
-    }     
+        EventManager.PostNotification(GameEvents.SendSchat, this, str);
+    }
 
     public void PostScoreSend(string str)
     {
         EventManager.PostNotification(GameEvents.SendScore, this, str);
     }
 
-    public TeamType GetTeamType {
+    public TeamType GetTeamType
+    {
         get { return MainManager.MyTeamType; }
     }
-   
+
     /// <summary>
     /// Update a text with the topic description on an object, if existing.
     /// </summary>

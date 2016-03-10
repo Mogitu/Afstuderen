@@ -77,12 +77,19 @@ public class ValidNetworkController : NetworkController
 
     protected override void OnConnectionReceived(NetworkMessage msg)
     {
-        EventManager.PostNotification(GameEvents.PlayerJoined, this, "Client joined");
+        //EventManager.PostNotification(GameEvents.PlayerJoined, this, "Client joined");
     }
 
     protected override void OnDisconnect(NetworkMessage msg)   
     {
         EventManager.PostNotification(GameEvents.PlayerLeft, this, "LEFT");
+    }
+
+    private void OnTeamTypeReceived(NetworkMessage msg)
+    {
+        TeamTypeMessage msgA = msg.ReadMessage<TeamTypeMessage>();
+        EventManager.PostNotification(GameEvents.ReceivedTeamType, this, msgA.TeamType);
+        EventManager.PostNotification(GameEvents.PlayerJoined, this, "Client joined");
     }
    
     protected override void AddHandlers()
@@ -90,8 +97,8 @@ public class ValidNetworkController : NetworkController
         //Custom NETWORK messages
         RegisterHandler(NetworkMessages.MsgChat, OnChatMessageReceived);
         RegisterHandler(NetworkMessages.MsgScore, OnScoreMessageReceived);
-        RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);        
-    }
-
-   
+        RegisterHandler(NetworkMessages.OpponentCard, OnOpponentCardReceived);
+        RegisterHandler(NetworkMessages.MsgTeamType, OnTeamTypeReceived);
+        RegisterHandler(NetworkMessages.MsgPlayerLeft, OnDisconnect);   
+    }   
 }

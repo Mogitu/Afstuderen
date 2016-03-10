@@ -16,12 +16,12 @@ public class MultiplayermenuView : View {
 
     public void ClickedClient()
     {
-        GuiPresenter.StartMultiplayerClient(IpAdress.text);
+        GuiPresenter.StartMultiplayerClient();
     }
 
     public void ClickedHost()
     {
-        GuiPresenter.StartMultiplayerHost(IpAdress.text);        
+        GuiPresenter.StartMultiplayerHost();        
     }
 
     public void GoBack()

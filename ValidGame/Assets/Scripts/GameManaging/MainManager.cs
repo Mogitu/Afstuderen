@@ -6,6 +6,7 @@ using System.IO;
 using AMC.GUI;
 using AMC.Networking;
 using AMC.Camera;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -38,6 +39,7 @@ public class MainManager : MonoBehaviour, IMainManager
     void Start()
     {
         Score = 0;
+        EventManager.AddListener(GameEvents.ReceivedTeamType,OnTeamTypeReceived);
     }
 
 
@@ -64,7 +66,7 @@ public class MainManager : MonoBehaviour, IMainManager
         CardController.ManageCards();
     }
 
-    public void StartMultiplayerHost(string ip)
+    public void StartMultiplayerHost()
     {
         NetworkController.StartHosting();
         IsMultiplayerGame = true;
@@ -78,15 +80,28 @@ public class MainManager : MonoBehaviour, IMainManager
         GamestateManager.SetMultiplayerState();
     }
 
-    public void StartMultiplayerClient(string ip)
+    public void StartMultiplayerClient()
     {
         //RunGameStartAnimation();
-        GamestateManager.SetMultiplayerState();
-        string adress = ReadFileItem("ip", "config.ini");
-        Debug.Log(adress);
+        //GamestateManager.SetMultiplayerState();
+        string adress = ReadFileItem("ip", "config.ini");       
         NetworkController.StartClient(adress);
         IsMultiplayerGame = true;
-        MyTeamType = TeamType.PlanAndDo;
+        //MyTeamType = TeamType.PlanAndDo;
+        //CardController.CollectCards();
+    }
+
+    private void OnTeamTypeReceived(short eventType, Component sender, object param=null)
+    {
+        int type = (int)param;
+        if(type == 1)
+        {
+            MyTeamType = TeamType.PlanAndDo;
+        }
+        else
+        {
+            MyTeamType = TeamType.CheckAndAct;
+        }
         CardController.CollectCards();
     }
 
@@ -172,8 +187,7 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         Application.Quit();
         Debug.Log("Quit!");
-    }
-
+    }   
 
     public CardController CardController
     {

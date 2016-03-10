@@ -21,6 +21,7 @@ public class RunningView : View {
         NumMatches = 0;
         ((ServerPresenter)Presenter).EventManager.AddListener(ServerEvents.ClientJoined, IncreaseConnectionsCount);
         ((ServerPresenter)Presenter).EventManager.AddListener(ServerEvents.MatchCreated, IncreaseMatchCount);
+        ((ServerPresenter)Presenter).EventManager.AddListener(ServerEvents.PlayerLeft, OnClientLeft);
     }
 
     private void IncreaseConnectionsCount(short event_Type, Component sender, object param = null) {
@@ -41,7 +42,14 @@ public class RunningView : View {
         ((ServerPresenter)Presenter).EventManager.PostNotification(ServerEvents.Disconnect,this,null);
         Presenter.ChangeView("MainView");
     }
-	
+
+    private void OnClientLeft(short event_Type, Component sender, object param = null)
+    {
+        NumMatches--;
+        MatchesCount.text = NumMatches.ToString();
+        NumConnections--;
+        ConnectionCountTxt.text = NumConnections.ToString();
+    }	
 
     private void CreateLogText(string message)
     {

@@ -18,8 +18,7 @@ public class ServerNetworkController : NetworkController
     {
         ConnectionIds = new List<int>();
         Matches = new List<Match>();
-        EventManager.AddListener(ServerEvents.StartServer, Begin);
-        EventManager.AddListener(ServerEvents.Disconnect, OnDisconnect);
+        EventManager.AddListener(ServerEvents.StartServer, Begin);  
         EventManager.AddListener(ServerEvents.QuitApplication, QuitApplication);
     }  
 
@@ -35,12 +34,16 @@ public class ServerNetworkController : NetworkController
 
     protected override void AddHandlers()
     {
-        RegisterHandler(NetworkMessages.MsgChat, Relay<ChatMessage>);   
-        RegisterHandler(NetworkMessages.MsgPlayerLeft, Relay<PlayerLeftMessage>);
-        RegisterHandler(NetworkMessages.MsgScore, Relay<ScoreMessage>);
-        RegisterHandler(NetworkMessages.OpponentCard, Relay<CardToOpponentMessage>);
+        RegisterHandler(NetworkMessages.MsgChat, Relay<ChatMessage>);          
+        RegisterHandler(NetworkMessages.MsgScore, Relay<ScoreMessage>);        
+        RegisterHandler(NetworkMessages.OpponentCard, Relay<CardToOpponentMessage>);       
     }     
 
+    /// <summary>
+    /// Relays message of type T to other client in a a match.
+    /// </summary>
+    /// <typeparam name="T">The type of message to relay, needs to inherit from MessageBase</typeparam>
+    /// <param name="msg">Obligated paramater in order to properly handle message parsing in the handlers</param>
     private void Relay<T>( NetworkMessage msg) where T : MessageBase, new()
     {
         MessageBase msgBase = msg.ReadMessage<T>();
@@ -64,28 +67,42 @@ public class ServerNetworkController : NetworkController
             NetworkServer.SendToClient(match.ConnectionA, msg.msgType, msgBase);
         }
     }
-
-    protected override void OnConnectionReceived(NetworkMessage msg)
+  
+    private Match FindMatch()
     {
-        base.OnConnectionReceived(msg);
-        ConnectionIds.Add(msg.conn.connectionId);
         Match match = null;
         if (Matches.Count < 1)
         {
-            match = new Match();
-            Matches.Add(match);
-            EventManager.PostNotification(ServerEvents.MatchCreated, this, null);
+            match = CreateMatch();
         }
         else
         {
             match = Matches[Matches.Count - 1];
             if (match.ConnectionA != 0 && match.ConnectionB != 0)
             {
-                match = new Match();
-                Matches.Add(match);
-                EventManager.PostNotification(ServerEvents.MatchCreated, this, null);
+                match = CreateMatch();
             }
         }
+        return match;
+    }
+
+    /// <summary>
+    /// Creates a new match and adds it to the Matches list
+    /// </summary>
+    /// <returns>The newly created match</returns>
+    private Match CreateMatch()
+    {
+        Match match = new Match();
+        Matches.Add(match);
+        EventManager.PostNotification(ServerEvents.MatchCreated, this, null);
+        return match;
+    }    
+
+    protected override void OnConnectionReceived(NetworkMessage msg)
+    {
+        base.OnConnectionReceived(msg);
+        ConnectionIds.Add(msg.conn.connectionId);
+        Match match = FindMatch();
 
         if (match.ConnectionA == 0)
         {
@@ -94,14 +111,37 @@ public class ServerNetworkController : NetworkController
         else if (match.ConnectionB == 0)
         {
             match.ConnectionB = msg.conn.connectionId;
+            TeamTypeMessage teamMsg = new TeamTypeMessage();
+            teamMsg.TeamType = 1;
+            NetworkServer.SendToClient(match.ConnectionA, NetworkMessages.MsgTeamType, teamMsg);
+            teamMsg.TeamType = 2;
+            NetworkServer.SendToClient(match.ConnectionB, NetworkMessages.MsgTeamType, teamMsg);
         }
         EventManager.PostNotification(ServerEvents.ClientJoined, this, null);
     }
 
     protected override void OnDisconnect(NetworkMessage msg)
     {
-        base.OnDisconnect(msg);
-        ConnectionIds.Remove(msg.conn.connectionId);
+        base.OnDisconnect(msg);        
+        foreach(Match match in Matches)
+        {
+            if (msg.conn.connectionId == match.ConnectionA || msg.conn.connectionId == match.ConnectionB)
+            {                
+                if (msg.conn.connectionId == match.ConnectionA)
+                {
+                    NetworkServer.SendToClient(match.ConnectionB, NetworkMessages.MsgPlayerLeft, new PlayerLeftMessage());
+                }
+                else
+                {
+                    NetworkServer.SendToClient(match.ConnectionA, NetworkMessages.MsgPlayerLeft, new PlayerLeftMessage());
+                }
+                ConnectionIds.Remove(match.ConnectionA);
+                ConnectionIds.Remove(match.ConnectionB);               
+                Matches.Remove(match);
+                break;
+            }            
+        }      
+        EventManager.PostNotification(ServerEvents.PlayerLeft, this, null);              
     }
 
     public override void Disconnect()
@@ -110,7 +150,7 @@ public class ServerNetworkController : NetworkController
         NetworkServer.Shutdown();
     }
 
-    private void OnDisconnect(short eventType, Component sender, object param = null)
+    private void OnServerDisconnect(short eventType, Component sender, object param = null)
     {
         Disconnect();
     }

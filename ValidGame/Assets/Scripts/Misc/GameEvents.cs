@@ -18,4 +18,5 @@ public class GameEvents
 
     public const short SendCardToOpponent = 11;
     public const short CardReceivedFromOpponent = 12;
+    public const short ReceivedTeamType = 13;
 }

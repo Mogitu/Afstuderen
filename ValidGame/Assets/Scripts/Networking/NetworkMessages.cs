@@ -12,12 +12,18 @@ public class NetworkMessages
     public const short MsgPlayerJoined = MsgType.Highest + 3;
     public const short MsgPlayerLeft = MsgType.Highest + 4;
     public const short OpponentCard = MsgType.Highest + 5;
+    public const short MsgTeamType = MsgType.Highest + 6;
 }
 
 //All custom messages below.
 public class ChatMessage : MessageBase
 {
     public string Text;
+}
+
+public class TeamTypeMessage : MessageBase
+{
+    public int TeamType;
 }
 
 public class ScoreMessage : MessageBase
