@@ -21,16 +21,17 @@ public class ServerNetworkController : NetworkController
         Matches = new List<Match>();
         EventManager.AddListener(ServerEvents.StartServer, Begin);  
         EventManager.AddListener(ServerEvents.QuitApplication, QuitApplication);
+        EventManager.AddListener(ServerEvents.Disconnect, OnServerDisconnect);
     }  
 
     public override void StartHosting()
     {
-        CreateServerContext<AmcServer>();
+        CreateServerContext<AmcServer>();        
     }
 
     private void Begin(short event_Type, Component sender, object param = null)
     {
-        StartHosting();
+        StartHosting();        
     }
 
     protected override void AddHandlers()
@@ -151,10 +152,16 @@ public class ServerNetworkController : NetworkController
         EventManager.PostNotification(ServerEvents.PlayerLeft, this, GetStats());              
     }
 
+    private void ClearConnections()
+    {
+        ConnectionIds.Clear();
+        Matches.Clear();     
+    }
+
     public override void Disconnect()
     {
-        base.Disconnect();
-        NetworkServer.Shutdown();
+        base.Disconnect();      
+        ClearConnections();     
     }
 
     private void OnServerDisconnect(short eventType, Component sender, object param = null)

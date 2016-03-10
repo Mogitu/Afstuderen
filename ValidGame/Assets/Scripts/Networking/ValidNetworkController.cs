@@ -80,6 +80,12 @@ public class ValidNetworkController : NetworkController
         //EventManager.PostNotification(GameEvents.PlayerJoined, this, "Client joined");
     }
 
+    public override void Disconnect()
+    {
+        base.Disconnect();
+        Debug.Log("ja");      
+    }
+
     protected override void OnDisconnect(NetworkMessage msg)   
     {
         EventManager.PostNotification(GameEvents.PlayerLeft, this, "LEFT");
