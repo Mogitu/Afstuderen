@@ -5,12 +5,6 @@
 namespace AMC.GUI
 {
     public class StandardView : View
-    {
-        private StandardPresenter StandardPresenter;
-
-        void Awake()
-        {
-            StandardPresenter = GetPresenterType<StandardPresenter>();
-        }
+    {   
     }
 }

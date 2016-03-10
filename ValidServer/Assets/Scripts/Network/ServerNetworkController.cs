@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   
+/// Desc    :   Rather than a "gamemanager" this class controls the state of the program. Done like this because the only thing this application does is "controlling" network states.
+/// TODO    :   Most methods can be improved a lot, especially where there are comparisons done between connections in a match.
 /// </summary>
 public class ServerNetworkController : NetworkController
 {
@@ -93,8 +94,8 @@ public class ServerNetworkController : NetworkController
     private Match CreateMatch()
     {
         Match match = new Match();
-        Matches.Add(match);
-        EventManager.PostNotification(ServerEvents.MatchCreated, this, null);
+        Matches.Add(match);       
+        EventManager.PostNotification(ServerEvents.MatchCreated, this, GetStats());
         return match;
     }    
 
@@ -116,8 +117,14 @@ public class ServerNetworkController : NetworkController
             NetworkServer.SendToClient(match.ConnectionA, NetworkMessages.MsgTeamType, teamMsg);
             teamMsg.TeamType = 2;
             NetworkServer.SendToClient(match.ConnectionB, NetworkMessages.MsgTeamType, teamMsg);
-        }
-        EventManager.PostNotification(ServerEvents.ClientJoined, this, null);
+        }       
+        EventManager.PostNotification(ServerEvents.ClientJoined, this, GetStats());
+    }
+
+    private int[] GetStats()
+    {
+        int[] stats = { ConnectionIds.Count, Matches.Count };
+        return stats;
     }
 
     protected override void OnDisconnect(NetworkMessage msg)
@@ -140,8 +147,8 @@ public class ServerNetworkController : NetworkController
                 Matches.Remove(match);
                 break;
             }            
-        }      
-        EventManager.PostNotification(ServerEvents.PlayerLeft, this, null);              
+        }        
+        EventManager.PostNotification(ServerEvents.PlayerLeft, this, GetStats());              
     }
 
     public override void Disconnect()
