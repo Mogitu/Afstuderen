@@ -10,11 +10,9 @@
 /// </summary>
 public class Card : MonoBehaviour
 {
-  
-
     public string MatchCode;
     public string Title;
-    public CardType TypeOfCard;
+    public TeamType TypeOfCard;
     public string Description;
 
     public SpriteRenderer Sprite;
@@ -29,7 +27,7 @@ public class Card : MonoBehaviour
     }
 
     //Set needed properties
-    public void SetData(string title, string description, string matchCode, CardType cardType)
+    public void SetData(string title, string description, string matchCode, TeamType cardType)
     {
         Title = title;
         Description = description;
@@ -38,12 +36,4 @@ public class Card : MonoBehaviour
         MatchCode = matchCode;
         TypeOfCard = cardType;
     }
-}
-
-public enum CardType
-{
-    Check,
-    Act,
-    Plan,
-    Do
 }

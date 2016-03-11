@@ -88,7 +88,7 @@
     <Compile Include="Assets\Scripts\Camera\Topview\TopviewController.cs" />
     <Compile Include="Assets\Scripts\Camera\Topview\TopviewMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
-    <Compile Include="Assets\Scripts\Cards\CardManager.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardController.cs" />
     <Compile Include="Assets\Scripts\ContextDescription.cs" />
     <Compile Include="Assets\Scripts\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameovermenuView.cs" />
@@ -110,6 +110,7 @@
     <Compile Include="Assets\Scripts\Gamestates\MultiplayerState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\PlayingState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\WaitingState.cs" />
+    <Compile Include="Assets\Scripts\Misc\AmcUtilities.cs" />
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />

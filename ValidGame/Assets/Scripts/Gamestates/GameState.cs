@@ -10,7 +10,7 @@ public abstract class GameState: IGameState
     //overridable base methods
     public GameState(MainManager gameManager)
     {
-        this.GameManager = gameManager;
+        GameManager = gameManager;
     }
 
     public virtual void UpdateState() { }

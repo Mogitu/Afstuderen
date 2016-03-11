@@ -7,6 +7,6 @@
 public class GuiCard : MonoBehaviour
 {
     public string MatchCode = "1a";
-    public CardType typeOfCard;
+    public TeamType TeamType;
 }
 

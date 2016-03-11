@@ -32,33 +32,24 @@ public class CardbrowserView : View
     /// </summary>
     private void PopulateContent()
     {
+        //float widthScale = 1024 / Screen.width;
+        //float heightScale = 768 / Screen.height;
         GuiCard[] cards = FindObjectsOfType<GuiCard>();
-        int offSetX = -225;
-        int offSetY = 200;
+        float offSetX = -225;
+        float offSetY = 200;
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
-        {
-            GuiCard obj = cards[i];
-            //TODO: this needs to be smaller!  
-            if (GuiPresenter.GetTeamType == TeamType.CheckAndAct)
+        {           
+            GuiCard obj = cards[i];              
+            if(GuiPresenter.GetTeamType ==  obj.TeamType)
             {
-                if (obj.typeOfCard == CardType.Check || obj.typeOfCard == CardType.Act)
-                {
-                    AddCard(obj, ref offSetX, ref offSetY, ref col);
-                }
-            }
-            else if (GuiPresenter.GetTeamType == TeamType.PlanAndDo)
-            {
-                if (obj.typeOfCard == CardType.Plan || obj.typeOfCard == CardType.Do)
-                {
-                    AddCard(obj, ref offSetX, ref offSetY, ref col);
-                }
-            }
+                AddCard(obj, ref offSetX, ref offSetY, ref col);
+            }           
         }
     }
 
     //TODO: Split this up into smaller methods.
-    private void AddCard(GuiCard obj, ref int offSetX, ref int offSetY, ref int col)
+    private void AddCard(GuiCard obj, ref float offSetX, ref float offSetY, ref int col)
     {
         obj.transform.SetParent(CardPanelContent.transform, false);
         Vector3 newPos = obj.transform.parent.transform.position;

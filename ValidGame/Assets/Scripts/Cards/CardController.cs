@@ -6,22 +6,21 @@ using System.Collections.Generic;
 /// Desc    :   Controls card behaviour etc.
 /// TODO    :   To much responsibilities? Decouple drag, drop, pickup BEHAVIOURS?
 /// </summary>
-public class CardController
+public class CardController: MonoBehaviour
 {
     public List<Card> PlacedCards { get; private set; }
     private Card CurrentCard;   
     private List<Card> CardCollection;
     //private float cardOffsetY;
-    private MainManager MainManager;
-    private EventManager EventManager;
+    public MainManager MainManager;
+    public EventManager EventManager;
+    public GameObject CardPlacementEffect;
 
-    public CardController(MainManager manager, EventManager eventManager)
+    public void Awake()
     {
         CardCollection = new List<Card>();
         PlacedCards = new List<Card>();
-        //cardOffsetY = 0.2f;
-        MainManager = manager;
-        EventManager = eventManager;
+        //cardOffsetY = 0.2f;       
         //CollectCards();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
     }
@@ -33,7 +32,7 @@ public class CardController
     }
 
     //Call every frame in manager class.
-    public void ManageCards()
+    private void Update()
     {
         if (CardCollection.Count > 0)
         {
@@ -52,7 +51,6 @@ public class CardController
             }
         }
     }
-
 
     /// <summary>
     /// Drag the card
@@ -102,6 +100,8 @@ public class CardController
             CardCollection.Remove(CurrentCard);
             PlacedCards.Add(CurrentCard);
             //route message to opponent
+            GameObject go = Instantiate(CardPlacementEffect);
+            go.transform.position = CurrentCard.transform.position;
             if (MainManager.IsMultiplayerGame)
             {
                 CardToOpponentMessage msg = new CardToOpponentMessage();
@@ -168,20 +168,10 @@ public class CardController
         {
             Card card = cards[i];
             //collect only cards of the current teamtype
-            if (MainManager.MyTeamType == TeamType.CheckAndAct)
-            {
-                if (card.TypeOfCard == CardType.Check || card.TypeOfCard == CardType.Act)
-                {
-                    CardCollection.Add(card);
-                }
-            }
-            else if (MainManager.MyTeamType == TeamType.PlanAndDo)
-            {
-                if (card.TypeOfCard == CardType.Plan || card.TypeOfCard == CardType.Do)
-                {
-                    CardCollection.Add(card);
-                }
-            }
+            if (MainManager.MyTeamType == card.TypeOfCard)
+            {               
+                    CardCollection.Add(card);                
+            }            
             //card.gameObject.SetActive(false);           
         }
     }

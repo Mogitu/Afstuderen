@@ -19,11 +19,21 @@ public class GameOverState : GameState
         //Only run this once
         if (!FirstRun)
         {
-            DetermineResults();
-            FirstRun = true;
+            DetermineResults();           
             Camera.main.GetComponent<CameraController>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
+            DisableAllCards();
+            FirstRun = true;
+        }
+    }
+
+    private void DisableAllCards()
+    {
+        BoxCollider[] cards = GameObject.FindObjectsOfType<BoxCollider>();        
+        for(int i=0; i<cards.Length;i++)
+        {
+            cards[i].enabled = false;
         }
     }
 

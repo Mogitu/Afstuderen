@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.IO;
+
 
 //Import the developed modules
 using AMC.GUI;
 using AMC.Networking;
 using AMC.Camera;
-using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -27,43 +26,25 @@ public class MainManager : MonoBehaviour, IMainManager
     public EventManager EventManager;
 
     private GameStateManager GamestateManager;
-    private CardController _CardController;
+    public CardController CardController;
 
     void Awake()
     {
+        Application.runInBackground = true;
         MyTeamType = TeamType.CheckAndAct;
-        GamestateManager = new GameStateManager(this);
-        _CardController = new CardController(this, EventManager);
+        GamestateManager = new GameStateManager(this);       
     }
 
     void Start()
     {
         Score = 0;
         EventManager.AddListener(GameEvents.ReceivedTeamType,OnTeamTypeReceived);
-    }
-
-
-    //TODO: this is just a test method!
-    private string ReadFileItem(string item, string path)
-    {
-        StreamReader reader = new StreamReader(path);
-        string line;
-        while((line = reader.ReadLine())!= string.Empty)
-        {
-            string[] value = line.Split('=');
-            if (value[0] == item)
-            {
-                return value[1];
-            }
-        }
-        return null;
-    }
+    }    
 
     //Update all attached modules if they dont have their own monobehaviour update.
     void Update()
     {
-        GamestateManager.UpdateCurrentState();
-        CardController.ManageCards();
+        GamestateManager.UpdateCurrentState();        
     }
 
     public void StartMultiplayerHost()
@@ -81,14 +62,10 @@ public class MainManager : MonoBehaviour, IMainManager
     }
 
     public void StartMultiplayerClient()
-    {
-        //RunGameStartAnimation();
-        //GamestateManager.SetMultiplayerState();
-        string adress = ReadFileItem("ip", "config.ini");       
+    {        
+        string adress = AmcUtilities.ReadFileItem("ip", "config.ini");       
         NetworkController.StartClient(adress);
-        IsMultiplayerGame = true;
-        //MyTeamType = TeamType.PlanAndDo;
-        //CardController.CollectCards();
+        IsMultiplayerGame = true;       
     }
 
     private void OnTeamTypeReceived(short eventType, Component sender, object param=null)
@@ -189,10 +166,7 @@ public class MainManager : MonoBehaviour, IMainManager
         Debug.Log("Quit!");
     }   
 
-    public CardController CardController
-    {
-        get { return _CardController; }
-    }
+  
 
     public bool IsMultiplayerGame
     {

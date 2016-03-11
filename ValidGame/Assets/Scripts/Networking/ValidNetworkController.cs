@@ -35,16 +35,22 @@ public class ValidNetworkController : NetworkController
 
     public override void StartHosting()
     {
+        string port = AmcUtilities.ReadFileItem("port", "config.ini").Trim();
+        int.TryParse(port, out SocketPort);
         CreateServerContext<AmcServer>(SocketPort);               
     }
 
     public override void StartClient(string ip)
     {
+        string port = AmcUtilities.ReadFileItem("port", "config.ini").Trim();
+        int.TryParse(port , out SocketPort);
         CreateClientContext<AmcClient>(ip, SocketPort);              
     }
 
     public override void StartClient()
     {
+        string port = AmcUtilities.ReadFileItem("port", "config.ini").Trim();
+        int.TryParse(port, out SocketPort);
         CreateClientContext<AmcClient>(IpAdress, SocketPort);
     }
 
@@ -81,8 +87,7 @@ public class ValidNetworkController : NetworkController
 
     public override void Disconnect()
     {
-        base.Disconnect();
-        Debug.Log("ja");      
+        base.Disconnect();        
     }
 
     protected override void OnDisconnect(NetworkMessage msg)   
