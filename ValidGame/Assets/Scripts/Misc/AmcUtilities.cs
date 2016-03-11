@@ -15,8 +15,7 @@ public static class AmcUtilities
     public static string ReadFileItem(string identifier, string path)
     {
         StreamReader reader = new StreamReader(path);
-        string line;
-        
+        string line;        
         //Read the file line by line
         while ((line = reader.ReadLine()) != null)
         {                   
@@ -25,7 +24,7 @@ public static class AmcUtilities
             if (value[0] == identifier)
             {
                 reader.Close();
-                //only the value needs to be returned
+                //only the right-hand value needs to be returned
                 return value[1];
             }            
         }

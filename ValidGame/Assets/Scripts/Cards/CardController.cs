@@ -4,14 +4,13 @@ using System.Collections.Generic;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Controls card behaviour etc.
-/// TODO    :   To much responsibilities? Decouple drag, drop, pickup BEHAVIOURS?
+/// TODO    :   To much responsibilities and hardcoded variables
 /// </summary>
 public class CardController: MonoBehaviour
 {
     public List<Card> PlacedCards { get; private set; }
     private Card CurrentCard;   
-    private List<Card> CardCollection;
-    //private float cardOffsetY;
+    private List<Card> CardCollection;  
     public MainManager MainManager;
     public EventManager EventManager;
     public GameObject CardPlacementEffect;
@@ -19,21 +18,17 @@ public class CardController: MonoBehaviour
     public void Awake()
     {
         CardCollection = new List<Card>();
-        PlacedCards = new List<Card>();
-        //cardOffsetY = 0.2f;       
-        //CollectCards();
+        PlacedCards = new List<Card>();        
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
-    {
-        //GameObject go = (GameObject)param;
+    {        
         object[] data = (object[])param;
         GameObject go = GameObject.Find((string)data[0]).gameObject;
         go.transform.position = (Vector3)data[1];
         GameObject go2 = Instantiate(CardPlacementEffect);
-        go2.transform.position = go.transform.position;
-        Debug.Log("Received card in cardmanager from opponent");
+        go2.transform.position = go.transform.position;      
     }
 
     //Call every frame in manager class.
@@ -58,8 +53,7 @@ public class CardController: MonoBehaviour
     }
 
     /// <summary>
-    /// Drag the card
-    /// TODO    :   Get rid of hardcoded literals.
+    /// Drag the card    
     /// </summary>
     public void DragCurrentCard()
     {
@@ -75,9 +69,8 @@ public class CardController: MonoBehaviour
             {
                 Transform objectHit = hit.transform;
                 Vector3 newPos = hit.point;
-                newPos.y = 0.24f;// cardOffsetY; //gameManager.cardOffsetY;
+                newPos.y = 0.24f;
                 CurrentCard.transform.position = newPos;
-
                 //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
                 if (objectHit.gameObject.tag == "ValidTopic")
                 {
@@ -161,8 +154,7 @@ public class CardController: MonoBehaviour
     //Executed by the gui handler to pick the current selected card in the card browser.
     public void SelectCard(string code)
     {
-        CurrentCard = GetCard(code);
-        // CurrentCard.gameObject.SetActive(true);
+        CurrentCard = GetCard(code);      
     }
 
     //Collects all cards that are created in the scene by the builder module and add them to the card collection.
@@ -176,8 +168,7 @@ public class CardController: MonoBehaviour
             if (MainManager.MyTeamType == card.TypeOfCard)
             {               
                     CardCollection.Add(card);                
-            }            
-            //card.gameObject.SetActive(false);           
+            }                         
         }
     }
 }

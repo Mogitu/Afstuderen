@@ -82,8 +82,8 @@ public class ValidNetworkController : NetworkController
     }
 
     protected override void OnConnectionReceived(NetworkMessage msg)
-    {
-        //EventManager.PostNotification(GameEvents.PlayerJoined, this, "Client joined");
+    {        
+        EventManager.PostNotification(GameEvents.SuccesfullConnection, this);
     }
 
     public override void Disconnect()

@@ -8,6 +8,7 @@ public class GameOverState : GameState
 {
     private bool FirstRun = false;
     private int GoodCards = 0;
+  
 
     public GameOverState(MainManager manager)
             : base(manager)
@@ -50,14 +51,17 @@ public class GameOverState : GameState
             if (matcher && matcher.MatchCode == GameManager.CardController.PlacedCards[i].MatchCode)
             {                
                 GameManager.CardController.PlacedCards[i].GetComponent<Renderer>().material.color = Color.green;
+                GameObject go = Object.Instantiate(GameManager.GoodPlacementEffect);
+                go.transform.position = GameManager.CardController.PlacedCards[i].transform.position;
                 GoodCards++;
             }
             else
             {              
                 GameManager.CardController.PlacedCards[i].GetComponent<Renderer>().material.color = Color.red;
+                GameObject go = Object.Instantiate(GameManager.WrongPlacementEffect);
+                go.transform.position = GameManager.CardController.PlacedCards[i].transform.position;
             }
         }
-        Debug.Log(GoodCards + " properly placed cards.");
         SendScores();
     }
 

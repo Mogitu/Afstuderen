@@ -10,7 +10,10 @@ public class GameovermenuView : View {
 
     public Text OwnScoreTxt;
     public Text OtherScoreTxt;
+    public Text gameResultTxt;
     private GuiPresenter GuiPresenter;
+    private int ownScore;
+    private int otherScore;
 
     public void Awake()
     {        
@@ -33,15 +36,25 @@ public class GameovermenuView : View {
         GuiPresenter.Restart();
     }    
 
-    public void OnScoreReceived(short Event_Type, Component Sender, object Param = null)
+    public void OnScoreReceived(short eventType, Component sender, object param = null)
     {
-        Debug.Log("Received in gui score of " + Param);
-        OwnScoreTxt.text = "You have " +Param + " good cards.";
+        Debug.Log("Received in gui score of " + param);
+        ownScore = (int)param;
+        OwnScoreTxt.text = "You have " +param + " good cards.";
     }
 
-    public void OnScoreReceivedMP(short Event_Type, Component Sender, object Param = null)
+    public void OnScoreReceivedMP(short eventType, Component sender, object param = null)
     {        
-        OtherScoreTxt.text = "Your opponent has " + Param + " good cards.";
+        OtherScoreTxt.text = "Your opponent has " + param + " good cards.";
+        otherScore = (int)param;
         GuiPresenter.EventManager.PostNotification(GameEvents.SendScoreNetwork, this, GuiPresenter.MainManager.Score);
+        if(ownScore > otherScore)
+        {
+            gameResultTxt.text = "You Won!";
+        }
+        else
+        {
+            gameResultTxt.text = "You Lost!";
+        }
     }   
 }

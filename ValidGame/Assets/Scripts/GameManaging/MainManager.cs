@@ -28,6 +28,9 @@ public class MainManager : MonoBehaviour, IMainManager
     private GameStateManager GamestateManager;
     public CardController CardController;
 
+    public GameObject GoodPlacementEffect;
+    public GameObject WrongPlacementEffect;
+
     void Awake()
     {
         Application.runInBackground = true;
