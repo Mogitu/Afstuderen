@@ -28,9 +28,10 @@ public class ValidNetworkController : NetworkController
     {
         CardToOpponentMessage msgA = msg.ReadMessage<CardToOpponentMessage>();
         string name = msgA.CardName.Trim();
-        GameObject go = GameObject.Find(name).gameObject;
-        go.transform.position = msgA.Position;
-        EventManager.PostNotification(GameEvents.CardReceivedFromOpponent, this, go);
+       // GameObject go = GameObject.Find(name).gameObject;
+       // go.transform.position = msgA.Position;
+        object[] data = { name, msgA.Position};
+        EventManager.PostNotification(GameEvents.CardReceivedFromOpponent, this, data);
     }
 
     public override void StartHosting()

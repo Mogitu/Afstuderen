@@ -11,5 +11,3 @@ public class SubtopicMatcher : MonoBehaviour
     public string MatchCode;
     public bool Occupied = false;
 }
-
-

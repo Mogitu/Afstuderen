@@ -28,6 +28,11 @@ public class CardController: MonoBehaviour
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
     {
         //GameObject go = (GameObject)param;
+        object[] data = (object[])param;
+        GameObject go = GameObject.Find((string)data[0]).gameObject;
+        go.transform.position = (Vector3)data[1];
+        GameObject go2 = Instantiate(CardPlacementEffect);
+        go2.transform.position = go.transform.position;
         Debug.Log("Received card in cardmanager from opponent");
     }
 
