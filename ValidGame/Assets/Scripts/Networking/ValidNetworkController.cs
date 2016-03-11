@@ -27,9 +27,7 @@ public class ValidNetworkController : NetworkController
     public void OnOpponentCardReceived(NetworkMessage msg)
     {
         CardToOpponentMessage msgA = msg.ReadMessage<CardToOpponentMessage>();
-        string name = msgA.CardName.Trim();
-       // GameObject go = GameObject.Find(name).gameObject;
-       // go.transform.position = msgA.Position;
+        string name = msgA.CardName.Trim();  
         object[] data = { name, msgA.Position};
         EventManager.PostNotification(GameEvents.CardReceivedFromOpponent, this, data);
     }

@@ -7,27 +7,27 @@ using System.Collections.Generic;
 /// </summary>
 public class EventManager : MonoBehaviour
 {
-    public delegate void OnEvent(short event_Type, Component sender, object param = null);
+    public delegate void OnEvent(short eventType, Component sender, object param = null);
 
     private Dictionary<short, List<OnEvent>> Listeners = new Dictionary<short, List<OnEvent>>();
 
-    public void AddListener(short event_Type, OnEvent listener)
+    public void AddListener(short eventType, OnEvent listener)
     {
         List<OnEvent> listenList = null;
-        if (Listeners.TryGetValue(event_Type, out listenList))
+        if (Listeners.TryGetValue(eventType, out listenList))
         {
             listenList.Add(listener);
             return;
         }
         listenList = new List<OnEvent>();
         listenList.Add(listener);
-        Listeners.Add(event_Type, listenList);
+        Listeners.Add(eventType, listenList);
     }
 
-    public void PostNotification(short event_Type, Component sender, object param = null)
+    public void PostNotification(short eventType, Component sender, object param = null)
     {
         List<OnEvent> listenList = null;
-        if (!Listeners.TryGetValue(event_Type, out listenList))
+        if (!Listeners.TryGetValue(eventType, out listenList))
         {
             return;
         }
@@ -36,14 +36,14 @@ public class EventManager : MonoBehaviour
         {
             if (!listenList[i].Equals(null))
             {
-                listenList[i](event_Type, sender, param);
+                listenList[i](eventType, sender, param);
             }
         }
     }
 
-    public void RemoveEvent(short event_Type)
+    public void RemoveEvent(short eventType)
     {
-        Listeners.Remove(event_Type);
+        Listeners.Remove(eventType);
     }
 
     //Removes all redundantly added listeners.

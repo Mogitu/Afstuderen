@@ -111,6 +111,7 @@
     <Compile Include="Assets\Scripts\Gamestates\PlayingState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\WaitingState.cs" />
     <Compile Include="Assets\Scripts\Misc\AmcUtilities.cs" />
+    <Compile Include="Assets\Scripts\Misc\DestructibleParticle.cs" />
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />

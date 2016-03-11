@@ -20,4 +20,5 @@ public class GameEvents
     public const short CardReceivedFromOpponent = 12;
     public const short ReceivedTeamType = 13;
     public const short SuccesfullConnection = 14;
+    public const short StartMultiplayerMatch = 15;
 }

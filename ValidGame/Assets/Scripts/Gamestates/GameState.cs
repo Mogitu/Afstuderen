@@ -12,6 +12,5 @@ public abstract class GameState: IGameState
     {
         GameManager = gameManager;
     }
-
     public virtual void UpdateState() { }
 }

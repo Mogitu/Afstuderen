@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-
-
 //Import the developed modules
 using AMC.GUI;
 using AMC.Networking;

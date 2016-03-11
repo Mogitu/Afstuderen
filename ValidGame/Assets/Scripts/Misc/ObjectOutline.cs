@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
-
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Changes color of object when mouse hovers on it.
 /// TODO    :   Rather than OnMouseX, a raycast would be more stable on different platforms.
 /// </summary>
-
 public class ObjectOutline : MonoBehaviour
 {
     // Use this for initialization  
@@ -18,7 +15,7 @@ public class ObjectOutline : MonoBehaviour
     void Start()
     {
         ObjectRenderer = GetComponent<Renderer>();
-        HighLightMat = (Material)Instantiate(ObjectRenderer.sharedMaterial);//Shared material because normal material will create extra instances "killing" performance.
+        HighLightMat = Instantiate(ObjectRenderer.sharedMaterial);//Shared material because normal material will create extra instances "killing" performance.
         DefaultMat = ObjectRenderer.sharedMaterial;
     }
 

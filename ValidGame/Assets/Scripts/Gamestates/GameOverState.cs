@@ -7,8 +7,7 @@ using AMC.Camera;
 public class GameOverState : GameState
 {
     private bool FirstRun = false;
-    private int GoodCards = 0;
-  
+    private int GoodCards = 0; 
 
     public GameOverState(MainManager manager)
             : base(manager)
@@ -24,17 +23,20 @@ public class GameOverState : GameState
             Camera.main.GetComponent<CameraController>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
-            DisableAllCards();
+            DisableAllColliders();
             FirstRun = true;
         }
     }
 
-    private void DisableAllCards()
+    /// <summary>
+    /// Disables colliders on all objects in the scene
+    /// </summary>
+    private void DisableAllColliders()
     {
-        BoxCollider[] cards = GameObject.FindObjectsOfType<BoxCollider>();        
-        for(int i=0; i<cards.Length;i++)
+        BoxCollider[] objects = Object.FindObjectsOfType<BoxCollider>();        
+        for(int i=0; i<objects.Length;i++)
         {
-            cards[i].enabled = false;
+            objects[i].enabled = false;
         }
     }
 
@@ -58,7 +60,7 @@ public class GameOverState : GameState
             else
             {              
                 GameManager.CardController.PlacedCards[i].GetComponent<Renderer>().material.color = Color.red;
-                GameObject go = Object.Instantiate(GameManager.WrongPlacementEffect);
+                GameObject go = Object.Instantiate(GameManager.WrongPlacementEffect);                
                 go.transform.position = GameManager.CardController.PlacedCards[i].transform.position;
             }
         }
@@ -67,6 +69,7 @@ public class GameOverState : GameState
 
     public void SendScores()
     {
+        //If it is an multiplayer game the score needs to be sent to the opposing player.
         if (GameManager.IsMultiplayerGame)
         {
             GameManager.EventManager.PostNotification(GameEvents.SendScoreNetwork, null, GoodCards);

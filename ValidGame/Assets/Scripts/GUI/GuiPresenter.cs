@@ -16,8 +16,9 @@ public class GuiPresenter : Presenter
     public void Start()
     {
         ChangeView(VIEWS.MainmenuView);
-        EventManager.AddListener(GameEvents.PlayerJoined, StartMatch);
-        EventManager.AddListener(GameEvents.ReceivedTeamType, OpenMultiplayerViews);
+        EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMatch);
+        //EventManager.AddListener(GameEvents.PlayerJoined, StartMatch);
+       // EventManager.AddListener(GameEvents.ReceivedTeamType, OpenMultiplayerViews);
     }
 
     public void StartPracticeRound()
@@ -34,7 +35,8 @@ public class GuiPresenter : Presenter
         MainManager.StartMultiplayerClient();
     }
 
-    private void OpenMultiplayerViews(short eventType, Component sender, object param = null)
+   // private void OpenMultiplayerViews(short eventType, Component sender, object param = null)
+    private void OpenMultiplayerViews()
     {
         ChangeView(VIEWS.GamePlayingView);
         OpenView(VIEWS.MultiplayerGameplayView);
@@ -49,7 +51,7 @@ public class GuiPresenter : Presenter
 
     public void StartMatch(short event_type, Component sender, object Param = null)
     {
-        OpenView(VIEWS.GamePlayingView);
+        OpenMultiplayerViews();
     }
 
     public void Restart()
