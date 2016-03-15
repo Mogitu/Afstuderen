@@ -25,7 +25,8 @@ public class GameplayingView : View{
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GuiPresenter.Restart();
+            // GuiPresenter.Restart();
+            Presenter.OpenView("PauzeMenu");
         }
         CheckForDescriptionHit();
     }

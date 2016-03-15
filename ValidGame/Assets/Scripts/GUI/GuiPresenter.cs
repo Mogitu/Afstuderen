@@ -10,6 +10,7 @@ using AMC.GUI;
 /// </summary>
 public class GuiPresenter : Presenter
 {
+    public bool ShowTutorial = true;
     public MainManager MainManager;
     public EventManager EventManager;
 
@@ -18,13 +19,15 @@ public class GuiPresenter : Presenter
         ChangeView(VIEWS.MainmenuView);
         EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMatch);
         //EventManager.AddListener(GameEvents.PlayerJoined, StartMatch);
-       // EventManager.AddListener(GameEvents.ReceivedTeamType, OpenMultiplayerViews);
+        //EventManager.AddListener(GameEvents.ReceivedTeamType, OpenMultiplayerViews);
     }
 
     public void StartPracticeRound()
     {
         ChangeView(VIEWS.GamePlayingView);
         MainManager.StartPracticeRound();
+        if (ShowTutorial)
+            OpenView("TutorialView");
     }
 
     public void StartMultiplayerClient()
@@ -33,6 +36,8 @@ public class GuiPresenter : Presenter
         //OpenView(VIEWS.MultiplayerGameplayView);
         ChangeView(VIEWS.MatchMakerView);
         MainManager.StartMultiplayerClient();
+        if (ShowTutorial)
+            OpenView("TutorialView");
     }
 
    // private void OpenMultiplayerViews(short eventType, Component sender, object param = null)
@@ -40,14 +45,7 @@ public class GuiPresenter : Presenter
     {
         ChangeView(VIEWS.GamePlayingView);
         OpenView(VIEWS.MultiplayerGameplayView);
-    }
-
-    //TODO  : start host instead of client.
-    public void StartMultiplayerHost()
-    {
-        ChangeView(VIEWS.MultiplayerGameplayView);
-        MainManager.StartMultiplayerHost();
-    }
+    }    
 
     public void StartMatch(short event_type, Component sender, object Param = null)
     {

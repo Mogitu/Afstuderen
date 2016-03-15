@@ -17,12 +17,7 @@ public class MultiplayermenuView : View {
     public void ClickedClient()
     {
         GuiPresenter.StartMultiplayerClient();
-    }
-
-    public void ClickedHost()
-    {
-        GuiPresenter.StartMultiplayerHost();        
-    }
+    }    
 
     public void GoBack()
     {

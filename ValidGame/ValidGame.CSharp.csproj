@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -99,7 +101,10 @@
     <Compile Include="Assets\Scripts\GUI\MatchMakerView.cs" />
     <Compile Include="Assets\Scripts\GUI\MultiplayerGameplayView.cs" />
     <Compile Include="Assets\Scripts\GUI\MultiplayermenuView.cs" />
+    <Compile Include="Assets\Scripts\GUI\OptionsView.cs" />
+    <Compile Include="Assets\Scripts\GUI\PauzeMenu.cs" />
     <Compile Include="Assets\Scripts\GUI\PopupView.cs" />
+    <Compile Include="Assets\Scripts\GUI\TutorialView.cs" />
     <Compile Include="Assets\Scripts\GUI\Views.cs" />
     <Compile Include="Assets\Scripts\GameManaging\IMainManager.cs" />
     <Compile Include="Assets\Scripts\GameManaging\MainManager.cs" />
@@ -115,6 +120,7 @@
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
+    <Compile Include="Assets\Scripts\Misc\TutorialComponent.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkMessages.cs" />
     <Compile Include="Assets\Scripts\Networking\ValidNetworkController.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />

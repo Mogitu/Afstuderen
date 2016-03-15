@@ -12,8 +12,8 @@ public class MatchMakerView : View {
       
 	// Use this for initialization
 	void Start () {
-        ((GuiPresenter)Presenter).EventManager.AddListener(GameEvents.SuccesfullConnection, OnConnection);
-        ((GuiPresenter)Presenter).EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
+        GetPresenterType<GuiPresenter>().EventManager.AddListener(GameEvents.SuccesfullConnection, OnConnection);
+        GetPresenterType<GuiPresenter>().EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
     }
 
     private void OnConnection(short eventType, Component sender, object param=null)

@@ -31,4 +31,24 @@ public static class AmcUtilities
         reader.Close();
         return null;
     }
+
+
+    public static void SaveToFile(string identifier, string path)
+    {
+        StreamReader reader = new StreamReader(path);
+        StreamWriter writer = new StreamWriter(path);
+        string line;
+
+        while ((line = reader.ReadLine()) !=null)
+        {
+            //split the line between identifier[0] and value[1]
+            string[] value = line.Split('=');
+            if (value[0] == identifier)
+            {          
+               
+            }
+        }
+        writer.Close();
+        reader.Close();
+    }
 }
