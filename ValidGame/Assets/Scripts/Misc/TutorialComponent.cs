@@ -21,7 +21,7 @@ public class TutorialComponent : MonoBehaviour
 
     void OnDisable()
     {
-        transform.localScale = new Vector3(0, 0, 0);
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void Down()

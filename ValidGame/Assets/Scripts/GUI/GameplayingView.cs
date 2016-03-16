@@ -7,7 +7,6 @@ using AMC.GUI;
 /// Desc    :   Default gui view for when the player is hovering over the game board.
 /// </summary>
 public class GameplayingView : View{
-
     public GameObject InfoBar;
     public Text InfoText;
     private GuiPresenter GuiPresenter;
@@ -26,14 +25,19 @@ public class GameplayingView : View{
         GuiPresenter.ToggleOptionsView();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            // GuiPresenter.Restart();
-            Presenter.OpenView("PauzeMenu");
-        }
         CheckForDescriptionHit();
+    }
+
+    void Update()
+    {        
+        //CheckForDescriptionHit();
+    }
+
+    public void Restart()
+    {
+        GuiPresenter.Restart();
     }
 
     private void CheckForDescriptionHit()
