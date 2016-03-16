@@ -27,7 +27,7 @@ public class GameplayingView : View{
 
     public void ToggleTutorial()
     {
-        GuiPresenter.ToggleView(VIEWS.TutorialView);
+        GuiPresenter.ToggleTutorial();
     }
 
     void FixedUpdate()

@@ -27,6 +27,9 @@ public class TutorialComponent : MonoBehaviour
     void OnDisable()
     {
         transform.localScale = new Vector3(1, 1, 1);
+        RawImage rawr = GetComponent<RawImage>();
+        MovieTexture MovieTexture = (MovieTexture)rawr.mainTexture;       
+        MovieTexture.Pause();
     }
 
     public void Down()

@@ -23,9 +23,7 @@ public class GuiPresenter : Presenter
     public void StartPracticeRound()
     {
         ChangeView(VIEWS.GamePlayingView);
-        MainManager.StartPracticeRound();
-       // if (ShowTutorial)
-            //OpenView(VIEWS.TutorialView);
+        MainManager.StartPracticeRound();   
     }
 
     public void StartMultiplayerClient()
@@ -94,6 +92,13 @@ public class GuiPresenter : Presenter
         ChangeView(VIEWS.MultiplayermenuView);
     }
 
+    public void ToggleTutorial()
+    {
+        MainManager.ToggleAllColliders();
+        MainManager.ToggleCameraActive();
+        ToggleView(VIEWS.TutorialView);
+    }
+
     public void PostChatSend(string str)
     {
         EventManager.PostNotification(GameEvents.SendSchat, this, str);
@@ -122,7 +127,7 @@ public class GuiPresenter : Presenter
 
     public void ToggleOptionsView()
     {
-        MainManager.DisableAllColliders();
+        MainManager.ToggleAllColliders();
         MainManager.ToggleCameraActive();
         ToggleView(VIEWS.OptionsView);
         GameObject view = GetView(VIEWS.OptionsView);
