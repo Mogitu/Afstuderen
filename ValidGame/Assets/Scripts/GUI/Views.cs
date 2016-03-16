@@ -11,4 +11,6 @@ public class VIEWS
     public const string MultiplayermenuView = "MultiplayermenuView";
     public const string MultiplayerGameplayView = "MultiplayerGameplayView";
     public const string MatchMakerView = "MatchMakerView";
+    public const string TutorialView = "TutorialView";
+    public const string OptionsView = "OptionsView";
 }

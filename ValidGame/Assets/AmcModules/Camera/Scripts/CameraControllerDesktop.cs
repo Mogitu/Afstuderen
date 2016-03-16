@@ -8,6 +8,7 @@ namespace AMC.Camera
 {
     public class CameraControllerDesktop : CameraController
     {
+        public EventManager EventManager;
         public float LookSpeed { get; private set; }
         public float MoveSpeed { get; private set; }
         public float ZoomSpeed { get; private set; }
@@ -22,6 +23,7 @@ namespace AMC.Camera
         // Use this for initialization
         void Start()
         {
+            EventManager.AddListener(GameEvents.UpdateSettings, OnUpdateSettings);
             AddMovementPattern("Horizontal", new CameraDirectionalMovementDesktop());
             AddMovementPattern("Rotational", new CameraRotationalMovementDesktop());
             AddMovementPattern("Zoom", new CameraZoomMovementDesktop());
@@ -33,6 +35,12 @@ namespace AMC.Camera
             ZoomSpeed = PlayerPrefs.GetFloat("ZoomSpeed", 5);
             LookSpeed = PlayerPrefs.GetFloat("LookSpeed", 5);
             MoveSpeed = PlayerPrefs.GetFloat("MoveSpeed", 5);
+        }
+
+
+        private void OnUpdateSettings(short eventType, Component sender, object param=null)
+        {
+            SetPrefs();
         }
 
         public override void HandleInput()

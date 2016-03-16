@@ -17,9 +17,7 @@ public class GuiPresenter : Presenter
     public void Start()
     {
         ChangeView(VIEWS.MainmenuView);
-        EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMatch);
-        //EventManager.AddListener(GameEvents.PlayerJoined, StartMatch);
-        //EventManager.AddListener(GameEvents.ReceivedTeamType, OpenMultiplayerViews);
+        EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMatch);     
     }
 
     public void StartPracticeRound()
@@ -27,20 +25,15 @@ public class GuiPresenter : Presenter
         ChangeView(VIEWS.GamePlayingView);
         MainManager.StartPracticeRound();
         if (ShowTutorial)
-            OpenView("TutorialView");
+            OpenView(VIEWS.TutorialView);
     }
 
     public void StartMultiplayerClient()
-    {
-        //ChangeView(VIEWS.GamePlayingView);
-        //OpenView(VIEWS.MultiplayerGameplayView);
+    {  
         ChangeView(VIEWS.MatchMakerView);
-        MainManager.StartMultiplayerClient();
-        if (ShowTutorial)
-            OpenView("TutorialView");
+        MainManager.StartMultiplayerClient();       
     }
-
-   // private void OpenMultiplayerViews(short eventType, Component sender, object param = null)
+ 
     private void OpenMultiplayerViews()
     {
         ChangeView(VIEWS.GamePlayingView);
@@ -109,6 +102,27 @@ public class GuiPresenter : Presenter
     public void PostScoreSend(string str)
     {
         EventManager.PostNotification(GameEvents.SendScore, this, str);
+    }
+
+    public void OpenOptionView()
+    {        
+        MainManager.DisableAllColliders();
+        ChangeView(VIEWS.OptionsView);
+    }
+
+    public void CloseOptionView()
+    {
+
+    }
+
+    public void ToggleOptionsView()
+    {
+        MainManager.DisableAllColliders();
+        MainManager.ToggleCameraActive();
+        ToggleView(VIEWS.OptionsView);
+        GameObject view = GetView(VIEWS.OptionsView);
+        EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
+        view.GetComponent<OptionsView>().GetViewComponent("GoBackBtn").SetActive(false);        
     }
 
     public TeamType GetTeamType

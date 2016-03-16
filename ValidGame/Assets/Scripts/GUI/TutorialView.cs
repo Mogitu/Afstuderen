@@ -1,9 +1,11 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AMC.GUI;
 
-public class TutorialView : View {
-        
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   .
+/// </summary>
+public class TutorialView : View {        
     private bool TutorialComplete = false;
     private bool ShowTutorial;
     private Dictionary<string, TutorialComponent> TutorialComponents;  
@@ -15,7 +17,7 @@ public class TutorialView : View {
         if(GetPresenterType<GuiPresenter>().ShowTutorial)
         {
             ShowTutorial = true;
-            ShowViewComponent("TutOne");           
+            ShowViewComponent("TutorialOne");           
         }
     }	
 
@@ -43,7 +45,7 @@ public class TutorialView : View {
     {
         if (!ShowTutorial)
             return;      
-        TutorialComponents["TutOne"].Down();
-        ShowViewComponent("Jan");
+        TutorialComponents["TutorialOne"].Down();
+        ShowViewComponent("TutorialTwo");
     }	
 }

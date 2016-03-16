@@ -10,4 +10,3 @@ public interface IMainManager
     void RestartGame();
     void QuitApplication();
 }
-

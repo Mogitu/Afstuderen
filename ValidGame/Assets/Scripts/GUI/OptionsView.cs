@@ -18,8 +18,21 @@ public class OptionsView : View
     private float MoveSpeed;
     private float LookSpeed;
 
+    private GuiPresenter GuiPresenter;
+
     void Awake()
-    {       
+    {
+        GuiPresenter = GetPresenterType<GuiPresenter>();
+        SetDefaults();
+    }
+
+    /// <summary>
+    /// Set default values for all sliders
+    /// </summary>
+    private void SetDefaults()
+    {
+        //When the values in the playerprefs are not 0 we use those to initialize the slider values, else we revert to hardcoded values.
+        //TODO: Move hardcoded values to the config file later.
         ZoomSlider.value = PlayerPrefs.GetFloat("ZoomSpeed") != 0 ? PlayerPrefs.GetFloat("ZoomSpeed") : 5;
         MoveSlider.value = PlayerPrefs.GetFloat("MoveSpeed") != 0 ? PlayerPrefs.GetFloat("MoveSpeed") : 5;
         LookSlider.value = PlayerPrefs.GetFloat("LookSpeed") != 0 ? PlayerPrefs.GetFloat("LookSpeed") : 5;
@@ -27,11 +40,20 @@ public class OptionsView : View
 
     void Update()
     {
+        //Rather not have this in update; TODO; lower update interval or use events.
         ZoomSpeed = ZoomSlider.value;
         MoveSpeed = MoveSlider.value;
         LookSpeed = LookSlider.value;
     }
 
+    private void OnDisable()
+    {
+        SavePrefs();
+    }
+
+    /// <summary>
+    /// Save all available options to the playerprefs
+    /// </summary>
     private void SavePrefs()
     {
         PlayerPrefs.SetFloat("ZoomSpeed", ZoomSpeed);
@@ -40,10 +62,14 @@ public class OptionsView : View
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Saves the playerprefs and changes the view
+    /// </summary>
     public void GoBack()
     {
         SavePrefs();
-        Presenter.ChangeView("MainmenuView");
+        GuiPresenter.EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
+        Presenter.ChangeView(VIEWS.MainmenuView);
     }
 }
 

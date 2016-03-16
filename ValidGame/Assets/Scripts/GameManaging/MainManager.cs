@@ -33,19 +33,20 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         Application.runInBackground = true;
         MyTeamType = TeamType.CheckAndAct;
-        GamestateManager = new GameStateManager(this);       
+        GamestateManager = new GameStateManager(this);
     }
 
     void Start()
     {
         Score = 0;
-        EventManager.AddListener(GameEvents.ReceivedTeamType,OnTeamTypeReceived);
-    }    
+        EventManager.AddListener(GameEvents.ReceivedTeamType, OnTeamTypeReceived);
+        DisableAllColliders();
+    }
 
     //Update all attached modules if they dont have their own monobehaviour update.
     void Update()
     {
-        GamestateManager.UpdateCurrentState();        
+        GamestateManager.UpdateCurrentState();
     }
 
     public void StartMultiplayerHost()
@@ -63,16 +64,16 @@ public class MainManager : MonoBehaviour, IMainManager
     }
 
     public void StartMultiplayerClient()
-    {        
-        string adress = AmcUtilities.ReadFileItem("ip", "config.ini");       
+    {
+        string adress = AmcUtilities.ReadFileItem("ip", "config.ini");
         NetworkController.StartClient(adress);
-        IsMultiplayerGame = true;       
+        IsMultiplayerGame = true;
     }
 
-    private void OnTeamTypeReceived(short eventType, Component sender, object param=null)
+    private void OnTeamTypeReceived(short eventType, Component sender, object param = null)
     {
         int type = (int)param;
-        if(type == 1)
+        if (type == 1)
         {
             MyTeamType = TeamType.PlanAndDo;
         }
@@ -89,6 +90,7 @@ public class MainManager : MonoBehaviour, IMainManager
         GamestateManager.SetPlayingState();
         IsMultiplayerGame = false;
         CardController.CollectCards();
+        EnableAllColliders();
     }
 
     public void EndPracticeGame()
@@ -131,7 +133,6 @@ public class MainManager : MonoBehaviour, IMainManager
         Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
     }
 
-
     public void ToggleCameraActive()
     {
         if (CameraController.enabled)
@@ -145,18 +146,36 @@ public class MainManager : MonoBehaviour, IMainManager
     }
 
     //For all colliders in the currently active scene.
+    public void DisableAllColliders()
+    {
+        Collider[] cols = FindObjectsOfType<Collider>();
+        foreach (Collider col in cols)
+        {
+            col.enabled = false;
+        }
+    }
+
+    public void EnableAllColliders()
+    {
+        Collider[] cols = FindObjectsOfType<Collider>();
+        foreach (Collider col in cols)
+        {
+            col.enabled = true;
+        }
+    }
+
     public void ToggleAllColliders()
     {
         Collider[] cols = FindObjectsOfType<Collider>();
         foreach (Collider col in cols)
         {
-            if (col.enabled)
+            if (!col.enabled)
             {
-                col.enabled = false;
+                col.enabled = true;
             }
             else
             {
-                col.enabled = true;
+                col.enabled = false;
             }
         }
     }
@@ -165,9 +184,7 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         Application.Quit();
         Debug.Log("Quit!");
-    }   
-
-  
+    }
 
     public bool IsMultiplayerGame
     {

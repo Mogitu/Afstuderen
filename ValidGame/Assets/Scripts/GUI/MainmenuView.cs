@@ -29,6 +29,6 @@ public class MainmenuView : View {
 
     public void ShowOptions()
     {
-        Presenter.ChangeView("OptionsView");
+        GuiPresenter.OpenOptionView();
     }
 }

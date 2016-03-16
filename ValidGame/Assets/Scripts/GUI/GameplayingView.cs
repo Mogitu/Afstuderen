@@ -21,6 +21,11 @@ public class GameplayingView : View{
         GuiPresenter.ToggleCardbrowser();    
     }
 
+    public void ToggleOptionsView()
+    {
+        GuiPresenter.ToggleOptionsView();
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

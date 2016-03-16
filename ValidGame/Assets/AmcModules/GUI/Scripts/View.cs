@@ -11,28 +11,33 @@ namespace AMC.GUI
     public abstract class View : MonoBehaviour, IView
     {
         private IPresenter _Presenter;
-        private Dictionary<string, GameObject> ViewComponents;
-        //public abstract void SetPresenter(IPresenter presenter);
-
+        private Dictionary<string, GameObject> ViewComponents;   
 
         void Awake()
-        {
-            //Retreive the presenter on the root canvas object and set it.
-            //IPresenter tmp = GetComponentInParent<IPresenter>();
-            //SetPresenter(tmp);
+        {          
             ViewComponents = PopulateViewComponents();
         }
 
+        void Start()
+        {
+            //ViewComponents = PopulateViewComponents();
+        }
+
+        void OnEnable()
+        {            
+            if (ViewComponents == null)
+            {
+                ViewComponents = PopulateViewComponents();               
+            }
+        }
 
         private Dictionary<string, GameObject> PopulateViewComponents()
-        {
-            RectTransform[] objects = GetComponentsInChildren<RectTransform>();
+        {           
             Dictionary<string, GameObject> tmpDict = new Dictionary<string, GameObject>();
-
-            for (int i = 0; i < objects.Length; i++)
+            foreach(Transform child in transform)
             {
-                tmpDict.Add(objects[i].name, objects[i].gameObject);
-            }
+                tmpDict.Add(child.name, child.gameObject);              
+            }         
             return tmpDict;
         }
 
