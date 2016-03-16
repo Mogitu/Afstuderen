@@ -24,8 +24,8 @@ public class GuiPresenter : Presenter
     {
         ChangeView(VIEWS.GamePlayingView);
         MainManager.StartPracticeRound();
-        if (ShowTutorial)
-            OpenView(VIEWS.TutorialView);
+       // if (ShowTutorial)
+            //OpenView(VIEWS.TutorialView);
     }
 
     public void StartMultiplayerClient()
@@ -113,6 +113,11 @@ public class GuiPresenter : Presenter
     public void CloseOptionView()
     {
 
+    }
+
+    public void CloseTutorialView()
+    {
+        CloseView(VIEWS.TutorialView);
     }
 
     public void ToggleOptionsView()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class TutorialComponent : MonoBehaviour
@@ -6,17 +7,21 @@ public class TutorialComponent : MonoBehaviour
     public float ScaleFactor = 1;
     public float MaxScale = 1.5f;
     public float NormalScale = 1.0f;
-    public float Minscale = 0.5f;
+    public float Minscale = 0.5f;  
 
     // Use this for initialization
     void Start()
     {
-        transform.localScale = new Vector3(1,1,1);        
+        transform.localScale = new Vector3(1,1,1);       
     }   
 
     void OnEnable()
     {
-       StartCoroutine("IncreaseScale");
+        StartCoroutine("IncreaseScale");
+        RawImage rawr = GetComponent<RawImage>();
+        MovieTexture MovieTexture = (MovieTexture)rawr.mainTexture;
+        MovieTexture.loop = true;
+        MovieTexture.Play();
     }
 
     void OnDisable()

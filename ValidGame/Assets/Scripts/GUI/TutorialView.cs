@@ -9,17 +9,23 @@ public class TutorialView : View {
     private bool TutorialComplete = false;
     private bool ShowTutorial;
     private Dictionary<string, TutorialComponent> TutorialComponents;  
+    private GuiPresenter GuiPresenter;
 
     void Start()
     {
+        GuiPresenter = GetPresenterType<GuiPresenter>();
         CreateTutorialDictionary(out TutorialComponents);
-        DisableAllAttachedComponents();
-        if(GetPresenterType<GuiPresenter>().ShowTutorial)
+        //DisableAllAttachedComponents();
+        if(GuiPresenter.ShowTutorial)
         {
-            ShowTutorial = true;
-            ShowViewComponent("TutorialOne");           
+            ShowTutorial = true;                 
         }
     }	
+
+    public void Close()
+    {
+        GuiPresenter.CloseTutorialView();
+    }
 
     private void CreateTutorialDictionary(out Dictionary<string,TutorialComponent> dic)
     {
@@ -39,13 +45,5 @@ public class TutorialView : View {
         {
             components[i].gameObject.SetActive(false);
         }
-    }
-
-    public void ShowBrowserTutorial()
-    {
-        if (!ShowTutorial)
-            return;      
-        TutorialComponents["TutorialOne"].Down();
-        ShowViewComponent("TutorialTwo");
-    }	
+    } 	
 }

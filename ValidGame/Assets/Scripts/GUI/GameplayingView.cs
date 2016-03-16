@@ -25,6 +25,11 @@ public class GameplayingView : View{
         GuiPresenter.ToggleOptionsView();
     }
 
+    public void ToggleTutorial()
+    {
+        GuiPresenter.ToggleView(VIEWS.TutorialView);
+    }
+
     void FixedUpdate()
     {
         CheckForDescriptionHit();
