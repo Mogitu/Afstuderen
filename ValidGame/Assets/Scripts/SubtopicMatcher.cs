@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Attached to subtopic card holders to compare the placed cards with their matchcode,

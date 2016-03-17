@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using AMC.GUI;
-
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Presenter that is responsible for the main gui and underlying views.
 /// TODO    :   When this class grows to big it is an idea to split the gui up with multiple presenters.
-
 /// </summary>
 public class GuiPresenter : Presenter
 {  

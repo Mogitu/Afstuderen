@@ -8,6 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   .
+/// TODO    :   To much responsibilities; loading of videos could be a much better task for a dedicated object/class.
 /// </summary>
 public class TutorialView : View
 {
@@ -20,56 +21,67 @@ public class TutorialView : View
     private GuiPresenter GuiPresenter;
     private TutorialModel CurrentTutorial;
     private TutorialModel[] TutorialModels;
-    private MovieTexture[] MovieTextures;
+    private Dictionary<string, MovieTexture> MovieTextures;
     private MovieTexture CurrentMovieTexture;
     private int CurrentTutorialId;
 
     void Start()
     {
-        GuiPresenter = GetPresenterType<GuiPresenter>();         
+        GuiPresenter = GetPresenterType<GuiPresenter>();
         InitTutorialData();
     }
 
     //TODO: Divide in smaller methods
     private void InitTutorialData()
     {
+        FillTutorialModels();
+        FillMovieTextures();
+        SetTutorialData(CurrentTutorialId);
+    }
+
+    private void FillTutorialModels()
+    {
         DirectoryInfo directoryInfo = new DirectoryInfo(Environment.CurrentDirectory + "/Tutorials");
-        Debug.Log(Environment.CurrentDirectory);
         FileInfo[] filesInfo = directoryInfo.GetFiles("*.tut");
         TutorialModels = new TutorialModel[filesInfo.Length];
         for (int i = 0; i < filesInfo.Length; i++)
         {
             FileInfo tmpInfo = filesInfo[i];
-            TutorialModel model = new TutorialModel(tmpInfo.FullName);           
+            TutorialModel model = new TutorialModel(tmpInfo.FullName);
             TutorialModels[i] = model;
         }
         CurrentTutorialId = 0;
         CurrentTutorial = TutorialModels[CurrentTutorialId];
-        SetTutorialData(CurrentTutorial);
-
-        MovieTextures = Resources.LoadAll<MovieTexture>("Movies");
-        CurrentMovieTexture = MovieTextures[CurrentTutorialId];
-        Image.texture = CurrentMovieTexture;
-        CurrentMovieTexture.loop = true;
-        CurrentMovieTexture.Play();
-
     }
 
-    private void SetTutorialData(TutorialModel model)
+    private void FillMovieTextures()
     {
-        TitleText.text = model.Title;
-        InfoText.text = model.TutorialText;
+        MovieTexture[] MovieTexturesTmp = Resources.LoadAll<MovieTexture>("Movies");
+        MovieTextures = new Dictionary<string, MovieTexture>();
+        foreach (MovieTexture tex in MovieTexturesTmp)
+        {
+            MovieTextures.Add(tex.name, tex);
+        }
+    }
+
+    private void SetTutorialData(int id)
+    {
+        CurrentTutorial = TutorialModels[id];
+        if (CurrentMovieTexture != null)
+        {
+            CurrentMovieTexture.Stop();
+        }
+        TitleText.text = CurrentTutorial.Title;
+        InfoText.text = CurrentTutorial.TutorialText;
+        CurrentMovieTexture = MovieTextures[CurrentTutorial.VideoPath];
+        Image.texture = CurrentMovieTexture;
+        CurrentMovieTexture.Play();
     }
 
     private void OnEnable()
     {
         if (CurrentMovieTexture)
             CurrentMovieTexture.Play();
-    }
-
-    void Update()
-    {
-       
     }
 
     private void OnDisable()
@@ -80,36 +92,27 @@ public class TutorialView : View
 
     public void NextTutorial()
     {
-        CurrentMovieTexture.Stop();
         CurrentTutorialId++;
         if (CurrentTutorialId > TutorialModels.Length - 1)
         {
             CurrentTutorialId = 0;
         }
-        CurrentTutorial = TutorialModels[CurrentTutorialId];
-        CurrentMovieTexture = MovieTextures[CurrentTutorialId];
-        Image.texture = CurrentMovieTexture;
-        SetTutorialData(CurrentTutorial);
-        CurrentMovieTexture.Play();
+        SetTutorialData(CurrentTutorialId);
     }
 
     public void PreviousTutorial()
     {
-        CurrentMovieTexture.Stop();
         CurrentTutorialId--;
         if (CurrentTutorialId < 0)
         {
             CurrentTutorialId = TutorialModels.Length - 1;
         }
-        CurrentTutorial = TutorialModels[CurrentTutorialId];
-        CurrentMovieTexture = MovieTextures[CurrentTutorialId];
-        Image.texture = CurrentMovieTexture;
-        SetTutorialData(CurrentTutorial);
+        SetTutorialData(CurrentTutorialId);
         CurrentMovieTexture.Play();
     }
 
     public void Close()
     {
         GuiPresenter.ToggleTutorial();
-    }   
+    }
 }

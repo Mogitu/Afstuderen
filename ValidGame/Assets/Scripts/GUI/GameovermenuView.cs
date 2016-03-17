@@ -7,7 +7,6 @@ using AMC.GUI;
 /// Desc    :   Displays game over items, like scores etc.
 /// </summary>
 public class GameovermenuView : View {
-
     public Text OwnScoreTxt;
     public Text OtherScoreTxt;
     public Text gameResultTxt;

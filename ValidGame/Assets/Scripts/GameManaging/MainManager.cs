@@ -67,6 +67,7 @@ public class MainManager : MonoBehaviour, IMainManager
         string adress = AmcUtilities.ReadFileItem("ip", "config.ini");
         NetworkController.StartClient(adress);
         IsMultiplayerGame = true;
+        EnableAllColliders();
     }
 
     private void OnTeamTypeReceived(short eventType, Component sender, object param = null)

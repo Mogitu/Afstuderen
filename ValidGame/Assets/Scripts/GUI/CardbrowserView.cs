@@ -48,7 +48,7 @@ public class CardbrowserView : View
         }
     }
 
-    //TODO: Split this up into smaller methods.
+    //TODO: Split this up into smaller methods and get rid of hardcoded items
     private void AddCard(GuiCard obj, ref float offSetX, ref float offSetY, ref int col)
     {
         obj.transform.SetParent(CardPanelContent.transform, false);
