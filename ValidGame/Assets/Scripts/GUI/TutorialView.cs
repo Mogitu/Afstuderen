@@ -39,31 +39,43 @@ public class TutorialView : View
         SetTutorialData(CurrentTutorialId);
     }
 
+    //Populate the tutorialmodels field
     private void FillTutorialModels()
     {
+        //Setup the directory information containing the files
         DirectoryInfo directoryInfo = new DirectoryInfo(Environment.CurrentDirectory + "/Tutorials");
+
+        //create a new, temporary, array to contain fileinformation. Tutorials have the .tut file extension
         FileInfo[] filesInfo = directoryInfo.GetFiles("*.tut");
         TutorialModels = new TutorialModel[filesInfo.Length];
+        //add all tutorialfiles to the tutorialarray
         for (int i = 0; i < filesInfo.Length; i++)
         {
             FileInfo tmpInfo = filesInfo[i];
             TutorialModel model = new TutorialModel(tmpInfo.FullName);
             TutorialModels[i] = model;
         }
+        //begin with the first tutorial
         CurrentTutorialId = 0;
         CurrentTutorial = TutorialModels[CurrentTutorialId];
     }
 
+    //Fill the movie textures dictionary
     private void FillMovieTextures()
     {
+        //Load all movies located in the resources\movies folder
         MovieTexture[] MovieTexturesTmp = Resources.LoadAll<MovieTexture>("Movies");
+        //initialize the movietextures dictionary
         MovieTextures = new Dictionary<string, MovieTexture>();
+
+        //copy the temporary array into the dictionary
         foreach (MovieTexture tex in MovieTexturesTmp)
         {
             MovieTextures.Add(tex.name, tex);
         }
     }
 
+    //Set up all visible view fields with the current tutorial data
     private void SetTutorialData(int id)
     {
         CurrentTutorial = TutorialModels[id];
@@ -80,12 +92,14 @@ public class TutorialView : View
 
     private void OnEnable()
     {
+        //Start the movie only if it is available
         if (CurrentMovieTexture)
             CurrentMovieTexture.Play();
     }
 
     private void OnDisable()
     {
+        //pauzes the movie only if available
         if (CurrentMovieTexture)
             CurrentMovieTexture.Pause();
     }
