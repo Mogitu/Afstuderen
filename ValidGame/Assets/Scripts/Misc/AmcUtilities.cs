@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEngine;
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -42,7 +43,6 @@ public static class AmcUtilities
         StreamReader reader = new StreamReader(path);
         StreamWriter writer = new StreamWriter(path);
         string line;
-
         while ((line = reader.ReadLine()) !=null)
         {
             //split the line between identifier[0] and value[1]
@@ -54,5 +54,5 @@ public static class AmcUtilities
         }
         writer.Close();
         reader.Close();
-    }
+    }    
 }

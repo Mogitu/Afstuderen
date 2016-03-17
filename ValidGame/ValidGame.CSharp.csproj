@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\GUI\MultiplayermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\OptionsView.cs" />
     <Compile Include="Assets\Scripts\GUI\PopupView.cs" />
+    <Compile Include="Assets\Scripts\GUI\TutorialModel.cs" />
     <Compile Include="Assets\Scripts\GUI\TutorialView.cs" />
     <Compile Include="Assets\Scripts\GUI\Views.cs" />
     <Compile Include="Assets\Scripts\GameManaging\IMainManager.cs" />

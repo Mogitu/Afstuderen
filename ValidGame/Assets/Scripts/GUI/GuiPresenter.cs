@@ -9,8 +9,7 @@ using AMC.GUI;
 
 /// </summary>
 public class GuiPresenter : Presenter
-{
-    public bool ShowTutorial = true;
+{  
     public MainManager MainManager;
     public EventManager EventManager;
 
