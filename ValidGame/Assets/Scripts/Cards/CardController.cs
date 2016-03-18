@@ -22,7 +22,7 @@ public class CardController : MonoBehaviour
         PlacedCards = new List<Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
         //testy!
-        //CardLoader cardLoader = new CardLoader("/Cards");
+       // CardLoader cardLoader = new CardLoader("/Cards");
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)

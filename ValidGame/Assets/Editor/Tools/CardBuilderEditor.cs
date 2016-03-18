@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Tool to help develop valid gamecards.
-/// TODO    :   SOLID!
+/// TODO    :   SOLID! Or delete this class in favor of external file loading
 /// </summary>
 public class CardBuilderEditor : EditorWindow
 {
@@ -14,6 +14,7 @@ public class CardBuilderEditor : EditorWindow
     private string matchCodeStr = "1a";
     private Sprite sprite;
     private Sprite guiSprite;
+    private TeamType MyTeamType;
 
     [MenuItem("AMC Centre/Tools/VALID/Card builder")]
     public static void ShowWindow()
@@ -34,14 +35,15 @@ public class CardBuilderEditor : EditorWindow
         sprite = (Sprite)EditorGUILayout.ObjectField("Scenery sprite", sprite, typeof(Sprite), false);
         guiSprite = (Sprite)EditorGUILayout.ObjectField("Browser sprite", guiSprite, typeof(Sprite), false);
 
+        MyTeamType = (TeamType)EditorGUILayout.EnumPopup("Select type", MyTeamType);
+
         /*
         EditorGUILayout.BeginVertical();
         EditorGUI.DrawPreviewTexture(new Rect(new Vector2(0,300), new Vector2(800, 800)),AssetPreview.GetAssetPreview(PreviewObject().gameObject),PreviewObject().GetComponent<Renderer>().sharedMaterial);
         EditorGUILayout.EndVertical();            
         
         GUILayout.Label("Building the card places 2 objects below the cards object in the scene, \n if this object does not exist it will be created.",
-                        EditorStyles.label);
-         
+                        EditorStyles.label);         
         */
         if (GUILayout.Button("Build Card"))
         {
@@ -59,7 +61,7 @@ public class CardBuilderEditor : EditorWindow
         }
         GameObject go = Resources.Load<GameObject>("card");
         Card card = go.GetComponent<Card>();
-        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr, card.TypeOfCard);
+        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr, MyTeamType);
         SpriteRenderer spr = card.Sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
         go.transform.rotation = Quaternion.identity;
@@ -74,15 +76,17 @@ public class CardBuilderEditor : EditorWindow
             parent = new GameObject();
             parent.name = "Cards";
         }
+
         GameObject go = Resources.Load<GameObject>("card");
         Card card = go.GetComponent<Card>();
-        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr, card.TypeOfCard);
+        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr, MyTeamType);
         SpriteRenderer spr = card.Sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
 
         GameObject go2 = Resources.Load<GameObject>("guiCard");
         GuiCard guiCard = go2.GetComponent<GuiCard>();
         guiCard.MatchCode = this.matchCodeStr;
+        guiCard.TeamType = MyTeamType;
         Image spr2 = guiCard.GetComponent<Image>();
         spr2.sprite = guiSprite;
         go.name = "SceneCard" + matchCodeStr;

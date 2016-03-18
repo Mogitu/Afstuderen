@@ -8,8 +8,6 @@ using UnityEngine;
 /// Desc    :
 /// </summary>
 public class CardLoader {
-
-
     private string Path;
     private List<CardModel> CardModels;	
 
@@ -19,7 +17,6 @@ public class CardLoader {
         LoadCards();
         InstantiateCards();
     }
-
 
     private void LoadCards()
     {
@@ -42,7 +39,6 @@ public class CardLoader {
         for(int i=0; i<CardModels.Count;i++)
         {
             CardModel model = CardModels[i];
-
             //create scenecard
             GameObject go = Resources.Load<GameObject>("card");
             Card card = go.GetComponent<Card>();
