@@ -21,6 +21,8 @@ public class CardController : MonoBehaviour
         CardCollection = new List<Card>();
         PlacedCards = new List<Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
+        //testy!
+        //CardLoader cardLoader = new CardLoader("/Cards");
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
@@ -35,7 +37,6 @@ public class CardController : MonoBehaviour
     //Call every frame in manager class.
     private void Update()
     {
-
         if (CurrentCard != null)
         {
             DragCurrentCard();
@@ -54,7 +55,6 @@ public class CardController : MonoBehaviour
             //MainManager.EndPracticeGame();
         }
     }
-
 
     private void SetGameNotFinishable()
     {
@@ -118,7 +118,6 @@ public class CardController : MonoBehaviour
             }
             CurrentCard = null;
         }
-
         CheckForGameFinishable();
     }
 

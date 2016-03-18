@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -95,6 +89,8 @@
     <Compile Include="Assets\Scripts\Camera\Topview\TopviewMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Cards\CardController.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardLoader.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardModel.cs" />
     <Compile Include="Assets\Scripts\ContextDescription.cs" />
     <Compile Include="Assets\Scripts\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameovermenuView.cs" />

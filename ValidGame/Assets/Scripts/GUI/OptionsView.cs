@@ -33,7 +33,7 @@ public class OptionsView : View
     {
         //When the values in the playerprefs are not 0 we use those to initialize the slider values, else we revert to hardcoded values.
         //TODO: Move hardcoded values to the config file later.
-        ZoomSlider.value = PlayerPrefs.GetFloat("ZoomSpeed") != 0 ? PlayerPrefs.GetFloat("ZoomSpeed") : 5;
+        ZoomSlider.value = PlayerPrefs.GetFloat("ZoomSpeed") != 0 ? PlayerPrefs.GetFloat("ZoomSpeed") : 15;
         MoveSlider.value = PlayerPrefs.GetFloat("MoveSpeed") != 0 ? PlayerPrefs.GetFloat("MoveSpeed") : 5;
         LookSlider.value = PlayerPrefs.GetFloat("LookSpeed") != 0 ? PlayerPrefs.GetFloat("LookSpeed") : 5;
     }

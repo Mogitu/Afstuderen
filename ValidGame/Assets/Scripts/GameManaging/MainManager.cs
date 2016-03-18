@@ -30,7 +30,8 @@ public class MainManager : MonoBehaviour, IMainManager
 
     void Awake()
     {
-        Application.runInBackground = true;
+        //PlayerPrefs.DeleteAll();
+        //Application.runInBackground = true;
         MyTeamType = TeamType.CheckAndAct;
         GamestateManager = new GameStateManager(this);
     }
