@@ -6,50 +6,59 @@ using System.Collections.Generic;
 /// Desc    :   Controls card behaviour etc.
 /// TODO    :   To much responsibilities and hardcoded variables
 /// </summary>
-public class CardController: MonoBehaviour
+public class CardController : MonoBehaviour
 {
     public List<Card> PlacedCards { get; private set; }
-    private Card CurrentCard;   
-    private List<Card> CardCollection;  
+    private Card CurrentCard;
+    private List<Card> CardCollection;
     public MainManager MainManager;
     public EventManager EventManager;
     public GameObject CardPlacementEffect;
+    private int CardCount;
 
     public void Awake()
     {
         CardCollection = new List<Card>();
-        PlacedCards = new List<Card>();        
+        PlacedCards = new List<Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
-    {        
+    {
         object[] data = (object[])param;
         GameObject go = GameObject.Find((string)data[0]).gameObject;
         go.transform.position = (Vector3)data[1];
         GameObject go2 = Instantiate(CardPlacementEffect);
-        go2.transform.position = go.transform.position;      
+        go2.transform.position = go.transform.position;
     }
 
     //Call every frame in manager class.
     private void Update()
     {
-        if (CardCollection.Count > 0)
-        {
-            if (CurrentCard != null)
-            {
-                DragCurrentCard();
-            }
-            else if (CurrentCard == null && Input.GetMouseButtonDown(0))
-            {
-                PickUpSelectedCard();
-            }
 
-            if (CardCollection.Count <= 0)
-            {
-                MainManager.EndPracticeGame();
-            }
+        if (CurrentCard != null)
+        {
+            DragCurrentCard();
         }
+        else if (CurrentCard == null && Input.GetMouseButtonDown(0))
+        {
+            PickUpSelectedCard();
+        }
+    }
+
+    private void CheckForGameFinishable()
+    {
+        if (PlacedCards.Count == CardCount)
+        {
+            EventManager.PostNotification(GameEvents.GameIsFinishable, this, null);
+            //MainManager.EndPracticeGame();
+        }
+    }
+
+
+    private void SetGameNotFinishable()
+    {
+        EventManager.PostNotification(GameEvents.UndoGameFinishable, this, null);
     }
 
     /// <summary>
@@ -109,6 +118,8 @@ public class CardController: MonoBehaviour
             }
             CurrentCard = null;
         }
+
+        CheckForGameFinishable();
     }
 
     /// <summary>
@@ -123,6 +134,7 @@ public class CardController: MonoBehaviour
         {
             if (hit.transform.gameObject.tag == "ValidCard")
             {
+                SetGameNotFinishable();
                 Transform objectHit = hit.transform;
                 SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
                 topicMatcher.Occupied = false;
@@ -154,7 +166,7 @@ public class CardController: MonoBehaviour
     //Executed by the gui handler to pick the current selected card in the card browser.
     public void SelectCard(string code)
     {
-        CurrentCard = GetCard(code);      
+        CurrentCard = GetCard(code);
     }
 
     //Collects all cards that are created in the scene by the builder module and add them to the card collection.
@@ -166,9 +178,10 @@ public class CardController: MonoBehaviour
             Card card = cards[i];
             //collect only cards of the current teamtype
             if (MainManager.MyTeamType == card.TypeOfCard)
-            {               
-                    CardCollection.Add(card);                
-            }                         
+            {
+                CardCollection.Add(card);
+            }
         }
+        CardCount = CardCollection.Count;
     }
 }

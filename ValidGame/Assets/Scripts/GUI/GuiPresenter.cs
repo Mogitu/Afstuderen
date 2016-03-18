@@ -110,12 +110,7 @@ public class GuiPresenter : Presenter
     {        
         MainManager.DisableAllColliders();
         ChangeView(VIEWS.OptionsView);
-    }
-
-    public void CloseOptionView()
-    {
-
-    }
+    }  
 
     public void CloseTutorialView()
     {
@@ -130,6 +125,11 @@ public class GuiPresenter : Presenter
         GameObject view = GetView(VIEWS.OptionsView);
         EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
         view.GetComponent<OptionsView>().GetViewComponent("GoBackBtn").SetActive(false);        
+    }
+
+    public void FinishGame()
+    {
+        MainManager.EndPracticeGame();
     }
 
     public TeamType GetTeamType

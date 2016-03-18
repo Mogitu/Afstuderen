@@ -22,4 +22,6 @@ public class GameEvents
     public const short SuccesfullConnection = 14;
     public const short StartMultiplayerMatch = 15;
     public const short UpdateSettings = 16;
+    public const short GameIsFinishable = 17;
+    public const short UndoGameFinishable = 18;
 }

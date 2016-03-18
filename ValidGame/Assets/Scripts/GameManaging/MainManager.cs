@@ -190,7 +190,7 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         get;
         private set;
-    }
+    }   
 }
 
 public enum TeamType

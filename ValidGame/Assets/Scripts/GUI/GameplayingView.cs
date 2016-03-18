@@ -7,13 +7,17 @@ using AMC.GUI;
 /// Desc    :   Default gui view for when the player is hovering over the game board.
 /// </summary>
 public class GameplayingView : View{
+    public GameObject FinishButton;
     public GameObject InfoBar;
     public Text InfoText;
     private GuiPresenter GuiPresenter;
 
     void Awake()
     {
+        FinishButton.SetActive(false);
         GuiPresenter = GetPresenterType<GuiPresenter>();
+        GuiPresenter.EventManager.AddListener(GameEvents.GameIsFinishable,OnGameIsFinishable);
+        GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
     }
 
     public void OpenCardView(){       
@@ -43,6 +47,21 @@ public class GameplayingView : View{
     public void Restart()
     {
         GuiPresenter.Restart();
+    }
+
+    public void OnGameIsFinishable(short gameEvent, Component sender, object param=null)
+    {
+        FinishButton.SetActive(true);
+    }
+
+    public void OnUndoGameFinishable(short gameEvent, Component sender, object param=null)
+    {
+        FinishButton.SetActive(false);
+    }
+
+    public void FinishGame()
+    {       
+        GuiPresenter.FinishGame();
     }
 
     private void CheckForDescriptionHit()
