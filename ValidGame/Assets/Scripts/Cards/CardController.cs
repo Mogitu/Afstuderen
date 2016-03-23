@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 /// <summary>
@@ -8,6 +9,8 @@ using System.Collections.Generic;
 /// </summary>
 public class CardController : MonoBehaviour
 {
+    public GameObject CardInfoCam;
+    public Image CardInfoImage;
     public ArrowScript Arrow;
     public List<Card> PlacedCards { get; private set; }
     private Card CurrentCard;
@@ -20,6 +23,7 @@ public class CardController : MonoBehaviour
     public void Awake()
     {
         Arrow.gameObject.SetActive(false);
+        CardInfoCam.SetActive(false);
         CardCollection = new List<Card>();
         PlacedCards = new List<Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
@@ -41,8 +45,9 @@ public class CardController : MonoBehaviour
     {
         if (CurrentCard != null)
         {
+            SetExtraGuiCard("5a");
             Arrow.RotateDown();
-            DragCurrentCard();
+            DragCurrentCard();        
         }
         else if (CurrentCard == null)
         {
@@ -58,11 +63,13 @@ public class CardController : MonoBehaviour
                 {
                     Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
                     Arrow.gameObject.SetActive(true);
+                    CardInfoCam.SetActive(true);
                     Arrow.RotateUp();
                 }
                 else
                 {
                     Arrow.gameObject.SetActive(false);
+                    CardInfoCam.SetActive(false);
                 }
             }
         }
@@ -107,7 +114,7 @@ public class CardController : MonoBehaviour
                     if (!Arrow.gameObject.activeSelf)
                     {
                         Arrow.RotateDown();
-                        Arrow.gameObject.SetActive(true);
+                        Arrow.gameObject.SetActive(true);                       
                     }
                     Arrow.transform.position = new Vector3(CurrentCard.transform.position.x, Arrow.transform.position.y, CurrentCard.transform.position.z);
 
@@ -199,7 +206,22 @@ public class CardController : MonoBehaviour
     public void SelectCard(string code)
     {
         CurrentCard = GetCard(code);
+        CardInfoCam.SetActive(true);       
     }
+
+    private void SetExtraGuiCard(string matchCode)
+    {
+        Debug.Log(matchCode);
+        GuiCard[] guiCards = FindObjectsOfType<GuiCard>();        
+        for(int i=0;i<guiCards.Length;i++)
+        {
+            if (guiCards[i].MatchCode == matchCode)
+            {                     
+                CardInfoImage.sprite= guiCards[i].GetComponentInParent<Image>().sprite;
+            }
+        }
+    }
+
 
     //Collects all cards that are created in the scene by the builder module and add them to the card collection.
     public void CollectCards()
