@@ -8,6 +8,7 @@ using System.Collections.Generic;
 /// </summary>
 public class CardController : MonoBehaviour
 {
+    public ArrowScript Arrow;
     public List<Card> PlacedCards { get; private set; }
     private Card CurrentCard;
     private List<Card> CardCollection;
@@ -18,11 +19,12 @@ public class CardController : MonoBehaviour
 
     public void Awake()
     {
+        Arrow.gameObject.SetActive(false);
         CardCollection = new List<Card>();
         PlacedCards = new List<Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
         //testy!
-       // CardLoader cardLoader = new CardLoader("/Cards");
+        // CardLoader cardLoader = new CardLoader("/Cards");
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
@@ -39,11 +41,30 @@ public class CardController : MonoBehaviour
     {
         if (CurrentCard != null)
         {
+            Arrow.RotateDown();
             DragCurrentCard();
         }
-        else if (CurrentCard == null && Input.GetMouseButtonDown(0))
+        else if (CurrentCard == null)
         {
-            PickUpSelectedCard();
+            if (Input.GetMouseButtonDown(0))
+            {
+                PickUpSelectedCard();
+            }
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform.gameObject.tag == "ValidCard")
+                {
+                    Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
+                    Arrow.gameObject.SetActive(true);
+                    Arrow.RotateUp();
+                }
+                else
+                {
+                    Arrow.gameObject.SetActive(false);
+                }
+            }
         }
     }
 
@@ -81,9 +102,25 @@ public class CardController : MonoBehaviour
                 newPos.y = 0.24f;
                 CurrentCard.transform.position = newPos;
                 //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
-                if (objectHit.gameObject.tag == "ValidTopic")
+                if (objectHit.gameObject.tag == "ValidSubTopic")
                 {
-                    DropCurrentCard(objectHit.gameObject);
+                    if (!Arrow.gameObject.activeSelf)
+                    {
+                        Arrow.RotateDown();
+                        Arrow.gameObject.SetActive(true);
+                    }
+                    Arrow.transform.position = new Vector3(CurrentCard.transform.position.x, Arrow.transform.position.y, CurrentCard.transform.position.z);
+
+                    SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
+                    if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.Occupied)
+                    {
+                        DropCurrentCard(topicMatcher);
+                    }
+                }
+                else
+                {
+                    if (Arrow.gameObject.activeSelf)
+                        Arrow.gameObject.SetActive(false);
                 }
             }
         }
@@ -93,31 +130,27 @@ public class CardController : MonoBehaviour
     /// Drop card
     /// </summary>
     /// <param name="obj"></param>
-    public void DropCurrentCard(GameObject obj)
+    public void DropCurrentCard(SubtopicMatcher topicMatcher)
     {
-        SubtopicMatcher topicMatcher = obj.gameObject.GetComponent<SubtopicMatcher>();
-        //place card
-        if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.Occupied)
+        Arrow.gameObject.SetActive(false);
+        Vector3 pos = topicMatcher.transform.position;
+        pos.y += 0.0006f;
+        CurrentCard.transform.position = pos;
+        CurrentCard.transform.parent = topicMatcher.transform;
+        topicMatcher.Occupied = true;
+        CardCollection.Remove(CurrentCard);
+        PlacedCards.Add(CurrentCard);
+        //route message to opponent
+        GameObject go = Instantiate(CardPlacementEffect);
+        go.transform.position = CurrentCard.transform.position;
+        if (MainManager.IsMultiplayerGame)
         {
-            Vector3 pos = topicMatcher.transform.position;
-            pos.y += 0.0006f;
-            CurrentCard.transform.position = pos;
-            CurrentCard.transform.parent = topicMatcher.transform;
-            topicMatcher.Occupied = true;
-            CardCollection.Remove(CurrentCard);
-            PlacedCards.Add(CurrentCard);
-            //route message to opponent
-            GameObject go = Instantiate(CardPlacementEffect);
-            go.transform.position = CurrentCard.transform.position;
-            if (MainManager.IsMultiplayerGame)
-            {
-                CardToOpponentMessage msg = new CardToOpponentMessage();
-                msg.CardName = CurrentCard.name;
-                msg.Position = CurrentCard.transform.position;
-                MainManager.SendCardToOppent(msg);
-            }
-            CurrentCard = null;
+            CardToOpponentMessage msg = new CardToOpponentMessage();
+            msg.CardName = CurrentCard.name;
+            msg.Position = CurrentCard.transform.position;
+            MainManager.SendCardToOppent(msg);
         }
+        CurrentCard = null;
         CheckForGameFinishable();
     }
 
