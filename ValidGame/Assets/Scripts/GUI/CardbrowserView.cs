@@ -34,13 +34,13 @@ public class CardbrowserView : View
     {
         //float widthScale = 1024 / Screen.width;
         //float heightScale = 768 / Screen.height;
-        GuiCard[] cards = FindObjectsOfType<GuiCard>();
+        Card[] cards = FindObjectsOfType<Card>();
         float offSetX = -225;
         float offSetY = 200;
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
         {           
-            GuiCard obj = cards[i];              
+            GuiCard obj =  Instantiate(cards[i].GuiCard);              
             if(GuiPresenter.GetTeamType ==  obj.TeamType)
             {
                 AddCard(obj, ref offSetX, ref offSetY, ref col);
@@ -51,7 +51,7 @@ public class CardbrowserView : View
     //TODO: Split this up into smaller methods and get rid of hardcoded items
     private void AddCard(GuiCard card, ref float offSetX, ref float offSetY, ref int col)
     {
-        GuiCard obj = Instantiate(card);
+        GuiCard obj = card;
         obj.transform.SetParent(CardPanelContent.transform, false);
         Vector3 newPos = obj.transform.parent.transform.position;
         newPos.x += offSetX;
@@ -111,8 +111,7 @@ public class CardbrowserView : View
     //TODO  :   Ties card model to this view, defeating the purpose of mvp?
     public void ClickedCard(GameObject obj)
     {
-        GuiCard card = obj.GetComponent<GuiCard>();
-        //Presenter.PickCard(card.MatchCode);
+        GuiCard card = obj.GetComponent<GuiCard>();      
         GetPresenterType<GuiPresenter>().PickCard(card.MatchCode);
         obj.SetActive(false);
     }   

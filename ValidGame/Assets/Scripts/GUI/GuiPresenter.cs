@@ -71,12 +71,11 @@ public class GuiPresenter : Presenter
     {
         MainManager.EndMultiplayerGame();
     }
-
-    //TODO  :   Reduce coupling between mainmanager, this presenter and the cardcontroller.
+   
     public void PickCard(string code)
-    {        
-        MainManager.PickCard(code);
+    {               
         ToggleCardbrowser();
+        EventManager.PostNotification(GameEvents.PickupCard, this, code);
     }
 
     public void ShowGameOverView()

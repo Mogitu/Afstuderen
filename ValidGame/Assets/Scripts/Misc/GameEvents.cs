@@ -24,4 +24,5 @@ public class GameEvents
     public const short UpdateSettings = 16;
     public const short GameIsFinishable = 17;
     public const short UndoGameFinishable = 18;
+    public const short PickupCard = 19;
 }

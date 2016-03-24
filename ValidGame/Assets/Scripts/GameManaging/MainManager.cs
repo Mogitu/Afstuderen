@@ -111,11 +111,6 @@ public class MainManager : MonoBehaviour, IMainManager
         SceneManager.LoadScene("GameScene");
     }
 
-    public void PickCard(string code)
-    {
-        CardController.SelectCard(code);
-    }
-
     public void SendCardToOppent(CardToOpponentMessage param)
     {
         EventManager.PostNotification(GameEvents.SendCardToOpponent, null, param);

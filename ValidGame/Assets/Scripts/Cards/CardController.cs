@@ -11,7 +11,6 @@ using System.Collections.Generic;
 /// </summary>
 public class CardController : MonoBehaviour
 {
-
     //context stuff; should be place in own class
     public GameObject CardInfoCam;
     public Dictionary<string, Image> ContextCards;
@@ -32,14 +31,16 @@ public class CardController : MonoBehaviour
 
     public void Awake()
     {
-        ContextCards = FillContextCards();
+        
         Arrow.gameObject.SetActive(false);
         CardInfoCam.SetActive(false);
         CardCollection = new List<Card>();
         PlacedCards = new List<Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
+        EventManager.AddListener(GameEvents.PickupCard,OnSelectCard);
         //testy!
         // CardLoader cardLoader = new CardLoader("/Cards");
+        
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
@@ -230,9 +231,10 @@ public class CardController : MonoBehaviour
         return null;
     }
 
-    //Executed by the gui handler to pick the current selected card in the card browser.
-    public void SelectCard(string code)
+    
+    public void OnSelectCard(short gameEvent, Component Sender, object param)
     {
+        string code = ((string)param).Trim();
         SetExtraGuiCard(code);
         CurrentCard = GetCard(code);
         CardInfoCam.SetActive(true);
@@ -249,11 +251,10 @@ public class CardController : MonoBehaviour
     /// <returns>Dictionary with all guicards that are in the scene.</returns>
     private Dictionary<string, Image> FillContextCards()
     {
-        GuiCard[] guiCards = FindObjectsOfType<GuiCard>();
-        Dictionary<string, Image> tmpDic = new Dictionary<string, Image>();
-        for (int i = 0; i < guiCards.Length; i++)
+        Dictionary<string, Image> tmpDic = new Dictionary<string, Image>();        
+        for (int i = 0; i < CardCollection.Count; i++)
         {
-            tmpDic.Add(guiCards[i].MatchCode, guiCards[i].GetComponent<Image>());
+            tmpDic.Add(CardCollection[i].MatchCode, CardCollection[i].GuiCard.GetComponent<Image>());
         }
         return tmpDic;
     }
@@ -272,5 +273,6 @@ public class CardController : MonoBehaviour
             }
         }
         CardCount = CardCollection.Count;
+        ContextCards = FillContextCards();
     }
 }

@@ -14,10 +14,12 @@ public class Card : MonoBehaviour
     public string Title;
     public TeamType TypeOfCard;
     public string Description;
+    public GuiCard GuiCard;
 
     public SpriteRenderer Sprite;
     public TextMesh TxtMeshTitle;
     public TextMesh TxtMeshDesc;
+
 
     // Use this for initialization
     void Start()
