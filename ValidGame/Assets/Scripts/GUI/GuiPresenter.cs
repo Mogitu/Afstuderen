@@ -74,9 +74,9 @@ public class GuiPresenter : Presenter
 
     //TODO  :   Reduce coupling between mainmanager, this presenter and the cardcontroller.
     public void PickCard(string code)
-    {
-        ToggleCardbrowser();
+    {        
         MainManager.PickCard(code);
+        ToggleCardbrowser();
     }
 
     public void ShowGameOverView()

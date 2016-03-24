@@ -5,13 +5,23 @@ using System.Collections.Generic;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Controls card behaviour etc.
-/// TODO    :   To much responsibilities and hardcoded variables
+/// TODO    :   To much responsibilities and hardcoded variables.
+///             Place context stuff in own class.
+///             Needs a heavy refactor.
 /// </summary>
 public class CardController : MonoBehaviour
 {
+
+    //context stuff; should be place in own class
     public GameObject CardInfoCam;
+    public Dictionary<string, Image> ContextCards;
     public Image CardInfoImage;
     public ArrowScript Arrow;
+    private float ContextTimer = 0.0f;
+    private float MaxContextTime = 1.0f;
+    private bool StartTimer = false;
+    //end
+
     public List<Card> PlacedCards { get; private set; }
     private Card CurrentCard;
     private List<Card> CardCollection;
@@ -22,6 +32,7 @@ public class CardController : MonoBehaviour
 
     public void Awake()
     {
+        ContextCards = FillContextCards();
         Arrow.gameObject.SetActive(false);
         CardInfoCam.SetActive(false);
         CardCollection = new List<Card>();
@@ -45,9 +56,8 @@ public class CardController : MonoBehaviour
     {
         if (CurrentCard != null)
         {
-            SetExtraGuiCard("5a");
             Arrow.RotateDown();
-            DragCurrentCard();        
+            DragCurrentCard();
         }
         else if (CurrentCard == null)
         {
@@ -63,13 +73,31 @@ public class CardController : MonoBehaviour
                 {
                     Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
                     Arrow.gameObject.SetActive(true);
-                    CardInfoCam.SetActive(true);
                     Arrow.RotateUp();
+                    StartTimer = true;
                 }
                 else
                 {
+                    StartTimer = false;
+                    ContextTimer = 0.0f;
                     Arrow.gameObject.SetActive(false);
                     CardInfoCam.SetActive(false);
+                }
+                if (StartTimer)
+                {
+                    ContextTimer += Time.deltaTime;
+                    if (ContextTimer >= MaxContextTime)
+                    {
+                        // set the visiable card for the context info card 
+                        CardInfoCam.SetActive(true);
+                        Card card = hit.transform.gameObject.GetComponent<Card>();
+                        if (card)
+                        {
+                            SetExtraGuiCard(card.MatchCode);
+                            StartTimer = false;
+                            ContextTimer = 0;
+                        }
+                    }
                 }
             }
         }
@@ -114,7 +142,7 @@ public class CardController : MonoBehaviour
                     if (!Arrow.gameObject.activeSelf)
                     {
                         Arrow.RotateDown();
-                        Arrow.gameObject.SetActive(true);                       
+                        Arrow.gameObject.SetActive(true);
                     }
                     Arrow.transform.position = new Vector3(CurrentCard.transform.position.x, Arrow.transform.position.y, CurrentCard.transform.position.z);
 
@@ -205,28 +233,35 @@ public class CardController : MonoBehaviour
     //Executed by the gui handler to pick the current selected card in the card browser.
     public void SelectCard(string code)
     {
+        SetExtraGuiCard(code);
         CurrentCard = GetCard(code);
-        CardInfoCam.SetActive(true);       
+        CardInfoCam.SetActive(true);
     }
 
     private void SetExtraGuiCard(string matchCode)
     {
-        Debug.Log(matchCode);
-        GuiCard[] guiCards = FindObjectsOfType<GuiCard>();        
-        for(int i=0;i<guiCards.Length;i++)
-        {
-            if (guiCards[i].MatchCode == matchCode)
-            {                     
-                CardInfoImage.sprite= guiCards[i].GetComponentInParent<Image>().sprite;
-            }
-        }
+        CardInfoImage.sprite = ContextCards[matchCode].sprite;
     }
 
+    /// <summary>
+    /// Fill dictionary with available guicards.
+    /// </summary>
+    /// <returns>Dictionary with all guicards that are in the scene.</returns>
+    private Dictionary<string, Image> FillContextCards()
+    {
+        GuiCard[] guiCards = FindObjectsOfType<GuiCard>();
+        Dictionary<string, Image> tmpDic = new Dictionary<string, Image>();
+        for (int i = 0; i < guiCards.Length; i++)
+        {
+            tmpDic.Add(guiCards[i].MatchCode, guiCards[i].GetComponent<Image>());
+        }
+        return tmpDic;
+    }
 
     //Collects all cards that are created in the scene by the builder module and add them to the card collection.
     public void CollectCards()
     {
-        Card[] cards = Object.FindObjectsOfType<Card>();
+        Card[] cards = FindObjectsOfType<Card>();
         for (int i = 0; i < cards.Length; i++)
         {
             Card card = cards[i];

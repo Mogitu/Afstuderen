@@ -49,8 +49,9 @@ public class CardbrowserView : View
     }
 
     //TODO: Split this up into smaller methods and get rid of hardcoded items
-    private void AddCard(GuiCard obj, ref float offSetX, ref float offSetY, ref int col)
+    private void AddCard(GuiCard card, ref float offSetX, ref float offSetY, ref int col)
     {
+        GuiCard obj = Instantiate(card);
         obj.transform.SetParent(CardPanelContent.transform, false);
         Vector3 newPos = obj.transform.parent.transform.position;
         newPos.x += offSetX;
