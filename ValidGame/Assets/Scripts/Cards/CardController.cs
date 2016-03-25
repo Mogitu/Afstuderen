@@ -30,8 +30,7 @@ public class CardController : MonoBehaviour
     private int CardCount;
 
     public void Awake()
-    {
-        
+    {        
         Arrow.gameObject.SetActive(false);
         CardInfoCam.SetActive(false);
         CardCollection = new List<Card>();
@@ -39,8 +38,7 @@ public class CardController : MonoBehaviour
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
         EventManager.AddListener(GameEvents.PickupCard,OnSelectCard);
         //testy!
-        // CardLoader cardLoader = new CardLoader("/Cards");
-        
+        // CardLoader cardLoader = new CardLoader("/Cards");        
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
@@ -70,7 +68,7 @@ public class CardController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.tag == "ValidCard")
+                if (hit.transform.gameObject.tag == "ValidCard" && hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType)
                 {
                     Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
                     Arrow.gameObject.SetActive(true);
@@ -200,7 +198,7 @@ public class CardController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.gameObject.tag == "ValidCard")
+            if (hit.transform.gameObject.tag == "ValidCard" && hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType)
             {
                 SetGameNotFinishable();
                 Transform objectHit = hit.transform;
