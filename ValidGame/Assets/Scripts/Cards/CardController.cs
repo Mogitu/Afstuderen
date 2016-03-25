@@ -18,7 +18,7 @@ public class CardController : MonoBehaviour
     public ArrowScript Arrow;
     private float ContextTimer = 0.0f;
     private float MaxContextTime = 1.0f;
-    private bool StartTimer = false;
+    private bool StartContextInfoTimer = false;
     //end
 
     public List<Card> PlacedCards { get; private set; }
@@ -30,13 +30,13 @@ public class CardController : MonoBehaviour
     private int CardCount;
 
     public void Awake()
-    {        
+    {
         Arrow.gameObject.SetActive(false);
         CardInfoCam.SetActive(false);
         CardCollection = new List<Card>();
         PlacedCards = new List<Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
-        EventManager.AddListener(GameEvents.PickupCard,OnSelectCard);
+        EventManager.AddListener(GameEvents.PickupCard, OnSelectCard);
         //testy!
         // CardLoader cardLoader = new CardLoader("/Cards");        
     }
@@ -73,16 +73,16 @@ public class CardController : MonoBehaviour
                     Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
                     Arrow.gameObject.SetActive(true);
                     Arrow.RotateUp();
-                    StartTimer = true;
+                    StartContextInfoTimer = true;
                 }
                 else
                 {
-                    StartTimer = false;
+                    StartContextInfoTimer = false;
                     ContextTimer = 0.0f;
                     Arrow.gameObject.SetActive(false);
                     CardInfoCam.SetActive(false);
                 }
-                if (StartTimer)
+                if (StartContextInfoTimer)
                 {
                     ContextTimer += Time.deltaTime;
                     if (ContextTimer >= MaxContextTime)
@@ -93,7 +93,7 @@ public class CardController : MonoBehaviour
                         if (card)
                         {
                             SetExtraGuiCard(card.MatchCode);
-                            StartTimer = false;
+                            StartContextInfoTimer = false;
                             ContextTimer = 0;
                         }
                     }
@@ -116,6 +116,20 @@ public class CardController : MonoBehaviour
         EventManager.PostNotification(GameEvents.UndoGameFinishable, this, null);
     }
 
+    private Vector3 CurrentCardDragPosition()
+    {
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(-0.247f, 0.2244f, -0.266f));
+        Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float rayDistance;
+        Vector3 newPos = new Vector3();
+        if (groundPlane.Raycast(ray2, out rayDistance))
+        {
+            newPos = ray2.GetPoint(rayDistance);
+            newPos.y = 0.24f;
+        }
+        return newPos;
+    }
+
     /// <summary>
     /// Drag the card    
     /// </summary>
@@ -124,17 +138,22 @@ public class CardController : MonoBehaviour
         //make current card follow the cursor
         if (CurrentCard != null)
         {
-            CurrentCard.transform.position = new Vector3(CurrentCard.transform.position.x,
-                                                                       0.0250f,
-                                                                       CurrentCard.transform.position.z);
+            if (CurrentCard.GetComponent<BoxCollider>().enabled)
+            CurrentCard.GetComponent<BoxCollider>().enabled = false;
+
+            CurrentCard.transform.position = CurrentCardDragPosition();
+            //CurrentCard.transform.position = new Vector3(CurrentCard.transform.position.x,
+            //0.0250f,
+            //CurrentCard.transform.position.z);           
+
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
                 Transform objectHit = hit.transform;
-                Vector3 newPos = hit.point;
-                newPos.y = 0.24f;
-                CurrentCard.transform.position = newPos;
+                //Vector3 newPos = hit.point;
+                //newPos.y = 0.24f;
+                //CurrentCard.transform.position = newPos;
                 //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
                 if (objectHit.gameObject.tag == "ValidSubTopic")
                 {
@@ -166,6 +185,7 @@ public class CardController : MonoBehaviour
     /// <param name="obj"></param>
     public void DropCurrentCard(SubtopicMatcher topicMatcher)
     {
+        CurrentCard.GetComponent<BoxCollider>().enabled = true;
         Arrow.gameObject.SetActive(false);
         Vector3 pos = topicMatcher.transform.position;
         pos.y += 0.0006f;
@@ -200,6 +220,7 @@ public class CardController : MonoBehaviour
         {
             if (hit.transform.gameObject.tag == "ValidCard" && hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType)
             {
+                CardInfoCam.SetActive(true);
                 SetGameNotFinishable();
                 Transform objectHit = hit.transform;
                 SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
@@ -229,7 +250,7 @@ public class CardController : MonoBehaviour
         return null;
     }
 
-    
+
     public void OnSelectCard(short gameEvent, Component Sender, object param)
     {
         string code = ((string)param).Trim();
@@ -249,7 +270,7 @@ public class CardController : MonoBehaviour
     /// <returns>Dictionary with all guicards that are in the scene.</returns>
     private Dictionary<string, Image> FillContextCards()
     {
-        Dictionary<string, Image> tmpDic = new Dictionary<string, Image>();        
+        Dictionary<string, Image> tmpDic = new Dictionary<string, Image>();
         for (int i = 0; i < CardCollection.Count; i++)
         {
             tmpDic.Add(CardCollection[i].MatchCode, CardCollection[i].GuiCard.GetComponent<Image>());
