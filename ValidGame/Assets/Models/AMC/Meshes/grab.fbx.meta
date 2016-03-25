@@ -15,7 +15,7 @@ ModelImporter:
     3300000: Text
     4300000: Text
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

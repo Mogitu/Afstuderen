@@ -1,21 +1,17 @@
 fileFormatVersion: 2
-guid: 7456f9d01c348d6478749d3b67547533
-timeCreated: 1458728989
+guid: df8ec1d6b396ca54f8f268fb05bd3177
+timeCreated: 1458720808
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Lamp
-    100004: Text
     400000: //RootNode
-    400002: Lamp
-    400004: Text
-    2300000: Text
-    3300000: Text
-    4300000: Text
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cone
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
