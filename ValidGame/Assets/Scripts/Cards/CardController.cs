@@ -125,7 +125,7 @@ public class CardController : MonoBehaviour
         if (groundPlane.Raycast(ray2, out rayDistance))
         {
             newPos = ray2.GetPoint(rayDistance);
-            newPos.y = 0.24f;
+            newPos.y = 0.245f;
         }
         return newPos;
     }
