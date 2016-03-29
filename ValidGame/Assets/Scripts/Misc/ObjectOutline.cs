@@ -12,8 +12,13 @@ public class ObjectOutline : MonoBehaviour
     private Material DefaultMat;
     private Material HighLightMat;
 
+    private Shader DefaultShader;
+    private Shader OutlineShader;
+
     void Start()
     {
+        DefaultShader = Shader.Find("Standard");
+        OutlineShader = Shader.Find("Toon/Basic Outline");
         ObjectRenderer = GetComponent<Renderer>();
         HighLightMat = Instantiate(ObjectRenderer.sharedMaterial);//Shared material because normal material will create extra instances "killing" performance.
         DefaultMat = ObjectRenderer.sharedMaterial;
@@ -23,15 +28,17 @@ public class ObjectOutline : MonoBehaviour
     {
         if (enabled)
         {
-            ObjectRenderer.material = HighLightMat;
-            HighLightMat.color = HoverColor;
+            //ObjectRenderer.material = HighLightMat;
+            //HighLightMat.color = HoverColor;
+            ObjectRenderer.material.shader = OutlineShader;
         }
     }
 
     void OnMouseExit()
     {
         if (enabled)
-            ObjectRenderer.material = DefaultMat;
+            // ObjectRenderer.material = DefaultMat;
+            ObjectRenderer.material.shader = DefaultShader;
     }
 }
 
