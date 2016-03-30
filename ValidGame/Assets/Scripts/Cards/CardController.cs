@@ -288,7 +288,7 @@ public class CardController : MonoBehaviour
             //collect only cards of the current teamtype
             if (MainManager.MyTeamType == card.TypeOfCard)
             {
-                CardCollection.Add(card);
+               //CardCollection.Add(card);
             }
         }
         CardCount = CardCollection.Count;

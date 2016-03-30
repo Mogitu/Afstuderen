@@ -30,7 +30,7 @@ public class MainManager : MonoBehaviour, IMainManager
 
     void Awake()
     {
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
         MyTeamType = TeamType.CheckAndAct;

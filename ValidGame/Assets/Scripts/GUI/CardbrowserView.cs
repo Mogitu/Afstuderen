@@ -14,6 +14,8 @@ public class CardbrowserView : View
     public GameObject CardPanelContent;
     public Image ExtraInfoPanelImage;
     private GuiPresenter GuiPresenter;
+    private float OffsetX = 80;
+    private float OffsetY = -90;
 
     void Awake()
     {
@@ -35,8 +37,8 @@ public class CardbrowserView : View
         //float widthScale = 1024 / Screen.width;
         //float heightScale = 768 / Screen.height;
         GuiCard[] cards = FindObjectsOfType<GuiCard>();
-        float offSetX = -225;
-        float offSetY = 200;
+        float offSetX = OffsetX;
+        float offSetY = OffsetY;
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
         {                             
@@ -66,7 +68,7 @@ public class CardbrowserView : View
         {
             col = 1;
             offSetY -= 200;
-            offSetX = -225;
+            offSetX = OffsetX;
         }
     }
 
