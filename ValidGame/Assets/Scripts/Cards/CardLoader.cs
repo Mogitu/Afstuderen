@@ -42,8 +42,8 @@ public class CardLoader {
             //create scenecard
             GameObject go = Resources.Load<GameObject>("card");
             Card card = go.GetComponent<Card>();
-            card.SetData(model.Title,model.Description,model.MatchCode,TeamType.CheckAndAct);
-            go.name = "SceneCard"+card.Title;          
+            card.SetData(model.MatchCode,TeamType.CheckAndAct);
+            go.name = "SceneCard"+card.MatchCode;          
             GameObject newGo = (GameObject)UnityEngine.Object.Instantiate(go, Vector3.zero, go.transform.rotation);
 
             //create gui card

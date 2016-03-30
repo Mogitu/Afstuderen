@@ -9,11 +9,11 @@ using UnityEngine.UI;
 /// </summary>
 public class CardBuilderEditor : EditorWindow
 {
-    private string cardTitleStr = "Title";
-    private string cardDescriptionStr = "Placeholder description";
+    //private string cardTitleStr = "Title";
+    //private string cardDescriptionStr = "Placeholder description";
     private string matchCodeStr = "1a";
     private Sprite sprite;
-    private Sprite guiSprite;
+    //private Sprite guiSprite;
     private TeamType MyTeamType;
 
     [MenuItem("AMC Centre/Tools/VALID/Card builder")]
@@ -25,15 +25,15 @@ public class CardBuilderEditor : EditorWindow
 
     void OnGUI()
     {
-        GUILayout.Label("Basic Card Settings", EditorStyles.boldLabel);
-        cardTitleStr = EditorGUILayout.TextField("Card title", cardTitleStr);
+        //GUILayout.Label("Basic Card Settings", EditorStyles.boldLabel);
+       // cardTitleStr = EditorGUILayout.TextField("Card title", cardTitleStr);
 
-        GUILayout.Label("Description", EditorStyles.label);
-        cardDescriptionStr = EditorGUILayout.TextArea(cardDescriptionStr, GUILayout.Height(100));
+        //GUILayout.Label("Description", EditorStyles.label);
+        //cardDescriptionStr = EditorGUILayout.TextArea(cardDescriptionStr, GUILayout.Height(100));
         matchCodeStr = EditorGUILayout.TextField("Card Matchcode", matchCodeStr);
 
         sprite = (Sprite)EditorGUILayout.ObjectField("Scenery sprite", sprite, typeof(Sprite), false);
-        guiSprite = (Sprite)EditorGUILayout.ObjectField("Browser sprite", guiSprite, typeof(Sprite), false);
+        //guiSprite = (Sprite)EditorGUILayout.ObjectField("Browser sprite", guiSprite, typeof(Sprite), false);
 
         MyTeamType = (TeamType)EditorGUILayout.EnumPopup("Select type", MyTeamType);
 
@@ -61,7 +61,7 @@ public class CardBuilderEditor : EditorWindow
         }
         GameObject go = Resources.Load<GameObject>("card");
         Card card = go.GetComponent<Card>();
-        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr, MyTeamType);
+        card.SetData(matchCodeStr, MyTeamType);
         SpriteRenderer spr = card.Sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
         go.transform.rotation = Quaternion.identity;
@@ -79,7 +79,7 @@ public class CardBuilderEditor : EditorWindow
 
         GameObject go = Resources.Load<GameObject>("card");
         Card card = go.GetComponent<Card>();
-        card.SetData(cardTitleStr, cardDescriptionStr, matchCodeStr, MyTeamType);
+        card.SetData(matchCodeStr, MyTeamType);
         SpriteRenderer spr = card.Sprite.GetComponent<SpriteRenderer>();
         spr.sprite = this.sprite;
 
@@ -88,12 +88,13 @@ public class CardBuilderEditor : EditorWindow
         guiCard.MatchCode = this.matchCodeStr;
         guiCard.TeamType = MyTeamType;
         Image spr2 = guiCard.GetComponent<Image>();
-        spr2.sprite = guiSprite;
+        spr2.sprite = this.sprite;
         go.name = "SceneCard" + matchCodeStr;
         go2.name = "GUICard" + matchCodeStr;
+        card.GuiCard = guiCard;
 
-        GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
-        newGo2.transform.SetParent(parent.transform, false);
+        //GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
+       // newGo2.transform.SetParent(parent.transform, false);
         GameObject newGo = (GameObject)Instantiate(go, Vector3.zero, go.transform.rotation);
         newGo.transform.SetParent(parent.transform, false);
     }

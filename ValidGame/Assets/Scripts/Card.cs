@@ -11,30 +11,30 @@
 public class Card : MonoBehaviour
 {
     public string MatchCode;
-    public string Title;
+   // public string Title;
     public TeamType TypeOfCard;
-    public string Description;
+   // public string Description;
     public GuiCard GuiCard;
 
     public SpriteRenderer Sprite;
-    public TextMesh TxtMeshTitle;
-    public TextMesh TxtMeshDesc;
+   // public TextMesh TxtMeshTitle;
+    //public TextMesh TxtMeshDesc;
 
 
     // Use this for initialization
     void Start()
     {
-        TxtMeshTitle.text = Title;
-        TxtMeshDesc.text = Description;
+        //TxtMeshTitle.text = Title;
+        //TxtMeshDesc.text = Description;
     }
 
     //Set needed properties
-    public void SetData(string title, string description, string matchCode, TeamType cardType)
+    public void SetData(string matchCode, TeamType cardType)
     {
-        Title = title;
-        Description = description;
-        TxtMeshTitle.text = title;
-        TxtMeshDesc.text = description;
+       // Title = title;
+       // Description = description;
+       // TxtMeshTitle.text = title;
+        //TxtMeshDesc.text = description;
         MatchCode = matchCode;
         TypeOfCard = cardType;
     }
