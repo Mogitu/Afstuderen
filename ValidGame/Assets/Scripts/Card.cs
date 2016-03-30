@@ -11,13 +11,11 @@
 public class Card : MonoBehaviour
 {
     public string MatchCode;
-   // public string Title;
+    //public string Title;
     public TeamType TypeOfCard;
-   // public string Description;
-    public GuiCard GuiCard;
-
+    //public string Description;
     public SpriteRenderer Sprite;
-   // public TextMesh TxtMeshTitle;
+    //public TextMesh TxtMeshTitle;
     //public TextMesh TxtMeshDesc;
 
 

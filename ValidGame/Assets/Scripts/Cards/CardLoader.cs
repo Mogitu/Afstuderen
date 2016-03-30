@@ -40,18 +40,20 @@ public class CardLoader {
         {
             CardModel model = CardModels[i];
             //create scenecard
+            /*
             GameObject go = Resources.Load<GameObject>("card");
             Card card = go.GetComponent<Card>();
             card.SetData(model.MatchCode,TeamType.CheckAndAct);
             go.name = "SceneCard"+card.MatchCode;          
             GameObject newGo = (GameObject)UnityEngine.Object.Instantiate(go, Vector3.zero, go.transform.rotation);
-
+            */
             //create gui card
             GameObject go2 = Resources.Load<GameObject>("guiCard");
-            GuiCard guiCard = go2.GetComponent<GuiCard>();
+            GameObject newGo2 = (GameObject)UnityEngine.Object.Instantiate(go2, Vector3.zero, go2.transform.rotation);
+            GuiCard guiCard = newGo2.GetComponent<GuiCard>();
             guiCard.MatchCode = model.MatchCode;
             go2.name = "GUICard" + model.MatchCode;
-            GameObject newGo2 = (GameObject)UnityEngine.Object.Instantiate(go2,Vector3.zero, go2.transform.rotation);
+          
         }       
     }  
 }

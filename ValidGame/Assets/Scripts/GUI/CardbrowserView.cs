@@ -34,16 +34,15 @@ public class CardbrowserView : View
     {
         //float widthScale = 1024 / Screen.width;
         //float heightScale = 768 / Screen.height;
-        Card[] cards = FindObjectsOfType<Card>();
+        GuiCard[] cards = FindObjectsOfType<GuiCard>();
         float offSetX = -225;
         float offSetY = 200;
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
-        {           
-            GuiCard obj =  Instantiate(cards[i].GuiCard);              
-            if(GuiPresenter.GetTeamType ==  obj.TeamType)
+        {                             
+            if(GuiPresenter.GetTeamType ==  cards[i].TeamType)
             {
-                AddCard(obj, ref offSetX, ref offSetY, ref col);
+                AddCard(cards[i], ref offSetX, ref offSetY, ref col);
             }           
         }
     }

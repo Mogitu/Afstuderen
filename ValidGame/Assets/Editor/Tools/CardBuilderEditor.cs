@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Tool to help develop valid gamecards.
 /// TODO    :   SOLID! Or delete this class in favor of external file loading
+///             Also due for a refactor.
 /// </summary>
 public class CardBuilderEditor : EditorWindow
 {
@@ -70,11 +71,12 @@ public class CardBuilderEditor : EditorWindow
 
     void CreateCard()
     {
-        GameObject parent = GameObject.Find("Cards");
-        if (!parent)
+        GameObject sceneCardsParent = GameObject.Find("SceneCards");
+        GameObject guiCardsParent = GameObject.Find("GuiCards");
+        if (!sceneCardsParent)
         {
-            parent = new GameObject();
-            parent.name = "Cards";
+            sceneCardsParent = new GameObject();
+            sceneCardsParent.name = "Cards";
         }
 
         GameObject go = Resources.Load<GameObject>("card");
@@ -90,13 +92,12 @@ public class CardBuilderEditor : EditorWindow
         Image spr2 = guiCard.GetComponent<Image>();
         spr2.sprite = this.sprite;
         go.name = "SceneCard" + matchCodeStr;
-        go2.name = "GUICard" + matchCodeStr;
-        card.GuiCard = guiCard;
+        go2.name = "GUICard" + matchCodeStr;       
 
-        //GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
-       // newGo2.transform.SetParent(parent.transform, false);
+        GameObject newGo2 = (GameObject)Instantiate(go2, Vector3.zero, go2.transform.rotation);
+        newGo2.transform.SetParent(guiCardsParent.transform, false);
         GameObject newGo = (GameObject)Instantiate(go, Vector3.zero, go.transform.rotation);
-        newGo.transform.SetParent(parent.transform, false);
+        newGo.transform.SetParent(sceneCardsParent.transform, false);
     }
 }
 

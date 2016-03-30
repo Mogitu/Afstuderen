@@ -13,7 +13,7 @@ public class CardController : MonoBehaviour
 {
     //context stuff; should be place in own class
     public GameObject CardInfoCam;
-    public Dictionary<string, Image> ContextCards;
+    public Dictionary<string, Sprite> ContextCards;
     public Image CardInfoImage;
     public ArrowScript Arrow;
     private float ContextTimer = 0.0f;
@@ -261,19 +261,19 @@ public class CardController : MonoBehaviour
 
     private void SetExtraGuiCard(string matchCode)
     {
-        CardInfoImage.sprite = ContextCards[matchCode].sprite;
+        CardInfoImage.sprite = ContextCards[matchCode];
     }
 
     /// <summary>
     /// Fill dictionary with available guicards.
     /// </summary>
     /// <returns>Dictionary with all guicards that are in the scene.</returns>
-    private Dictionary<string, Image> FillContextCards()
+    private Dictionary<string, Sprite> FillContextCards()
     {
-        Dictionary<string, Image> tmpDic = new Dictionary<string, Image>();
+        Dictionary<string, Sprite> tmpDic = new Dictionary<string, Sprite>();       
         for (int i = 0; i < CardCollection.Count; i++)
         {
-            tmpDic.Add(CardCollection[i].MatchCode, CardCollection[i].GuiCard.GetComponent<Image>());
+            tmpDic.Add(CardCollection[i].MatchCode, CardCollection[i].GetComponentInChildren<SpriteRenderer>().sprite);
         }
         return tmpDic;
     }
