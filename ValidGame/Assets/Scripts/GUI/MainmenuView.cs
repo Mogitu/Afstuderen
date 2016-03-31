@@ -13,8 +13,9 @@ public class MainmenuView : View {
     }
 
     public void ClickedStart()
-    {          
-        GuiPresenter.StartPracticeRound();            
+    {
+        GuiPresenter.ShowTeamSelectView();
+        //GuiPresenter.StartPracticeRound();            
     }
 
     public void ClickedMultiplayer()

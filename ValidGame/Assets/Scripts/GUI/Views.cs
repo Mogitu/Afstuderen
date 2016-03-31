@@ -13,4 +13,5 @@ public class VIEWS
     public const string MatchMakerView = "MatchMakerView";
     public const string TutorialView = "TutorialView";
     public const string OptionsView = "OptionsView";
+    public const string TeamSelectView = "TeamSelectView";
 }

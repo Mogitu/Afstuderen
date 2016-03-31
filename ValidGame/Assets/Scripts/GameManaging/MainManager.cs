@@ -33,7 +33,7 @@ public class MainManager : MonoBehaviour, IMainManager
         //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
-        MyTeamType = TeamType.PlanAndDo;
+       // MyTeamType = TeamType.PlanAndDo;
         GamestateManager = new GameStateManager(this);
     }
 
@@ -93,6 +93,12 @@ public class MainManager : MonoBehaviour, IMainManager
         IsMultiplayerGame = false;
         CardController.CollectCards();
         EnableAllColliders();
+    }
+
+    public void StartPracticeRound(TeamType teamType)
+    {       
+        MyTeamType = teamType;
+        StartPracticeRound();
     }
 
     public void EndPracticeGame()

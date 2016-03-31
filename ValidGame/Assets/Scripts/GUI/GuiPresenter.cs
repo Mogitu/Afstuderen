@@ -17,16 +17,21 @@ public class GuiPresenter : Presenter
         EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMatch);     
     }
 
-    public void StartPracticeRound()
+    public void StartPracticeRound(TeamType teamType)
     {
         ChangeView(VIEWS.GamePlayingView);
-        MainManager.StartPracticeRound();   
+        MainManager.StartPracticeRound(teamType);   
     }
 
     public void StartMultiplayerClient()
     {  
         ChangeView(VIEWS.MatchMakerView);
         MainManager.StartMultiplayerClient();       
+    }
+
+    public void ShowTeamSelectView()
+    {
+        ChangeView(VIEWS.TeamSelectView);
     }
  
     private void OpenMultiplayerViews()

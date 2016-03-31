@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// </summary>
 public class CardController : MonoBehaviour
 {
-    //context stuff; should be place in own class
+    //context stuff; should be place in own class  
     public GameObject CardInfoCam;
     public Dictionary<string, Sprite> ContextCards;
     public Image CardInfoImage;
