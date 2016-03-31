@@ -229,6 +229,7 @@ public class CardController : MonoBehaviour
                 CurrentCard.transform.parent = null;
                 CardCollection.Add(CurrentCard.MatchCode, CurrentCard);
                 PlacedCards.Remove(CurrentCard.MatchCode);
+                SetExtraGuiCard(CurrentCard.MatchCode);
             }
         }
     }

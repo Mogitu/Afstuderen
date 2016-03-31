@@ -56,6 +56,7 @@ public class GameOverState : GameState
             if (matcher && matcherCode == cardCode)
             {
                 card.Value.GetComponent<Renderer>().material.color = Color.green;
+                card.Value.GetComponentInChildren<SpriteRenderer>().material.color = Color.green;
                 GameObject go = Object.Instantiate(GameManager.GoodPlacementEffect);
                 go.transform.position = card.Value.transform.position;
                 GoodCards++;
@@ -63,6 +64,7 @@ public class GameOverState : GameState
             else
             {
                 card.Value.GetComponent<Renderer>().material.color = Color.red;
+                card.Value.GetComponentInChildren<SpriteRenderer>().material.color = Color.red;
                 GameObject go = Object.Instantiate(GameManager.WrongPlacementEffect);
                 go.transform.position = card.Value.transform.position;
             }

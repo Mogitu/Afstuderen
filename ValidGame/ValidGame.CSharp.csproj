@@ -130,6 +130,7 @@
     <Compile Include="Assets\Scripts\Misc\TutorialComponent.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkMessages.cs" />
     <Compile Include="Assets\Scripts\Networking\ValidNetworkController.cs" />
+    <Compile Include="Assets\Scripts\ResultChecker.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
   </ItemGroup>
   <ItemGroup>
