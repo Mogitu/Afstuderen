@@ -19,7 +19,7 @@ public class MainManager : MonoBehaviour, IMainManager
     //other fields
     public GameObject GameBoard;
     public int Score { get; set; }
-    public TeamType MyTeamType { get; private set; }
+    public TeamType MyTeamType;// { get; private set; }
     public EventManager EventManager;
 
     private GameStateManager GamestateManager;
@@ -33,7 +33,7 @@ public class MainManager : MonoBehaviour, IMainManager
         //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
-        MyTeamType = TeamType.CheckAndAct;
+        MyTeamType = TeamType.PlanAndDo;
         GamestateManager = new GameStateManager(this);
     }
 
