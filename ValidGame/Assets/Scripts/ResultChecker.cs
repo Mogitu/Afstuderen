@@ -17,6 +17,7 @@ public class ResultChecker:MonoBehaviour {
     
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.P) && !ShowingResults)
         {          
             ShowingResults = true;
@@ -27,6 +28,7 @@ public class ResultChecker:MonoBehaviour {
             ShowingResults = false;
             HideResults();
         }
+        */
     }
 
     public int CalculateResults()
@@ -72,7 +74,7 @@ public class ResultChecker:MonoBehaviour {
         }
     }
 
-    private void HideResults()
+    public void HideResults()
     {
         GoodCards.Clear();
         BadCards.Clear();

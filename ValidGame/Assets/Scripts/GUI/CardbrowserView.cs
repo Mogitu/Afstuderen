@@ -49,6 +49,30 @@ public class CardbrowserView : View
         }
     }
 
+    private void RepopulateContent()
+    {
+        float offSetX = OffsetX;
+        float offSetY = OffsetY;
+        int col = 1;
+        foreach(KeyValuePair<string, GuiCard> card in BrowsableCards)
+        {
+            GuiCard guiCard = card.Value;
+            guiCard.transform.SetParent(CardPanelContent.transform, false);
+            Vector3 newPos = guiCard.transform.parent.transform.position;
+            newPos.x += offSetX;
+            newPos.y += offSetY;
+            offSetX += 150;
+            guiCard.transform.position = newPos;  
+            col++;
+            if (col >= 5)
+            {
+                col = 1;
+                offSetY -= 200;
+                offSetX = OffsetX;
+            }
+        }
+    }
+
     //TODO: Split this up into smaller methods and get rid of hardcoded items
     private void AddCard(GuiCard card, ref float offSetX, ref float offSetY, ref int col)
     {
@@ -124,6 +148,8 @@ public class CardbrowserView : View
     {
         GuiCard card = obj.GetComponent<GuiCard>();
         GetPresenterType<GuiPresenter>().PickCard(card.MatchCode);
+        BrowsableCards.Remove(card.MatchCode);
         obj.SetActive(false);
+        RepopulateContent();
     }
 }
