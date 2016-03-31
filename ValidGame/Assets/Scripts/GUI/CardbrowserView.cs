@@ -10,7 +10,7 @@ using AMC.GUI;
 /// </summary>
 public class CardbrowserView : View
 {
-    private List<GuiCard> BrowsableCards;
+    private Dictionary<string, GuiCard> BrowsableCards;
     public GameObject CardPanelContent;
     public Image ExtraInfoPanelImage;
     private GuiPresenter GuiPresenter;
@@ -20,7 +20,7 @@ public class CardbrowserView : View
     void Awake()
     {
         GuiPresenter = GetPresenterType<GuiPresenter>();
-        BrowsableCards = new List<GuiCard>();       
+        BrowsableCards = new Dictionary<string, GuiCard>();
     }
 
     void Start()
@@ -41,27 +41,37 @@ public class CardbrowserView : View
         float offSetY = OffsetY;
         int col = 1;
         for (int i = 0; i < cards.Length; i++)
-        {                             
-            if(GuiPresenter.GetTeamType ==  cards[i].TeamType)
+        {
+            if (GuiPresenter.GetTeamType == cards[i].TeamType)
             {
                 AddCard(cards[i], ref offSetX, ref offSetY, ref col);
-            }           
+            }
         }
     }
 
     //TODO: Split this up into smaller methods and get rid of hardcoded items
     private void AddCard(GuiCard card, ref float offSetX, ref float offSetY, ref int col)
     {
-        GuiCard obj = card;
-        obj.transform.SetParent(CardPanelContent.transform, false);
-        Vector3 newPos = obj.transform.parent.transform.position;
+        GuiCard guiCard = card;
+        guiCard.transform.SetParent(CardPanelContent.transform, false);
+        Vector3 newPos = guiCard.transform.parent.transform.position;
         newPos.x += offSetX;
         newPos.y += offSetY;
         offSetX += 150;
-        obj.transform.position = newPos;
-        Button objBtn = obj.GetComponent<Button>();
+        guiCard.transform.position = newPos;
+        Button objBtn = guiCard.GetComponent<Button>();
         objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });
-        BrowsableCards.Add(obj);
+
+        if (BrowsableCards.ContainsKey(guiCard.MatchCode))
+        {
+            guiCard.MatchCode = guiCard.MatchCode + "2";
+            guiCard.name = "GuiCard" + guiCard.MatchCode;
+            BrowsableCards.Add(guiCard.MatchCode, guiCard);
+        }
+        else
+        {
+            BrowsableCards.Add(guiCard.MatchCode, guiCard);
+        }
         col++;
 
         if (col >= 5)
@@ -112,8 +122,8 @@ public class CardbrowserView : View
     //TODO  :   Ties card model to this view, defeating the purpose of mvp?
     public void ClickedCard(GameObject obj)
     {
-        GuiCard card = obj.GetComponent<GuiCard>();      
+        GuiCard card = obj.GetComponent<GuiCard>();
         GetPresenterType<GuiPresenter>().PickCard(card.MatchCode);
         obj.SetActive(false);
-    }   
+    }
 }

@@ -21,9 +21,9 @@ public class CardController : MonoBehaviour
     private bool StartContextInfoTimer = false;
     //end
 
-    public List<Card> PlacedCards { get; private set; }
+    public Dictionary<string, Card> PlacedCards { get; private set; }
     private Card CurrentCard;
-    private List<Card> CardCollection;
+    private Dictionary<string, Card> CardCollection;
     public MainManager MainManager;
     public EventManager EventManager;
     public GameObject CardPlacementEffect;
@@ -33,12 +33,12 @@ public class CardController : MonoBehaviour
     {
         Arrow.gameObject.SetActive(false);
         CardInfoCam.SetActive(false);
-        CardCollection = new List<Card>();
-        PlacedCards = new List<Card>();
+        CardCollection = new Dictionary<string, Card>();
+        PlacedCards = new Dictionary<string, Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
         EventManager.AddListener(GameEvents.PickupCard, OnSelectCard);
         //testy!
-        // CardLoader cardLoader = new CardLoader("/Cards");        
+        //CardLoader cardLoader = new CardLoader("/Cards");        
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
@@ -139,7 +139,7 @@ public class CardController : MonoBehaviour
         if (CurrentCard != null)
         {
             if (CurrentCard.GetComponent<BoxCollider>().enabled)
-            CurrentCard.GetComponent<BoxCollider>().enabled = false;
+                CurrentCard.GetComponent<BoxCollider>().enabled = false;
 
             CurrentCard.transform.position = CurrentCardDragPosition();
             //CurrentCard.transform.position = new Vector3(CurrentCard.transform.position.x,
@@ -192,8 +192,8 @@ public class CardController : MonoBehaviour
         CurrentCard.transform.position = pos;
         CurrentCard.transform.parent = topicMatcher.transform;
         topicMatcher.Occupied = true;
-        CardCollection.Remove(CurrentCard);
-        PlacedCards.Add(CurrentCard);
+        CardCollection.Remove(CurrentCard.MatchCode);
+        PlacedCards.Add(CurrentCard.MatchCode, CurrentCard);
         //route message to opponent
         GameObject go = Instantiate(CardPlacementEffect);
         go.transform.position = CurrentCard.transform.position;
@@ -227,8 +227,8 @@ public class CardController : MonoBehaviour
                 topicMatcher.Occupied = false;
                 CurrentCard = hit.transform.gameObject.GetComponent<Card>();
                 CurrentCard.transform.parent = null;
-                CardCollection.Add(CurrentCard);
-                PlacedCards.Remove(CurrentCard);
+                CardCollection.Add(CurrentCard.MatchCode, CurrentCard);
+                PlacedCards.Remove(CurrentCard.MatchCode);
             }
         }
     }
@@ -239,13 +239,7 @@ public class CardController : MonoBehaviour
     {
         if (CardCollection.Count > 0)
         {
-            for (int i = 0; i < CardCollection.Count; i++)
-            {
-                if (CardCollection[i].MatchCode == code)
-                {
-                    return CardCollection[i];
-                }
-            }
+            return CardCollection[code];
         }
         return null;
     }
@@ -270,10 +264,10 @@ public class CardController : MonoBehaviour
     /// <returns>Dictionary with all guicards that are in the scene.</returns>
     private Dictionary<string, Sprite> FillContextCards()
     {
-        Dictionary<string, Sprite> tmpDic = new Dictionary<string, Sprite>();       
-        for (int i = 0; i < CardCollection.Count; i++)
+        Dictionary<string, Sprite> tmpDic = new Dictionary<string, Sprite>();
+        foreach (KeyValuePair<string, Card> card in CardCollection)
         {
-            tmpDic.Add(CardCollection[i].MatchCode, CardCollection[i].GetComponentInChildren<SpriteRenderer>().sprite);
+            tmpDic.Add(card.Value.MatchCode, card.Value.GetComponentInChildren<SpriteRenderer>().sprite);
         }
         return tmpDic;
     }
@@ -288,7 +282,20 @@ public class CardController : MonoBehaviour
             //collect only cards of the current teamtype
             if (MainManager.MyTeamType == card.TypeOfCard)
             {
-               //CardCollection.Add(card);
+                //check if card already exists in dictionary, if so we append the code with 2 at the end
+                //if()
+                if (CardCollection.ContainsKey(card.MatchCode))
+                {
+                    card.MatchCode = card.MatchCode + "2";
+                    card.name = "SceneCard" + card.MatchCode;
+                    CardCollection.Add(card.MatchCode, card);
+                }
+                else
+                {
+                    //card.MatchCode = card.MatchCode;
+                    //card.name = "SceneCard" + card.MatchCode;
+                    CardCollection.Add(card.MatchCode, card);
+                }
             }
         }
         CardCount = CardCollection.Count;

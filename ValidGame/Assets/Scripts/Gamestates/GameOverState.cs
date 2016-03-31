@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using AMC.Camera;
+using System.Collections.Generic;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   ...
@@ -7,7 +8,7 @@ using AMC.Camera;
 public class GameOverState : GameState
 {
     private bool FirstRun = false;
-    private int GoodCards = 0; 
+    private int GoodCards = 0;
 
     public GameOverState(MainManager manager)
             : base(manager)
@@ -19,7 +20,7 @@ public class GameOverState : GameState
         //Only run this once
         if (!FirstRun)
         {
-            DetermineResults();           
+            DetermineResults();
             Camera.main.GetComponent<CameraController>().enabled = false;
             Camera.main.GetComponent<Animator>().enabled = true;
             Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
@@ -33,8 +34,8 @@ public class GameOverState : GameState
     /// </summary>
     private void DisableAllColliders()
     {
-        BoxCollider[] objects = Object.FindObjectsOfType<BoxCollider>();        
-        for(int i=0; i<objects.Length;i++)
+        BoxCollider[] objects = Object.FindObjectsOfType<BoxCollider>();
+        for (int i = 0; i < objects.Length; i++)
         {
             objects[i].enabled = false;
         }
@@ -47,21 +48,23 @@ public class GameOverState : GameState
     public void DetermineResults()
     {
         //Retreive all subtopicmatchers in the placed cards parents and check if their codes match
-        for (int i = 0; i < GameManager.CardController.PlacedCards.Count; i++)//LOD violation
+        foreach (KeyValuePair<string, Card> card in GameManager.CardController.PlacedCards)//LOD violation
         {
-            SubtopicMatcher matcher = GameManager.CardController.PlacedCards[i].GetComponentInParent<SubtopicMatcher>();
-            if (matcher && matcher.MatchCode == GameManager.CardController.PlacedCards[i].MatchCode)
-            {                
-                GameManager.CardController.PlacedCards[i].GetComponent<Renderer>().material.color = Color.green;
+            SubtopicMatcher matcher = card.Value.GetComponentInParent<SubtopicMatcher>();
+            string matcherCode = matcher.MatchCode.Substring(0, 2);
+            string cardCode = card.Value.MatchCode.Substring(0, 2);
+            if (matcher && matcherCode == cardCode)
+            {
+                card.Value.GetComponent<Renderer>().material.color = Color.green;
                 GameObject go = Object.Instantiate(GameManager.GoodPlacementEffect);
-                go.transform.position = GameManager.CardController.PlacedCards[i].transform.position;
+                go.transform.position = card.Value.transform.position;
                 GoodCards++;
             }
             else
-            {              
-                GameManager.CardController.PlacedCards[i].GetComponent<Renderer>().material.color = Color.red;
-                GameObject go = Object.Instantiate(GameManager.WrongPlacementEffect);                
-                go.transform.position = GameManager.CardController.PlacedCards[i].transform.position;
+            {
+                card.Value.GetComponent<Renderer>().material.color = Color.red;
+                GameObject go = Object.Instantiate(GameManager.WrongPlacementEffect);
+                go.transform.position = card.Value.transform.position;
             }
         }
         SendScores();
