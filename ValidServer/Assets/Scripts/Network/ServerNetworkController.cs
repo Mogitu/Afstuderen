@@ -17,7 +17,8 @@ public class ServerNetworkController : NetworkController
 
     void Start()
     {
-        //Application.runInBackground = true;
+        //Application.targetFrameRate = 60;
+        Application.runInBackground = true;
         ConnectionIds = new List<int>();
         Matches = new List<Match>();
         EventManager.AddListener(ServerEvents.StartServer, Begin);  

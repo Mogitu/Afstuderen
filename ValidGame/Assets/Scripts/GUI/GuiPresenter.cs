@@ -57,8 +57,8 @@ public class GuiPresenter : Presenter
 
     public void ToggleCardbrowser()
     {
-        MainManager.ToggleCameraActive();
         MainManager.ToggleAllColliders();
+        MainManager.ToggleCameraActive();        
         ToggleView(VIEWS.CardbrowserView);
     }
 

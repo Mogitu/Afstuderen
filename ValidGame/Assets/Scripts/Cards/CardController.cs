@@ -53,6 +53,12 @@ public class CardController : MonoBehaviour
     //Call every frame in manager class.
     private void Update()
     {
+        //avoids that cards can be picked up when mouse click hits both browser button and a placed card.
+        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (CurrentCard != null)
         {
             Arrow.RotateDown();

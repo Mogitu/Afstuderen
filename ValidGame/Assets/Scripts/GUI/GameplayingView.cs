@@ -18,7 +18,7 @@ public class GameplayingView : View{
         GuiPresenter = GetPresenterType<GuiPresenter>();
         GuiPresenter.EventManager.AddListener(GameEvents.GameIsFinishable,OnGameIsFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
-    }
+    }    
 
     public void OpenCardView(){       
         GuiPresenter.ToggleCardbrowser();    
