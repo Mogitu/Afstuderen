@@ -14,6 +14,7 @@ public class TutorialView : View
 {
     public Text TitleText;
     public Text InfoText;
+    public Text TutorialCountText;
     public RawImage Image;
 
     private bool TutorialComplete = false;
@@ -58,6 +59,12 @@ public class TutorialView : View
         //begin with the first tutorial
         CurrentTutorialId = 0;
         CurrentTutorial = TutorialModels[CurrentTutorialId];
+        SetTutorialCountText();
+    }
+
+    private void SetTutorialCountText()
+    {
+        TutorialCountText.text = (CurrentTutorialId + 1) + "/" + TutorialModels.Length;
     }
 
     //Fill the movie textures dictionary
@@ -87,6 +94,7 @@ public class TutorialView : View
         InfoText.text = CurrentTutorial.TutorialText;
         CurrentMovieTexture = MovieTextures[CurrentTutorial.VideoPath];
         Image.texture = CurrentMovieTexture;
+        CurrentMovieTexture.loop = true;
         CurrentMovieTexture.Play();
     }
 
@@ -94,7 +102,10 @@ public class TutorialView : View
     {
         //Start the movie only if it is available
         if (CurrentMovieTexture)
+        {
+            CurrentMovieTexture.loop = true;
             CurrentMovieTexture.Play();
+        }            
     }
 
     private void OnDisable()
@@ -112,6 +123,7 @@ public class TutorialView : View
             CurrentTutorialId = 0;
         }
         SetTutorialData(CurrentTutorialId);
+        SetTutorialCountText();
     }
 
     public void PreviousTutorial()
@@ -122,7 +134,9 @@ public class TutorialView : View
             CurrentTutorialId = TutorialModels.Length - 1;
         }
         SetTutorialData(CurrentTutorialId);
+        CurrentMovieTexture.loop = true;
         CurrentMovieTexture.Play();
+        SetTutorialCountText();
     }
 
     public void Close()
