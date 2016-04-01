@@ -130,7 +130,7 @@ public class ServerNetworkController : NetworkController
     }
 
     protected override void OnDisconnect(NetworkMessage msg)
-    {
+    {        
         base.OnDisconnect(msg);        
         foreach(Match match in Matches)
         {
