@@ -23,10 +23,10 @@ public class GuiPresenter : Presenter
         MainManager.StartPracticeRound(teamType);   
     }
 
-    public void StartMultiplayerClient()
+    public void StartMultiplayerClient(string name)
     {  
         ChangeView(VIEWS.MatchMakerView);
-        MainManager.StartMultiplayerClient();       
+        MainManager.StartMultiplayerClient(name);       
     }
 
     public void ShowTeamSelectView()

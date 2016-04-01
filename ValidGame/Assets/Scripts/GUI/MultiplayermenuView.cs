@@ -6,8 +6,10 @@ using AMC.GUI;
 /// </summary>
 public class MultiplayermenuView : View {
 
-    public Text IpAdress;
+    //public Text IpAdress;
+    public Text PlayerName;
     private GuiPresenter GuiPresenter;
+
 
     void Awake()
     {
@@ -16,7 +18,7 @@ public class MultiplayermenuView : View {
 
     public void ClickedClient()
     {
-        GuiPresenter.StartMultiplayerClient();
+        GuiPresenter.StartMultiplayerClient(PlayerName.text);
     }    
 
     public void GoBack()

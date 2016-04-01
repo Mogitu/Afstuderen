@@ -13,6 +13,7 @@ public class MultiplayerGameplayView : View {
     public Text MessageTxt;
     public Text ChatBoxTxt;
     private GuiPresenter GuiPresenter;
+    private string PlayerName;    
 
     void Awake()
     {
@@ -20,12 +21,13 @@ public class MultiplayerGameplayView : View {
         GuiPresenter.EventManager.AddListener(GameEvents.ReceiveChatNetwork, OnChatReceived);
         GuiPresenter.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
         GuiPresenter.EventManager.AddListener(GameEvents.PlayerLeft, OnPlayerLeft);
+        PlayerName = GuiPresenter.MainManager.PlayerName;
     }
 
     //TODO  :   More descriptive naming.
     public string AppendTextToBox()
     {       
-        string strA = InputField.text+"NEWLINE";
+        string strA = PlayerName+": "+ InputField.text+"NEWLINE";
         string strB = strA.Replace("NEWLINE", "\n");
         ChatBoxTxt.text += strB;      
         InputField.text = "";

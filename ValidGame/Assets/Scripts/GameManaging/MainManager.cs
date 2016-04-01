@@ -28,12 +28,15 @@ public class MainManager : MonoBehaviour, IMainManager
     public GameObject GoodPlacementEffect;
     public GameObject WrongPlacementEffect;
 
+    private string _PlayerName;
+
+
     void Awake()
     {
         //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
-       // MyTeamType = TeamType.PlanAndDo;
+        // MyTeamType = TeamType.PlanAndDo;
         GamestateManager = new GameStateManager(this);
     }
 
@@ -64,8 +67,9 @@ public class MainManager : MonoBehaviour, IMainManager
         GamestateManager.SetMultiplayerState();
     }
 
-    public void StartMultiplayerClient()
+    public void StartMultiplayerClient(string name)
     {
+        PlayerName = name;
         string adress = AmcUtilities.ReadFileItem("ip", "config.ini");
         NetworkController.StartClient(adress);
         IsMultiplayerGame = true;
@@ -96,7 +100,7 @@ public class MainManager : MonoBehaviour, IMainManager
     }
 
     public void StartPracticeRound(TeamType teamType)
-    {       
+    {
         MyTeamType = teamType;
         StartPracticeRound();
     }
@@ -193,7 +197,23 @@ public class MainManager : MonoBehaviour, IMainManager
     {
         get;
         private set;
-    }   
+    }
+
+    public string PlayerName
+    {
+        get { return _PlayerName; }
+        set
+        {
+            if (value.Length > 0)
+            {
+                _PlayerName = value;
+            }
+            else
+            {
+                _PlayerName = "John Doe";
+            }
+        }
+    }
 }
 
 public enum TeamType
