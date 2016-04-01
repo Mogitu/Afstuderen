@@ -22,7 +22,7 @@ public class TutorialModel
     {
         _Title = AmcUtilities.ReadFileItem("title", path);
         _VideoPath = AmcUtilities.ReadFileItem("video", path);
-        _TutorialText = AmcUtilities.ReadFileItem("text", path);
+        _TutorialText = AmcUtilities.ReadFull("text", path);
     }
 
     public string Title

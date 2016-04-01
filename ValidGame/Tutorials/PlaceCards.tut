@@ -1,3 +1,5 @@
-title=Browsing cards
+title=Placing cards
 video=Tutorial
-text=To browse cards...
+text=Place a card by dragging it over the gameboard. 
+When you hover over an element the upper side of the screen will display information of the object. 
+Place the card by left clicking on an interactable object.

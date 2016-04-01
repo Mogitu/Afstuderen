@@ -34,6 +34,41 @@ public static class AmcUtilities
     }
 
     /// <summary>
+    /// Used to test reading till end of file
+    /// TODO:   if works merge with above readfileitem
+    /// </summary>
+    /// <param name="identifier"></param>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static string ReadFull(string identifier, string path)
+    {
+        StreamReader reader = new StreamReader(path);
+        string line;
+        string[] value;
+        string text="";
+        bool check = false;
+        //Read the file line by line
+        while ((line = reader.ReadLine()) != null)
+        {
+            if (!check)
+            {
+                value = line.Split('=');
+                if (value[0] == identifier)
+                {
+                    //only the right-hand value needs to be returned
+                    text += value[1];
+                    check = true;
+                }
+            }else
+            {
+                text += line;
+            }           
+        }
+        reader.Close();
+        return text;
+    }
+
+    /// <summary>
     /// Not working yet
     /// </summary>
     /// <param name="identifier"></param>
