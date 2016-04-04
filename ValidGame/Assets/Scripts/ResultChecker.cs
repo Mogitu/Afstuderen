@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 
 public class ResultChecker:MonoBehaviour {
-
-    public MainManager GameManager;
-  
+    public MainManager GameManager;  
     private bool ShowingResults = false;
     private List<Card> GoodCards;
     private List<Card> BadCards;

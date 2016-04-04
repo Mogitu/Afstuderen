@@ -4,7 +4,8 @@ using AMC.Networking;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   High level networkmanager
+/// Desc    :   High level networkmanager, defines extra functionality for the VALID game and/or overrides default functions.
+///             This controller is specifically coupled to the VALID game.
 /// </summary>
 
 public class ValidNetworkController : NetworkController

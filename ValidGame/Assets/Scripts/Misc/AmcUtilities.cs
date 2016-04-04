@@ -1,6 +1,5 @@
-﻿using System;
-using System.IO;
-using UnityEngine;
+﻿using System.IO;
+
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Container for misc methods that can be usefull on any place in the application.

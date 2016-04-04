@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class CheatBookScript : MonoBehaviour {
-
-    public ResultChecker Checker;   
+public class CheatBookScript : MonoBehaviour
+{
+    public ResultChecker Checker;
     private bool Cheating;
     private float CheatTimer;
     private int MaxCheatTime = 5;
@@ -19,9 +18,8 @@ public class CheatBookScript : MonoBehaviour {
         {
             Cheating = false;
             Checker.HideResults();
-        }       
+        }
     }
-
 
     void Update()
     {
@@ -36,5 +34,4 @@ public class CheatBookScript : MonoBehaviour {
             }
         }
     }
-	
 }

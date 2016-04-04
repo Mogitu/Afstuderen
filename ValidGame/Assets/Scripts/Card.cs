@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Contains all data used to populate the card front with.
@@ -17,7 +16,6 @@ public class Card : MonoBehaviour
     public SpriteRenderer Sprite;
     //public TextMesh TxtMeshTitle;
     //public TextMesh TxtMeshDesc;
-
 
     // Use this for initialization
     void Start()
