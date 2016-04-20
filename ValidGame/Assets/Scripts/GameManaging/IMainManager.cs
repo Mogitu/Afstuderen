@@ -5,7 +5,8 @@
 public interface IMainManager
 {
     void StartPracticeRound();
-    void StartMultiplayerHost();   
+    void StartMultiplayerHost();
+    void StartMultiplayerClient(string name);
     void RestartGame();
     void QuitApplication();
 }

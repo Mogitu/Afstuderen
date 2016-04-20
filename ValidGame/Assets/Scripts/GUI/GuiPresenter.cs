@@ -22,7 +22,12 @@ public class GuiPresenter : Presenter
         ChangeView(VIEWS.GamePlayingView);
         MainManager.StartPracticeRound(teamType);   
     }
-   
+
+    public void StartMultiplayerClient(string name)
+    {  
+        ChangeView(VIEWS.MatchMakerView);
+        MainManager.StartMultiplayerClient(name);       
+    }
 
     public void ShowTeamSelectView()
     {

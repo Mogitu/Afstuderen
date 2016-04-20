@@ -7,9 +7,8 @@ using System.Collections;
 /// </summary>
 public class PlayingState : GameState {
 
-    public PlayingState(EventManager eventManager)
-            : base(eventManager)
-    {
+    public PlayingState(MainManager manager)
+            : base(manager){
        
     }
 

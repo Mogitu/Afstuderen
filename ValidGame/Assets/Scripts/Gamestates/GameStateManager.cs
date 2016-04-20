@@ -1,51 +1,46 @@
-﻿using UnityEngine;
-/// <summary>
+﻿/// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Controls the flow of available gamestates in relation to the manager.
-/// TODO    :   Depends on concrete Mainmanager, should rather depend on an manager abstraction.(SOLID), or none at all by using events more efficiently.
+/// TODO    :   Depends on concrete Mainmanager, should rather depend on an manager abstraction.(SOLID)
 /// </summary>
-public class GameStateManager:MonoBehaviour {
-    
-    public EventManager EventManager;
+public class GameStateManager {
+
     private GameState GameState;
     private PlayingState PlayingState;
     private WaitingState WaitingState;
     private MultiplayerState MultiPlayerState;
     private GameOverState GameoverState;
 
-    void Start()
-    {    
-        PlayingState = new PlayingState(EventManager);
-        WaitingState = new WaitingState(EventManager);
-        MultiPlayerState = new MultiplayerState(EventManager);
-        GameoverState = new GameOverState(EventManager);
-        AddListeners();
+    public GameStateManager(MainManager manager)
+    {
+        PlayingState = new PlayingState(manager);
+        WaitingState = new WaitingState(manager);
+        MultiPlayerState = new MultiplayerState(manager);
+        GameoverState = new GameOverState(manager);
+        GameState = WaitingState;
+    }    
+	
+	public void UpdateCurrentState()
+    {
+        GameState.UpdateState();
+    }
+
+    public void SetPlayingState()
+    {
+        GameState = PlayingState;
+    }
+
+    public void SetWaitingState()
+    {
         GameState = WaitingState;
     }
 
-    private void AddListeners()
-    {
-        EventManager.AddListener(GameEvents.BeginPracticeMatch,SetPlayingState);
-        EventManager.AddListener(GameEvents.EndPracticeGame,SetGameoverState);
-        EventManager.AddListener(GameEvents.StartMultiplayerMatch,SetMultiplayerState);
-    }
-    
-    void Update()
-    {
-        GameState.UpdateState();
-    }  
-
-    public void SetPlayingState(short gameEvent, Component sender, object obj)
-    {        
-        GameState = PlayingState;
-    }   
-
-    public void SetGameoverState(short gameEvent, Component sender, object obj)
+    public void SetGameoverState()
     {
         GameState = GameoverState;
     }
 
-    public void SetMultiplayerState(short gameEvent, Component sender, object obj)
+    public void SetMultiplayerState()
     {
         GameState = MultiPlayerState;
     }

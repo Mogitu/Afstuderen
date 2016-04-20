@@ -14,7 +14,12 @@ public class MultiplayermenuView : View {
     void Awake()
     {
         GuiPresenter = GetPresenterType<GuiPresenter>();
-    }     
+    }
+
+    public void ClickedClient()
+    {
+        GuiPresenter.StartMultiplayerClient(PlayerName.text);
+    }    
 
     public void GoBack()
     {

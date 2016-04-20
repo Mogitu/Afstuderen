@@ -5,12 +5,12 @@
 ///              Can include basic states such as gameover etc but also new types of gamemodes.
 /// </summary>
 public abstract class GameState: IGameState
-{   
-    protected EventManager EventManager;
+{
+    protected MainManager GameManager;
     //overridable base methods
-    public GameState(EventManager eventManager)
+    public GameState(MainManager gameManager)
     {
-        EventManager = eventManager;
+        GameManager = gameManager;
     }
     public virtual void UpdateState() { }
 }
