@@ -25,4 +25,7 @@ public class GameEvents
     public const short GameIsFinishable = 17;
     public const short UndoGameFinishable = 18;
     public const short PickupCard = 19;
+    public const short BeginPracticeMatch = 20;
+    public const short EndPracticeGame = 21;
+    public const short EndMultiplayerGame = 22;
 }

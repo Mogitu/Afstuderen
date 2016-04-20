@@ -7,7 +7,8 @@ using AMC.Camera;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Hooks all primary functionalities/modules together, after initializing them.
-/// TODO    :   A lot of functions can be placed to specific states.
+/// TODO    :   A lot of functions can be placed to specific states. 
+///             Goal is to move entirely towards modules that no longer need hooks to this/a gamemanager but works with events.
 /// </summary>
 public class MainManager : MonoBehaviour, IMainManager
 {
@@ -21,36 +22,31 @@ public class MainManager : MonoBehaviour, IMainManager
     public int Score { get; set; }
     public TeamType MyTeamType;// { get; private set; }
     public EventManager EventManager;
-
-    private GameStateManager GamestateManager;
     public CardController CardController;
-
     public GameObject GoodPlacementEffect;
     public GameObject WrongPlacementEffect;
-
     private string _PlayerName;
-
 
     void Awake()
     {
         //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
-        //Application.runInBackground = true;
-        // MyTeamType = TeamType.PlanAndDo;
-        GamestateManager = new GameStateManager(this);
+        //Application.runInBackground = true;      
     }
 
     void Start()
     {
         Score = 0;
         EventManager.AddListener(GameEvents.ReceivedTeamType, OnTeamTypeReceived);
+        EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMultiplayerMatch);
+        EventManager.AddListener(GameEvents.SendScore,OnScoreReceived);
+        EventManager.AddListener(GameEvents.SendScoreNetwork, OnScoreReceived);
         DisableAllColliders();
-    }
+    } 
 
-    //Update all attached modules if they dont have their own monobehaviour update.
-    void Update()
-    {
-        GamestateManager.UpdateCurrentState();
+    public void OnScoreReceived(short gameEvent, Component sender, object obj)
+    {     
+        Score = (int)obj;
     }
 
     public void StartMultiplayerHost()
@@ -61,20 +57,11 @@ public class MainManager : MonoBehaviour, IMainManager
         CardController.CollectCards();
     }
 
-    public void StartMultiplayerMatch()
+    public void StartMultiplayerMatch(short gameEvent, Component sender, object obj)
     {
-        RunGameStartAnimation();
-        GamestateManager.SetMultiplayerState();
-    }
-
-    public void StartMultiplayerClient(string name)
-    {
-        PlayerName = name;
-        string adress = AmcUtilities.ReadFileItem("ip", "config.ini");
-        NetworkController.StartClient(adress);
-        IsMultiplayerGame = true;
-        EnableAllColliders();
-    }
+        RunGameStartAnimation();      
+        EventManager.PostNotification(GameEvents.StartMultiplayerMatch, this);
+    } 
 
     private void OnTeamTypeReceived(short eventType, Component sender, object param = null)
     {
@@ -92,8 +79,8 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void StartPracticeRound()
     {
-        RunGameStartAnimation();
-        GamestateManager.SetPlayingState();
+        RunGameStartAnimation();      
+        EventManager.PostNotification(GameEvents.BeginPracticeMatch,this);
         IsMultiplayerGame = false;
         CardController.CollectCards();
         EnableAllColliders();
@@ -107,14 +94,16 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void EndPracticeGame()
     {
-        Presenter.ChangeView(VIEWS.GameovermenuView);
-        GamestateManager.SetGameoverState();
+        Presenter.ChangeView(VIEWS.GameovermenuView);      
+        EventManager.PostNotification(GameEvents.EndPracticeGame,this);
         RunGameEndAnimation();
     }
 
     public void EndMultiplayerGame()
     {
-        EndPracticeGame();
+        Presenter.ChangeView(VIEWS.GameovermenuView);
+        EventManager.PostNotification(GameEvents.EndMultiplayerGame, this);
+        RunGameEndAnimation();
     }
 
     public void RestartGame()

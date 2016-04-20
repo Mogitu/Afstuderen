@@ -4,9 +4,9 @@
 /// </summary>
 public class MultiplayerState : GameState{
 
-    public MultiplayerState(MainManager manager)
-            : base(manager){
-    }
+    public MultiplayerState(EventManager eventManager)
+            : base(eventManager) { }
+    
 
     public override void UpdateState()
     {
