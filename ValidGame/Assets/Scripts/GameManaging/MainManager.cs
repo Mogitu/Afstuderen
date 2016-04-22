@@ -11,6 +11,7 @@ using AMC.Camera;
 /// </summary>
 public class MainManager : MonoBehaviour
 {
+    public GameObject DefaultRoom;
     //current modules developed for internalship
     public Presenter Presenter;
     public CameraController CameraController;
@@ -20,7 +21,7 @@ public class MainManager : MonoBehaviour
     public GameObject GameBoard;
     public int Score { get; set; }
     public TeamType MyTeamType;// { get; private set; }
-    public EventManager EventManager;   
+    public EventManager EventManager;
     public CardController CardController;
 
     public GameObject GoodPlacementEffect;
@@ -33,14 +34,15 @@ public class MainManager : MonoBehaviour
         //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
-        // MyTeamType = TeamType.PlanAndDo;
-        //ExternalAssetLoader loader = new ExternalAssetLoader();
-        /*
-        if (loader.LoadBundle("ExternalAssets/objects/block", "myObjects"))
-        {           
-            GameObject o = Instantiate(loader.LoadObject("myObjects","Cube.prefab"));
-        }        
-        */
+        //MyTeamType = TeamType.PlanAndDo;
+        string room = AmcUtilities.ReadFileItem("room", "config.ini");
+        if (room != "default")
+        {
+            DefaultRoom.SetActive(false);
+            ExternalAssetLoader loader = new ExternalAssetLoader();
+            loader.LoadBundle("ExternalAssets/kantoor", "myObjects");
+            Instantiate(loader.LoadObject("myObjects", room));
+        }
     }
 
     void Start()
@@ -48,7 +50,7 @@ public class MainManager : MonoBehaviour
         Score = 0;
         EventManager.AddListener(GameEvents.ReceivedTeamType, OnTeamTypeReceived);
         EventManager.AddListener(GameEvents.SendScore, OnScoreReceived);
-        EventManager.AddListener(GameEvents.SendScoreNetwork,OnScoreReceived);
+        EventManager.AddListener(GameEvents.SendScoreNetwork, OnScoreReceived);
         EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMultiplayerMatch);
         EventManager.AddListener(GameEvents.RestartGame, RestartGame);
         DisableAllColliders();
@@ -57,11 +59,11 @@ public class MainManager : MonoBehaviour
     private void OnScoreReceived(short gameEvent, Component sender, object obj)
     {
         Score = (int)obj;
-    }   
+    }
 
     public void StartMultiplayerMatch(short gameEvent, Component sender, object obj)
     {
-        RunGameStartAnimation();   
+        RunGameStartAnimation();
         EventManager.PostNotification(GameEvents.BeginMultiplayer, this, null);
     }
 
@@ -90,8 +92,8 @@ public class MainManager : MonoBehaviour
 
     public void StartPracticeRound()
     {
-        RunGameStartAnimation();       
-        EventManager.PostNotification(GameEvents.BeginPractice,this,null);
+        RunGameStartAnimation();
+        EventManager.PostNotification(GameEvents.BeginPractice, this, null);
         IsMultiplayerGame = false;
         CardController.CollectCards();
         EnableAllColliders();
@@ -105,14 +107,14 @@ public class MainManager : MonoBehaviour
 
     private void EndPracticeGame()
     {
-        Presenter.ChangeView(VIEWS.GameovermenuView);        
+        Presenter.ChangeView(VIEWS.GameovermenuView);
         EventManager.PostNotification(GameEvents.EndPractice, this);
         RunGameEndAnimation();
     }
 
     private void EndMultiplayerGame()
-    {        
-        Presenter.ChangeView(VIEWS.GameovermenuView);       
+    {
+        Presenter.ChangeView(VIEWS.GameovermenuView);
         EventManager.PostNotification(GameEvents.EndMultiplayer, this);
         RunGameEndAnimation();
     }
@@ -122,7 +124,8 @@ public class MainManager : MonoBehaviour
         if (IsMultiplayerGame)
         {
             EndMultiplayerGame();
-        }else
+        }
+        else
         {
             EndPracticeGame();
         }
@@ -131,7 +134,7 @@ public class MainManager : MonoBehaviour
     public void RestartGame(short eventType, Component sender, object param = null)
     {
         SceneManager.LoadScene("GameScene");
-    }   
+    }
 
     //Played at the start of the game. Moves camera to gameboard and hands camera control over to the player. See the animation statemachine.
     public void RunGameStartAnimation()

@@ -1,26 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class ExternalAssetLoader{
-
+public class ExternalAssetLoader
+{
     private string AssetPath;
     private Dictionary<string, AssetBundle> AssetBundles;
     private bool LoadSuccess;
 
-	public ExternalAssetLoader()
+    public ExternalAssetLoader()
     {
         AssetBundles = new Dictionary<string, AssetBundle>();
     }
 
-    public bool LoadBundle(string path, string lookupName)
+    public void LoadBundle(string path, string lookupName)
     {
-        AssetBundle bundle = AssetBundle.LoadFromFile(path);       
-        if (bundle != null)
-        {           
-            AssetBundles.Add(lookupName, bundle);
-            return true;
-        }
-        return false;
+        AssetBundle bundle = AssetBundle.LoadFromFile(path);
+        AssetBundles.Add(lookupName, bundle);
     }
 
     public GameObject LoadObject(string bundleName, string objectName)
