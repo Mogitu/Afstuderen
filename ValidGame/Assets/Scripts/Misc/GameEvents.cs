@@ -30,4 +30,6 @@ public class GameEvents
     public const short BeginPractice = 21;
     public const short EndMultiplayer = 22;
     public const short EndPractice = 23;
+
+    public const short RestartGame = 24;
 }

@@ -9,7 +9,7 @@ using AMC.Camera;
 /// Desc    :   Hooks all primary functionalities/modules together, after initializing them.
 /// TODO    :   A lot of functions can be placed to specific states.
 /// </summary>
-public class MainManager : MonoBehaviour, IMainManager
+public class MainManager : MonoBehaviour
 {
     //current modules developed for internalship
     public Presenter Presenter;
@@ -28,14 +28,19 @@ public class MainManager : MonoBehaviour, IMainManager
 
     private string _PlayerName;
 
-
     void Awake()
     {
         //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
         // MyTeamType = TeamType.PlanAndDo;
-        
+        //ExternalAssetLoader loader = new ExternalAssetLoader();
+        /*
+        if (loader.LoadBundle("ExternalAssets/objects/block", "myObjects"))
+        {           
+            GameObject o = Instantiate(loader.LoadObject("myObjects","Cube.prefab"));
+        }        
+        */
     }
 
     void Start()
@@ -45,19 +50,18 @@ public class MainManager : MonoBehaviour, IMainManager
         EventManager.AddListener(GameEvents.SendScore, OnScoreReceived);
         EventManager.AddListener(GameEvents.SendScoreNetwork,OnScoreReceived);
         EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMultiplayerMatch);
+        EventManager.AddListener(GameEvents.RestartGame, RestartGame);
         DisableAllColliders();
     }
 
     private void OnScoreReceived(short gameEvent, Component sender, object obj)
     {
         Score = (int)obj;
-    }
-   
+    }   
 
     public void StartMultiplayerMatch(short gameEvent, Component sender, object obj)
     {
-        RunGameStartAnimation();
-        //GamestateManager.SetMultiplayerState();
+        RunGameStartAnimation();   
         EventManager.PostNotification(GameEvents.BeginMultiplayer, this, null);
     }
 
@@ -86,8 +90,7 @@ public class MainManager : MonoBehaviour, IMainManager
 
     public void StartPracticeRound()
     {
-        RunGameStartAnimation();
-        //GamestateManager.SetPlayingState();
+        RunGameStartAnimation();       
         EventManager.PostNotification(GameEvents.BeginPractice,this,null);
         IsMultiplayerGame = false;
         CardController.CollectCards();
@@ -102,17 +105,14 @@ public class MainManager : MonoBehaviour, IMainManager
 
     private void EndPracticeGame()
     {
-        Presenter.ChangeView(VIEWS.GameovermenuView);
-        //GamestateManager.SetGameoverState();
+        Presenter.ChangeView(VIEWS.GameovermenuView);        
         EventManager.PostNotification(GameEvents.EndPractice, this);
         RunGameEndAnimation();
     }
 
     private void EndMultiplayerGame()
-    {
-        //EndPracticeGame();
-        Presenter.ChangeView(VIEWS.GameovermenuView);
-        //GamestateManager.SetGameoverState();
+    {        
+        Presenter.ChangeView(VIEWS.GameovermenuView);       
         EventManager.PostNotification(GameEvents.EndMultiplayer, this);
         RunGameEndAnimation();
     }
@@ -128,15 +128,10 @@ public class MainManager : MonoBehaviour, IMainManager
         }
     }
 
-    public void RestartGame()
+    public void RestartGame(short eventType, Component sender, object param = null)
     {
         SceneManager.LoadScene("GameScene");
-    }
-
-    public void SendCardToOppent(CardToOpponentMessage param)
-    {
-        EventManager.PostNotification(GameEvents.SendCardToOpponent, null, param);
-    }
+    }   
 
     //Played at the start of the game. Moves camera to gameboard and hands camera control over to the player. See the animation statemachine.
     public void RunGameStartAnimation()

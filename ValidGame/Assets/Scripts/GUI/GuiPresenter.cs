@@ -47,7 +47,8 @@ public class GuiPresenter : Presenter
 
     public void Restart()
     {
-        MainManager.RestartGame();
+        EventManager.PostNotification(GameEvents.RestartGame, this);
+        //MainManager.RestartGame();
     }
 
     public void QuitApplication()

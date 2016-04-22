@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.4f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -114,7 +116,6 @@
     <Compile Include="Assets\Scripts\GUI\TutorialModel.cs" />
     <Compile Include="Assets\Scripts\GUI\TutorialView.cs" />
     <Compile Include="Assets\Scripts\GUI\Views.cs" />
-    <Compile Include="Assets\Scripts\GameManaging\IMainManager.cs" />
     <Compile Include="Assets\Scripts\GameManaging\MainManager.cs" />
     <Compile Include="Assets\Scripts\Gamestates\GameOverState.cs" />
     <Compile Include="Assets\Scripts\Gamestates\GameState.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Assets\Scripts\Misc\CheatBookScript.cs" />
     <Compile Include="Assets\Scripts\Misc\DestructibleParticle.cs" />
     <Compile Include="Assets\Scripts\Misc\EventManager.cs" />
+    <Compile Include="Assets\Scripts\Misc\ExternalAssetLoader.cs" />
     <Compile Include="Assets\Scripts\Misc\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
     <Compile Include="Assets\Scripts\Misc\Rotator.cs" />

@@ -208,7 +208,7 @@ public class CardController : MonoBehaviour
             CardToOpponentMessage msg = new CardToOpponentMessage();
             msg.CardName = CurrentCard.name;
             msg.Position = CurrentCard.transform.position;
-            MainManager.SendCardToOppent(msg);
+            EventManager.PostNotification(GameEvents.SendCardToOpponent,this,msg);           
         }
         CurrentCard = null;
         CheckForGameFinishable();
