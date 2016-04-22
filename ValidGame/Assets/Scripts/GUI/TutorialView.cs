@@ -15,10 +15,7 @@ public class TutorialView : View
     public Text TitleText;
     public Text InfoText;
     public Text TutorialCountText;
-    public RawImage Image;
-
-    private bool TutorialComplete = false;
-    private Dictionary<string, TutorialComponent> TutorialComponents;
+    public RawImage Image;      
     private GuiPresenter GuiPresenter;
     private TutorialModel CurrentTutorial;
     private TutorialModel[] TutorialModels;

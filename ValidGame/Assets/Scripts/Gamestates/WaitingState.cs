@@ -8,9 +8,10 @@ public class WaitingState : GameState {
     private bool RunTimer = false;
     private int MaxTime = 3;
 
-    public WaitingState(MainManager manager)
-            : base(manager){
-        manager.EventManager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
+    public WaitingState(EventManager manager)
+            : base(manager)
+    {
+        manager.AddListener(GameEvents.PlayerJoined, OnPlayerJoined);
     }
 
     public override void UpdateState()
@@ -20,10 +21,10 @@ public class WaitingState : GameState {
             Timer += Time.deltaTime;
             if(Timer >=MaxTime)
             {
-                GameManager.StartMultiplayerMatch();
+                //GameManager.StartMultiplayerMatch();
                 Timer = 0;
                 RunTimer = false;
-                GameManager.EventManager.PostNotification(GameEvents.StartMultiplayerMatch,null);
+                EventManager.PostNotification(GameEvents.StartMultiplayerMatch,null);
             }
         }
     }

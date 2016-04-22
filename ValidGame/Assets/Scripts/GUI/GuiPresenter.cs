@@ -67,6 +67,7 @@ public class GuiPresenter : Presenter
         ChangeView(VIEWS.MainmenuView);
     }
 
+    /*
     public void EndPracticeGame()
     {
         MainManager.EndPracticeGame();
@@ -76,6 +77,7 @@ public class GuiPresenter : Presenter
     {
         MainManager.EndMultiplayerGame();
     }
+    */
    
     public void PickCard(string code)
     {               
@@ -133,7 +135,8 @@ public class GuiPresenter : Presenter
 
     public void FinishGame()
     {
-        MainManager.EndPracticeGame();
+        //MainManager.EndPracticeGame();
+        MainManager.FinishGame();
     }
 
     public TeamType GetTeamType

@@ -20,9 +20,7 @@ public class MainManager : MonoBehaviour, IMainManager
     public GameObject GameBoard;
     public int Score { get; set; }
     public TeamType MyTeamType;// { get; private set; }
-    public EventManager EventManager;
-
-    private GameStateManager GamestateManager;
+    public EventManager EventManager;   
     public CardController CardController;
 
     public GameObject GoodPlacementEffect;
@@ -37,34 +35,30 @@ public class MainManager : MonoBehaviour, IMainManager
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
         // MyTeamType = TeamType.PlanAndDo;
-        GamestateManager = new GameStateManager(this);
+        
     }
 
     void Start()
     {
         Score = 0;
         EventManager.AddListener(GameEvents.ReceivedTeamType, OnTeamTypeReceived);
+        EventManager.AddListener(GameEvents.SendScore, OnScoreReceived);
+        EventManager.AddListener(GameEvents.SendScoreNetwork,OnScoreReceived);
+        EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMultiplayerMatch);
         DisableAllColliders();
     }
 
-    //Update all attached modules if they dont have their own monobehaviour update.
-    void Update()
+    private void OnScoreReceived(short gameEvent, Component sender, object obj)
     {
-        GamestateManager.UpdateCurrentState();
+        Score = (int)obj;
     }
+   
 
-    public void StartMultiplayerHost()
-    {
-        NetworkController.StartHosting();
-        IsMultiplayerGame = true;
-        MyTeamType = TeamType.CheckAndAct;
-        CardController.CollectCards();
-    }
-
-    public void StartMultiplayerMatch()
+    public void StartMultiplayerMatch(short gameEvent, Component sender, object obj)
     {
         RunGameStartAnimation();
-        GamestateManager.SetMultiplayerState();
+        //GamestateManager.SetMultiplayerState();
+        EventManager.PostNotification(GameEvents.BeginMultiplayer, this, null);
     }
 
     public void StartMultiplayerClient(string name)
@@ -93,7 +87,8 @@ public class MainManager : MonoBehaviour, IMainManager
     public void StartPracticeRound()
     {
         RunGameStartAnimation();
-        GamestateManager.SetPlayingState();
+        //GamestateManager.SetPlayingState();
+        EventManager.PostNotification(GameEvents.BeginPractice,this,null);
         IsMultiplayerGame = false;
         CardController.CollectCards();
         EnableAllColliders();
@@ -105,16 +100,32 @@ public class MainManager : MonoBehaviour, IMainManager
         StartPracticeRound();
     }
 
-    public void EndPracticeGame()
+    private void EndPracticeGame()
     {
         Presenter.ChangeView(VIEWS.GameovermenuView);
-        GamestateManager.SetGameoverState();
+        //GamestateManager.SetGameoverState();
+        EventManager.PostNotification(GameEvents.EndPractice, this);
         RunGameEndAnimation();
     }
 
-    public void EndMultiplayerGame()
+    private void EndMultiplayerGame()
     {
-        EndPracticeGame();
+        //EndPracticeGame();
+        Presenter.ChangeView(VIEWS.GameovermenuView);
+        //GamestateManager.SetGameoverState();
+        EventManager.PostNotification(GameEvents.EndMultiplayer, this);
+        RunGameEndAnimation();
+    }
+
+    public void FinishGame()
+    {
+        if (IsMultiplayerGame)
+        {
+            EndMultiplayerGame();
+        }else
+        {
+            EndPracticeGame();
+        }
     }
 
     public void RestartGame()

@@ -7,26 +7,35 @@ using System.Collections.Generic;
 /// </summary>
 public class GameOverState : GameState
 {
-    private bool FirstRun = false;
+
     private int GoodCards = 0;
 
-    public GameOverState(MainManager manager)
+    public GameOverState(EventManager manager)
             : base(manager)
     {
+        EventManager.AddListener(GameEvents.EndMultiplayer, OnEndMultiplayer);
+        EventManager.AddListener(GameEvents.EndPractice, OnEndPractice);
+    }
+
+    private void OnEndMultiplayer(short gameEvent, Component sender, object obj)
+    {
+        OnEndPractice(gameEvent, sender, obj);
+        EventManager.PostNotification(GameEvents.SendScoreNetwork, null, GoodCards);
+    }
+
+    private void OnEndPractice(short gameEvent, Component sender, object obj)
+    {
+        DetermineResults();
+        Camera.main.GetComponent<CameraController>().enabled = false;
+        Camera.main.GetComponent<Animator>().enabled = true;
+        Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
+        DisableAllColliders();
+        EventManager.PostNotification(GameEvents.SendScore, null, GoodCards);
     }
 
     public override void UpdateState()
     {
-        //Only run this once
-        if (!FirstRun)
-        {
-            DetermineResults();
-            Camera.main.GetComponent<CameraController>().enabled = false;
-            Camera.main.GetComponent<Animator>().enabled = true;
-            Camera.main.GetComponent<Animator>().SetBool("GameOver", true);
-            DisableAllColliders();
-            FirstRun = true;
-        }
+
     }
 
     /// <summary>
@@ -47,19 +56,7 @@ public class GameOverState : GameState
     /// </summary>
     public void DetermineResults()
     {
-        ResultChecker checker = Object.FindObjectOfType<ResultChecker>();       
+        ResultChecker checker = Object.FindObjectOfType<ResultChecker>();
         GoodCards = checker.CalculateResults();
-        SendScores();
-    }
-
-    public void SendScores()
-    {
-        //If it is an multiplayer game the score needs to be sent to the opposing player.
-        if (GameManager.IsMultiplayerGame)
-        {
-            GameManager.EventManager.PostNotification(GameEvents.SendScoreNetwork, null, GoodCards);
-        }
-        GameManager.EventManager.PostNotification(GameEvents.SendScore, null, GoodCards);
-        GameManager.Score = GoodCards;
     }
 }

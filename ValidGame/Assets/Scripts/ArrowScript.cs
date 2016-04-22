@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   Floating arrow depicting if a card can be grabbed or dropped.
+/// </summary>
 public class ArrowScript : MonoBehaviour {
     public Transform TextTransform;
     public GameObject ArrowObject;
@@ -7,7 +11,7 @@ public class ArrowScript : MonoBehaviour {
     public GameObject GrabObject;
     public float MaxUpDown = 1.0f;
     public float Speed = 1.0f;
-    private float Angle =0;
+    private float Angle = 0;
     private float OriginalYPos;
     private float OriginalYText;
 

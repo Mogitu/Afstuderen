@@ -65,6 +65,6 @@ public class MultiplayerGameplayView : View {
     public void OnPlayerLeft(short Event_Type, Component Sender, object Param = null)
     {
         AppendSingle("Player left, gameover!");
-        GuiPresenter.EndMultiplayerGame();
+        GuiPresenter.FinishGame();
     }   
 }

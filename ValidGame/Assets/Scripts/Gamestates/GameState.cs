@@ -6,11 +6,11 @@
 /// </summary>
 public abstract class GameState: IGameState
 {
-    protected MainManager GameManager;
+    protected EventManager EventManager;
     //overridable base methods
-    public GameState(MainManager gameManager)
+    public GameState(EventManager eventManager)
     {
-        GameManager = gameManager;
+        EventManager = eventManager;
     }
     public virtual void UpdateState() { }
 }
