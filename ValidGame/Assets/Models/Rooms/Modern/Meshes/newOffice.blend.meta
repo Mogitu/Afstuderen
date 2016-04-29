@@ -17,6 +17,10 @@ ModelImporter:
     100018: Cube
     100020: TableLeft
     100022: TableRight
+    100024: GameTable
+    100026: TableRight_001
+    100028: Support
+    100030: Glas
     400000: Ceiling
     400002: DiagonalWallLeft
     400004: DiagonalWallLeft_001
@@ -29,6 +33,10 @@ ModelImporter:
     400018: Cube
     400020: TableLeft
     400022: TableRight
+    400024: GameTable
+    400026: TableRight_001
+    400028: Support
+    400030: Glas
     2300000: Ceiling
     2300002: DiagonalWallLeft
     2300004: DiagonalWallLeft_001
@@ -40,6 +48,10 @@ ModelImporter:
     2300016: Cube
     2300018: TableLeft
     2300020: TableRight
+    2300022: GameTable
+    2300024: TableRight_001
+    2300026: Support
+    2300028: Glas
     3300000: Ceiling
     3300002: DiagonalWallLeft
     3300004: DiagonalWallLeft_001
@@ -51,6 +63,10 @@ ModelImporter:
     3300016: Cube
     3300018: TableLeft
     3300020: TableRight
+    3300022: GameTable
+    3300024: TableRight_001
+    3300026: Support
+    3300028: Glas
     4300000: Table
     4300002: DiagonalWallRight_001
     4300004: DiagonalWallLeft_001
@@ -62,6 +78,10 @@ ModelImporter:
     4300016: Cube
     4300018: TableRight
     4300020: TableLeft
+    4300022: GameTable
+    4300024: TableRight_001
+    4300026: Support
+    4300028: Glas
     7400000: Default Take
     9500000: //RootNode
   materials:
