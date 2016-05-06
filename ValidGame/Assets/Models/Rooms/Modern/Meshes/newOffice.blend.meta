@@ -24,6 +24,10 @@ ModelImporter:
     100032: Carpet
     100034: MeetingTable
     100036: Support_001
+    100038: MeetingTable_001
+    100040: MeetingTable_002
+    100042: Support_002
+    100044: Support_003
     400000: Ceiling
     400002: DiagonalWallLeft
     400004: DiagonalWallLeft_001
@@ -43,6 +47,10 @@ ModelImporter:
     400032: Carpet
     400034: MeetingTable
     400036: Support_001
+    400038: MeetingTable_001
+    400040: MeetingTable_002
+    400042: Support_002
+    400044: Support_003
     2300000: Ceiling
     2300002: DiagonalWallLeft
     2300004: DiagonalWallLeft_001
@@ -61,6 +69,10 @@ ModelImporter:
     2300030: Carpet
     2300032: MeetingTable
     2300034: Support_001
+    2300036: MeetingTable_001
+    2300038: MeetingTable_002
+    2300040: Support_002
+    2300042: Support_003
     3300000: Ceiling
     3300002: DiagonalWallLeft
     3300004: DiagonalWallLeft_001
@@ -79,6 +91,10 @@ ModelImporter:
     3300030: Carpet
     3300032: MeetingTable
     3300034: Support_001
+    3300036: MeetingTable_001
+    3300038: MeetingTable_002
+    3300040: Support_002
+    3300042: Support_003
     4300000: Table
     4300002: DiagonalWallRight_001
     4300004: DiagonalWallLeft_001
@@ -97,6 +113,10 @@ ModelImporter:
     4300030: MeetingTable
     4300032: Support_001
     4300034: Carpet
+    4300036: MeetingTable_002
+    4300038: Support_003
+    4300040: MeetingTable_001
+    4300042: Support_002
     7400000: Default Take
     9500000: //RootNode
   materials:
