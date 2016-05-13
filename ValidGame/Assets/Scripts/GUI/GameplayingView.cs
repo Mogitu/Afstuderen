@@ -40,8 +40,15 @@ public class GameplayingView : View{
     }
 
     void Update()
-    {        
-        //CheckForDescriptionHit();
+    {
+        if (CheckForDescriptionHit())
+        {
+            return;
+        }   
+        if(InfoText.text!="")
+        {
+            InfoText.text = "";
+        }   
     }
 
     public void Restart()
@@ -64,14 +71,19 @@ public class GameplayingView : View{
         GuiPresenter.FinishGame();
     }
 
-    private void CheckForDescriptionHit()
+    private bool CheckForDescriptionHit()
     {
         //Update inforbar description text with the object below the mouse pointer.
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 10))
         {
-            GuiPresenter.UpdateContextInformationText(InfoText, hit);
+            if (hit.transform.name != "gameBoard")
+            {
+                GuiPresenter.UpdateContextInformationText(InfoText, hit);
+                return true;
+            }           
         }
+        return false;
     }   
 }

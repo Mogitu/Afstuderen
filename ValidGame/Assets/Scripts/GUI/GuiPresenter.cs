@@ -153,9 +153,17 @@ public class GuiPresenter : Presenter
     public void UpdateContextInformationText(Text txt, RaycastHit hit)
     {
         ContextDescription desc = hit.transform.gameObject.GetComponentInChildren<ContextDescription>();
-        if (desc != null)
+        if (desc != null )
         {
             txt.text = desc.DescriptionText;
+            return;
         }
-    }
+
+        Transform parent = hit.transform.parent;
+        desc = parent.transform.gameObject.GetComponentInChildren<ContextDescription>();
+        if(desc !=null)
+        {
+            txt.text = desc.DescriptionText;
+        }    
+    }   
 }
