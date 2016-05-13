@@ -52,9 +52,9 @@ public class GameplayingView : View
         {
             // GuiPresenter.EventManager.PostNotification(GameEvents.EndPractice,null);
             GuiPresenter.FinishGame();
-        }       
-        string minutes = Math.Round((MainManager.GameTime / 60),0).ToString();
-        string seconds = Math.Round((MainManager.GameTime % 60),0).ToString();
+        }
+        int minutes = (int)(MainManager.GameTime / 60);
+        int seconds = (int)(MainManager.GameTime % 60);
         TimerText.text = minutes + ":" + seconds;
         if (CheckForDescriptionHit())
         {

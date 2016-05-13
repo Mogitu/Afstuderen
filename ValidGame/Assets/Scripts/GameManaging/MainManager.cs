@@ -21,7 +21,8 @@ public class MainManager : MonoBehaviour
     public GameObject GameBoard;
     public int Score { get; set; }
     public TeamType MyTeamType;// { get; private set; }
-    public float GameTime = 3;
+    [HideInInspector]
+    public float GameTime = 300;
     public EventManager EventManager;
     public CardController CardController;
 
@@ -44,6 +45,9 @@ public class MainManager : MonoBehaviour
             loader.LoadBundle("ExternalAssets/kantoor", "myObjects");
             Instantiate(loader.LoadObject("myObjects", room));
         }
+
+        GameTime = float.Parse(AmcUtilities.ReadFileItem("gametime", "config.ini"));
+      
     }
 
     void Start()
