@@ -19,10 +19,15 @@ public class GuiPresenter : Presenter
 
     public void StartPracticeRound(TeamType teamType)
     {
-        ChangeView(VIEWS.GamePlayingView);
-        MainManager.StartPracticeRound(teamType);   
+        ChangeView(VIEWS.GamePlayingView);       
+        MainManager.StartPracticeRound(teamType);       
     }
 
+    public void StartPracticeRound()
+    {
+        ChangeView(VIEWS.GamePlayingView);
+        MainManager.StartPracticeRoundAllCards();
+    }
     public void StartMultiplayerClient(string name)
     {  
         ChangeView(VIEWS.MatchMakerView);

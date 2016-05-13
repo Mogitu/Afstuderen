@@ -39,12 +39,24 @@ public class CardbrowserView : View
         GuiCard[] cards = FindObjectsOfType<GuiCard>();
         float offSetX = OffsetX;
         float offSetY = OffsetY;
-        int col = 1;
-        for (int i = 0; i < cards.Length; i++)
+        int col = 1;     
+        //add all cards
+        if (GuiPresenter.GetTeamType == TeamType.ALL)
         {
-            if (GuiPresenter.GetTeamType == cards[i].TeamType)
+            for (int i = 0; i < cards.Length; i++)
             {
                 AddCard(cards[i], ref offSetX, ref offSetY, ref col);
+            }
+        }
+        //only add cards of selected teamtype
+        else
+        {
+            for (int i = 0; i < cards.Length; i++)
+            {
+                if (GuiPresenter.GetTeamType == cards[i].TeamType)
+                {
+                    AddCard(cards[i], ref offSetX, ref offSetY, ref col);
+                }
             }
         }
     }
@@ -54,7 +66,7 @@ public class CardbrowserView : View
         float offSetX = OffsetX;
         float offSetY = OffsetY;
         int col = 1;
-        foreach(KeyValuePair<string, GuiCard> card in BrowsableCards)
+        foreach (KeyValuePair<string, GuiCard> card in BrowsableCards)
         {
             GuiCard guiCard = card.Value;
             guiCard.transform.SetParent(CardPanelContent.transform, false);
@@ -62,7 +74,7 @@ public class CardbrowserView : View
             newPos.x += offSetX;
             newPos.y += offSetY;
             offSetX += 150;
-            guiCard.transform.position = newPos;  
+            guiCard.transform.position = newPos;
             col++;
             if (col >= 5)
             {

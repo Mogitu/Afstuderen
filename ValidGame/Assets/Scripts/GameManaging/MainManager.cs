@@ -34,7 +34,7 @@ public class MainManager : MonoBehaviour
         //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
-        //MyTeamType = TeamType.PlanAndDo;
+        MyTeamType = TeamType.ALL;
         string room = AmcUtilities.ReadFileItem("room", "config.ini");
         if (room != "default")
         {
@@ -94,8 +94,8 @@ public class MainManager : MonoBehaviour
     {
         RunGameStartAnimation();
         EventManager.PostNotification(GameEvents.BeginPractice, this, null);
-        IsMultiplayerGame = false;
-        CardController.CollectCards();
+        IsMultiplayerGame = false;        
+        CardController.CollectCards();             
         EnableAllColliders();
     }
 
@@ -103,6 +103,15 @@ public class MainManager : MonoBehaviour
     {
         MyTeamType = teamType;
         StartPracticeRound();
+    }
+
+    public void StartPracticeRoundAllCards()
+    {
+        RunGameStartAnimation();
+        EventManager.PostNotification(GameEvents.BeginPractice, this, null);
+        IsMultiplayerGame = false;
+        CardController.CollectCards();
+        EnableAllColliders();
     }
 
     private void EndPracticeGame()
@@ -228,5 +237,6 @@ public class MainManager : MonoBehaviour
 public enum TeamType
 {
     CheckAndAct,
-    PlanAndDo
+    PlanAndDo,
+    ALL
 }

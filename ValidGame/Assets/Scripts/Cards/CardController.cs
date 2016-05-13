@@ -208,7 +208,7 @@ public class CardController : MonoBehaviour
             CardToOpponentMessage msg = new CardToOpponentMessage();
             msg.CardName = CurrentCard.name;
             msg.Position = CurrentCard.transform.position;
-            EventManager.PostNotification(GameEvents.SendCardToOpponent,this,msg);           
+            EventManager.PostNotification(GameEvents.SendCardToOpponent, this, msg);
         }
         CurrentCard = null;
         CheckForGameFinishable();
@@ -251,7 +251,6 @@ public class CardController : MonoBehaviour
         return null;
     }
 
-
     public void OnSelectCard(short gameEvent, Component Sender, object param)
     {
         string code = ((string)param).Trim();
@@ -282,9 +281,9 @@ public class CardController : MonoBehaviour
     //Collects all cards that are created in the scene by the builder module and add them to the card collection.
     public void CollectCards()
     {
-        Card[] cards = FindObjectsOfType<Card>();
+        Card[] cards = FindObjectsOfType<Card>();      
         for (int i = 0; i < cards.Length; i++)
-        {
+        {         
             Card card = cards[i];
             //collect only cards of the current teamtype
             if (MainManager.MyTeamType == card.TypeOfCard)
@@ -304,8 +303,25 @@ public class CardController : MonoBehaviour
                     CardCollection.Add(card.MatchCode, card);
                 }
             }
+            else if(MainManager.MyTeamType==TeamType.ALL)
+            {
+                //check if card already exists in dictionary, if so we append the code with 2 at the end
+                //if()
+                if (CardCollection.ContainsKey(card.MatchCode))
+                {
+                    card.MatchCode = card.MatchCode + "2";
+                    card.name = "SceneCard" + card.MatchCode;
+                    CardCollection.Add(card.MatchCode, card);
+                }
+                else
+                {
+                    //card.MatchCode = card.MatchCode;
+                    //card.name = "SceneCard" + card.MatchCode;
+                    CardCollection.Add(card.MatchCode, card);
+                }
+            }
         }
         CardCount = CardCollection.Count;
         ContextCards = FillContextCards();
-    }
+    }   
 }
