@@ -21,6 +21,7 @@ public class MainManager : MonoBehaviour
     public GameObject GameBoard;
     public int Score { get; set; }
     public TeamType MyTeamType;// { get; private set; }
+    public float GameTime = 3;
     public EventManager EventManager;
     public CardController CardController;
 

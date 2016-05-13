@@ -1,27 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using AMC.GUI;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Default gui view for when the player is hovering over the game board.
 /// </summary>
-public class GameplayingView : View{
+public class GameplayingView : View
+{
     public GameObject FinishButton;
     public GameObject InfoBar;
     public Text InfoText;
+    public Text TimerText;
     private GuiPresenter GuiPresenter;
-
+    private MainManager MainManager;
     void Awake()
     {
         FinishButton.SetActive(false);
         GuiPresenter = GetPresenterType<GuiPresenter>();
-        GuiPresenter.EventManager.AddListener(GameEvents.GameIsFinishable,OnGameIsFinishable);
+        GuiPresenter.EventManager.AddListener(GameEvents.GameIsFinishable, OnGameIsFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
-    }    
+        MainManager = GuiPresenter.MainManager;
+        
+    }
 
-    public void OpenCardView(){       
-        GuiPresenter.ToggleCardbrowser();    
+    public void OpenCardView()
+    {
+        GuiPresenter.ToggleCardbrowser();
     }
 
     public void ToggleOptionsView()
@@ -41,14 +47,25 @@ public class GameplayingView : View{
 
     void Update()
     {
+        MainManager.GameTime -= Time.deltaTime;
+        if (MainManager.GameTime <= 0)
+        {
+            // GuiPresenter.EventManager.PostNotification(GameEvents.EndPractice,null);
+            GuiPresenter.FinishGame();
+        }       
+        string minutes = Math.Round((MainManager.GameTime / 60),0).ToString();
+        string seconds = Math.Round((MainManager.GameTime % 60),0).ToString();
+        TimerText.text = minutes + ":" + seconds;
         if (CheckForDescriptionHit())
         {
             return;
-        }   
-        if(InfoText.text!="")
+        }
+        if (InfoText.text != "")
         {
             InfoText.text = "";
-        }   
+        }
+
+       
     }
 
     public void Restart()
@@ -56,18 +73,18 @@ public class GameplayingView : View{
         GuiPresenter.Restart();
     }
 
-    public void OnGameIsFinishable(short gameEvent, Component sender, object param=null)
+    public void OnGameIsFinishable(short gameEvent, Component sender, object param = null)
     {
         FinishButton.SetActive(true);
     }
 
-    public void OnUndoGameFinishable(short gameEvent, Component sender, object param=null)
+    public void OnUndoGameFinishable(short gameEvent, Component sender, object param = null)
     {
         FinishButton.SetActive(false);
     }
 
     public void FinishGame()
-    {       
+    {
         GuiPresenter.FinishGame();
     }
 
@@ -82,8 +99,8 @@ public class GameplayingView : View{
             {
                 GuiPresenter.UpdateContextInformationText(InfoText, hit);
                 return true;
-            }           
+            }
         }
         return false;
-    }   
+    }
 }
