@@ -74,7 +74,7 @@ public class CardController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.tag == "ValidCard" && hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType)
+                if (hit.transform.gameObject.tag == "ValidCard" && (hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType||MainManager.MyTeamType == TeamType.ALL))
                 {
                     Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
                     Arrow.gameObject.SetActive(true);
@@ -224,7 +224,7 @@ public class CardController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.gameObject.tag == "ValidCard" && hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType)
+            if (hit.transform.gameObject.tag == "ValidCard" && (hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType || MainManager.MyTeamType== TeamType.ALL))
             {
                 CardInfoCam.SetActive(true);
                 SetGameNotFinishable();

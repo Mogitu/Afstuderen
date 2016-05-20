@@ -26,8 +26,10 @@ public class GuiPresenter : Presenter
     public void StartPracticeRound()
     {
         ChangeView(VIEWS.GamePlayingView);
+        MainManager.MyTeamType = TeamType.ALL;
         MainManager.StartPracticeRoundAllCards();
     }
+
     public void StartMultiplayerClient(string name)
     {  
         ChangeView(VIEWS.MatchMakerView);
@@ -166,7 +168,7 @@ public class GuiPresenter : Presenter
 
         Transform parent = hit.transform.parent;
         desc = parent.transform.gameObject.GetComponentInChildren<ContextDescription>();
-        if(desc !=null)
+        if(desc)
         {
             txt.text = desc.DescriptionText;
         }    

@@ -16,7 +16,7 @@ public class TeamSelectView : View {
         TeamType teamType;
         if (PlandAndDoToggle.isOn)
         {
-            teamType = TeamType.PlanAndDo;
+            teamType = TeamType.ALL;
         }
         else
         {
