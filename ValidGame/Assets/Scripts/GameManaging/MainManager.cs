@@ -30,13 +30,15 @@ public class MainManager : MonoBehaviour
     public GameObject WrongPlacementEffect;
 
     private string _PlayerName;
+    public string SceneName;
 
     void Awake()
     {
         //Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
-        MyTeamType = TeamType.ALL;
+        MyTeamType = TeamType.ALL;       
+        /*
         string room = AmcUtilities.ReadFileItem("room", "config.ini");
         if (room != "default")
         {
@@ -45,6 +47,7 @@ public class MainManager : MonoBehaviour
             loader.LoadBundle("ExternalAssets/kantoor", "myObjects");
             Instantiate(loader.LoadObject("myObjects", room));
         }
+        */
 
         GameTime = float.Parse(AmcUtilities.ReadFileItem("gametime", "config.ini"));
       
@@ -147,7 +150,7 @@ public class MainManager : MonoBehaviour
 
     public void RestartGame(short eventType, Component sender, object param = null)
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     //Played at the start of the game. Moves camera to gameboard and hands camera control over to the player. See the animation statemachine.

@@ -54,4 +54,9 @@ public class GameStateManager : MonoBehaviour{
     {
         GameState = MultiPlayerState;
     }
+
+    public GameState CurrentState
+    {
+        get { return GameState; }
+    }
 }

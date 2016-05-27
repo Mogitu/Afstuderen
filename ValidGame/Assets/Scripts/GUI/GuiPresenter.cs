@@ -138,7 +138,9 @@ public class GuiPresenter : Presenter
         ToggleView(VIEWS.OptionsView);
         GameObject view = GetView(VIEWS.OptionsView);
         EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
-        view.GetComponent<OptionsView>().GetViewComponent("GoBackBtn").SetActive(false);        
+        //view.GetComponent<OptionsView>().GetViewComponent("GoBackBtn").SetActive(false);        
+        view.GetComponent<OptionsView>().GetViewComponent("GameSceneTxt").SetActive(false);
+        view.GetComponent<OptionsView>().GetViewComponent("Dropdown").SetActive(false);
     }
 
     public void FinishGame()

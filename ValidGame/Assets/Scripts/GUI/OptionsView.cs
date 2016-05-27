@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using AMC.GUI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -12,6 +13,7 @@ public class OptionsView : View
     public Slider ZoomSlider;
     public Slider MoveSlider;
     public Slider LookSlider;
+    public Dropdown SceneSelectDropDown;
 
     //settings values
     private float ZoomSpeed;
@@ -24,6 +26,15 @@ public class OptionsView : View
     {
         GuiPresenter = GetPresenterType<GuiPresenter>();
         SetDefaults();
+        if (SceneManager.GetActiveScene().name == "Modern")
+        {
+            SceneSelectDropDown.value = 0;
+        }
+        else
+        {
+            SceneSelectDropDown.value = 1;
+        }
+        
     }
 
     /// <summary>
@@ -58,8 +69,9 @@ public class OptionsView : View
     {
         PlayerPrefs.SetFloat("ZoomSpeed", ZoomSpeed);
         PlayerPrefs.SetFloat("MoveSpeed", MoveSpeed);
-        PlayerPrefs.SetFloat("LookSpeed", LookSpeed);
-        PlayerPrefs.Save();
+        PlayerPrefs.SetFloat("LookSpeed", LookSpeed);       
+       
+        PlayerPrefs.Save();       
     }
 
     /// <summary>
@@ -69,7 +81,23 @@ public class OptionsView : View
     {
         SavePrefs();
         GuiPresenter.EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
-        Presenter.ChangeView(VIEWS.MainmenuView);
+        GameStateManager go = FindObjectOfType<GameStateManager>();
+
+        if (go.CurrentState is PlayingState || go.CurrentState is MultiplayerState)
+        {
+            Presenter.CloseView(VIEWS.OptionsView);
+            GuiPresenter.MainManager.ToggleAllColliders();
+            GuiPresenter.MainManager.ToggleCameraActive();
+        }
+        else
+        {
+            Presenter.ChangeView(VIEWS.MainmenuView);
+        }
+
+        if (SceneSelectDropDown.captionText.text != SceneManager.GetActiveScene().name)
+        {
+            SceneManager.LoadScene(SceneSelectDropDown.captionText.text);
+        }
     }
 }
 
