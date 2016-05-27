@@ -27,11 +27,11 @@ public class Card : MonoBehaviour
     //Set needed properties
     public void SetData(string matchCode, TeamType cardType)
     {
-       // Title = title;
-       // Description = description;
-       // TxtMeshTitle.text = title;
-        //TxtMeshDesc.text = description;
-        MatchCode = matchCode;
-        TypeOfCard = cardType;
+       //Title = title;
+       //Description = description;
+       //TxtMeshTitle.text = title;
+       //TxtMeshDesc.text = description;
+       MatchCode = matchCode;
+       TypeOfCard = cardType;
     }
 }

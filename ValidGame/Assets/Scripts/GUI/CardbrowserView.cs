@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using AMC.GUI;
+using System.Collections;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -10,15 +11,27 @@ using AMC.GUI;
 /// </summary>
 public class CardbrowserView : View
 {
-    private Dictionary<string, GuiCard> BrowsableCards;
+    private Dictionary<string, GuiCard> BrowsableCards; 
     public GameObject CardPanelContent;
     public Image ExtraInfoPanelImage;
     private GuiPresenter GuiPresenter;
     private float OffsetX = 80;
     private float OffsetY = -90;
 
+    private float TargetResX = 1024;
+    private float TargetResY = 768;
+    private float CurrentResX ;
+    private float CurrentResY;
+
+    private float ResOffsetX;
+    private float ResOffsetY;
+
     void Awake()
     {
+        CurrentResX = Screen.width;
+        CurrentResY = Screen.height;
+        ResOffsetX = CurrentResX / TargetResX;
+        ResOffsetY = CurrentResY / TargetResY;
         GuiPresenter = GetPresenterType<GuiPresenter>();
         BrowsableCards = new Dictionary<string, GuiCard>();
     }
@@ -26,6 +39,10 @@ public class CardbrowserView : View
     void Start()
     {
         PopulateContent();
+        IEnumerator enumerator = BrowsableCards.Keys.GetEnumerator();
+        enumerator.MoveNext();
+        string first = enumerator.Current.ToString();
+        ExtraInfoPanelImage.sprite = BrowsableCards[first].GetComponent<Image>().sprite;
     }
 
     /// <summary>
@@ -73,7 +90,7 @@ public class CardbrowserView : View
             Vector3 newPos = guiCard.transform.parent.transform.position;
             newPos.x += offSetX;
             newPos.y += offSetY;
-            offSetX += 150;
+            offSetX += 150*ResOffsetX;
             guiCard.transform.position = newPos;
             col++;
             if (col >= 5)
@@ -91,8 +108,8 @@ public class CardbrowserView : View
         GuiCard guiCard = card;
         guiCard.transform.SetParent(CardPanelContent.transform, false);
         Vector3 newPos = guiCard.transform.parent.transform.position;
-        newPos.x += offSetX;
-        newPos.y += offSetY;
+        newPos.x += offSetX*ResOffsetX;
+        newPos.y += offSetY*ResOffsetY;
         offSetX += 150;
         guiCard.transform.position = newPos;
         Button objBtn = guiCard.GetComponent<Button>();
