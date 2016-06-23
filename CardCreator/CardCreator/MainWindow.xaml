@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Card Creator v0.1" Height="563.753" Width="502.972">
     <Grid>
-        <Canvas x:Name="cardCanvas" HorizontalAlignment="Left" Height="513" Margin="198,10,0,0" VerticalAlignment="Top" Width="287" Background="#FFD0E8FF">
+        <Canvas x:Name="cardCanvas" HorizontalAlignment="Left" Height="513" Margin="198,10,0,0"  VerticalAlignment="Top" Width="287" Background="#FFD0E8FF">
             <Image x:Name="cardImage" Height="158" Canvas.Left="10" Canvas.Top="47" Width="267" MouseUp="cardImage_MouseUp" Source="Media/img1.png" />
             <TextBlock x:Name="cardTitleTextBlock" Canvas.Left="70" TextWrapping="Wrap" Text="Card" Canvas.Top="10" Height="26" Width="129" FontWeight="Bold" FontSize="20" TextAlignment="Center" Foreground="#FF0070C0"/>
             <TextBlock x:Name="cardDescriptionTextBlock" Canvas.Left="25" TextWrapping="Wrap" Text="Description" Canvas.Top="210" Height="250" Width="239" Foreground="#FF0070C0" FontSize="16" FontWeight="Bold"/>

@@ -22,34 +22,15 @@ namespace CardCreator
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {       
-
+    {
+        private const string defaultFileExtension = ".png";
+        private const string fileFilters = "PNG Files(*.png)|*.png|JPG Files(*.jpg)|*.jpg|GIF Files(*.gif)|*.gif";
 
         public MainWindow()
         {
             InitializeComponent();
             setCardImage("/Media/img1.png");
-        }          
-
-        private void setCardDescription()
-        {
-
-        }       
-
-        private void setCardTitle()
-        {
-
-        }
-
-        private void createImageFromCanvas()
-        {
-
-        }
-
-        private void saveImage()
-        {
-
-        }
+        } 
 
         private void cardImage_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -65,10 +46,11 @@ namespace CardCreator
         {
             var dialog = new OpenFileDialog();
 
-            dialog.DefaultExt = ".png";
-            dialog.Filter = "PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            dialog.DefaultExt = defaultFileExtension;
+            dialog.Filter = fileFilters;
 
-            Nullable<bool> result = dialog.ShowDialog();
+            bool? result = dialog.ShowDialog();
+
             // Get the selected file name and display in a TextBox 
             if (result == true)
             {
@@ -78,7 +60,6 @@ namespace CardCreator
                 setCardImage(filename);
             }
         }
-
       
         private void setCardImage(string path)
         {
@@ -96,44 +77,64 @@ namespace CardCreator
 
         private void richtTextBoxCardDescription_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextRange textRange = new TextRange(richtTextBoxCardDescription.Document.ContentStart,  richtTextBoxCardDescription.Document.ContentEnd);
+            var textRange = new TextRange(richtTextBoxCardDescription.Document.ContentStart,  richtTextBoxCardDescription.Document.ContentEnd);
             cardDescriptionTextBlock.Text = textRange.Text;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new SaveFileDialog();
-            Nullable<bool> result = dialog.ShowDialog();
+            dialog.DefaultExt = defaultFileExtension;
+            dialog.Filter = fileFilters;
+            bool? result = dialog.ShowDialog();
             // Get the selected file name and display in a TextBox 
             if (result == true)
             {
                 // Open document 
-                string filename = dialog.FileName;
-                Console.WriteLine(filename);
-                // setCardImage(filename);
+                string filename = dialog.FileName;                
+        
                 CreateSaveBitmap(cardCanvas, filename);
             }           
         }
 
         private void CreateSaveBitmap(Canvas canvas, string filename)
         {
-            RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
+            var renderBitmap = new RenderTargetBitmap(
              (int)canvas.Width, (int)canvas.Height,
              96d, 96d, PixelFormats.Pbgra32);
             // needed otherwise the image output is black
-            canvas.Measure(new Size((int)canvas.Width, (int)canvas.Height));
-            canvas.Arrange(new Rect(new Size((int)canvas.Width, (int)canvas.Height)));
-
+            canvas.Measure(new Size((int)canvas.Width, (int)canvas.Height));           
+            canvas.Arrange(new Rect(new Point(-canvas.Margin.Left,-canvas.Margin.Top), new Size((int)canvas.Width, (int)canvas.Height)));
             renderBitmap.Render(canvas);
 
             //JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
-
             using (FileStream file = File.Create(filename))
             {
                 encoder.Save(file);
             }
+        }
+
+
+        private void setCardDescription()
+        {
+
+        }
+
+        private void setCardTitle()
+        {
+
+        }
+
+        private void createImageFromCanvas()
+        {
+
+        }
+
+        private void saveImage()
+        {
+
         }
     }
 }
