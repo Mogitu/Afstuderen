@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CardCreator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Card Creator v0.1" Height="563.753" Width="502.972">
     <Grid>
-        
+        <Canvas x:Name="cardCanvas" HorizontalAlignment="Left" Height="513" Margin="198,10,0,0" VerticalAlignment="Top" Width="287" Background="#FFD0E8FF">
+            <Image x:Name="cardImage" Height="158" Canvas.Left="10" Canvas.Top="47" Width="267" MouseUp="cardImage_MouseUp" Source="Media/img1.png" />
+            <TextBlock x:Name="cardTitleTextBlock" Canvas.Left="70" TextWrapping="Wrap" Text="Card" Canvas.Top="10" Height="26" Width="129" FontWeight="Bold" FontSize="20" TextAlignment="Center" Foreground="#FF0070C0"/>
+            <TextBlock x:Name="cardDescriptionTextBlock" Canvas.Left="25" TextWrapping="Wrap" Text="Description" Canvas.Top="210" Height="250" Width="239" Foreground="#FF0070C0" FontSize="16" FontWeight="Bold"/>
+            <Image x:Name="imageCardValidLogo" Height="38" Canvas.Left="177" Canvas.Top="465" Width="100" Source="Media/validlogo.png"/>
+        </Canvas>
+        <GroupBox x:Name="cardSettingsGroup" Header="Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="513" Width="183">
+            <Grid HorizontalAlignment="Left" Height="481" Margin="10,10,0,0" VerticalAlignment="Top" Width="152">
+                <Button x:Name="buttonSelectImage" Content="Select image" HorizontalAlignment="Left" Margin="10,294,0,0" VerticalAlignment="Top" Width="75" Click="buttonSelectImage_Click" />
+                <Label x:Name="label" Content="Card title" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0"/>
+                <TextBox x:Name="cardTitleTextBox" HorizontalAlignment="Left" Height="23" Margin="10,26,0,0" TextWrapping="Wrap" Text="...enter title..." VerticalAlignment="Top" Width="120" TextChanged="cardTitleTextBox_TextChanged"/>
+                <Label x:Name="cardDescriptionLabel" Content="Card description" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+                <RichTextBox x:Name="richtTextBoxCardDescription" HorizontalAlignment="Left" Height="185" Margin="10,95,0,0" VerticalAlignment="Top" Width="132"  TextChanged="richtTextBoxCardDescription_TextChanged">
+                    <FlowDocument>
+                        <FlowDocument.Blocks>
+                            <Paragraph>
+                                Enter a description.
+                            </Paragraph>
+                        </FlowDocument.Blocks>
+                    </FlowDocument>
+                </RichTextBox>
+                <Button x:Name="saveCardButton" Content="Save" HorizontalAlignment="Left" Margin="20,428,0,0" VerticalAlignment="Top" Width="110" Click="button_Click" Height="43"/>
+            </Grid>
+        </GroupBox>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="-173,-121,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
