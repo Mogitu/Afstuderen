@@ -175,10 +175,11 @@ public class CardbrowserView : View
     //TODO  :   Ties card model to this view, defeating the purpose of mvp?
     public void ClickedCard(GameObject obj)
     {
-        GuiCard card = obj.GetComponent<GuiCard>();
+        GuiCard card = obj.GetComponent<GuiCard>();        
         GetPresenterType<GuiPresenter>().PickCard(card.MatchCode);
         BrowsableCards.Remove(card.MatchCode);
         obj.SetActive(false);
         RepopulateContent();
+        GuiPresenter.EventManager.PostNotification(GameEvents.RestartTimer, this);
     }
 }

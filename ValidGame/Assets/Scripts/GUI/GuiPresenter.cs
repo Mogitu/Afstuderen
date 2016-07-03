@@ -133,14 +133,30 @@ public class GuiPresenter : Presenter
 
     public void ToggleOptionsView()
     {
-        MainManager.ToggleAllColliders();
-        MainManager.ToggleCameraActive();
+        ToggleCamColliders();   
         ToggleView(VIEWS.OptionsView);
         GameObject view = GetView(VIEWS.OptionsView);
         EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
         //view.GetComponent<OptionsView>().GetViewComponent("GoBackBtn").SetActive(false);        
         view.GetComponent<OptionsView>().GetViewComponent("GameSceneTxt").SetActive(false);
         view.GetComponent<OptionsView>().GetViewComponent("Dropdown").SetActive(false);
+    }
+
+    private void ToggleCamColliders()
+    {
+        MainManager.ToggleAllColliders();
+        MainManager.ToggleCameraActive();
+    }
+
+    public void StartAnalyzing()
+    {
+        ToggleCamColliders();
+        CloseView(VIEWS.GameovermenuView);
+    }
+
+    public void StopAnalyzing()
+    {
+
     }
 
     public void FinishGame()
@@ -169,10 +185,14 @@ public class GuiPresenter : Presenter
         }
 
         Transform parent = hit.transform.parent;
-        desc = parent.transform.gameObject.GetComponentInChildren<ContextDescription>();
-        if(desc)
+        if(parent != null)
         {
-            txt.text = desc.DescriptionText;
-        }    
+            desc = parent.transform.gameObject.GetComponentInChildren<ContextDescription>();
+            if (desc != null)
+            {
+                txt.text = desc.DescriptionText;
+            }
+        }
+        
     }   
 }

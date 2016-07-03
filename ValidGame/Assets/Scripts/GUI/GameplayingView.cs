@@ -15,24 +15,37 @@ public class GameplayingView : View
     public Text TimerText;
     private GuiPresenter GuiPresenter;
     private MainManager MainManager;
+    private bool TimerIsPaused;
+
     void Awake()
     {
         FinishButton.SetActive(false);
         GuiPresenter = GetPresenterType<GuiPresenter>();
         GuiPresenter.EventManager.AddListener(GameEvents.GameIsFinishable, OnGameIsFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
-        MainManager = GuiPresenter.MainManager;
-        
+        GuiPresenter.EventManager.AddListener(GameEvents.RestartTimer, OnRestartTimer);
+        MainManager = GuiPresenter.MainManager;        
+    }
+
+    private void OnRestartTimer(short eventType, Component sender, object param)
+    {
+        ToggleTimer();
     }
 
     public void OpenCardView()
     {
-        GuiPresenter.ToggleCardbrowser();
+        ToggleTimer();
+        GuiPresenter.ToggleCardbrowser();        
     }
 
     public void ToggleOptionsView()
     {
         GuiPresenter.ToggleOptionsView();
+    }
+
+    public void ToggleTimer()
+    {
+        TimerIsPaused = !TimerIsPaused;
     }
 
     public void ToggleTutorial()
@@ -47,12 +60,17 @@ public class GameplayingView : View
 
     void Update()
     {
-        MainManager.GameTime -= Time.deltaTime;
+        if (!TimerIsPaused)
+        {
+            MainManager.GameTime -= Time.deltaTime;
+        }
+       
         if (MainManager.GameTime <= 0)
         {
             // GuiPresenter.EventManager.PostNotification(GameEvents.EndPractice,null);
             GuiPresenter.FinishGame();
         }
+
         int minutes = (int)(MainManager.GameTime / 60);
         int seconds = (int)(MainManager.GameTime % 60);
         TimerText.text = minutes + ":" + seconds;

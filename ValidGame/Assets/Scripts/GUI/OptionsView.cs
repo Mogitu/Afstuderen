@@ -14,6 +14,7 @@ public class OptionsView : View
     public Slider MoveSlider;
     public Slider LookSlider;
     public Dropdown SceneSelectDropDown;
+    public InputField GameTimeInput;
 
     //settings values
     private float ZoomSpeed;
@@ -35,6 +36,13 @@ public class OptionsView : View
             SceneSelectDropDown.value = 1;
         }
         
+    }
+
+    public void OnGameTimeChanged()
+    {
+        int time = int.Parse(GameTimeInput.text);
+        GuiPresenter.MainManager.GameTime = time;
+        Debug.Log("fds");
     }
 
     /// <summary>

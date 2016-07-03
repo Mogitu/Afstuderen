@@ -30,6 +30,11 @@ public class GameovermenuView : View {
         }             
     }
 
+    public void Analyze()
+    {
+        GuiPresenter.StartAnalyzing();
+    }
+
     public void Restart()
     {
         GuiPresenter.Restart();

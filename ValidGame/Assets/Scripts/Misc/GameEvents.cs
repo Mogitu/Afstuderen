@@ -32,4 +32,6 @@ public class GameEvents
     public const short EndPractice = 23;
 
     public const short RestartGame = 24;
+    public const short RestartTimer = 25;
+    public const short ChangeGameTime = 26;
 }
