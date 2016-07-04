@@ -16,11 +16,13 @@ public class OptionsView : View
     public Slider LookSlider;
     public Dropdown SceneSelectDropDown;
     public InputField GameTimeInput;
+    public Toggle ShowCoordinateToggle;
 
     //settings values
     private float ZoomSpeed;
     private float MoveSpeed;
     private float LookSpeed;
+    private int ShowCoordinates;
 
     private GuiPresenter GuiPresenter;
     private const string InputFieldErrorText = "Enter a valid number";
@@ -65,6 +67,19 @@ public class OptionsView : View
         ZoomSlider.value = PlayerPrefs.GetFloat("ZoomSpeed") != 0 ? PlayerPrefs.GetFloat("ZoomSpeed") : 15;
         MoveSlider.value = PlayerPrefs.GetFloat("MoveSpeed") != 0 ? PlayerPrefs.GetFloat("MoveSpeed") : 5;
         LookSlider.value = PlayerPrefs.GetFloat("LookSpeed") != 0 ? PlayerPrefs.GetFloat("LookSpeed") : 5;
+
+        ShowCoordinates = PlayerPrefs.GetInt("ShowCoordinates", 0);
+
+        if (ShowCoordinates == 1)
+        {
+            ShowCoordinateToggle.isOn = true;
+        }
+        else
+        {
+            ShowCoordinateToggle.isOn = false;
+        }
+        
+
     }
 
     void Update()
@@ -72,7 +87,7 @@ public class OptionsView : View
         //Rather not have this in update; TODO; lower update interval or use events.
         ZoomSpeed = ZoomSlider.value;
         MoveSpeed = MoveSlider.value;
-        LookSpeed = LookSlider.value;
+        LookSpeed = LookSlider.value;       
     }
 
     private void OnDisable()
@@ -88,6 +103,15 @@ public class OptionsView : View
         PlayerPrefs.SetFloat("ZoomSpeed", ZoomSpeed);
         PlayerPrefs.SetFloat("MoveSpeed", MoveSpeed);
         PlayerPrefs.SetFloat("LookSpeed", LookSpeed);
+        if (ShowCoordinateToggle.isOn)
+        {
+            ShowCoordinates = 1;
+        }
+        else
+        {
+            ShowCoordinates = 0;
+        }
+        PlayerPrefs.SetInt("ShowCoordinates", ShowCoordinates );
         PlayerPrefs.Save();
     }
 
