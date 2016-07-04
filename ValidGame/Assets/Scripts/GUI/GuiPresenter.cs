@@ -136,10 +136,12 @@ public class GuiPresenter : Presenter
         ToggleCamAndColliders();   
         ToggleView(VIEWS.OptionsView);
         GameObject view = GetView(VIEWS.OptionsView);
-        EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
-        //view.GetComponent<OptionsView>().GetViewComponent("GoBackBtn").SetActive(false);        
+        EventManager.PostNotification(GameEvents.UpdateSettings, this);             
         view.GetComponent<OptionsView>().GetViewComponent("GameSceneTxt").SetActive(false);
         view.GetComponent<OptionsView>().GetViewComponent("Dropdown").SetActive(false);
+
+        view.GetComponent<OptionsView>().GetViewComponent("GameTimeTxt").SetActive(false);
+        view.GetComponent<OptionsView>().GetViewComponent("InputGameTime").SetActive(false);
     }
 
     private void ToggleCamAndColliders()
