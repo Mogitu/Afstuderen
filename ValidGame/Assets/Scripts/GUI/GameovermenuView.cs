@@ -10,9 +10,11 @@ public class GameovermenuView : View {
     public Text OwnScoreTxt;
     public Text OtherScoreTxt;
     public Text gameResultTxt;
+    public GameObject GameOverOverviewParent;
+    public GameObject GameOverAnalyzerParent;
     private GuiPresenter GuiPresenter;
-    private int ownScore;
-    private int otherScore;
+    private int OwnScore;
+    private int OtherScore;
 
     public void Awake()
     {        
@@ -33,6 +35,16 @@ public class GameovermenuView : View {
     public void Analyze()
     {
         GuiPresenter.StartAnalyzing();
+        GameOverOverviewParent.SetActive(false);
+        GameOverAnalyzerParent.SetActive(true);     
+    }
+
+
+    public void StopAnalyzing()
+    {
+        GameOverOverviewParent.SetActive(true);
+        GameOverAnalyzerParent.SetActive(false);
+        GuiPresenter.StopAnalyzing();
     }
 
     public void Restart()
@@ -43,16 +55,16 @@ public class GameovermenuView : View {
     private void OnScoreReceived(short eventType, Component sender, object param = null)
     {
         Debug.Log("Received in gui score of " + param);
-        ownScore = (int)param;
+        OwnScore = (int)param;
         OwnScoreTxt.text = "You have " +param + " good cards.";
     }
 
     private void OnScoreReceivedMP(short eventType, Component sender, object param = null)
     {        
         OtherScoreTxt.text = "Your opponent has " + param + " good cards.";
-        otherScore = (int)param;
+        OtherScore = (int)param;
         GuiPresenter.EventManager.PostNotification(GameEvents.SendScoreNetwork, this, GuiPresenter.MainManager.Score);
-        if(ownScore > otherScore)
+        if(OwnScore > OtherScore)
         {
             gameResultTxt.text = "You Won!";
         }

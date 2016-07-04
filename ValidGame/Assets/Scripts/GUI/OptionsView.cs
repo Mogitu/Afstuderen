@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using AMC.GUI;
 using UnityEngine.SceneManagement;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -22,6 +23,7 @@ public class OptionsView : View
     private float LookSpeed;
 
     private GuiPresenter GuiPresenter;
+    private const string InputFieldErrorText = "Enter a valid number";
 
     void Awake()
     {
@@ -35,15 +37,23 @@ public class OptionsView : View
         {
             SceneSelectDropDown.value = 1;
         }
-        
     }
 
-    public void OnGameTimeChanged()
+    private void ChangeGameTime()
     {
-        int time = int.Parse(GameTimeInput.text);
+        int time;
+        bool result = int.TryParse(GameTimeInput.text, out time);
+        if (!result)
+        {          
+            throw new FormatException();            
+        }       
         GuiPresenter.MainManager.GameTime = time;
-        Debug.Log("fds");
     }
+
+    private void ToggleCoordinateVisibility()
+    {
+        Debug.Log("toggling coords");
+    }  
 
     /// <summary>
     /// Set default values for all sliders
@@ -77,9 +87,8 @@ public class OptionsView : View
     {
         PlayerPrefs.SetFloat("ZoomSpeed", ZoomSpeed);
         PlayerPrefs.SetFloat("MoveSpeed", MoveSpeed);
-        PlayerPrefs.SetFloat("LookSpeed", LookSpeed);       
-       
-        PlayerPrefs.Save();       
+        PlayerPrefs.SetFloat("LookSpeed", LookSpeed);
+        PlayerPrefs.Save();
     }
 
     /// <summary>
@@ -87,25 +96,34 @@ public class OptionsView : View
     /// </summary>
     public void GoBack()
     {
-        SavePrefs();
-        GuiPresenter.EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
-        GameStateManager go = FindObjectOfType<GameStateManager>();
+        try
+        {
+            ChangeGameTime();
+            ToggleCoordinateVisibility();
+            SavePrefs();
+            GuiPresenter.EventManager.PostNotification(GameEvents.UpdateSettings, this);
+            GameStateManager go = FindObjectOfType<GameStateManager>();
 
-        if (go.CurrentState is PlayingState || go.CurrentState is MultiplayerState)
-        {
-            Presenter.CloseView(VIEWS.OptionsView);
-            GuiPresenter.MainManager.ToggleAllColliders();
-            GuiPresenter.MainManager.ToggleCameraActive();
-        }
-        else
-        {
-            Presenter.ChangeView(VIEWS.MainmenuView);
-        }
+            if (go.CurrentState is PlayingState || go.CurrentState is MultiplayerState)
+            {
+                Presenter.CloseView(VIEWS.OptionsView);
+                GuiPresenter.MainManager.ToggleAllColliders();
+                GuiPresenter.MainManager.ToggleCameraActive();
+            }
+            else
+            {
+                Presenter.ChangeView(VIEWS.MainmenuView);
+            }
 
-        if (SceneSelectDropDown.captionText.text != SceneManager.GetActiveScene().name)
-        {
-            SceneManager.LoadScene(SceneSelectDropDown.captionText.text);
+            if (SceneSelectDropDown.captionText.text != SceneManager.GetActiveScene().name)
+            {
+                SceneManager.LoadScene(SceneSelectDropDown.captionText.text);
+            }
         }
+        catch(FormatException)
+        {
+            GameTimeInput.text = "Enter a valid number.";
+        }        
     }
 }
 

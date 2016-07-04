@@ -48,9 +48,7 @@ public class MainManager : MonoBehaviour
             Instantiate(loader.LoadObject("myObjects", room));
         }
         */
-
-        GameTime = float.Parse(AmcUtilities.ReadFileItem("gametime", "config.ini"));
-      
+        //GameTime = float.Parse(AmcUtilities.ReadFileItem("gametime", "config.ini"));      
     }
 
     void Start()

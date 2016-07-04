@@ -133,7 +133,7 @@ public class GuiPresenter : Presenter
 
     public void ToggleOptionsView()
     {
-        ToggleCamColliders();   
+        ToggleCamAndColliders();   
         ToggleView(VIEWS.OptionsView);
         GameObject view = GetView(VIEWS.OptionsView);
         EventManager.PostNotification(GameEvents.UpdateSettings, this, null);
@@ -142,7 +142,7 @@ public class GuiPresenter : Presenter
         view.GetComponent<OptionsView>().GetViewComponent("Dropdown").SetActive(false);
     }
 
-    private void ToggleCamColliders()
+    private void ToggleCamAndColliders()
     {
         MainManager.ToggleAllColliders();
         MainManager.ToggleCameraActive();
@@ -150,13 +150,15 @@ public class GuiPresenter : Presenter
 
     public void StartAnalyzing()
     {
-        ToggleCamColliders();
-        CloseView(VIEWS.GameovermenuView);
+        ToggleCamAndColliders();
+        Camera.main.GetComponent<Animator>().enabled = false;
+        //CloseView(VIEWS.GameovermenuView);
     }
 
     public void StopAnalyzing()
     {
 
+        ToggleCamAndColliders();
     }
 
     public void FinishGame()
