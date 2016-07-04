@@ -34,4 +34,6 @@ public class GameEvents
     public const short RestartGame = 24;
     public const short RestartTimer = 25;
     public const short ChangeGameTime = 26;
+    public const short CardCount = 27;
+    public const short RequestCardCount = 28;
 }

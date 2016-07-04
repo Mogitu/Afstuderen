@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -37,9 +38,15 @@ public class CardController : MonoBehaviour
         CardCollection = new Dictionary<string, Card>();
         PlacedCards = new Dictionary<string, Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
-        EventManager.AddListener(GameEvents.PickupCard, OnSelectCard);
+        EventManager.AddListener(GameEvents.RequestCardCount, OnCardCountRequested);
+        EventManager.AddListener(GameEvents.PickupCard, OnSelectCard);    
         //testy!
         //CardLoader cardLoader = new CardLoader("/Cards");        
+    }
+
+    private void OnCardCountRequested(short eventType, Component sender, object param)
+    {
+        EventManager.PostNotification(GameEvents.CardCount, this, CardCount);
     }
 
     public void OnCardReceivedFromOpponent(short Event_Type, Component Sender, object param = null)
@@ -337,6 +344,7 @@ public class CardController : MonoBehaviour
             }
         }
         CardCount = CardCollection.Count;
-        ContextCards = FillContextCards();
+        ContextCards = FillContextCards();       
+   
     }   
 }
