@@ -123,6 +123,7 @@ public class MainManager : MonoBehaviour
     private void EndPracticeGame()
     {
         Presenter.ChangeView(VIEWS.GameovermenuView);
+        CardController.DisableControls();
         EventManager.PostNotification(GameEvents.EndPractice, this);
         RunGameEndAnimation();
     }
@@ -130,6 +131,7 @@ public class MainManager : MonoBehaviour
     private void EndMultiplayerGame()
     {
         Presenter.ChangeView(VIEWS.GameovermenuView);
+        CardController.DisableControls();
         EventManager.PostNotification(GameEvents.EndMultiplayer, this);
         RunGameEndAnimation();
     }

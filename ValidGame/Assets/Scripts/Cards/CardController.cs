@@ -19,6 +19,7 @@ public class CardController : MonoBehaviour
     private float ContextTimer = 0.0f;
     private float MaxContextTime = 1.0f;
     private bool StartContextInfoTimer = false;
+    private bool ControlsDisabled = false;
     //end
 
     public Dictionary<string, Card> PlacedCards { get; private set; }
@@ -50,7 +51,15 @@ public class CardController : MonoBehaviour
         go2.transform.position = go.transform.position;
     }
 
+    public void DisableControls()
+    {
+        ControlsDisabled = true;
+        Arrow.gameObject.SetActive(false);
+        
+    }
+
     //Call every frame in manager class.
+    //TODO: divide this method in to smaller methods for readability
     private void Update()
     {
         //avoids that cards can be picked up when mouse click hits both browser button and a placed card.
@@ -76,9 +85,12 @@ public class CardController : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "ValidCard" && (hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType||MainManager.MyTeamType == TeamType.ALL))
                 {
-                    Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
-                    Arrow.gameObject.SetActive(true);
-                    Arrow.RotateUp();
+                    if (!ControlsDisabled)
+                    {
+                        Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
+                        Arrow.gameObject.SetActive(true);
+                        Arrow.RotateUp();
+                    }              
                     StartContextInfoTimer = true;
                 }
                 else
@@ -220,24 +232,27 @@ public class CardController : MonoBehaviour
     /// </summary>
     public void PickUpSelectedCard()
     {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
+        if (!ControlsDisabled)
         {
-            if (hit.transform.gameObject.tag == "ValidCard" && (hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType || MainManager.MyTeamType== TeamType.ALL))
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
             {
-                CardInfoCam.SetActive(true);
-                SetGameNotFinishable();
-                Transform objectHit = hit.transform;
-                SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
-                topicMatcher.Occupied = false;
-                CurrentCard = hit.transform.gameObject.GetComponent<Card>();
-                CurrentCard.transform.parent = null;
-                CardCollection.Add(CurrentCard.MatchCode, CurrentCard);
-                PlacedCards.Remove(CurrentCard.MatchCode);
-                SetExtraGuiCard(CurrentCard.MatchCode);
+                if (hit.transform.gameObject.tag == "ValidCard" && (hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType || MainManager.MyTeamType == TeamType.ALL))
+                {
+                    CardInfoCam.SetActive(true);
+                    SetGameNotFinishable();
+                    Transform objectHit = hit.transform;
+                    SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
+                    topicMatcher.Occupied = false;
+                    CurrentCard = hit.transform.gameObject.GetComponent<Card>();
+                    CurrentCard.transform.parent = null;
+                    CardCollection.Add(CurrentCard.MatchCode, CurrentCard);
+                    PlacedCards.Remove(CurrentCard.MatchCode);
+                    SetExtraGuiCard(CurrentCard.MatchCode);
+                }
             }
-        }
+        }       
     }
 
     //retreives the first card with the matching code
