@@ -14,18 +14,7 @@ public class ResultChecker:MonoBehaviour {
     
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.P) && !ShowingResults)
-        {          
-            ShowingResults = true;
-            CalculateResults();
-        }
-        else if(Input.GetKeyDown(KeyCode.P) && ShowingResults)
-        {
-            ShowingResults = false;
-            HideResults();
-        }
-        */
+    
     }
 
     public int CalculateResults()
@@ -58,7 +47,7 @@ public class ResultChecker:MonoBehaviour {
         {
             card.GetComponent<Renderer>().material.color = Color.green;
             card.GetComponentInChildren<SpriteRenderer>().material.color = Color.green;
-            GameObject go = Object.Instantiate(GameManager.GoodPlacementEffect);
+            GameObject go = Instantiate(GameManager.GoodPlacementEffect);
             go.transform.position = card.transform.position;
         }
 
@@ -66,7 +55,7 @@ public class ResultChecker:MonoBehaviour {
         {
             card.GetComponent<Renderer>().material.color = Color.red;
             card.GetComponentInChildren<SpriteRenderer>().material.color = Color.red;
-            GameObject go = Object.Instantiate(GameManager.WrongPlacementEffect);
+            GameObject go = Instantiate(GameManager.WrongPlacementEffect);
             go.transform.position = card.transform.position;
         }
     }

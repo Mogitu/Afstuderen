@@ -16,7 +16,7 @@ public class CardController : MonoBehaviour
     public GameObject CardInfoCam;
     public Dictionary<string, Sprite> ContextCards;
     public Image CardInfoImage;
-    public ArrowScript Arrow;
+    public ArrowScript Arrow;   
     private float ContextTimer = 0.0f;
     private float MaxContextTime = 1.0f;
     private bool StartContextInfoTimer = false;
@@ -39,7 +39,7 @@ public class CardController : MonoBehaviour
         PlacedCards = new Dictionary<string, Card>();
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
         EventManager.AddListener(GameEvents.RequestCardCount, OnCardCountRequested);
-        EventManager.AddListener(GameEvents.PickupCard, OnSelectCard);    
+        EventManager.AddListener(GameEvents.PickupCard, OnSelectCard);
         //testy!
         //CardLoader cardLoader = new CardLoader("/Cards");        
     }
@@ -62,7 +62,7 @@ public class CardController : MonoBehaviour
     {
         ControlsDisabled = true;
         Arrow.gameObject.SetActive(false);
-        
+
     }
 
     //Call every frame in manager class.
@@ -90,39 +90,49 @@ public class CardController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.tag == "ValidCard" && (hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType||MainManager.MyTeamType == TeamType.ALL))
-                {
-                    if (!ControlsDisabled)
-                    {
-                        Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
-                        Arrow.gameObject.SetActive(true);
-                        Arrow.RotateUp();
-                    }              
-                    StartContextInfoTimer = true;
-                }
-                else
-                {
-                    StartContextInfoTimer = false;
-                    ContextTimer = 0.0f;
-                    Arrow.gameObject.SetActive(false);
-                    CardInfoCam.SetActive(false);
-                }
-                if (StartContextInfoTimer)
-                {
-                    ContextTimer += Time.deltaTime;
-                    if (ContextTimer >= MaxContextTime)
-                    {
-                        // set the visiable card for the context info card 
-                        CardInfoCam.SetActive(true);
-                        Card card = hit.transform.gameObject.GetComponent<Card>();
-                        if (card)
-                        {
-                            SetExtraGuiCard(card.MatchCode);
-                            StartContextInfoTimer = false;
-                            ContextTimer = 0;
-                        }
-                    }
-                }
+                HandleContextInfo(hit);
+            }
+        }
+    }
+
+    private void HandleContextInfo(RaycastHit hit)
+    {
+        if (hit.transform.gameObject.tag == "ValidCard" && (hit.transform.GetComponent<Card>().TypeOfCard == MainManager.MyTeamType || MainManager.MyTeamType == TeamType.ALL))
+        {
+            if (!ControlsDisabled)
+            {
+                Arrow.transform.position = new Vector3(hit.transform.position.x, Arrow.transform.position.y, hit.transform.position.z);
+                Arrow.gameObject.SetActive(true);
+                Arrow.RotateUp();
+            }
+            StartContextInfoTimer = true;
+        }
+        else
+        {
+            StartContextInfoTimer = false;
+            ContextTimer = 0.0f;
+            Arrow.gameObject.SetActive(false);
+            CardInfoCam.SetActive(false);
+        }
+        if (StartContextInfoTimer)
+        {
+            RunContextTimer(hit);
+        }
+    }
+
+    private void RunContextTimer(RaycastHit hit)
+    {
+        ContextTimer += Time.deltaTime;
+        if (ContextTimer >= MaxContextTime)
+        {
+            // set the visiable card for the context info card 
+            CardInfoCam.SetActive(true);
+            Card card = hit.transform.gameObject.GetComponent<Card>();
+            if (card)
+            {
+                SetExtraGuiCard(card.MatchCode);
+                StartContextInfoTimer = false;
+                ContextTimer = 0;
             }
         }
     }
@@ -175,32 +185,36 @@ public class CardController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                Transform objectHit = hit.transform;
-                //Vector3 newPos = hit.point;
-                //newPos.y = 0.24f;
-                //CurrentCard.transform.position = newPos;
-                //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
-                if (objectHit.gameObject.tag == "ValidSubTopic")
-                {
-                    if (!Arrow.gameObject.activeSelf)
-                    {
-                        Arrow.RotateDown();
-                        Arrow.gameObject.SetActive(true);
-                    }
-                    Arrow.transform.position = new Vector3(CurrentCard.transform.position.x, Arrow.transform.position.y, CurrentCard.transform.position.z);
-
-                    SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
-                    if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.Occupied)
-                    {
-                        DropCurrentCard(topicMatcher);
-                    }
-                }
-                else
-                {
-                    if (Arrow.gameObject.activeSelf)
-                        Arrow.gameObject.SetActive(false);
-                }
+                ControlDragging(hit);
             }
+        }
+    }
+
+    private void ControlDragging(RaycastHit hit)
+    {
+        Transform objectHit = hit.transform;
+        //Vector3 newPos = hit.point;
+        //newPos.y = 0.24f;
+        //CurrentCard.transform.position = newPos;
+        //If the card hovers over an topic we query the topic data and place the card when the card is clicked.           
+        if (objectHit.gameObject.tag == "ValidSubTopic")
+        {
+            if (!Arrow.gameObject.activeSelf)
+            {
+                Arrow.RotateDown();
+                Arrow.gameObject.SetActive(true);
+            }
+            Arrow.transform.position = new Vector3(CurrentCard.transform.position.x, Arrow.transform.position.y, CurrentCard.transform.position.z);
+
+            SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
+            if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.Occupied)
+            {
+                DropCurrentCard(topicMatcher);
+            }
+        }
+        else if (Arrow.gameObject.activeSelf)
+        {
+            Arrow.gameObject.SetActive(false);
         }
     }
 
@@ -259,7 +273,7 @@ public class CardController : MonoBehaviour
                     SetExtraGuiCard(CurrentCard.MatchCode);
                 }
             }
-        }       
+        }
     }
 
     //retreives the first card with the matching code
@@ -303,48 +317,40 @@ public class CardController : MonoBehaviour
     //Collects all cards that are created in the scene by the builder module and add them to the card collection.
     public void CollectCards()
     {
-        Card[] cards = FindObjectsOfType<Card>();      
+        Card[] cards = FindObjectsOfType<Card>();
         for (int i = 0; i < cards.Length; i++)
-        {         
+        {
             Card card = cards[i];
             //collect only cards of the current teamtype
             if (MainManager.MyTeamType == card.TypeOfCard)
             {
-                //check if card already exists in dictionary, if so we append the code with 2 at the end
-                //if()
-                if (CardCollection.ContainsKey(card.MatchCode))
-                {
-                    card.MatchCode = card.MatchCode + "2";
-                    card.name = "SceneCard" + card.MatchCode;
-                    CardCollection.Add(card.MatchCode, card);
-                }
-                else
-                {
-                    //card.MatchCode = card.MatchCode;
-                    //card.name = "SceneCard" + card.MatchCode;
-                    CardCollection.Add(card.MatchCode, card);
-                }
+                AddCardToCollection(card);
             }
-            else if(MainManager.MyTeamType==TeamType.ALL)
+            else if (MainManager.MyTeamType == TeamType.ALL)
             {
-                //check if card already exists in dictionary, if so we append the code with 2 at the end
-                //if()
-                if (CardCollection.ContainsKey(card.MatchCode))
-                {
-                    card.MatchCode = card.MatchCode + "2";
-                    card.name = "SceneCard" + card.MatchCode;
-                    CardCollection.Add(card.MatchCode, card);
-                }
-                else
-                {
-                    //card.MatchCode = card.MatchCode;
-                    //card.name = "SceneCard" + card.MatchCode;
-                    CardCollection.Add(card.MatchCode, card);
-                }
+                AddCardToCollection(card);
             }
         }
         CardCount = CardCollection.Count;
-        ContextCards = FillContextCards();       
-   
-    }   
+        ContextCards = FillContextCards();
+
+    }
+
+    private void AddCardToCollection(Card card)
+    {
+        //check if card already exists in dictionary, if so we append the code with 2 at the end
+        //if()
+        if (CardCollection.ContainsKey(card.MatchCode))
+        {
+            card.MatchCode = card.MatchCode + "2";
+            card.name = "SceneCard" + card.MatchCode;
+            CardCollection.Add(card.MatchCode, card);
+        }
+        else
+        {
+            //card.MatchCode = card.MatchCode;
+            //card.name = "SceneCard" + card.MatchCode;
+            CardCollection.Add(card.MatchCode, card);
+        }
+    }
 }

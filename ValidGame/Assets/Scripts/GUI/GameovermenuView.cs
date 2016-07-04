@@ -43,13 +43,12 @@ public class GameovermenuView : View
         CardCount = (int)param;
     }
 
-    public void Analyze()
+    public void StartAnalyzing()
     {
         GuiPresenter.StartAnalyzing();
         GameOverOverviewParent.SetActive(false);
         GameOverAnalyzerParent.SetActive(true);
     }
-
 
     public void StopAnalyzing()
     {
