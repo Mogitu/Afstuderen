@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\Cards\CardLoader.cs" />
     <Compile Include="Assets\Scripts\Cards\CardModel.cs" />
     <Compile Include="Assets\Scripts\ContextDescription.cs" />
+    <Compile Include="Assets\Scripts\CoordinateScript.cs" />
     <Compile Include="Assets\Scripts\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameovermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameplayingView.cs" />
