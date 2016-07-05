@@ -5,6 +5,7 @@ using UnityEngine;
 using AMC.GUI;
 using UnityEngine.UI;
 
+
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   .
@@ -12,6 +13,7 @@ using UnityEngine.UI;
 /// </summary>
 public class TutorialView : View
 {
+#if UNITY_STANDALONE_WIN
     public Text TitleText;
     public Text InfoText;
     public Text TutorialCountText;
@@ -22,6 +24,8 @@ public class TutorialView : View
     private Dictionary<string, MovieTexture> MovieTextures;
     private MovieTexture CurrentMovieTexture;
     private int CurrentTutorialId;
+
+    
 
     void Start()
     {
@@ -140,4 +144,5 @@ public class TutorialView : View
     {
         GuiPresenter.ToggleTutorial();
     }
+#endif
 }

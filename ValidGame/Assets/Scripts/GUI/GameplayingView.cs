@@ -9,6 +9,7 @@ using System;
 /// </summary>
 public class GameplayingView : View
 {
+    public GameObject MenuButtons;
     public GameObject FinishButton;
     public GameObject InfoBar;
     public Text InfoText;
@@ -24,12 +25,19 @@ public class GameplayingView : View
         GuiPresenter.EventManager.AddListener(GameEvents.GameIsFinishable, OnGameIsFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.RestartTimer, OnRestartTimer);
-        MainManager = GuiPresenter.MainManager;        
+        MainManager = GuiPresenter.MainManager;
+        MenuButtons.SetActive(false);
+        
     }
 
     private void OnRestartTimer(short eventType, Component sender, object param)
     {
         ToggleTimer();
+    }
+
+    public void ToggleMenu()
+    {
+        MenuButtons.SetActive(!MenuButtons.activeSelf);
     }
 
     public void OpenCardView()
@@ -40,6 +48,7 @@ public class GameplayingView : View
 
     public void ToggleOptionsView()
     {
+        ToggleMenu();
         GuiPresenter.ToggleOptionsView();
     }
 
@@ -50,6 +59,7 @@ public class GameplayingView : View
 
     public void ToggleTutorial()
     {
+        ToggleMenu();
         GuiPresenter.ToggleTutorial();
     }
 
@@ -81,13 +91,12 @@ public class GameplayingView : View
         if (InfoText.text != "")
         {
             InfoText.text = "";
-        }
-
-       
+        }      
     }
 
     public void Restart()
     {
+        ToggleMenu();
         GuiPresenter.Restart();
     }
 

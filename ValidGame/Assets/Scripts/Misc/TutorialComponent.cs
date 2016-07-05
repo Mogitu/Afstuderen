@@ -4,6 +4,7 @@ using System.Collections;
 
 public class TutorialComponent : MonoBehaviour
 {
+#if UNITY_STANDALONE_WIN
     public float ScaleFactor = 1;
     public float MaxScale = 1.5f;
     public float NormalScale = 1.0f;
@@ -63,4 +64,5 @@ public class TutorialComponent : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
+#endif
 }

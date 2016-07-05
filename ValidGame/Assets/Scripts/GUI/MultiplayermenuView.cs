@@ -10,7 +10,6 @@ public class MultiplayermenuView : View {
     public Text PlayerName;
     private GuiPresenter GuiPresenter;
 
-
     void Awake()
     {
         GuiPresenter = GetPresenterType<GuiPresenter>();

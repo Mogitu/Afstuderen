@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-
 public class BoardCoordinateDisplayController : MonoBehaviour
 {
     public EventManager EventManager;
@@ -15,6 +14,7 @@ public class BoardCoordinateDisplayController : MonoBehaviour
     {
         EventManager.AddListener(GameEvents.UpdateSettings, OnUpdateSettings);
         DisplayObject.SetActive(false);
+        ShowDisplayObject = PlayerPrefs.GetInt("ShowCoordinates");
     }
 
     private void OnUpdateSettings(short eventType, Component sender, object param)
@@ -32,8 +32,7 @@ public class BoardCoordinateDisplayController : MonoBehaviour
             {
                 HandleCoordinateDisplay(hit);
             }
-        }
-        
+        }        
     }
 
     private void HandleCoordinateDisplay(RaycastHit hit)

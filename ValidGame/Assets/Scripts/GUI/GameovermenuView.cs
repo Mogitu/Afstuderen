@@ -67,7 +67,7 @@ public class GameovermenuView : View
         OwnScore = (int)param;
         double grade = Math.Round(((double)OwnScore / CardCount) * 100, 2);
         OwnScoreTxt.text = "You placed " + param + " card(s) good.\n" +
-            "you scored " + grade + "%";
+            "You scored " + grade + "%";
     }
 
     private void OnScoreReceivedMP(short eventType, Component sender, object param = null)

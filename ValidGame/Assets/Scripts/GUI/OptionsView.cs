@@ -49,7 +49,7 @@ public class OptionsView : View
         {          
             throw new FormatException();            
         }       
-        GuiPresenter.MainManager.GameTime = time;
+        GuiPresenter.MainManager.GameTime = time*60;
     }
 
     private void ToggleCoordinateVisibility()
@@ -78,8 +78,6 @@ public class OptionsView : View
         {
             ShowCoordinateToggle.isOn = false;
         }
-        
-
     }
 
     void Update()

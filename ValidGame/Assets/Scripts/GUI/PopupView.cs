@@ -23,6 +23,6 @@ public class PopupView : View
     {
         Debug.Log("Player joined");
         PopUpText.text = "Player joined";
-    }   
+    }
 }
 
