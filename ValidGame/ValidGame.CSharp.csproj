@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.5f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -92,7 +94,6 @@
     <Compile Include="Assets\AmcModules\Networking\Scripts\StandardNetworkController.cs" />
     <Compile Include="Assets\Scripts\Animation\StartAnim.cs" />
     <Compile Include="Assets\Scripts\ArrowScript.cs" />
-    <Compile Include="Assets\Scripts\BoardCoordinateDisplayController.cs" />
     <Compile Include="Assets\Scripts\Camera\Topview\TopviewController.cs" />
     <Compile Include="Assets\Scripts\Camera\Topview\TopviewMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
@@ -100,7 +101,8 @@
     <Compile Include="Assets\Scripts\Cards\CardLoader.cs" />
     <Compile Include="Assets\Scripts\Cards\CardModel.cs" />
     <Compile Include="Assets\Scripts\ContextDescription.cs" />
-    <Compile Include="Assets\Scripts\CoordinateScript.cs" />
+    <Compile Include="Assets\Scripts\Coordinates\BoardCoordinateDisplayController.cs" />
+    <Compile Include="Assets\Scripts\Coordinates\CoordinateScript.cs" />
     <Compile Include="Assets\Scripts\GUI\CardbrowserView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameovermenuView.cs" />
     <Compile Include="Assets\Scripts\GUI\GameplayingView.cs" />

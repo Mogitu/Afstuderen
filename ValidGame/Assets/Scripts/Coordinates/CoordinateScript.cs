@@ -2,13 +2,14 @@
 using System.Collections;
 using System;
 
-public class CoordinateScript : MonoBehaviour {
-
+public class CoordinateScript : MonoBehaviour
+{
     private int ShowCoordinate;
     private EventManager EventManager;
-	// Use this for initialization
-	void Start () {
-        EventManager = GameObject.FindObjectOfType<EventManager>();
+    // Use this for initialization
+    void Start()
+    {
+        EventManager = FindObjectOfType<EventManager>();
         EventManager.AddListener(GameEvents.UpdateSettings, OnUpdateSettings);
         ShowCoordinate = PlayerPrefs.GetInt("ShowCoordinates", 0);
         SetCoordinate();
@@ -21,7 +22,7 @@ public class CoordinateScript : MonoBehaviour {
         {
             gameObject.SetActive(false);
         }
-
+       
     }
 
     private void OnUpdateSettings(short eventType, Component sender, object param)
@@ -52,18 +53,18 @@ public class CoordinateScript : MonoBehaviour {
 
     private void SetCoordinate()
     {
-        
         TextMesh txtMesh = GetComponent<TextMesh>();
         GameObject root = transform.parent.parent.gameObject;
         SubtopicMatcher match = root.GetComponentInChildren<SubtopicMatcher>();
 
-        if (match!=null)
+        if (match != null)
         {
             txtMesh.text = match.MatchCode;
         }
         else
         {
-            txtMesh.text = "?";
+            string txt =  transform.parent.name.Substring(transform.parent.name.Length-1,1);
+            txtMesh.text = txt;
         }
-    }	
+    }
 }
