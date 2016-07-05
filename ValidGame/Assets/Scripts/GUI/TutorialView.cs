@@ -23,9 +23,7 @@ public class TutorialView : View
     private TutorialModel[] TutorialModels;
     private Dictionary<string, MovieTexture> MovieTextures;
     private MovieTexture CurrentMovieTexture;
-    private int CurrentTutorialId;
-
-    
+    private int CurrentTutorialId;    
 
     void Start()
     {

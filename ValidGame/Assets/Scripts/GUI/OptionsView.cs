@@ -48,7 +48,8 @@ public class OptionsView : View
         if (!result)
         {          
             throw new FormatException();            
-        }       
+        }
+        GameTimeInput.textComponent.color = Color.black;
         GuiPresenter.MainManager.GameTime = time*60;
     }
 
@@ -144,7 +145,8 @@ public class OptionsView : View
         }
         catch(FormatException)
         {
-            GameTimeInput.text = "Enter a valid number.";
+            //GameTimeInput.text = "Enter a valid number.";
+            GameTimeInput.textComponent.color = Color.red;
         }        
     }
 }
