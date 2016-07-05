@@ -30,16 +30,23 @@ public class BoardCoordinateDisplayController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                HandleContextInfo(hit);
+                HandleCoordinateDisplay(hit);
             }
         }
         
     }
 
-    private void HandleContextInfo(RaycastHit hit)
+    private void HandleCoordinateDisplay(RaycastHit hit)
     {
         if (hit.transform.gameObject.name == "subtopicinfo")
         {
+            GameObject parent = hit.transform.parent.gameObject;
+            string coord = parent.name;
+            TextMesh txtMesh = DisplayObject.GetComponentInChildren<TextMesh>();
+            if (txtMesh != null)
+            {
+                txtMesh.text = coord;
+            }
             DisplayObject.SetActive(true);
             DisplayObject.transform.position = hit.transform.TransformPoint(OffsetX, OffsetZ, OffsetY);         
         }
