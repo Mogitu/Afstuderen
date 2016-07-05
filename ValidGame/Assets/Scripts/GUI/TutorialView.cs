@@ -13,17 +13,17 @@ using UnityEngine.UI;
 /// </summary>
 public class TutorialView : View
 {
-#if UNITY_STANDALONE_WIN
     public Text TitleText;
     public Text InfoText;
     public Text TutorialCountText;
     public RawImage Image;      
     private GuiPresenter GuiPresenter;
     private TutorialModel CurrentTutorial;
-    private TutorialModel[] TutorialModels;
+    private TutorialModel[] TutorialModels;  
+    private int CurrentTutorialId;
     private Dictionary<string, MovieTexture> MovieTextures;
     private MovieTexture CurrentMovieTexture;
-    private int CurrentTutorialId;    
+
 
     void Start()
     {
@@ -142,5 +142,5 @@ public class TutorialView : View
     {
         GuiPresenter.ToggleTutorial();
     }
-#endif
+
 }
