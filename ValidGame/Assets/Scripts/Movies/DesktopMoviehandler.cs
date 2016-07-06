@@ -8,8 +8,8 @@ public class DesktopMoviehandler : IMovieHandler
     private TutorialModel CurrentTutorial;
     private TutorialModel[] TutorialModels;  
     private int CurrentTutorialId;
-    private Dictionary<string, MovieTexture> MovieTextures;
-    private MovieTexture CurrentMovieTexture;
+   // private Dictionary<string, MovieTexture> MovieTextures;
+   // private MovieTexture CurrentMovieTexture;
 
     public DesktopMoviehandler()
     {

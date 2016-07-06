@@ -79,7 +79,6 @@ public class TutorialView : View
                 MovieTexture[] MovieTexturesTmp = Resources.LoadAll<MovieTexture>("Movies");
                 //initialize the movietextures dictionary
                 MovieTextures = new Dictionary<string, MovieTexture>();
-
                 //copy the temporary array into the dictionary
                 foreach (MovieTexture tex in MovieTexturesTmp)
                 {
@@ -89,7 +88,7 @@ public class TutorialView : View
                 MovieTextures = new Dictionary<string, WebGLMovieTexture>();
                 for(int i=0;i<4;i++)
                 {
-                    WebGLMovieTexture tex = new WebGLMovieTexture("StreamingAssets/Begin_1.mp4");
+                    WebGLMovieTexture tex = new WebGLMovieTexture("StreamingAssets/Chrome_ImF.mp4");           
                     MovieTextures.Add(tex.ToString(),tex);
                 }
         #endif
@@ -101,7 +100,8 @@ public class TutorialView : View
         CurrentTutorial = TutorialModels[id];
         if (CurrentMovieTexture != null)
         {
-            CurrentMovieTexture.Stop();
+            //CurrentMovieTexture.Stop();
+            CurrentMovieTexture.Pause();
         }
         TitleText.text = CurrentTutorial.Title;
         InfoText.text = CurrentTutorial.TutorialText;
@@ -114,7 +114,7 @@ public class TutorialView : View
     private void OnEnable()
     {
         //Start the movie only if it is available
-        if (CurrentMovieTexture)
+        if (CurrentMovieTexture!=null)
         {
             CurrentMovieTexture.loop = true;
             CurrentMovieTexture.Play();
@@ -124,7 +124,7 @@ public class TutorialView : View
     private void OnDisable()
     {
         //pauzes the movie only if available
-        if (CurrentMovieTexture)
+        if (CurrentMovieTexture!=null)
             CurrentMovieTexture.Pause();
     }
 
