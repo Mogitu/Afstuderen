@@ -16,13 +16,20 @@ public class TutorialView : View
     public Text TitleText;
     public Text InfoText;
     public Text TutorialCountText;
-    public RawImage Image;      
+    public RawImage Image;
     private GuiPresenter GuiPresenter;
     private TutorialModel CurrentTutorial;
-    private TutorialModel[] TutorialModels;  
+    private TutorialModel[] TutorialModels;
     private int CurrentTutorialId;
-    private Dictionary<string, MovieTexture> MovieTextures;
-    private MovieTexture CurrentMovieTexture;
+
+    //platform specific declarations; webgl or pc 
+    #if UNITY_STANDALONE_WIN
+        private Dictionary<string, MovieTexture> MovieTextures;
+        private MovieTexture CurrentMovieTexture;
+    #else
+        private Dictionary<string, WebGLMovieTexture> MovieTextures;
+        private WebGLMovieTexture CurrentMovieTexture;
+    #endif
 
     void Start()
     {
@@ -43,7 +50,6 @@ public class TutorialView : View
     {
         //Setup the directory information containing the files
         DirectoryInfo directoryInfo = new DirectoryInfo(Environment.CurrentDirectory + "/Tutorials");
-
         //create a new, temporary, array to contain fileinformation. Tutorials have the .tut file extension
         FileInfo[] filesInfo = directoryInfo.GetFiles("*.tut");
         TutorialModels = new TutorialModel[filesInfo.Length];
@@ -69,15 +75,24 @@ public class TutorialView : View
     private void FillMovieTextures()
     {
         //Load all movies located in the resources\movies folder
-        MovieTexture[] MovieTexturesTmp = Resources.LoadAll<MovieTexture>("Movies");
-        //initialize the movietextures dictionary
-        MovieTextures = new Dictionary<string, MovieTexture>();
+        #if UNITY_STANDALONE_WIN
+                MovieTexture[] MovieTexturesTmp = Resources.LoadAll<MovieTexture>("Movies");
+                //initialize the movietextures dictionary
+                MovieTextures = new Dictionary<string, MovieTexture>();
 
-        //copy the temporary array into the dictionary
-        foreach (MovieTexture tex in MovieTexturesTmp)
-        {
-            MovieTextures.Add(tex.name, tex);
-        }
+                //copy the temporary array into the dictionary
+                foreach (MovieTexture tex in MovieTexturesTmp)
+                {
+                    MovieTextures.Add(tex.name, tex);
+                }
+        #else
+                MovieTextures = new Dictionary<string, WebGLMovieTexture>();
+                for(int i=0;i<4;i++)
+                {
+                    WebGLMovieTexture tex = new WebGLMovieTexture("StreamingAssets/Begin_1.mp4");
+                    MovieTextures.Add(tex.ToString(),tex);
+                }
+        #endif
     }
 
     //Set up all visible view fields with the current tutorial data
@@ -103,7 +118,7 @@ public class TutorialView : View
         {
             CurrentMovieTexture.loop = true;
             CurrentMovieTexture.Play();
-        }            
+        }
     }
 
     private void OnDisable()
@@ -141,5 +156,4 @@ public class TutorialView : View
     {
         GuiPresenter.ToggleTutorial();
     }
-
 }

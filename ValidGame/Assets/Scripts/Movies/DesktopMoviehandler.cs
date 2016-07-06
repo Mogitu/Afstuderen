@@ -16,8 +16,6 @@ public class DesktopMoviehandler : IMovieHandler
 
     }
 
-
-
     public bool Loop
     {
         get

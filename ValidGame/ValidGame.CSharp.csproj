@@ -136,7 +136,6 @@
     <Compile Include="Assets\Scripts\Misc\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectOutline.cs" />
     <Compile Include="Assets\Scripts\Misc\Rotator.cs" />
-    <Compile Include="Assets\Scripts\Misc\TutorialComponent.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkMessages.cs" />
     <Compile Include="Assets\Scripts\Networking\ValidNetworkController.cs" />
     <Compile Include="Assets\Scripts\ResultChecker.cs" />
