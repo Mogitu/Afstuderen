@@ -24,7 +24,6 @@ public class TutorialView : View
     private Dictionary<string, MovieTexture> MovieTextures;
     private MovieTexture CurrentMovieTexture;
 
-
     void Start()
     {
         GuiPresenter = GetPresenterType<GuiPresenter>();
