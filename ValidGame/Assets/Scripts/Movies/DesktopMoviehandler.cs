@@ -43,4 +43,49 @@ public class DesktopMoviehandler : IMovieHandler
     {
         throw new NotImplementedException();
     }
+
+    public void InitTutorialData()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void FillTutorialModels()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetTutorialData(int currentTutorialId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetTutorialContext()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void FillMovieTextures()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnEnable()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void NextTutorial()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PreviousTutorial()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Close()
+    {
+        throw new NotImplementedException();
+    }
 }

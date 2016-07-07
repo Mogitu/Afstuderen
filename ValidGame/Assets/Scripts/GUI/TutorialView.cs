@@ -9,7 +9,10 @@ using UnityEngine.UI;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   .
-/// TODO    :   To much responsibilities; loading of videos could be a much better task for a dedicated object/class.
+/// TODO    :   *To much responsibilities; loading of videos could be a much better task for a dedicated object/class.
+///             *Delegate platform specific video loading to single objects.
+///             *Improve WebGLMovietexture integration(currently this "barely" works), likely needs changes in the plugin source code.
+///             *Preprocessor directives should not be used in to much methods, instead use a single clause that handles/calls the required methods for the platform.
 /// </summary>
 public class TutorialView : View
 {
@@ -46,9 +49,11 @@ public class TutorialView : View
     }
 
     //Populate the tutorialmodels field
+    //TODO: refactor to read from a script rather than external files
     private void FillTutorialModels()
     {
         //Setup the directory information containing the files
+        //TODO  :   This should not read files from a folder in the future but instead read from a prefab file/script/object
         DirectoryInfo directoryInfo = new DirectoryInfo(Environment.CurrentDirectory + "/Tutorials");
         //create a new, temporary, array to contain fileinformation. Tutorials have the .tut file extension
         FileInfo[] filesInfo = directoryInfo.GetFiles("*.tut");
