@@ -166,6 +166,9 @@ public class TutorialView : View
     {
         GuiPresenter = GetPresenterType<GuiPresenter>();
         InitTutorialData();
+        GetViewComponent("PrevButton").SetActive(false);
+        GetViewComponent("NextButton").SetActive(false);
+        GetViewComponent("TutorialCountTxt").SetActive(false);
     }
 
     //TODO: Divide in smaller methods
@@ -223,7 +226,7 @@ public class TutorialView : View
 
     public void Close()
     {
-       
+        GuiPresenter.ToggleTutorial();
     }
 #endif
 
