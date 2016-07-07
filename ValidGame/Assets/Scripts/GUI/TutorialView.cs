@@ -16,6 +16,7 @@ using UnityEngine.UI;
 /// </summary>
 public class TutorialView : View
 {
+#if UNITY_STANDALONE_WIN
     public Text TitleText;
     public Text InfoText;
     public Text TutorialCountText;
@@ -24,15 +25,9 @@ public class TutorialView : View
     private TutorialModel CurrentTutorial;
     private TutorialModel[] TutorialModels;
     private int CurrentTutorialId;
+    private Dictionary<string, MovieTexture> MovieTextures;
+    private MovieTexture CurrentMovieTexture;
 
-    //platform specific declarations; webgl or pc 
-    #if UNITY_STANDALONE_WIN
-        private Dictionary<string, MovieTexture> MovieTextures;
-        private MovieTexture CurrentMovieTexture;
-    #else
-        private Dictionary<string, WebGLMovieTexture> MovieTextures;
-        private WebGLMovieTexture CurrentMovieTexture;
-    #endif
 
     void Start()
     {
@@ -80,23 +75,16 @@ public class TutorialView : View
     private void FillMovieTextures()
     {
         //Load all movies located in the resources\movies folder
-        #if UNITY_STANDALONE_WIN
-                MovieTexture[] MovieTexturesTmp = Resources.LoadAll<MovieTexture>("Movies");
-                //initialize the movietextures dictionary
-                MovieTextures = new Dictionary<string, MovieTexture>();
-                //copy the temporary array into the dictionary
-                foreach (MovieTexture tex in MovieTexturesTmp)
-                {
-                    MovieTextures.Add(tex.name, tex);
-                }
-        #else
-                MovieTextures = new Dictionary<string, WebGLMovieTexture>();
-                for(int i=0;i<4;i++)
-                {
-                    WebGLMovieTexture tex = new WebGLMovieTexture("StreamingAssets/Chrome_ImF.mp4");           
-                    MovieTextures.Add(tex.ToString(),tex);
-                }
-        #endif
+
+        MovieTexture[] MovieTexturesTmp = Resources.LoadAll<MovieTexture>("Movies");
+        //initialize the movietextures dictionary
+        MovieTextures = new Dictionary<string, MovieTexture>();
+        //copy the temporary array into the dictionary
+        foreach (MovieTexture tex in MovieTexturesTmp)
+        {
+            MovieTextures.Add(tex.name, tex);
+        }
+
     }
 
     //Set up all visible view fields with the current tutorial data
@@ -119,7 +107,7 @@ public class TutorialView : View
     private void OnEnable()
     {
         //Start the movie only if it is available
-        if (CurrentMovieTexture!=null)
+        if (CurrentMovieTexture != null)
         {
             CurrentMovieTexture.loop = true;
             CurrentMovieTexture.Play();
@@ -129,7 +117,7 @@ public class TutorialView : View
     private void OnDisable()
     {
         //pauzes the movie only if available
-        if (CurrentMovieTexture!=null)
+        if (CurrentMovieTexture != null)
             CurrentMovieTexture.Pause();
     }
 
@@ -161,4 +149,82 @@ public class TutorialView : View
     {
         GuiPresenter.ToggleTutorial();
     }
+#else
+        public Text TitleText;
+    public Text InfoText;
+    public Text TutorialCountText;
+    public RawImage Image;
+    private GuiPresenter GuiPresenter;
+    private TutorialModel CurrentTutorial;
+    private TutorialModel[] TutorialModels;
+    private int CurrentTutorialId;
+    //private Dictionary<string, MovieTexture> MovieTextures;
+   // private MovieTexture CurrentMovieTexture;
+
+
+    void Start()
+    {
+        GuiPresenter = GetPresenterType<GuiPresenter>();
+        InitTutorialData();
+    }
+
+    //TODO: Divide in smaller methods
+    private void InitTutorialData()
+    {
+        FillTutorialModels();
+        FillMovieTextures();
+        SetTutorialData(CurrentTutorialId);
+    }
+
+    //Populate the tutorialmodels field
+    //TODO: refactor to read from a script rather than external files
+    private void FillTutorialModels()
+    {
+     
+    }
+
+    private void SetTutorialCountText()
+    {
+        
+    }
+
+    //Fill the movie textures dictionary
+    private void FillMovieTextures()
+    {
+       
+
+    }
+
+    //Set up all visible view fields with the current tutorial data
+    private void SetTutorialData(int id)
+    {
+       
+    }
+
+    private void OnEnable()
+    {
+       
+    }
+
+    private void OnDisable()
+    {
+       
+    }
+
+    public void NextTutorial()
+    {
+       
+    }
+
+    public void PreviousTutorial()
+    {
+        
+    }
+
+    public void Close()
+    {
+       
+    }
+#endif
+
 }
