@@ -169,6 +169,9 @@ public class TutorialView : View
         GetViewComponent("PrevButton").SetActive(false);
         GetViewComponent("NextButton").SetActive(false);
         GetViewComponent("TutorialCountTxt").SetActive(false);
+        GetViewComponent("TutorialText").SetActive(false);
+        GetViewComponent("TutorialOne").SetActive(false);  
+       GetViewComponent("TutorialWebGL").SetActive(true); 
     }
 
     //TODO: Divide in smaller methods
