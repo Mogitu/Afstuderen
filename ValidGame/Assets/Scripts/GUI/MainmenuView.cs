@@ -1,4 +1,5 @@
 ﻿using AMC.GUI;
+using UnityEngine;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Main menu. Start, quit, etc.
@@ -23,6 +24,11 @@ public class MainmenuView : View
     {
         // GuiPresenter.ShowTeamSelectView();
         GuiPresenter.StartPracticeRound();
+    }
+
+    public void OpenAmcHomePage()
+    {
+        Application.OpenURL("http://www.amicoservices.nl/");
     }
 
     public void ClickedMultiplayer()
