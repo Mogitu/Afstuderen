@@ -28,7 +28,11 @@ public class MainmenuView : View
 
     public void OpenAmcHomePage()
     {
+#if UNITY_WEBGL
+        Application.ExternalEval("window.open("+ "http://www.amicoservices.nl/" + ");");
+#else
         Application.OpenURL("http://www.amicoservices.nl/");
+#endif
     }
 
     public void ClickedMultiplayer()
