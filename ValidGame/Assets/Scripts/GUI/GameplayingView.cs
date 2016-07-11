@@ -73,6 +73,7 @@ public class GameplayingView : View
         if (!TimerIsPaused)
         {
             MainManager.GameTime -= Time.deltaTime;
+            MainManager.TimeUsed += Time.deltaTime;
         }
        
         if (MainManager.GameTime <= 0)

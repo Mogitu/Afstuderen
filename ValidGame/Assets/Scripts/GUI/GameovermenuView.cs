@@ -66,8 +66,10 @@ public class GameovermenuView : View
     {
         OwnScore = (int)param;
         double grade = Math.Round(((double)OwnScore / CardCount) * 100, 2);
-        OwnScoreTxt.text = "You placed " + param + " card(s) good.\n" +
-            "You scored " + grade + "%";
+        double averageScore = Math.Round((int)param / (GuiPresenter.MainManager.TimeUsed/60),2);
+        OwnScoreTxt.text = "You placed " + param + " card(s) good\n" +
+            "You scored " + grade + "%"+"\n"+
+            "Average score of "+ averageScore +" cards per minute";
     }
 
     private void OnScoreReceivedMP(short eventType, Component sender, object param = null)

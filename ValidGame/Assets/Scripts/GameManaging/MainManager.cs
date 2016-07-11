@@ -23,6 +23,7 @@ public class MainManager : MonoBehaviour
     public TeamType MyTeamType;// { get; private set; }
     [HideInInspector]
     public float GameTime = 300;
+    public float TimeUsed;
     public EventManager EventManager;
     public CardController CardController;
 
@@ -59,7 +60,7 @@ public class MainManager : MonoBehaviour
         EventManager.AddListener(GameEvents.SendScoreNetwork, OnScoreReceived);
         EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMultiplayerMatch);
         EventManager.AddListener(GameEvents.RestartGame, RestartGame);
-        DisableAllColliders();
+        DisableAllColliders();       
     }
 
     private void OnScoreReceived(short gameEvent, Component sender, object obj)
