@@ -18,7 +18,7 @@ public class CardController : MonoBehaviour
     public Image CardInfoImage;
     public ArrowScript Arrow;   
     private float ContextTimer = 0.0f;
-    private float MaxContextTime = 1.0f;
+    private float MaxContextTime = 0.5f;
     private bool StartContextInfoTimer = false;
     private bool ControlsDisabled = false;
     //end
