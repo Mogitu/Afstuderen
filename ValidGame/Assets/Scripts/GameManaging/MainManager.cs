@@ -22,7 +22,7 @@ public class MainManager : MonoBehaviour
     public int Score { get; set; }
     public TeamType MyTeamType;// { get; private set; }
     [HideInInspector]
-    public float GameTime = 300;
+    public float GameTime = 300;    
     public float TimeUsed;
     public EventManager EventManager;
     public CardController CardController;
@@ -38,7 +38,7 @@ public class MainManager : MonoBehaviour
         Application.targetFrameRate = 60;
         //PlayerPrefs.DeleteAll();
         //Application.runInBackground = true;
-        MyTeamType = TeamType.ALL;       
+        MyTeamType = TeamType.ALL;
         /*
         string room = AmcUtilities.ReadFileItem("room", "config.ini");
         if (room != "default")
@@ -50,7 +50,10 @@ public class MainManager : MonoBehaviour
         }
         */
         //GameTime = float.Parse(AmcUtilities.ReadFileItem("gametime", "config.ini"));      
+     
     }
+
+  
 
     void Start()
     {

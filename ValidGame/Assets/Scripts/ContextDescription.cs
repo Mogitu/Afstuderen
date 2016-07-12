@@ -20,7 +20,7 @@ public class ContextDescription : MonoBehaviour
         else
         {
             //TODO: this only sets local pos during running the game, it needs be "ok" in scene to.
-            go.transform.localScale *= 1.5f;
+            go.transform.localScale *= 1.35f;
             go.transform.localPosition = new Vector3(-0.01994f, -0.00211f, 0.00016f);
         }        
     }
