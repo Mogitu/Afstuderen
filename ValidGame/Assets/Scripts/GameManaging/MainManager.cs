@@ -22,8 +22,8 @@ public class MainManager : MonoBehaviour
     public int Score { get; set; }
     public TeamType MyTeamType;// { get; private set; }
     [HideInInspector]
-    public float GameTime = 300;    
-    public float TimeUsed;
+    public double GameTime = 300;    
+    public double TimeUsed;
     public EventManager EventManager;
     public CardController CardController;
 
