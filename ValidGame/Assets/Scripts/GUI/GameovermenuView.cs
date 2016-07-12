@@ -67,14 +67,14 @@ public class GameovermenuView : View
         OwnScore = (int)param;
         double grade = Math.Round(((double)OwnScore / CardCount) * 100, 2);
         double averageScore = Math.Round((int)param / (GuiPresenter.MainManager.TimeUsed/60),2);
-        OwnScoreTxt.text = "You placed " + param + " card(s) good\n" +
+        OwnScoreTxt.text = "You placed " + param + " card(s) correct\n" +
             "You scored " + grade + "%"+"\n"+
             "Average score of "+ averageScore +" cards per minute";
     }
 
     private void OnScoreReceivedMP(short eventType, Component sender, object param = null)
     {
-        OtherScoreTxt.text = "Your opponent has " + param + " good cards.";
+        OtherScoreTxt.text = "Your opponent has " + param + " correct cards.";
         OtherScore = (int)param;
         GuiPresenter.EventManager.PostNotification(GameEvents.SendScoreNetwork, this, GuiPresenter.MainManager.Score);
         if (OwnScore > OtherScore)
