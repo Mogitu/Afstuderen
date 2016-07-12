@@ -59,12 +59,15 @@ public class CoordinateScript : MonoBehaviour
 
         if (match != null)
         {
-            txtMesh.text = match.MatchCode;
+           
+            string txt = match.MatchCode;
+            txtMesh.text = txt.Insert(1," ");
         }
         else
         {
+            
             string txt =  transform.parent.name.Substring(transform.parent.name.Length-1,1);
-            txtMesh.text = txt;
+            txtMesh.text = String.Format("{0:# #}", txt);
         }
     }
 }

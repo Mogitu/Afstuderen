@@ -140,8 +140,8 @@ public class GuiPresenter : Presenter
         view.GetComponent<OptionsView>().GetViewComponent("GameSceneTxt").SetActive(false);
         view.GetComponent<OptionsView>().GetViewComponent("Dropdown").SetActive(false);
 
-        view.GetComponent<OptionsView>().GetViewComponent("GameTimeTxt").SetActive(false);
-        view.GetComponent<OptionsView>().GetViewComponent("InputGameTime").SetActive(false);
+        //view.GetComponent<OptionsView>().GetViewComponent("GameTimeTxt").SetActive(false);
+        //view.GetComponent<OptionsView>().GetViewComponent("InputGameTime").SetActive(false);
     }
 
     private void ToggleCamAndColliders()

@@ -83,8 +83,18 @@ public class GameplayingView : View
         }
 
         int minutes = (int)(MainManager.GameTime / 60);
-        int seconds = (int)(MainManager.GameTime % 60);
-        TimerText.text = minutes + ":" + seconds;
+        string seconds = ((int)(MainManager.GameTime % 60)).ToString();
+
+        if (seconds.Length == 1)
+        {
+            TimerText.text = minutes + ":0" + seconds;
+        }
+        else
+        {
+            TimerText.text = minutes + ":" + seconds;
+        }
+
+       
         if (CheckForDescriptionHit())
         {
             return;
