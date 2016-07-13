@@ -24,12 +24,15 @@ public class CardController : MonoBehaviour
     //end
 
     public Dictionary<string, Card> PlacedCards { get; private set; }
-    private Card CurrentCard;
+    private Card _CurrentCard;
     private Dictionary<string, Card> CardCollection;
     public MainManager MainManager;
     public EventManager EventManager;
     public GameObject CardPlacementEffect;
     private int CardCount;
+
+
+    public Card CurrentCard { get { return _CurrentCard; } }
 
     public void Awake()
     {
@@ -75,12 +78,12 @@ public class CardController : MonoBehaviour
             return;
         }
 
-        if (CurrentCard != null)
+        if (_CurrentCard != null)
         {
             Arrow.RotateDown();
             DragCurrentCard();
         }
-        else if (CurrentCard == null)
+        else if (_CurrentCard == null)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -171,12 +174,12 @@ public class CardController : MonoBehaviour
     public void DragCurrentCard()
     {
         //make current card follow the cursor
-        if (CurrentCard != null)
+        if (_CurrentCard != null)
         {
-            if (CurrentCard.GetComponent<BoxCollider>().enabled)
-                CurrentCard.GetComponent<BoxCollider>().enabled = false;
+            if (_CurrentCard.GetComponent<BoxCollider>().enabled)
+                _CurrentCard.GetComponent<BoxCollider>().enabled = false;
 
-            CurrentCard.transform.position = CurrentCardDragPosition();
+            _CurrentCard.transform.position = CurrentCardDragPosition();
             //CurrentCard.transform.position = new Vector3(CurrentCard.transform.position.x,
             //0.0250f,
             //CurrentCard.transform.position.z);           
@@ -204,7 +207,7 @@ public class CardController : MonoBehaviour
                 Arrow.RotateDown();
                 Arrow.gameObject.SetActive(true);
             }
-            Arrow.transform.position = new Vector3(CurrentCard.transform.position.x, Arrow.transform.position.y, CurrentCard.transform.position.z);
+            Arrow.transform.position = new Vector3(_CurrentCard.transform.position.x, Arrow.transform.position.y, _CurrentCard.transform.position.z);
 
             SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponent<SubtopicMatcher>();
             if (Input.GetMouseButtonDown(0) && !Input.GetMouseButton(1) && !topicMatcher.Occupied)
@@ -224,26 +227,26 @@ public class CardController : MonoBehaviour
     /// <param name="obj"></param>
     public void DropCurrentCard(SubtopicMatcher topicMatcher)
     {
-        CurrentCard.GetComponent<BoxCollider>().enabled = true;
+        _CurrentCard.GetComponent<BoxCollider>().enabled = true;
         Arrow.gameObject.SetActive(false);
         Vector3 pos = topicMatcher.transform.position;
         pos.y += 0.0006f;
-        CurrentCard.transform.position = pos;
-        CurrentCard.transform.parent = topicMatcher.transform;
+        _CurrentCard.transform.position = pos;
+        _CurrentCard.transform.parent = topicMatcher.transform;
         topicMatcher.Occupied = true;
-        CardCollection.Remove(CurrentCard.MatchCode);
-        PlacedCards.Add(CurrentCard.MatchCode, CurrentCard);
+        CardCollection.Remove(_CurrentCard.MatchCode);
+        PlacedCards.Add(_CurrentCard.MatchCode, _CurrentCard);
         //route message to opponent
         GameObject go = Instantiate(CardPlacementEffect);
-        go.transform.position = CurrentCard.transform.position;
+        go.transform.position = _CurrentCard.transform.position;
         if (MainManager.IsMultiplayerGame)
         {
             CardToOpponentMessage msg = new CardToOpponentMessage();
-            msg.CardName = CurrentCard.name;
-            msg.Position = CurrentCard.transform.position;
+            msg.CardName = _CurrentCard.name;
+            msg.Position = _CurrentCard.transform.position;
             EventManager.PostNotification(GameEvents.SendCardToOpponent, this, msg);
         }
-        CurrentCard = null;
+        _CurrentCard = null;
         CheckForGameFinishable();
     }
 
@@ -266,11 +269,11 @@ public class CardController : MonoBehaviour
                     Transform objectHit = hit.transform;
                     SubtopicMatcher topicMatcher = objectHit.gameObject.GetComponentInParent<SubtopicMatcher>();
                     topicMatcher.Occupied = false;
-                    CurrentCard = hit.transform.gameObject.GetComponent<Card>();
-                    CurrentCard.transform.parent = null;
-                    CardCollection.Add(CurrentCard.MatchCode, CurrentCard);
-                    PlacedCards.Remove(CurrentCard.MatchCode);
-                    SetExtraGuiCard(CurrentCard.MatchCode);
+                    _CurrentCard = hit.transform.gameObject.GetComponent<Card>();
+                    _CurrentCard.transform.parent = null;
+                    CardCollection.Add(_CurrentCard.MatchCode, _CurrentCard);
+                    PlacedCards.Remove(_CurrentCard.MatchCode);
+                    SetExtraGuiCard(_CurrentCard.MatchCode);
                 }
             }
         }
@@ -291,7 +294,7 @@ public class CardController : MonoBehaviour
     {
         string code = ((string)param).Trim();
         SetExtraGuiCard(code);
-        CurrentCard = GetCard(code);
+        _CurrentCard = GetCard(code);
         CardInfoCam.SetActive(true);
     }
 

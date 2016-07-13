@@ -42,8 +42,11 @@ public class GameplayingView : View
 
     public void OpenCardView()
     {
-        ToggleTimer();
-        GuiPresenter.ToggleCardbrowser();        
+        if (GuiPresenter.MainManager.CardController.CurrentCard==null)
+        {
+            ToggleTimer();
+            GuiPresenter.ToggleCardbrowser();
+        }       
     }
 
     public void ToggleOptionsView()
