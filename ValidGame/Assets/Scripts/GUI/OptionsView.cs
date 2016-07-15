@@ -43,19 +43,29 @@ public class OptionsView : View
 
     private void ChangeGameTime()
     {
+        var stateManager = FindObjectOfType<GameStateManager>();
+        if(stateManager != null)
+        {
+            if(stateManager.GameState.GetType() == typeof(PlayingState))
+            {
+                Debug.Log("By changing the gametime during gameplay your average score will not be calculated with the results.");
+            }          
+        }
+
         int time;
         bool result = int.TryParse(GameTimeInput.text, out time);
         if (!result)
-        {          
-            throw new FormatException();            
+        {
+            throw new FormatException();
         }
         GameTimeInput.textComponent.color = Color.black;
-        GuiPresenter.MainManager.GameTime = time*60;
+        GuiPresenter.MainManager.GameTime = time * 60;
     }
 
+    //TODO: empty function!
     private void ToggleCoordinateVisibility()
     {
-        Debug.Log("toggling coords");
+       // Debug.Log("toggling coords");
     }  
 
     /// <summary>

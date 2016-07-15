@@ -7,7 +7,7 @@
 /// </summary>
 public class GameStateManager : MonoBehaviour{    
     public EventManager EventManager;
-    private GameState GameState;
+    private GameState _GameState;
     private PlayingState PlayingState;
     private WaitingState WaitingState;
     private MultiplayerState MultiPlayerState;
@@ -19,9 +19,11 @@ public class GameStateManager : MonoBehaviour{
         WaitingState = new WaitingState(EventManager);
         MultiPlayerState = new MultiplayerState(EventManager);
         GameoverState = new GameOverState(EventManager);
-        GameState = WaitingState;
+        _GameState = WaitingState;
         AddListeners();
     }
+
+    public GameState GameState { get { return _GameState; } }
 
     private void AddListeners()
     {
@@ -32,31 +34,31 @@ public class GameStateManager : MonoBehaviour{
     
     private void Update()
     {
-        GameState.UpdateState();
+        _GameState.UpdateState();
     }	
 
     public void SetPlayingState(short gameEvent, Component sender, object obj)
     {
-        GameState = PlayingState;
+        _GameState = PlayingState;
     }
 
     public void SetWaitingState()
     {
-        GameState = WaitingState;
+        _GameState = WaitingState;
     }
 
     public void SetGameoverState(short gameEvent, Component sender, object obj)
     {
-        GameState = GameoverState;
+        _GameState = GameoverState;
     }
 
     public void SetMultiplayerState(short gameEvent, Component sender, object obj)
     {
-        GameState = MultiPlayerState;
+        _GameState = MultiPlayerState;
     }
 
     public GameState CurrentState
     {
-        get { return GameState; }
+        get { return _GameState; }
     }
 }
