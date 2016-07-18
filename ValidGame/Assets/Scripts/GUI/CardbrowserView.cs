@@ -38,8 +38,7 @@ public class CardbrowserView : View
         CurrentResX = Screen.width;
         CurrentResY = Screen.height;
         ResOffsetX = CurrentResX / TargetResX;
-        ResOffsetY = CurrentResY / TargetResY;
-        OffsetX *= ResOffsetX;
+        ResOffsetY = CurrentResY / TargetResY;      
     }
 
     protected override void OnEnable()
