@@ -104,8 +104,9 @@ public class TutorialView : View
         CurrentMovieTexture.Play();
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         //Start the movie only if it is available
         if (CurrentMovieTexture != null)
         {
@@ -114,8 +115,9 @@ public class TutorialView : View
         }
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         //pauzes the movie only if available
         if (CurrentMovieTexture != null)
             CurrentMovieTexture.Pause();

@@ -10,11 +10,19 @@ public class GuiPresenter : Presenter
 {  
     public MainManager MainManager;
     public EventManager EventManager;
+    private bool _GameTimeChanged;
 
     public void Start()
     {
         ChangeView(VIEWS.MainmenuView);
-        EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMatch);     
+        EventManager.AddListener(GameEvents.StartMultiplayerMatch, StartMatch);
+        _GameTimeChanged = false;
+    }
+
+    public bool GameTimeChanged
+    {
+        get { return _GameTimeChanged; }
+        set { _GameTimeChanged = value; }
     }
 
     public void StartPracticeRound(TeamType teamType)

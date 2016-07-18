@@ -25,6 +25,8 @@ public class OptionsView : View
     private float LookSpeed;
     private int ShowCoordinates;
 
+    private string TimeString;
+
     private GuiPresenter GuiPresenter;
     private const string InputFieldErrorText = "Enter a valid number";
 
@@ -39,7 +41,9 @@ public class OptionsView : View
         else
         {
             SceneSelectDropDown.value = 1;
-        }     
+        }
+
+        TimeString = GameTimeInput.text;
     }   
 
     protected override void OnEnable()
@@ -59,11 +63,11 @@ public class OptionsView : View
     private void ChangeGameTime()
     {
         var gameState = FindObjectOfType<GameStateManager>().GameState as PlayingState;
-        if(gameState !=null)
+        if(gameState ==null)
         {
-            Debug.Log("By changing the gametime during gameplay your average score will not be calculated with the results.");
-        }              
-
+            TimeString = GameTimeInput.text;
+        }
+       
         int time;
         bool result = int.TryParse(GameTimeInput.text, out time);
         if (!result)
@@ -72,6 +76,8 @@ public class OptionsView : View
         }
         GameTimeInput.textComponent.color = Color.black;
         GuiPresenter.MainManager.GameTime = time * 60;
+
+        
     }
 
     //TODO: empty function!
@@ -136,6 +142,16 @@ public class OptionsView : View
         PlayerPrefs.Save();
     }
 
+    private void CheckForChangedGameTime()
+    {
+        var newTimeString = GameTimeInput.text;
+        if(!string.Equals(TimeString, newTimeString))
+        {
+            Debug.Log("Changed");
+            GuiPresenter.GameTimeChanged = true;
+        }        
+    }
+
     /// <summary>
     /// Saves the playerprefs and changes the view
     /// </summary>
@@ -154,6 +170,7 @@ public class OptionsView : View
                 Presenter.CloseView(VIEWS.OptionsView);
                 GuiPresenter.MainManager.ToggleAllColliders();
                 GuiPresenter.MainManager.ToggleCameraActive();
+                CheckForChangedGameTime();
             }
             else
             {
