@@ -26,8 +26,7 @@ public class GameplayingView : View
         GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.RestartTimer, OnRestartTimer);
         MainManager = GuiPresenter.MainManager;
-        MenuButtons.SetActive(false);
-        
+        MenuButtons.SetActive(false);        
     }
 
     private void OnRestartTimer(short eventType, Component sender, object param)

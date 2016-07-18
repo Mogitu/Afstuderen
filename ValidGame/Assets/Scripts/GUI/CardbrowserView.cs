@@ -36,6 +36,16 @@ public class CardbrowserView : View
         BrowsableCards = new Dictionary<string, GuiCard>();
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        CurrentResX = Screen.width;
+        CurrentResY = Screen.height;
+        ResOffsetX = CurrentResX / TargetResX;
+        ResOffsetY = CurrentResY / TargetResY;
+
+    }
+
     void Start()
     {
         PopulateContent();
@@ -62,6 +72,7 @@ public class CardbrowserView : View
         {
             for (int i = 0; i < cards.Length; i++)
             {
+                //AddCard(cards[i], ref offSetX, ref offSetY, ref col);
                 AddCard(cards[i], ref offSetX, ref offSetY, ref col);
             }
         }
@@ -76,6 +87,9 @@ public class CardbrowserView : View
                 }
             }
         }
+
+        //TODO: SLOPPY CALL; essentially populates the view twice.
+        RepopulateContent();
     }
 
     private void RepopulateContent()
@@ -90,7 +104,7 @@ public class CardbrowserView : View
             Vector3 newPos = guiCard.transform.parent.transform.position;
             newPos.x += offSetX;
             newPos.y += offSetY;
-            offSetX += 150*ResOffsetX;
+            offSetX += (guiCard.GetComponent<RectTransform>().rect.width*1.1f)*ResOffsetX;
             guiCard.transform.position = newPos;
             col++;
             if (col >= 5)
@@ -108,10 +122,10 @@ public class CardbrowserView : View
         GuiCard guiCard = card;
         guiCard.transform.SetParent(CardPanelContent.transform, false);
         Vector3 newPos = guiCard.transform.parent.transform.position;
-        newPos.x += offSetX*ResOffsetX;
-        newPos.y += offSetY*ResOffsetY;
-        offSetX += 150;
-        guiCard.transform.position = newPos;
+        //newPos.x += offSetX*ResOffsetX;
+        //newPos.y += offSetY*ResOffsetY;
+        //offSetX += 150;
+      //  guiCard.transform.position = newPos;
         Button objBtn = guiCard.GetComponent<Button>();
         objBtn.onClick.AddListener(() => { ClickedCard(objBtn.gameObject); });
 
@@ -129,9 +143,9 @@ public class CardbrowserView : View
 
         if (col >= 5)
         {
-            col = 1;
-            offSetY -= 200;
-            offSetX = OffsetX;
+          //  col = 1;
+          //  offSetY -= 200;
+           // offSetX = OffsetX;
         }
     }
 
