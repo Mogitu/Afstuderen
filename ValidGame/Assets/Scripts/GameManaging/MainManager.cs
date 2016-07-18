@@ -116,7 +116,7 @@ public class MainManager : MonoBehaviour
     }
 
     public void StartPracticeRoundAllCards()
-    {
+    {    
         RunGameStartAnimation();
         EventManager.PostNotification(GameEvents.BeginPractice, this, null);
         IsMultiplayerGame = false;

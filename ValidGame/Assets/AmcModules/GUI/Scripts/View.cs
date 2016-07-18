@@ -23,13 +23,15 @@ namespace AMC.GUI
             //ViewComponents = PopulateViewComponents();
         }
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {            
             if (ViewComponents == null)
             {
                 ViewComponents = PopulateViewComponents();               
             }
         }
+
+        protected virtual void OnDisable() { }
 
         private Dictionary<string, GameObject> PopulateViewComponents()
         {           

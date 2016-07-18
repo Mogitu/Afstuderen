@@ -17,6 +17,7 @@ public class OptionsView : View
     public Dropdown SceneSelectDropDown;
     public InputField GameTimeInput;
     public Toggle ShowCoordinateToggle;
+    public Text ChangeTimerWarning;
 
     //settings values
     private float ZoomSpeed;
@@ -38,19 +39,30 @@ public class OptionsView : View
         else
         {
             SceneSelectDropDown.value = 1;
-        }
-    }
+        }     
+    }   
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        var playingState = FindObjectOfType<GameStateManager>().GameState as PlayingState;
+        if(playingState!= null)
+        {
+            ChangeTimerWarning.enabled = true;
+        }
+        else
+        {
+            ChangeTimerWarning.enabled = false;
+        }
+    }    
+  
     private void ChangeGameTime()
     {
-        var stateManager = FindObjectOfType<GameStateManager>();
-        if(stateManager != null)
+        var gameState = FindObjectOfType<GameStateManager>().GameState as PlayingState;
+        if(gameState !=null)
         {
-            if(stateManager.GameState.GetType() == typeof(PlayingState))
-            {
-                Debug.Log("By changing the gametime during gameplay your average score will not be calculated with the results.");
-            }          
-        }
+            Debug.Log("By changing the gametime during gameplay your average score will not be calculated with the results.");
+        }              
 
         int time;
         bool result = int.TryParse(GameTimeInput.text, out time);
@@ -79,8 +91,8 @@ public class OptionsView : View
         MoveSlider.value = PlayerPrefs.GetFloat("MoveSpeed") != 0 ? PlayerPrefs.GetFloat("MoveSpeed") : 5;
         LookSlider.value = PlayerPrefs.GetFloat("LookSpeed") != 0 ? PlayerPrefs.GetFloat("LookSpeed") : 5;
 
+        //retreives int because playerprefs dont store boolean values.
         ShowCoordinates = PlayerPrefs.GetInt("ShowCoordinates", 0);
-
         if (ShowCoordinates == 1)
         {
             ShowCoordinateToggle.isOn = true;
@@ -99,7 +111,7 @@ public class OptionsView : View
         LookSpeed = LookSlider.value;       
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         SavePrefs();
     }
@@ -120,7 +132,7 @@ public class OptionsView : View
         {
             ShowCoordinates = 0;
         }
-        PlayerPrefs.SetInt("ShowCoordinates", ShowCoordinates );
+        PlayerPrefs.SetInt("ShowCoordinates", ShowCoordinates );//playerprefs dont store booleans.
         PlayerPrefs.Save();
     }
 
@@ -135,9 +147,9 @@ public class OptionsView : View
             ToggleCoordinateVisibility();
             SavePrefs();
             GuiPresenter.EventManager.PostNotification(GameEvents.UpdateSettings, this);
-            GameStateManager go = FindObjectOfType<GameStateManager>();
+            var gameState = FindObjectOfType<GameStateManager>().GameState as GameState;
 
-            if (go.CurrentState is PlayingState || go.CurrentState is MultiplayerState)
+            if ((gameState != null) && (gameState is PlayingState || gameState is MultiplayerState))
             {
                 Presenter.CloseView(VIEWS.OptionsView);
                 GuiPresenter.MainManager.ToggleAllColliders();
