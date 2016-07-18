@@ -28,21 +28,24 @@ public class CardbrowserView : View
 
     void Awake()
     {
+        CalculateOffsets();
+        GuiPresenter = GetPresenterType<GuiPresenter>();
+        BrowsableCards = new Dictionary<string, GuiCard>();
+    }
+
+    private void CalculateOffsets()
+    {
         CurrentResX = Screen.width;
         CurrentResY = Screen.height;
         ResOffsetX = CurrentResX / TargetResX;
         ResOffsetY = CurrentResY / TargetResY;
-        GuiPresenter = GetPresenterType<GuiPresenter>();
-        BrowsableCards = new Dictionary<string, GuiCard>();
+        OffsetX *= ResOffsetX;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        CurrentResX = Screen.width;
-        CurrentResY = Screen.height;
-        ResOffsetX = CurrentResX / TargetResX;
-        ResOffsetY = CurrentResY / TargetResY;
+        CalculateOffsets();
 
     }
 
