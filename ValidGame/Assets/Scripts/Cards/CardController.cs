@@ -51,8 +51,12 @@ public class CardController : MonoBehaviour
 
     private void OnEndPractice(short eventType, Component sender, object param)
     {
-        _CurrentCard.gameObject.SetActive(false);        
-        _CurrentCard = null;
+        if(_CurrentCard!=null)
+        {
+            _CurrentCard.gameObject.SetActive(false);
+            _CurrentCard = null;
+        }
+      
     }
 
     private void OnCardCountRequested(short eventType, Component sender, object param)
