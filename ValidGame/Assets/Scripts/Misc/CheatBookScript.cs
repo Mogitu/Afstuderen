@@ -9,15 +9,19 @@ public class CheatBookScript : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!Cheating)
+        var stateManager = FindObjectOfType<GameStateManager>() as GameStateManager;
+        if (stateManager != null && stateManager.CurrentState is PlayingState)
         {
-            Cheating = true;
-            Checker.CalculateResults();
-        }
-        else
-        {
-            Cheating = false;
-            Checker.HideResults();
+            if (!Cheating)
+            {
+                Cheating = true;
+                Checker.CalculateResults();
+            }
+            else
+            {
+                Cheating = false;
+                Checker.HideResults();
+            }
         }
     }
 

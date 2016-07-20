@@ -42,22 +42,22 @@ public class ResultChecker:MonoBehaviour {
     }
 
     private void ShowResults()
-    {
-        foreach(Card card in GoodCards)
-        {
-            card.GetComponent<Renderer>().material.color = Color.green;
-            card.GetComponentInChildren<SpriteRenderer>().material.color = Color.green;
-            GameObject go = Instantiate(GameManager.GoodPlacementEffect);
-            go.transform.position = card.transform.position;
-        }
+    {       
+            foreach (Card card in GoodCards)
+            {
+                card.GetComponent<Renderer>().material.color = Color.green;
+                card.GetComponentInChildren<SpriteRenderer>().material.color = Color.green;
+                GameObject go = Instantiate(GameManager.GoodPlacementEffect);
+                go.transform.position = card.transform.position;
+            }
 
-        foreach(Card card in BadCards)
-        {
-            card.GetComponent<Renderer>().material.color = Color.red;
-            card.GetComponentInChildren<SpriteRenderer>().material.color = Color.red;
-            GameObject go = Instantiate(GameManager.WrongPlacementEffect);
-            go.transform.position = card.transform.position;
-        }
+            foreach (Card card in BadCards)
+            {
+                card.GetComponent<Renderer>().material.color = Color.red;
+                card.GetComponentInChildren<SpriteRenderer>().material.color = Color.red;
+                GameObject go = Instantiate(GameManager.WrongPlacementEffect);
+                go.transform.position = card.transform.position;
+            }              
     }
 
     public void HideResults()
