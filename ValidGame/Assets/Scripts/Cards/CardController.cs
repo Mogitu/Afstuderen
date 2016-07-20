@@ -43,8 +43,16 @@ public class CardController : MonoBehaviour
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
         EventManager.AddListener(GameEvents.RequestCardCount, OnCardCountRequested);
         EventManager.AddListener(GameEvents.PickupCard, OnSelectCard);
+
+        EventManager.AddListener(GameEvents.EndPractice, OnEndPractice);
         //testy!
         //CardLoader cardLoader = new CardLoader("/Cards");        
+    }
+
+    private void OnEndPractice(short eventType, Component sender, object param)
+    {
+        _CurrentCard.gameObject.SetActive(false);        
+        _CurrentCard = null;
     }
 
     private void OnCardCountRequested(short eventType, Component sender, object param)

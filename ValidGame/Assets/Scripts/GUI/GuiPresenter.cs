@@ -174,7 +174,7 @@ public class GuiPresenter : Presenter
     public void FinishGame()
     {
         //MainManager.EndPracticeGame();
-        MainManager.FinishGame();
+        MainManager.FinishGame();        
     }
 
     public TeamType GetTeamType
