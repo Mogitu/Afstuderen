@@ -16,7 +16,7 @@ public class GameplayingView : View
     public Text TimerText;
     private GuiPresenter GuiPresenter;
     private MainManager MainManager;
-    private bool TimerIsPaused;
+    private bool TimerIsPaused; 
 
     void Awake()
     {
@@ -26,7 +26,9 @@ public class GameplayingView : View
         GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.RestartTimer, OnRestartTimer);
         MainManager = GuiPresenter.MainManager;
+
         MenuButtons.SetActive(false);        
+        
     }
 
     private void OnRestartTimer(short eventType, Component sender, object param)
@@ -45,6 +47,9 @@ public class GameplayingView : View
         {
             ToggleTimer();
             GuiPresenter.ToggleCardbrowser();
+
+            var animator = GetViewComponent("CardPanel").GetComponent<Animator>();
+            animator.SetBool("CardPanelClicked",true);
         }       
     }
 
