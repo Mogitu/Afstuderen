@@ -27,18 +27,24 @@ public class GameplayingView : View
         GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.RestartTimer, OnRestartTimer);
         GuiPresenter.EventManager.AddListener(GameEvents.EnableCardPlaceBack, OnPlaceBackEnabled);
+        GuiPresenter.EventManager.AddListener(GameEvents.DisableCardPlaceBack, OnPlaceBackDisabled);
         MainManager = GuiPresenter.MainManager;
+        MenuButtons.SetActive(false);                
+    }
 
-        MenuButtons.SetActive(false);        
-        
+    private void OnPlaceBackDisabled(short eventType, Component sender, object param)
+    {
+        var animator = GetViewComponent("CardPanel").GetComponent<Animator>();
+        animator.SetBool("CardPanelClicked", true);
+        animator.SetBool("CanPlaceCardBack", false);
     }
 
     private void OnPlaceBackEnabled(short eventType, Component sender, object param)
     {
 
-       // var animator = GetViewComponent("CardPanel").GetComponent<Animator>();
-      //  animator.SetBool("CardPanelClicked", false);
-        //animator.SetBool("CanPlaceCardBack", true);
+        var animator = GetViewComponent("CardPanel").GetComponent<Animator>();
+        animator.SetBool("CardPanelClicked", false);
+        animator.SetBool("CanPlaceCardBack", true);
     }
 
     private void OnRestartTimer(short eventType, Component sender, object param)
@@ -60,10 +66,13 @@ public class GameplayingView : View
 
             var animator = GetViewComponent("CardPanel").GetComponent<Animator>();
             animator.SetBool("CardPanelClicked",true);
-            CardPanelText.text = "Click to place card back.";
+            CardPanelText.text = "Click here to place card back.";
         }
         else
         {
+            var animator = GetViewComponent("CardPanel").GetComponent<Animator>();
+            animator.SetBool("CardPanelClicked", true);
+            animator.SetBool("CanPlaceCardBack", false);
             GuiPresenter.EventManager.PostNotification(GameEvents.CancelCardSelection,this, GuiPresenter.MainManager.CardController.CurrentCard.MatchCode);
         }     
     }

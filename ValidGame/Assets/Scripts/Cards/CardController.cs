@@ -268,6 +268,7 @@ public class CardController : MonoBehaviour
         }
         _CurrentCard = null;
         CheckForGameFinishable();
+        EventManager.PostNotification(GameEvents.DisableCardPlaceBack,this,null);
     }
 
     /// <summary>

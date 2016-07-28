@@ -38,4 +38,5 @@ public class GameEvents
     public const short RequestCardCount = 28;
     public const short CancelCardSelection = 29;
     public const short EnableCardPlaceBack = 30;
+    public const short DisableCardPlaceBack = 31;
 }
