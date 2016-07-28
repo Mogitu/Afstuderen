@@ -36,4 +36,6 @@ public class GameEvents
     public const short ChangeGameTime = 26;
     public const short CardCount = 27;
     public const short RequestCardCount = 28;
+    public const short CancelCardSelection = 29;
+    public const short EnableCardPlaceBack = 30;
 }

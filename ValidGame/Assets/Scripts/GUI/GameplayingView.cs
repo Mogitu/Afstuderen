@@ -14,6 +14,7 @@ public class GameplayingView : View
     public GameObject InfoBar;
     public Text InfoText;
     public Text TimerText;
+    public Text CardPanelText;
     private GuiPresenter GuiPresenter;
     private MainManager MainManager;
     private bool TimerIsPaused; 
@@ -25,10 +26,19 @@ public class GameplayingView : View
         GuiPresenter.EventManager.AddListener(GameEvents.GameIsFinishable, OnGameIsFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.UndoGameFinishable, OnUndoGameFinishable);
         GuiPresenter.EventManager.AddListener(GameEvents.RestartTimer, OnRestartTimer);
+        GuiPresenter.EventManager.AddListener(GameEvents.EnableCardPlaceBack, OnPlaceBackEnabled);
         MainManager = GuiPresenter.MainManager;
 
         MenuButtons.SetActive(false);        
         
+    }
+
+    private void OnPlaceBackEnabled(short eventType, Component sender, object param)
+    {
+
+       // var animator = GetViewComponent("CardPanel").GetComponent<Animator>();
+      //  animator.SetBool("CardPanelClicked", false);
+        //animator.SetBool("CanPlaceCardBack", true);
     }
 
     private void OnRestartTimer(short eventType, Component sender, object param)
@@ -50,7 +60,12 @@ public class GameplayingView : View
 
             var animator = GetViewComponent("CardPanel").GetComponent<Animator>();
             animator.SetBool("CardPanelClicked",true);
-        }       
+            CardPanelText.text = "Click to place card back.";
+        }
+        else
+        {
+            GuiPresenter.EventManager.PostNotification(GameEvents.CancelCardSelection,this, GuiPresenter.MainManager.CardController.CurrentCard.MatchCode);
+        }     
     }
 
     public void ToggleOptionsView()

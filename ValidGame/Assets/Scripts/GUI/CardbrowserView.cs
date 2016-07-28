@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using AMC.GUI;
 using System.Collections;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -20,7 +21,10 @@ public class CardbrowserView : View
     {       
         GuiPresenter = GetPresenterType<GuiPresenter>();
         BrowsableCards = new Dictionary<string, GuiCard>();
-    }    
+        GuiPresenter.EventManager.AddListener(GameEvents.CancelCardSelection, OnCancelCardSelection);
+    }
+
+  
 
     void Start()
     {
@@ -124,8 +128,21 @@ public class CardbrowserView : View
     {
         GuiCard card = obj.GetComponent<GuiCard>();        
         GetPresenterType<GuiPresenter>().PickCard(card.MatchCode);
-        BrowsableCards.Remove(card.MatchCode);
+        //BrowsableCards.Remove(card.MatchCode);
         obj.SetActive(false);       
         GuiPresenter.EventManager.PostNotification(GameEvents.RestartTimer, this);
+        GuiPresenter.EventManager.PostNotification(GameEvents.EnableCardPlaceBack, this);
+    }
+
+
+    private void OnCancelCardSelection(short eventType, Component sender, object param)
+    {
+        string matchCode = (string)param;
+        GuiCard card = BrowsableCards[matchCode];
+        card.gameObject.SetActive(true);
+
+
+        //var GuiC
+
     }
 }

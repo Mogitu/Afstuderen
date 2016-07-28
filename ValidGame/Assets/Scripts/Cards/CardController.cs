@@ -43,17 +43,25 @@ public class CardController : MonoBehaviour
         EventManager.AddListener(GameEvents.CardReceivedFromOpponent, OnCardReceivedFromOpponent);
         EventManager.AddListener(GameEvents.RequestCardCount, OnCardCountRequested);
         EventManager.AddListener(GameEvents.PickupCard, OnSelectCard);
+        EventManager.AddListener(GameEvents.CancelCardSelection, OnCancelCardSelection);
 
         EventManager.AddListener(GameEvents.EndPractice, OnEndPractice);
         //testy!
         //CardLoader cardLoader = new CardLoader("/Cards");        
     }
 
+    private void OnCancelCardSelection(short eventType, Component sender, object param)
+    {
+        CurrentCard.transform.position = new Vector3(1000,1000,1000);
+        CurrentCard.transform.parent = null;
+        _CurrentCard = null;
+    }
+
     private void OnEndPractice(short eventType, Component sender, object param)
     {
         if(_CurrentCard!=null)
         {
-            _CurrentCard.gameObject.SetActive(false);
+            CurrentCard.gameObject.SetActive(false);
             _CurrentCard = null;
         }
       
@@ -283,13 +291,17 @@ public class CardController : MonoBehaviour
                     topicMatcher.Occupied = false;
                     _CurrentCard = hit.transform.gameObject.GetComponent<Card>();
                     _CurrentCard.transform.parent = null;
+                    
                     CardCollection.Add(_CurrentCard.MatchCode, _CurrentCard);
                     PlacedCards.Remove(_CurrentCard.MatchCode);
                     SetExtraGuiCard(_CurrentCard.MatchCode);
                 }
             }
+            EventManager.PostNotification(GameEvents.EnableCardPlaceBack, this);
         }
     }
+
+   
 
     //retreives the first card with the matching code
     //TODO: currently does not account for multiple cards with the same match code; the first one is always returned.
