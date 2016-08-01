@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using System;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
@@ -10,6 +12,12 @@ public class EventManager : MonoBehaviour
     public delegate void OnEvent(short eventType, Component sender, object param = null);
 
     private Dictionary<short, List<OnEvent>> Listeners = new Dictionary<short, List<OnEvent>>();
+    private delegate void Jan();
+
+    void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }   
 
     public void AddListener(short eventType, OnEvent listener)
     {
@@ -63,8 +71,8 @@ public class EventManager : MonoBehaviour
         Listeners = tmpListeners;
     }
 
-    public void OnLevelWasLoaded()
-    {
+    void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {        
         RemoveRedundancies();
     }
 }
