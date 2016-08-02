@@ -296,9 +296,10 @@ public class CardController : MonoBehaviour
                     CardCollection.Add(_CurrentCard.MatchCode, _CurrentCard);
                     PlacedCards.Remove(_CurrentCard.MatchCode);
                     SetExtraGuiCard(_CurrentCard.MatchCode);
+                    EventManager.PostNotification(GameEvents.EnableCardPlaceBack, this);
                 }
             }
-            EventManager.PostNotification(GameEvents.EnableCardPlaceBack, this);
+           
         }
     }
 
