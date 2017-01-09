@@ -151,6 +151,13 @@ public class TutorialView : View
     {
         GuiPresenter.ToggleTutorial();
     }
+
+    public void OpenHelpInPdf()
+    {
+        GuiPresenter.OpenHelpPdf();
+    }
+
+
 #else
         public Text TitleText;
     public Text InfoText;
@@ -232,6 +239,11 @@ public class TutorialView : View
     public void Close()
     {
         GuiPresenter.ToggleTutorial();
+    }
+
+    public void OpenHelpInPdf()
+    {
+        GuiPresenter.OpenHelpPdf();
     }
 #endif
 

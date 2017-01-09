@@ -51,6 +51,9 @@ public class CoordinateScript : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Displays coordinates of the topics on the gameboard
+    /// </summary>
     private void SetCoordinate()
     {
         TextMesh txtMesh = GetComponent<TextMesh>();

@@ -101,6 +101,11 @@ public class GuiPresenter : Presenter
         EventManager.PostNotification(GameEvents.PickupCard, this, code);
     }
 
+    public void OpenHelpPdf()
+    {
+        Application.OpenURL(Application.streamingAssetsPath + "/Help.pdf");      
+    }
+
     public void ShowGameOverView()
     {
         ChangeView(VIEWS.GameovermenuView);
