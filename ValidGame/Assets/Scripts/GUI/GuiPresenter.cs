@@ -103,7 +103,7 @@ public class GuiPresenter : Presenter
 
     public void OpenHelpPdf()
     {
-        Application.OpenURL(Application.streamingAssetsPath + "/Help.pdf");      
+        Application.OpenURL(Application.streamingAssetsPath + "/sitemap_help.pdf");      
     }
 
     public void ShowGameOverView()
@@ -209,7 +209,6 @@ public class GuiPresenter : Presenter
             {
                 txt.text = desc.DescriptionText;
             }
-        }
-        
+        }        
     }   
 }
