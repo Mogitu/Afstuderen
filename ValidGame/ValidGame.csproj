@@ -150,6 +150,8 @@
     <Compile Include="Assets\Scripts\Networking\ValidNetworkController.cs" />
     <Compile Include="Assets\Scripts\ResultChecker.cs" />
     <Compile Include="Assets\Scripts\SubtopicMatcher.cs" />
+    <Compile Include="Assets\Scripts\Test\Link.cs" />
+    <Compile Include="Assets\Scripts\Test\PressHandler.cs" />
     <Compile Include="Assets\Scripts\TutorialPrefabScript.cs" />
   </ItemGroup>
   <ItemGroup>

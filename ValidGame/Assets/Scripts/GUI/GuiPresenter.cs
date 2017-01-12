@@ -103,7 +103,11 @@ public class GuiPresenter : Presenter
 
     public void OpenHelpPdf()
     {
-        Application.OpenURL(Application.streamingAssetsPath + "/sitemap_help.pdf");      
+        //Application.OpenURL(Application.streamingAssetsPath + "/sitemap_help.pdf");     
+        //var link = Application.streamingAssetsPath + "/sitemap_help.pdf";
+        //Application.ExternalCall("URLOpen","http://www.google.com");
+
+        Application.ExternalEval("var win=window.open('http://unity3diy.blogspot.com/','_blank');w‌​in.focus();");
     }
 
     public void ShowGameOverView()
