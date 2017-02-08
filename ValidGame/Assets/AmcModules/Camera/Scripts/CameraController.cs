@@ -2,7 +2,7 @@
 using UnityEngine;
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   
+/// Desc    :   Base class for extending camera controls
 /// </summary>
 namespace AMC.Camera
 {
@@ -10,6 +10,11 @@ namespace AMC.Camera
     {
         private Dictionary<string, ICameraMovement> MovementSet;
         private ICameraMovement ActiveMovement;
+
+
+        /// <summary>
+        /// This function should be implemented by the extending class such that it makes sense for the deployment target to use
+        /// </summary>
         public abstract void HandleInput();
 
         void Awake()
@@ -28,14 +33,30 @@ namespace AMC.Camera
             ActiveMovement.Move(this);
         }
 
+        /// <summary>
+        /// Add a new movement to the list of patterns 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="movement"></param>
         public void AddMovementPattern(string key, ICameraMovement movement)
         {
-            MovementSet.Add(key, movement);
+            //no duplicates
+            if (!MovementSet.ContainsKey(key))
+            {
+                MovementSet.Add(key, movement);
+            }            
         }
 
         public ICameraMovement GetMovement(string key)
         {
-            return MovementSet[key];
+            if (MovementSet.ContainsKey(key))
+            {
+                return MovementSet[key];
+            }
+            else
+            {                
+                return null;
+            }           
         }
 
         public void SetCameraMovement(string key)

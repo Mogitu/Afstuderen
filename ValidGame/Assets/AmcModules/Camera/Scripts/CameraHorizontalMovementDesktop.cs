@@ -2,6 +2,7 @@
 /// <summary>
 /// Author  :   Maikel van Munsteren 
 /// Desc    :   Moves camera up and down
+/// TODO    :   Hardcoded boundaries should be removed.
 /// </summary>
 
 namespace AMC.Camera

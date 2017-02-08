@@ -104,8 +104,6 @@
     <Compile Include="Assets\AmcModules\Networking\Scripts\StandardNetworkController.cs" />
     <Compile Include="Assets\Scripts\Animation\StartAnim.cs" />
     <Compile Include="Assets\Scripts\ArrowScript.cs" />
-    <Compile Include="Assets\Scripts\Camera\Topview\TopviewController.cs" />
-    <Compile Include="Assets\Scripts\Camera\Topview\TopviewMovement.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\Cards\CardController.cs" />
     <Compile Include="Assets\Scripts\Cards\CardLoader.cs" />

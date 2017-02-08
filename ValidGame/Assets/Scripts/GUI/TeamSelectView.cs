@@ -4,9 +4,9 @@ using AMC.GUI;
 
 public class TeamSelectView : View
 {
-
     public Toggle PlandAndDoToggle;
     public Toggle CheckAndActToggle;
+
     // Use this for initialization
     void Start()
     {

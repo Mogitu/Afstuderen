@@ -2,7 +2,8 @@
 using UnityEngine.Networking.NetworkSystem;
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :
+/// Desc    :   Client that connect to an AmcServer
+/// TODO    :   The current network Implementation is probably outdated as it uses Unity 5.1 experimental features.
 /// </summary>
 namespace AMC.Networking
 {

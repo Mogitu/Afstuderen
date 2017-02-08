@@ -89,7 +89,7 @@ public class CardController : MonoBehaviour
     }
 
     //Call every frame in manager class.
-    //TODO: divide this method in to smaller methods for readability
+    //TODO  :   divide this method in to smaller methods for readability
     private void Update()
     {
         //avoids that cards can be picked up when mouse click hits both browser button and a placed card.
@@ -306,7 +306,7 @@ public class CardController : MonoBehaviour
    
 
     //retreives the first card with the matching code
-    //TODO: currently does not account for multiple cards with the same match code; the first one is always returned.
+    //TODO  :   currently does not account for multiple cards with the same match code; the first one is always returned.
     public Card GetCard(string code)
     {
         if (CardCollection.Count > 0)

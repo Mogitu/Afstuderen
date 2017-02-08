@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using System;
 
 /// <summary>
-/// Author  :   Maikel van Munsteren
-/// Desc    :   Eventmanager, place in scene and drag it in a referenceslot on a gameobject that needs the evenmanager.
+/// Author       :   Maikel van Munsteren
+/// Desc         :   Eventmanager, place in scene and drag it in a referenceslot on a gameobject that needs the evenmanager.
+/// Notes/TODO   :   Because it extends monobehaviour the manager is in fact an "gameobject" and can be referenced as such; drag it into public slots
+///                  or use "Find or GetComponent, etc". Alternative is making the class static/singleton so it can be more easily accessed and setup, at the cost of abusing it.
 /// </summary>
 public class EventManager : MonoBehaviour
 {

@@ -159,7 +159,7 @@ public class TutorialView : View
 
 
 #else
-        public Text TitleText;
+    public Text TitleText;
     public Text InfoText;
     public Text TutorialCountText;
     public RawImage Image;
@@ -180,7 +180,7 @@ public class TutorialView : View
         GetViewComponent("TutorialCountTxt").SetActive(false);
         GetViewComponent("TutorialText").SetActive(false);
         GetViewComponent("TutorialOne").SetActive(false);  
-       GetViewComponent("TutorialWebGL").SetActive(true); 
+        GetViewComponent("TutorialWebGL").SetActive(true); 
     }
 
     //TODO: Divide in smaller methods

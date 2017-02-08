@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   Checks if the cards on the gameboard are placed correctly.
+/// TODO    :   Checks are made by using strings and substrings, this system could be made more robust in the future.
+/// </summary>
 public class ResultChecker:MonoBehaviour {
+
     public MainManager GameManager;    
     private List<Card> GoodCards;
     private List<Card> BadCards;
@@ -33,14 +39,18 @@ public class ResultChecker:MonoBehaviour {
             }
             else
             {
-                BadCards.Add(card.Value);
-                
+                BadCards.Add(card.Value);                
             }           
         }
         ShowResults();
         return GoodCards.Count;
     }
 
+
+    /// <summary>
+    /// For both properly or wrongly placed cards change their colors and display an effect.
+    /// TODO    :   This currently uses to foreach loops that do the same work. This could be refactored.
+    /// </summary>
     private void ShowResults()
     {       
             foreach (Card card in GoodCards)

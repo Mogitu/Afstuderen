@@ -14,4 +14,3 @@ namespace AMC.GUI
         void ToggleViewComponent(string name);
     }
 }
-   

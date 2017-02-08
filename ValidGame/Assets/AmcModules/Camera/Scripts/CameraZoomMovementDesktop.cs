@@ -2,6 +2,7 @@
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   "Zooms" camera in and out. This is faked by just moving the camera along the forward(Z) axis.
+/// TODO    :   Remove hard coded values.
 /// </summary>
 namespace AMC.Camera
 {
@@ -9,7 +10,7 @@ namespace AMC.Camera
     {
         public void Move(ICameraController controller)
         {
-            //TODO: replace hardcoded values for inspector properties.
+            //TODO  :   replace hardcoded values for inspector properties.
             CameraControllerDesktop cont = (CameraControllerDesktop)controller;
             cont.gameObject.transform.Translate(Input.GetAxis("Mouse ScrollWheel") * Vector3.forward * Time.deltaTime * cont.ZoomSpeed);
             cont.transform.position = new Vector3(Mathf.Clamp(cont.transform.position.x, -0.55f, 0.075f),

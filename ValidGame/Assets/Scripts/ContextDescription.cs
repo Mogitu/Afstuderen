@@ -13,13 +13,13 @@ public class ContextDescription : MonoBehaviour
         go.transform.parent = transform;
         if (gameObject.tag=="ValidTopic")
         {            
-            //TODO: this only sets local pos during running the game, it needs be "ok" in scene to.
+            //TODO  :   this only sets local pos during running the game, it needs be "ok" in scene to.
             go.transform.localPosition = new Vector3(-0.0197f, -0.004f, 0.0129f);
             go.transform.localScale = new Vector3(0.0158814f, 0.02788523f, 0.003244675f)/1.3f;
         }
         else
         {
-            //TODO: this only sets local pos during running the game, it needs be "ok" in scene to.
+            //TODO  :   this only sets local pos during running the game, it needs be "ok" in scene to.
             go.transform.localScale *= 1.35f;
             go.transform.localPosition = new Vector3(-0.01994f, -0.00211f, 0.00016f);
         }        

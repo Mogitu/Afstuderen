@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   Abstract view implementation.......
+/// Desc    :   Abstract view implementation
 /// </summary>
 namespace AMC.GUI
 {

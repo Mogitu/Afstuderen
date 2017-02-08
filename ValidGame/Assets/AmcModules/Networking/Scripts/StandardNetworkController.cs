@@ -1,6 +1,7 @@
 ﻿/// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   Default controller with basic functionality that should carry over to every application
+/// TODO    :   The current network Implementation is probably outdated as it uses Unity 5.1 experimental features.
 /// </summary>
 namespace AMC.Networking
 {

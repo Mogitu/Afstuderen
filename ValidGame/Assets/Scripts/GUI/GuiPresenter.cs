@@ -107,7 +107,7 @@ public class GuiPresenter : Presenter
         //var link = Application.streamingAssetsPath + "/sitemap_help.pdf";
         //Application.ExternalCall("URLOpen","http://www.google.com");
 
-        Application.ExternalEval("var win=window.open('http://unity3diy.blogspot.com/','_blank');w‌​in.focus();");
+       // Application.ExternalEval("var win=window.open('http://unity3diy.blogspot.com/','_blank');w‌​in.focus();");
     }
 
     public void ShowGameOverView()

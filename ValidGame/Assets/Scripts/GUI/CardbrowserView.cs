@@ -9,6 +9,7 @@ using System;
 /// <summary>
 /// Author  :   Maikel van Munsteren
 /// Desc    :   
+/// TODO    :   Has severaly hardcoded string values which should be refactored.
 /// </summary>
 public class CardbrowserView : View
 {
@@ -22,9 +23,7 @@ public class CardbrowserView : View
         GuiPresenter = GetPresenterType<GuiPresenter>();
         BrowsableCards = new Dictionary<string, GuiCard>();
         GuiPresenter.EventManager.AddListener(GameEvents.CancelCardSelection, OnCancelCardSelection);
-    }
-
-  
+    } 
 
     void Start()
     {
@@ -37,7 +36,7 @@ public class CardbrowserView : View
 
     /// <summary>
     /// Attach all cards to the content browser.
-    /// TODO: get rid of hardcoded offsets. Also, perhaps, this is to much logic for in the view?
+    /// TODO    :   get rid of hardcoded offsets. Also, perhaps, this is to much logic for in the view?
     /// </summary>
     private void PopulateContent()
     {        
@@ -65,7 +64,7 @@ public class CardbrowserView : View
         }       
     }   
 
-    //TODO: Split this up into smaller methods and get rid of hardcoded items
+    //TODO  :   Split this up into smaller methods and get rid of hardcoded items
     private void AddCard(GuiCard card)
     {
         GuiCard guiCard = card;
@@ -140,9 +139,5 @@ public class CardbrowserView : View
         string matchCode = (string)param;
         GuiCard card = BrowsableCards[matchCode];
         card.gameObject.SetActive(true);
-
-
-        //var GuiC
-
     }
 }

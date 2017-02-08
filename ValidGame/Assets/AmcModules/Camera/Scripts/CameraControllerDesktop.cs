@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 /// <summary>
 /// Author  :   Maikel van Munsteren
-/// Desc    :   Handles common camera functions.
-/// TODO    :   Make this abstract.
+/// Desc    :   Handles common camera functions for the desktop control scheme
+/// TODO    :   Make this abstract and get rid of all hardcoded stuff.
 /// </summary>
 namespace AMC.Camera
 {

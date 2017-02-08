@@ -1,6 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Author  :   Maikel van Munsteren
+/// Desc    :   
+/// </summary>
 public class BoardCoordinateDisplayController : MonoBehaviour
 {
     public EventManager EventManager;
